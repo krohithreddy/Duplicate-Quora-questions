@@ -1,0 +1,46 @@
+OrientDB - Export Database
+
+https://www.tutorialspoint.com/orientdb/orientdb_export_database.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Like RDBMS, OrientDB also provides features like Export and Import the database. OrientDB uses the JSON format to export the data. By default export command is using the GZIP algorithm to compress the files. While exporting a database it is not locking the database, which means you can perform concurrent read and write operations on it. It also means that you can create an exact copy of that data because of concurrent read and write operations. In this chapter, you can learn how to export the database from the OrientDB command line. The following statement is the basic syntax of the Export database command. 
+EXPORT DATABASE <output file>
+ Note − You can use this command only after connecting to a particular database. Example In this example, we will use the same database named ‘demo’ that we created in the previous chapter. You can use the following command to export the database to a file named ‘export-demo’. 
+orientdb {db = demo}> EXPORT DATABASE ./export-demo.export
+ If it is successfully executed, it will create a file named ‘export-demo.zip’ or ‘exportdemo.gz’ based on the operating system and you will get the following output. 
+Exporting current database to: DATABASE /home/linuxtp/Desktop/demo.export in 
+GZipped JSON format ...  
+
+Started export of database 'demo' to /home/linuxtp/Desktop/demo.export.gz... 
+Exporting database info...OK 
+Exporting clusters...OK (12 clusters) 
+Exporting schema...OK (11 classes) 
+Exporting records... 
+- Cluster 'internal' (id = 0)...OK (records = 3/3) 
+- Cluster 'index' (id = 1)...OK (records = 0/0) 
+- Cluster 'manindex' (id = 2)...OK (records = 0/0) 
+- Cluster 'default' (id = 3)...OK (records = 0/0) 
+- Cluster 'orole' (id = 4)...OK (records = 3/3) 
+- Cluster 'ouser' (id = 5)...OK (records = 3/3) 
+- Cluster 'ofunction' (id = 6)...OK (records = 0/0)
+- Cluster 'oschedule' (id = 7)...OK (records = 0/0) 
+- Cluster 'orids' (id = 8)...OK (records = 0/0) 
+- Cluster 'v' (id = 9)...OK (records = 0/0) 
+- Cluster 'e' (id = 10)...OK (records = 0/0) 
+- Cluster '_studio' (id = 11)...OK (records = 1/1)  
+
+Done. Exported 10 of total 10 records  
+
+Exporting index info... 
+- Index dictionary...OK 
+- Index OUser.name...OK 
+- Index ORole.name...OK 
+OK (3 indexes) 
+Exporting manual indexes content... 
+- Exporting index dictionary ...OK (entries = 0) 
+OK (1 manual indexes)  
+
+Database export completed in 377ms

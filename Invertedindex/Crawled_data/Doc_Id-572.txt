@@ -1,0 +1,41 @@
+PostgreSQL - SUM Function
+
+https://www.tutorialspoint.com/postgresql/postgresql_sum_function.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+PostgreSQL SUM function is used to find out the sum of a field in various records. To understand the SUM function consider the table COMPANY having records as follows − 
+testdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+ Now, based on the above table, suppose you want to calculate the total of all the salary, then you can do so by using the following command − 
+testdb# SELECT SUM(salary) FROM company;
+ The above given PostgreSQL statement will produce the following result − 
+  sum
+--------
+ 260000
+(1 row)
+ You can take the sum of various records set using the GROUP BY clause. The following example will sum up all the records related to a single person and you will have salary for each person. 
+testdb# SELECT name, SUM(salary) FROM company GROUP BY name;
+ The above given PostgreSQL statement will produce the following result − 
+ name  |  sum
+-------+-------
+ Teddy | 20000
+ Paul  | 20000
+ Mark  | 65000
+ David | 85000
+ Allen | 15000
+ Kim   | 45000
+ James | 10000
+(7 rows)
+ postgresql_useful_functions.htm

@@ -1,0 +1,52 @@
+AIML - Basic Tags
+
+https://www.tutorialspoint.com/aiml/aiml_basic_tags.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+In this tutorial, we'll discuss the basic tags of AIML. <aiml> − defines the beginning and end of a AIML document. <category> − defines the unit of knowledge in Alicebot's knowledge base. <pattern> − defines the pattern to match what a user may input to an Alicebot. <template> − defines the response of an Alicebot to user's input. Following AIML files have been used here as reference. 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern> HELLO ALICE </pattern>
+      
+      <template>
+         Hello User
+      </template>
+      
+   </category>
+</aiml>
+ <aiml> tag <aiml> tag marks the start and end of a AIML document. It contains version and encoding information under version and encoding attributes. version attribute stores the AIML version used by ALICE chatterbot Knowledge Base, KB. For example, we've used 1.0.1 version. This attribute is optional. Encoding attributes provide the character sets to be used in the document. For example, we've used UTF-8. As a mandatory requirement, <aiml> tag must contain at least one <category> tag. We can create multiple AIML files where each AIML file contains a single <aiml> tag. The purpose of each AIML file is to add at least a single knowledge unit called category to ALICE chatterbot KB. 
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   ...
+</aiml>
+ <category> tag <category> tag is the fundamental knowledge unit of an ALICE Bot. Each category contains − User input in the form of a sentence which can be an assertion, question, and exclamation etc. User input can contain wild card characters like * and _. Response to user input to be presented by Alicebot. Optional context. A <category> tag must have <pattern> and <template> tag. <pattern> represents the user input and template represents the bot's response. 
+<category>
+   <pattern> HELLO ALICE </pattern>
+   
+   <template>
+      Hello User
+   </template>
+   
+</category>
+ Here, if the user enters Hello Alice then bot will respond back as Hello User. <pattern> tag The <pattern> tag represents a user's input. It should be the first tag within the <category> tag. <pattern> tag can contain wild card to match more than one sentence as user input. For example, in our example, <pattern> contains HELLO ALICE. AIML is case-insensitive. If a user enters Hello Alice, hello alice, HELLO ALICE etc., all inputs are valid and bot will match them against HELLO ALICE. 
+<category>
+   <pattern> HELLO ALICE </pattern>
+   
+   <template>
+      Hello User
+   </template>
+   
+</category>
+ Here, the template is "Hello User" and represents a robot's response to user input. <template> tag <template> tag represents the bot's response to the user. It should be the second tag within the <category> tag. This <template> tag can save data, call another program, give conditional answers or delegate to other categories. 
+<category>
+   <pattern> HELLO ALICE </pattern>
+   
+   <template>
+      Hello User
+   </template>
+   
+</category>
+ Here, the template is "Hello User" and represents a robot's response to the user input.

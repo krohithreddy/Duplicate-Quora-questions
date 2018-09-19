@@ -1,0 +1,41 @@
+XML-RPC - Response Format
+
+https://www.tutorialspoint.com/xml-rpc/xml_rpc_response.htm
+
+XML-RPC, tutorial, basic, advanced, elements, data model, requests, responses, fault, examples, summary.
+
+August-15-2017-02:34:19
+
+Responses are much like requests, with a few extra twists. If the response is successful - the procedure was found, executed correctly, and returned results - then the XML-RPC response will look much like a request, except that the methodCall element is replaced by a methodResponse element and there is no methodName element: 
+<?xml version="1.0"?>
+<methodResponse>
+   <params>
+      <param>
+         <value><double>18.24668429131</double></value>
+      </param>
+   </params>
+</methodResponse>
+ An XML-RPC response can only contain one parameter. That parameter may be an array or a struct, so it is possible to return multiple values. It is always required to return a value in response. A "success value" - perhaps a Boolean set to true (1). Like requests, responses are packaged in HTTP and have HTTP headers. All XML-RPC responses use the 200 OK response code, even if a fault is contained in the message. Headers use a common structure similar to that of requests, and a typical set of headers might look like: 
+HTTP/1.1 200 OK
+Date: Sat, 06 Oct 2001 23:20:04 GMT
+Server: Apache.1.3.12 (Unix)
+Connection: close
+Content-Type: text/xml
+Content-Length: 124
+ XML-RPC only requires HTTP 1.0 support, but HTTP 1.1 is compatible. The Content-Type must be set to text/xml. The Content-Length header specifies the length of the response in bytes. A complete response, with both headers and a response payload, would look like: 
+HTTP/1.1 200 OK
+Date: Sat, 06 Oct 2001 23:20:04 GMT
+Server: Apache.1.3.12 (Unix)
+Connection: close
+Content-Type: text/xml
+Content-Length: 124
+
+<?xml version="1.0"?>
+<methodResponse>
+   <params>
+      <param>
+         <value><double>18.24668429131</double></value>
+      </param>
+   </params>
+</methodResponse>
+ After the response is delivered from the XML-RPC server to the XML-RPC client, the connection is closed. Follow-up requests need to be sent as separate XML-RPC connections.

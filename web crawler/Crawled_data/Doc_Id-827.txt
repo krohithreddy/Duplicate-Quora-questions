@@ -1,0 +1,45 @@
+AIML - <condition> Tag
+
+https://www.tutorialspoint.com/aiml/aiml_condition_tag.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+<condition> Tag is similar to switch statements in programming language. It helps ALICE to respond to the matching input. Syntax 
+<condition name = "variable-name" value = "variable-value"/>
+ For example, consider the following conversation. 
+Human: How are you feeling today
+Robot: I am happy!
+ Here we've stored happy as the state of ALICE and that is how it responds as "I am happy!". Example Create condition.aiml inside C > ab > bots > test > aiml and condition.aiml.csv inside C > ab > bots > test > aimlif directories. condition.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern> HOW ARE YOU FEELING TODAY </pattern>
+      
+      <template>
+         <think><set name = "state"> happy</set></think>
+         <condition name = "state" value = "happy">
+            I am happy!
+         </condition>
+         
+         <condition name = "state" value = "sad">
+            I am sad!
+         </condition>
+      </template>
+      
+   </category>
+</aiml>
+ condition.aiml.csv 
+0,HOW ARE YOU FEELING TODAY,*,*,
+   <think>
+      <set name = "state"> happy</set>
+   </think>
+   
+   <condition name = "state" value = "happy">I am happy!</condition>
+   <condition name = "state" value = "sad">I am sad!</condition>,condition.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You will see the following output − 
+Human: How are you feeling today
+Robot: I am happy!

@@ -1,0 +1,29 @@
+XQuery - Custom Functions
+
+https://www.tutorialspoint.com/xquery/xquery_custom_functions.htm
+
+Overview, Environment Setup, First Application, FLWOR, HTML Format, XPath, Sequences, Sequence functions, count, distinct-values, subsequence, sum, avg, min, max, insert-before, remove, reverse, index-of, last, position, String functions, string-length, concat, string-join, Date functions, current-date, current-time, current-dateTime, Regular Expressions, matches, replaces, tokenize, if then else, custom functions
+
+August-15-2017-02:34:10
+
+XQuery provides the capability to write custom functions. Listed below are the guidelines to create a custom function. Use the keyword declare function to define a function. Use the data types defined in the current XML Schema Enclose the body of function inside curly braces. Prefix the name of the function with an XML namespace. The following syntax is used while creating a custom function. Syntax 
+declare function prefix:function_name($parameter as datatype?...)
+as returnDatatype?
+{
+   function body...
+};
+ Example The following example shows how to create a user-defined function in XQuery. XQuery Expression 
+declare function local:discount($price as xs:decimal?,$percentDiscount as xs:decimal?)
+as xs:decimal? {
+   let $discount := $price - ($price * $percentDiscount div 100) 
+   return $discount
+};
+
+let $originalPrice := 100
+
+let $discountAvailed := 10
+
+return ( local:discount($originalPrice, $discountAvailed)) 
+ Output 
+90
+ Verify the Result To verify the result, replace the contents of books.xqy (given in the Environment Setup chapter) with the above XQuery expression and execute the XQueryTester java program.

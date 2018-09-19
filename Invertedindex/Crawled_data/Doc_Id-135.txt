@@ -1,0 +1,89 @@
+DynamoDB - Querying
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_querying.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+Queries locate items or secondary indices through primary keys. Performing a query requires a partition key and specific value, or a sort key and value; with the option to filter with comparisons. The default behavior of a query consists of returning every attribute for items associated with the provided primary key. However, you can specify the desired attributes with the ProjectionExpression parameter. A query utilizes the KeyConditionExpression parameters to select items, which requires providing the partition key name and value in the form of an equality condition. You also have the option to provide an additional condition for any sort keys present. A few examples of the sort key conditions are − Sr.No Condition & Description 1 x = y It evaluates to true if the attribute x equals y. 2 x < y It evaluates to true if x is less than y. 3 x <= y It evaluates to true if x is less than or equal to y. 4 x > y It evaluates to true if x is greater than y. 5 x >= y It evaluates to true if x is greater than or equal to y. 6 x BETWEEN y AND z It evaluates to true if x is both >= y, and <= z. DynamoDB also supports the following functions: begins_with (x, substr) It evaluates to true if attribute x starts with the specified string. The following conditions must conform to certain requirements − Attribute names must start with a character within the a-z or A-Z set. The second character of an attribute name must fall in the a-z, A-Z, or 0-9 set. Attribute names cannot use reserved words. Attribute names out of compliance with the constraints above can define a placeholder. The query processes by performing retrievals in sort key order, and using any condition and filter expressions present. Queries always return a result set, and on no matches, it returns an empty one. The results always return in sort key order, and data type based order with the modifiable default as the ascending order. Querying with Java Queries in Java allow you to query tables and secondary indices. They require specification of partition keys and equality conditions, with the option to specify sort keys and conditions. The general required steps for a query in Java include creating a DynamoDB class instance, Table class instance for the target table, and calling the query method of the Table instance to receive the query object. The response to the query contains an ItemCollection object providing all the returned items. The following example demonstrates detailed querying − 
+DynamoDB dynamoDB = new DynamoDB (
+   new AmazonDynamoDBClient(new ProfileCredentialsProvider()));
+
+Table table = dynamoDB.getTable("Response");  
+   QuerySpec spec = new QuerySpec() 
+   .withKeyConditionExpression("ID = :nn") 
+.withValueMap(new ValueMap() 
+   .withString(":nn", "Product Line 1#P1 Thread 1"));
+   
+ItemCollection<QueryOutcome> items = table.query(spec);  
+Iterator<Item> iterator = items.iterator(); 
+Item item = null; 
+
+while (iterator.hasNext()) { 
+   item = iterator.next(); 
+   System.out.println(item.toJSONPretty());
+}
+ The query method supports a wide variety of optional parameters. The following example demonstrates how to utilize these parameters − 
+Table table = dynamoDB.getTable("Response");  
+QuerySpec spec = new QuerySpec() 
+   .withKeyConditionExpression("ID = :nn and ResponseTM > :nn_responseTM")  
+   .withFilterExpression("Author = :nn_author") 
+   .withValueMap(new ValueMap()
+   .withString(":nn", "Product Line 1#P1 Thread 1") 
+   .withString(":nn_responseTM", twoWeeksAgoStr) 
+   .withString(":nn_author", "Member 123"))
+   .withConsistentRead(true);
+   
+ItemCollection<QueryOutcome> items = table.query(spec);  
+Iterator<Item> iterator = items.iterator(); 
+
+while (iterator.hasNext()) { 
+   System.out.println(iterator.next().toJSONPretty()); 
+}
+ You can also review the following larger example. Note − The following program may assume a previously created data source. Before attempting to execute, acquire supporting libraries and create necessary data sources (tables with required characteristics, or other referenced sources). This example also uses Eclipse IDE, an AWS credentials file, and the AWS Toolkit within an Eclipse AWS Java Project. 
+package com.amazonaws.codesamples.document;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+
+import com.amazonaws.services.dynamodbv2.document.Page;
+import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+
+public class QueryOpSample {
+   static DynamoDB dynamoDB = new DynamoDB(
+      new AmazonDynamoDBClient(new ProfileCredentialsProvider()));
+   static String tableName = "Reply";  
+   
+   public static void main(String[] args) throws Exception { 
+      String forumName = "PolyBlaster"; 
+      String threadSubject = "PolyBlaster Thread 1";  
+      getThreadReplies(forumName, threadSubject); 
+   } 
+   private static void getThreadReplies(String forumName, String threadSubject) {  
+      Table table = dynamoDB.getTable(tableName);  
+      String replyId = forumName + "#" + threadSubject; 
+      QuerySpec spec = new QuerySpec() 
+         .withKeyConditionExpression("Id = :v_id") 
+         .withValueMap(new ValueMap() 
+         .withString(":v_id", replyId)); 
+         
+      ItemCollection<QueryOutcome> items = table.query(spec); 
+      System.out.println("\ngetThreadReplies results:"); 
+      Iterator<Item> iterator = items.iterator(); 
+      
+      while (iterator.hasNext()) { 
+         System.out.println(iterator.next().toJSONPretty()); 
+      } 
+   } 
+}

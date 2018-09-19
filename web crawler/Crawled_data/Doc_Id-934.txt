@@ -1,0 +1,86 @@
+XML DOM - Traversing
+
+https://www.tutorialspoint.com/dom/xml_dom_traversing.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+In this chapter, we will discuss XML DOM Traversing. We studied in the previous chapter how to load XML document and parse the thus obtained DOM object. This parsed DOM object can be traversed. Traversing is a process in which looping is done in a systematic manner by going across each and every element step by step in a node tree. Example The following example (traverse_example.htm) demonstrates DOM traversing. Here we traverse through each child node of <Employee> element. 
+<!DOCTYPE html>
+<html>
+   <style>
+      table,th,td {
+         border:1px solid black;
+         border-collapse:collapse
+      }
+   </style>
+   <body>
+      <div id = "ajax_xml"></div>
+      <script>
+         //if browser supports XMLHttpRequest
+         if (window.XMLHttpRequest) {// Create an instance of XMLHttpRequest object. 
+            code for IE7+, Firefox, Chrome, Opera, Safari
+            var xmlhttp = new XMLHttpRequest();
+         } else {// code for IE6, IE5
+            var xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         // sets and sends the request for calling "node.xml"
+            xmlhttp.open("GET","/dom/node.xml",false);
+            xmlhttp.send();
+
+         // sets and returns the content as XML DOM
+            var xml_dom = xmlhttp.responseXML;
+	
+         // this variable stores the code of the html table
+            var html_tab = '<table id = "id_tabel" align = "center">
+            <tr>
+               <th>Employee Category</th>
+               <th>FirstName</th>
+               <th>LastName</th>
+               <th>ContactNo</th>
+               <th>Email</th>
+            </tr>';
+            var arr_employees = xml_dom.getElementsByTagName("Employee");
+         // traverses the "arr_employees" array
+            for(var i = 0; i<arr_employees.length; i++) {
+               var employee_cat = arr_employees[i].getAttribute('category');
+   
+               // gets the value of 'category' element of current "Element" tag
+
+               // gets the value of first child-node of 'FirstName' 
+               // element of current "Employee" tag
+                  var employee_firstName =
+                     arr_employees[i].getElementsByTagName('FirstName')[0].childNodes[0].nodeValue;
+
+               // gets the value of first child-node of 'LastName' 
+               // element of current "Employee" tag
+                  var employee_lastName =
+                     arr_employees[i].getElementsByTagName('LastName')[0].childNodes[0].nodeValue;
+
+               // gets the value of first child-node of 'ContactNo' 
+               // element of current "Employee" tag
+                  var employee_contactno = 
+                     arr_employees[i].getElementsByTagName('ContactNo')[0].childNodes[0].nodeValue;
+
+               // gets the value of first child-node of 'Email' 
+               // element of current "Employee" tag
+                  var employee_email = 
+                     arr_employees[i].getElementsByTagName('Email')[0].childNodes[0].nodeValue;
+
+               // adds the values in the html table
+               html_tab += '<tr>
+                  <td>'+ employee_cat+ '</td>
+                  <td>'+ employee_firstName+ '</td>
+                  <td>'+ employee_lastName+ '</td>
+                  <td>'+ employee_contactno+ '</td>
+                  <td>'+ employee_email+ '</td>
+               </tr>';
+            }
+         html_tab += '</table>'; 
+         // adds the html table in a html tag, with id = "ajax_xml"
+         document.getElementById('ajax_xml').innerHTML = html_tab; 
+      </script>
+   </body>
+</html>
+ This code loads node.xml. The XML content is transformed into JavaScript XML DOM object. The array of elements (with tag Element) using the method getElementsByTagName() is obtained. Next, we traverse through this array and display the child node values in a table. Execution Save this file as traverse_example.html on the server path (this file and node.xml should be on the same path in your server). You will receive the following output −

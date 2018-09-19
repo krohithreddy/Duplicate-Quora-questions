@@ -1,0 +1,60 @@
+T-SQL - String Functions
+
+https://www.tutorialspoint.com/t_sql/t_sql_string_functions.htm
+
+T-SQL, Tutorial, Learning, Beginners, Overview, Data Types, Create Tables, Drop Tables, INSERT Statement, SELECT Statement, UPDATE Statement, DELETE Statement, WHERE Clause, LIKE Clause, ORDER BY Clause, GROUP BY Clause, DISTINCT Clause, Joining Tables, Sub-Queries, Stored Procedures, Transactions, Indexes, Functions, String Functions, Date Functions, Numeric Functions.
+
+August-15-2017-02:34:09
+
+MS SQL Server String functions can be applied on string value or will return string value or numeric data. Following is the list of String functions with examples. ASCII() Ascii code value will come as output for a character expression. Example The following query will give the Ascii code value of a given character. 
+Select ASCII ('word') 
+ CHAR() Character will come as output for given Ascii code or integer. Example The following query will give the character for a given integer. 
+Select CHAR(97)
+ NCHAR() Unicode character will come as output for a given integer. Example The following query will give the Unicode character for a given integer. 
+Select NCHAR(300)
+ CHARINDEX() Starting position for given search expression will come as output in a given string expression. Example The following query will give the starting position of 'G' character for given string expression 'KING'. 
+Select CHARINDEX('G', 'KING')
+ LEFT() Left part of the given string till the specified number of characters will come as output for a given string. Example The following query will give the 'WORL' string as mentioned 4 number of characters for given string 'WORLD'. 
+Select LEFT('WORLD', 4)
+ RIGHT() Right part of the given string till the specified number of characters will come as output for a given string. Example The following query will give the 'DIA' string as mentioned 3 number of characters for given string 'INDIA'. 
+Select RIGHT('INDIA', 3)
+ SUBSTRING() Part of a string based on the start position value and length value will come as output for a given string. Example The following queries will give the 'WOR', 'DIA', 'ING' strings as we mentioned (1,3), (3,3) and (2,3) as start and length values respectively for given strings 'WORLD', 'INDIA' and 'KING'. 
+Select SUBSTRING ('WORLD', 1,3) 
+Select SUBSTRING ('INDIA', 3,3) 
+Select SUBSTRING ('KING', 2,3)
+ LEN() Number of characters will come as output for a given string expression. Example The following query will give the 5 for the 'HELLO' string expression. 
+Select LEN('HELLO') 
+ LOWER() Lowercase string will come as output for a given string data. Example The following query will give the 'sqlserver' for the 'SQLServer' character data. 
+Select LOWER('SQLServer') 
+ UPPER() Uppercase string will come as output for a given string data. Example The following query will give the 'SQLSERVER' for the 'SqlServer' character data. 
+Select UPPER('SqlServer')
+ LTRIM() String expression will come as output for a given string data after removing leading blanks. Example The following query will give the 'WORLD' for the '   WORLD' character data. 
+Select LTRIM('   WORLD')
+ RTRIM() String expression will come as output for a given string data after removing trailing blanks. Example The following query will give the 'INDIA' for the 'INDIA   ' character data. 
+Select RTRIM('INDIA   ') 
+ REPLACE() String expression will come as output for a given string data after replacing all occurrences of specified character with specified character. Example The following query will give the 'KNDKA' string for the 'INDIA' string data. 
+Select REPLACE('INDIA', 'I', 'K')
+ REPLICATE() Repeat string expression will come as output for a given string data with specified number of times. Example The following query will give the 'WORLDWORLD' string for the 'WORLD' string data. 
+Select REPLICATE('WORLD', 2)
+ REVERSE() Reverse string expression will come as output for a given string data. Example The following query will give the 'DLROW' string for the 'WORLD' string data. 
+Select REVERSE('WORLD')
+ SOUNDEX() Returns four-character (SOUNDEX) code to evaluate the similarity of two given strings. Example The following query will give the 'S530' for the 'Smith', 'Smyth' strings. 
+Select SOUNDEX('Smith'), SOUNDEX('Smyth')
+ DIFFERENCE() Integer value will come as output of given two expressions. Example The following query will give the 4 for the 'Smith', 'Smyth' expressions. 
+Select Difference('Smith','Smyth') 
+ Note − If the output value is 0 it indicates weak or no similarity between give 2 expressions. SPACE() String will come as output with the specified number of spaces. Example The following query will give the 'I LOVE INDIA'. 
+Select 'I'+space(1)+'LOVE'+space(1)+'INDIA'
+ STUFF() String expression will come as output for a given string data after replacing from starting character till the specified length with specified character. Example The following query will give the 'AIJKFGH' string for the 'ABCDEFGH' string data as per given starting character and length as 2 and 4 respectively and 'IJK' as specified target string. 
+Select STUFF('ABCDEFGH', 2,4,'IJK') 
+ STR() Character data will come as output for the given numeric data. Example The following query will give the 187.37 for the given 187.369 based on specified length as 6 and decimal as 2. 
+Select STR(187.369,6,2) 
+ UNICODE() Integer value will come as output for the first character of given expression. Example The following query will give the 82 for the 'RAMA' expression. 
+Select UNICODE('RAMA') 
+ QUOTENAME() Given string will come as output with the specified delimiter. Example The following query will give the "RAMA" for the given 'RAMA' string as we specified double quote as delimiter. 
+Select QUOTENAME('RAMA','"') 
+ PATINDEX() Starting position of the first occurrence from the given expression as we specified 'I' position is required. Example The following query will give the 1 for the 'INDIA'. 
+Select PATINDEX('I%','INDIA') 
+ FORMAT() Given expression will come as output with the specified format. Example The following query will give the ' Monday, November 16, 2015' for the getdate function as per specified format with 'D' refers weekday name. 
+SELECT FORMAT ( getdate(), 'D') 
+ CONCAT() Single string will come as output after concatenating the given parameter values. Example The following query will give the 'A,B,C' for the given parameters. 
+Select CONCAT('A',',','B',',','C')

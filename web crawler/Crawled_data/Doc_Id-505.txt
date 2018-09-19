@@ -1,0 +1,43 @@
+PL/SQL - Nested IF-THEN-ELSE Statements
+
+https://www.tutorialspoint.com/plsql/plsql_nested_if.htm
+
+PL/SQL, syntax, Environment Setup, Operators, Transactions, Date and Time, data types, variables, constants, records, conditional statements, iterative statements, cursors, procedures, functions, exception handling, triggers, packages, collections, external procedures, arrays, strings, dbms output.
+
+August-15-2017-02:34:06
+
+It is always legal in PL/SQL programming to nest the IF-ELSE statements, which means you can use one IF or ELSE IF statement inside another IF or ELSE IF statement(s). Syntax 
+IF( boolean_expression 1)THEN 
+   -- executes when the boolean expression 1 is true  
+   IF(boolean_expression 2) THEN 
+      -- executes when the boolean expression 2 is true  
+      sequence-of-statements; 
+   END IF; 
+ELSE 
+   -- executes when the boolean expression 1 is not true 
+   else-statements; 
+END IF; 
+ Example 
+DECLARE 
+   a number(3) := 100; 
+   b number(3) := 200; 
+BEGIN 
+   -- check the boolean condition  
+   IF( a = 100 ) THEN 
+   -- if condition is true then check the following  
+      IF( b = 200 ) THEN 
+      -- if condition is true then print the following  
+      dbms_output.put_line('Value of a is 100 and b is 200' ); 
+      END IF; 
+   END IF; 
+   dbms_output.put_line('Exact value of a is : ' || a ); 
+   dbms_output.put_line('Exact value of b is : ' || b ); 
+END; 
+/ 
+ When the above code is executed at the SQL prompt, it produces the following result − 
+Value of a is 100 and b is 200 
+Exact value of a is : 100 
+Exact value of b is : 200  
+
+PL/SQL procedure successfully completed. 
+ plsql_conditional_control.htm

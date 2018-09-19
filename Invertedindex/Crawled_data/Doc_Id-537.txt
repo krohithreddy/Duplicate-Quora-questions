@@ -1,0 +1,71 @@
+PostgreSQL - DISTINCT Keyword
+
+https://www.tutorialspoint.com/postgresql/postgresql_distinct_keyword.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+The PostgreSQL DISTINCT keyword is used in conjunction with SELECT statement to eliminate all the duplicate records and fetching only unique records. There may be a situation when you have multiple duplicate records in a table. While fetching such records, it makes more sense to fetch only unique records instead of fetching duplicate records. Syntax The basic syntax of DISTINCT keyword to eliminate duplicate records is as follows − 
+SELECT DISTINCT column1, column2,.....columnN
+FROM table_name
+WHERE [condition]
+ Example Consider the table COMPANY having records as follows − 
+# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+ Let us add two more records to this table as follows − 
+INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)
+VALUES (8, 'Paul', 32, 'California', 20000.00 );
+
+INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY)
+VALUES (9, 'Allen', 25, 'Texas', 15000.00 );
+ Now, the records in the COMPANY table would be − 
+ id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  1 | Paul  |  32 | California |  20000
+  2 | Allen |  25 | Texas      |  15000
+  3 | Teddy |  23 | Norway     |  20000
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  5 | David |  27 | Texas      |  85000
+  6 | Kim   |  22 | South-Hall |  45000
+  7 | James |  24 | Houston    |  10000
+  8 | Paul  |  32 | California |  20000
+  9 | Allen |  25 | Texas      |  15000
+(9 rows)
+ First, let us see how the following SELECT query returns duplicate salary records − 
+testdb=# SELECT name FROM COMPANY;
+ This would produce the following result − 
+ name
+-------
+ Paul
+ Allen
+ Teddy
+ Mark
+ David
+ Kim
+ James
+ Paul
+ Allen
+(9 rows)
+ Now, let us use DISTINCT keyword with the above SELECT query and see the result − 
+testdb=# SELECT DISTINCT name FROM COMPANY;
+ This would produce the following result where we do not have any duplicate entry − 
+ name
+-------
+ Teddy
+ Paul
+ Mark
+ David
+ Allen
+ Kim
+ James
+(7 rows)

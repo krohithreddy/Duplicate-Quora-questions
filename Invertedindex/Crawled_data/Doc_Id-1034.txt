@@ -1,0 +1,87 @@
+XSD - <any>
+
+https://www.tutorialspoint.com/xsd/xsd_complex_any.htm
+
+XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+<any> element is used to extend the XSD functionality. It is used to extend a complexType element defined in one XSD by an element which is not defined in the schema. Consider an example − person.xsd has defined person complexType element. address.xsd has defined address complexType element. person.xsd 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema"
+   targetNamespace = "http://www.tutorialspoint.com"
+   xmlns = "http://www.tutorialspoint.com"
+   elementFormDefault = "qualified">
+   
+   <xs:element name = "person">
+      <xs:complexType >
+         <xs:sequence>
+            <xs:element name = "firstname" type = "xs:string"/>
+            <xs:element name = "lastname" type = "xs:string"/>
+            <xs:element name = "nickname" type = "xs:string"/>     
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+	
+</xs:schema>	
+ address.xsd 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema"
+   targetNamespace = "http://www.tutorialspoint.com"
+   xmlns = "http://www.tutorialspoint.com"
+   elementFormDefault = "qualified">
+   
+   <xs:element name = "address">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name = "houseNumber" type = "xs:string"/>
+            <xs:element name = "street" type = "xs:string"/>
+            <xs:element name = "state" type = "xs:string"/>    
+            <xs:element name = "zipcode" type = "xs:integer"/>   	  
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+
+</xs:schema>
+ If we want to define a person with address in XML, then the following declaration will be invalid. person.xml 
+<?xml version = "1.0"?>
+<class xmlns = "http://www.tutorialspoint.com"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.tutorialspoint.com person.xsd
+   http://www.tutorialspoint.com address.xsd">  
+
+   <person>
+      <firstname>Dinkar</firstname>
+      <lastname>Kad</lastname>
+      <nickname>Dinkar</lastname>
+   
+      <address>
+         <houseNumber>101</firstname>
+         <street>Sector-1,Patiala</lastname>
+         <state>Punjab</lastname>
+         <zipcode>301202<zipcode>
+      </address>
+   
+   </person>
+	
+</class>
+ Use <xs:any> In order to validate above person.xml, add <xs:any> to person element in person.xsd. person.xsd 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema"
+   targetNamespace = "http://www.tutorialspoint.com"
+   xmlns = "http://www.tutorialspoint.com"
+   elementFormDefault = "qualified">
+
+   <xs:element name = "person">
+      <xs:complexType >
+         <xs:sequence>
+            <xs:element name = "firstname" type = "xs:string"/>
+            <xs:element name = "lastname" type = "xs:string"/>
+            <xs:element name = "nickname" type = "xs:string"/>   
+            <xs:any minOccurs = "0"/>		 
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+	
+</xs:schema>
+ Now person.xml will be validated against person.xsd and address.xsd. xsd_complex_types.htm

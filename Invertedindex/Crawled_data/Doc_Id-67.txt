@@ -1,0 +1,167 @@
+DocumentDB - Indexing Records
+
+https://www.tutorialspoint.com/documentdb/documentdb_indexing_records.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+By default, DocumentDB automatically indexes every property in a document as soon as the document is added to the database. However, you can take control and fine tune your own indexing policy that reduces storage and processing overhead when there are specific documents and/or properties that never needs to be indexed. The default indexing policy that tells DocumentDB to index every property automatically is suitable for many common scenarios. But you can also implement a custom policy that exercises fine control over exactly what gets indexed and what doesn't and other functionality with regards to indexing. DocumentDB supports the following types of indexing − Hash Range Hash Hash index enables efficient querying for equality, i.e., while searching for documents where a given property equals an exact value, rather than matching on a range of values like less than, greater than or between. You can perform range queries with a hash index, but DocumentDB will not be able to use the hash index to find matching documents and will instead need to sequentially scan each document to determine if it should be selected by the range query. You won't be able to sort your documents with an ORDER BY clause on a property that has just a hash index. Range Range index defined for the property, DocumentDB allows to efficiently query for documents against a range of values. It also allows you to sort the query results on that property, using ORDER BY. DocumentDB allows you to define both a hash and a range index on any or all properties, which enables efficient equality and range queries, as well as ORDER BY. Indexing Policy Every collection has an indexing policy that dictates which types of indexes are used for numbers and strings in every property of every document. You can also control whether or not documents get indexed automatically as they are added to the collection. Automatic indexing is enabled by default, but you can override that behavior when adding a document, telling DocumentDB not to index that particular document. You can disable automatic indexing so that by default, documents are not indexed when added to the collection. Similarly, you can override this at the document level and instruct DocumentDB to index a particular document when adding it to the collection. This is known as manual indexing. Include / Exclude Indexing An indexing policy can also define which path or paths should be included or excluded from the index. This is useful if you know that there are certain parts of a document that you never query against and certain parts that you do. In these cases, you can reduce indexing overhead by telling DocumentDB to index just those particular portions of each document added to the collection. Automatic Indexing Let’s take a look at a simple example of automatic indexing. Step 1 − First we create a collection called autoindexing and without explicitly supplying a policy, this collection uses the default indexing policy, which means that automatic indexing is enabled on this collection. Here we are using ID-based routing for the database self-link so we don't need to know its resource ID or query for it before creating the collection. We can just use the database ID, which is mydb. Step 2 − Now let’s create two documents, both with the last name of Upston. 
+private async static Task AutomaticIndexing(DocumentClient client) {
+   Console.WriteLine();
+   Console.WriteLine("**** Override Automatic Indexing ****");
+
+   // Create collection with automatic indexing
+
+   var collectionDefinition = new DocumentCollection {
+      Id = "autoindexing"
+   };
+	
+   var collection = await client.CreateDocumentCollectionAsync("dbs/mydb",
+      collectionDefinition);
+
+   // Add a document (indexed)
+   dynamic indexedDocumentDefinition = new {
+      id = "MARK",
+      firstName = "Mark",
+      lastName = "Upston",
+      addressLine = "123 Main Street",
+      city = "Brooklyn",
+      state = "New York",
+      zip = "11229",
+   };
+	
+   Document indexedDocument = await client
+      .CreateDocumentAsync("dbs/mydb/colls/autoindexing", indexedDocumentDefinition);
+		
+   // Add another document (request no indexing)
+   dynamic unindexedDocumentDefinition = new {
+      id = "JANE",
+      firstName = "Jane",
+      lastName = "Upston",
+      addressLine = "123 Main Street",
+      city = "Brooklyn",
+      state = "New York",
+      zip = "11229",
+   };
+	
+   Document unindexedDocument = await client
+      .CreateDocumentAsync("dbs/mydb/colls/autoindexing", unindexedDocumentDefinition,
+      new RequestOptions { IndexingDirective = IndexingDirective.Exclude });
+
+   //Unindexed document won't get returned when querying on non-ID (or selflink) property
+
+   var doeDocs = client.CreateDocumentQuery("dbs/mydb/colls/autoindexing", "SELECT *
+      FROM c WHERE c.lastName = 'Doe'").ToList();
+		
+   Console.WriteLine("Documents WHERE lastName = 'Doe': {0}", doeDocs.Count);
+
+   // Unindexed document will get returned when using no WHERE clause
+
+   var allDocs = client.CreateDocumentQuery("dbs/mydb/colls/autoindexing",
+      "SELECT * FROM c").ToList();
+   Console.WriteLine("All documents: {0}", allDocs.Count);
+	
+   // Unindexed document will get returned when querying by ID (or self-link) property
+	
+   Document janeDoc = client.CreateDocumentQuery("dbs/mydb/colls/autoindexing",
+      "SELECT * FROM c WHERE c.id = 'JANE'").AsEnumerable().FirstOrDefault();
+   Console.WriteLine("Unindexed document self-link: {0}", janeDoc.SelfLink);
+	
+   // Delete the collection
+	
+   await client.DeleteDocumentCollectionAsync("dbs/mydb/colls/autoindexing");
+}
+ This first one, for Mark Upston, gets added to the collection and is then immediately indexed automatically based on the default indexing policy. But when the second document for Mark Upston is added, we have passed the request options with IndexingDirective.Exclude which explicitly instructs DocumentDB not to index this document, despite the collection's indexing policy. We have different types of queries for both the documents at the end. Step 3 − Let’s call the AutomaticIndexing task from CreateDocumentClient. 
+private static async Task CreateDocumentClient() {
+   // Create a new instance of the DocumentClient 
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) { 
+      await AutomaticIndexing(client); 
+   } 
+}
+ When the above code is compiled and executed, you will receive the following output. 
+**** Override Automatic Indexing **** 
+Documents WHERE lastName = 'Upston': 1 
+All documents: 2 
+Unindexed document self-link: dbs/kV5oAA==/colls/kV5oAOEkfQA=/docs/kV5oAOEkfQACA 
+AAAAAAAAA==/
+ As you can see we have two such documents, but the query returns only the one for Mark because the one for Mark isn't indexed. If we query again, without a WHERE clause to retrieve all the documents in the collection, then we get a result set with both documents and this is because unindexed documents are always returned by queries that have no WHERE clause. We can also retrieve unindexed documents by their ID or self-link. So when we query for Mark's document by his ID, MARK, we see that DocumentDB returns the document even though it isn't indexed in the collection. Manual Indexing Let’ take a look at a simple example of manual indexing by overriding automatic indexing. Step 1 − First we'll create a collection called manualindexing and override the default policy by explicitly disabling automatic indexing. This means that, unless we request otherwise, new documents added to this collection will not be indexed. 
+private async static Task ManualIndexing(DocumentClient client) {
+   Console.WriteLine();
+   Console.WriteLine("**** Manual Indexing ****");
+   // Create collection with manual indexing
+
+   var collectionDefinition = new DocumentCollection {
+      Id = "manualindexing",
+      IndexingPolicy = new IndexingPolicy {
+         Automatic = false,
+      },
+   };
+	
+   var collection = await client.CreateDocumentCollectionAsync("dbs/mydb",
+      collectionDefinition);
+		
+   // Add a document (unindexed)
+   dynamic unindexedDocumentDefinition = new {
+      id = "MARK",
+      firstName = "Mark",
+      lastName = "Doe",
+      addressLine = "123 Main Street",
+      city = "Brooklyn",
+      state = "New York",
+      zip = "11229",
+   }; 
+	
+   Document unindexedDocument = await client
+      .CreateDocumentAsync("dbs/mydb/colls/manualindexing", unindexedDocumentDefinition);
+  
+   // Add another document (request indexing)
+   dynamic indexedDocumentDefinition = new {
+      id = "JANE",
+      firstName = "Jane",
+      lastName = "Doe",
+      addressLine = "123 Main Street",
+      city = "Brooklyn",
+      state = "New York",
+      zip = "11229",
+   };
+	
+   Document indexedDocument = await client.CreateDocumentAsync
+      ("dbs/mydb/colls/manualindexing", indexedDocumentDefinition, new RequestOptions {
+      IndexingDirective = IndexingDirective.Include });
+
+   //Unindexed document won't get returned when querying on non-ID (or selflink) property
+
+   var doeDocs = client.CreateDocumentQuery("dbs/mydb/colls/manualindexing",
+      "SELECT * FROM c WHERE c.lastName = 'Doe'").ToList();
+   Console.WriteLine("Documents WHERE lastName = 'Doe': {0}", doeDocs.Count);
+	
+   // Unindexed document will get returned when using no WHERE clause
+	
+   var allDocs = client.CreateDocumentQuery("dbs/mydb/colls/manualindexing",
+      "SELECT * FROM c").ToList();
+   Console.WriteLine("All documents: {0}", allDocs.Count);
+	
+   // Unindexed document will get returned when querying by ID (or self-link) property
+	
+   Document markDoc = client
+      .CreateDocumentQuery("dbs/mydb/colls/manualindexing",
+      "SELECT * FROM c WHERE c.id = 'MARK'")
+      .AsEnumerable().FirstOrDefault();
+   Console.WriteLine("Unindexed document self-link: {0}", markDoc.SelfLink);
+   await client.DeleteDocumentCollectionAsync("dbs/mydb/colls/manualindexing");
+}
+ Step 2 − Now we will again create the same two documents as before. We will not supply any special request options for Mark's document this time, because of the collection's indexing policy, this document will not get indexed. Step 3 − Now when we add the second document for Mark, we use RequestOptions with IndexingDirective.Include to tell DocumentDB that it should index this document, which overrides the collection's indexing policy that says that it shouldn't. We have different types of queries for both the documents at the end. Step 4 − Let’s call the ManualIndexing task from CreateDocumentClient. 
+private static async Task CreateDocumentClient() {
+   // Create a new instance of the DocumentClient 
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+      await ManualIndexing(client); 
+   } 
+}
+ When the above code is compiled and executed you will receive the following output. 
+**** Manual Indexing **** 
+Documents WHERE lastName = 'Upston': 1 
+All documents: 2 
+Unindexed document self-link: dbs/kV5oAA==/colls/kV5oANHJPgE=/docs/kV5oANHJPgEBA 
+AAAAAAAAA==/
+ Again, the query returns only one of the two documents, but this time, it returns Jane Doe, which we explicitly requested to be indexed. But again as before, querying without a WHERE clause retrieves all the documents in the collection, including the unindexed document for Mark. We can also query for the unindexed document by its ID, which DocumentDB returns even though it's not indexed.

@@ -1,0 +1,33 @@
+IMS DB - SSA
+
+https://www.tutorialspoint.com/ims_db/ims_db_ssa.htm
+
+IMS DB, Overview, STRUCTURE, DL/I TERMINOLOGY, DL/I PROCESSING, CONTROL BLOCKS, PROGRAMMING, COBOL BASICS, DL/I FUNCTIONS, PCB MASK, SSA, DATA RETRIEVAL, DATA MANIPULATION, SECONDARY INDEXING, LOGICAL DATABASE, RECOVERY, INTERVIEW QUESTIONS.
+
+August-07-2017-01:26:44
+
+SSA stands for Segment Search Arguments. SSA is used to identify the segment occurrence being accessed. It is an optional parameter. We can include any number of SSAs depending on the requirement. There are two types of SSAs − Unqualified SSA Qualified SSA Unqualified SSA An unqualified SSA provides the name of the segment being used inside the call. Given below is the syntax of an unqualified SSA − 
+01 UNQUALIFIED-SSA.
+   05  SEGMENT-NAME  PIC X(8).
+   05  FILLER        PIC X     VALUE SPACE.
+ The key points of unqualified SSA are as follows − A basic unqualified SSA is 9 bytes long. The first 8 bytes hold the segment name which is being used for processing. The last byte always contains space. DL/I uses the last byte to determine the type of SSA. To access a particular segment, move the name of the segment in the SEGMENT-NAME field. The following images show the structures of unqualified and qualified SSAs − Qualified SSA A Qualified SSA provides the segment type with the specific database occurrence of a segment. Given below is the syntax of a Qualified SSA − 
+01 QUALIFIED-SSA.
+   05  SEGMENT-NAME  PIC X(8).
+   05  FILLER        PIC X      VALUE '('.
+   05  FIELD-NAME    PIC X(8).
+   05  REL-OPR       PIC X(2).
+   05  SEARCH-VALUE  PIC X(n).
+   05  FILLER        PIC X(n+1) VALUE ')'.
+ The key points of qualified SSA are as follows − The first 8 bytes of a qualified SSA holds the segment name being used for processing. The ninth byte is a left parenthesis '('. The next 8 bytes starting from the tenth position specifies the field name which we want to search. After the field name, in the 18th and 19th positions, we specify two-character relational operator code. Then we specify the field value and in the last byte, there is a right parenthesis ')'. The following table shows the relational operators used in a Qualified SSA. Relational Operator Symbol Description EQ = Equal NE ~= ˜ Not equal GT > Greater than GE >= Greater than or equal LT << Less than LE <= Less than or equal Command Codes Command codes are used to enhance the functionality of DL/I calls. Command codes reduce the number of DL/I calls, making the programs simple. Also, it improves the performance as the number of calls is reduced. The following image shows how command codes are used in unqualified and qualified SSAs − The key points of command codes are as follows − To use command codes, specify an asterisk in the 9th position of the SSA as shown in the above image. Command code is coded at the tenth position. From 10th position onwards, DL/I considers all characters to be command codes until it encounters a space for an unqualified SSA and a left parenthesis for a qualified SSA. The following table shows the list of command codes used in SSA − Command Code Description C Concatenated Key D Path Call F First Occurrence L Last Occurrence N Path Call Ignore P Set Parentage Q Enqueue Segment U Maintain Position at this level V Maintain Position at this and all above levels - Null Command Code Multiple Qualifications The fundamental points of multiple qualifications are as follows − Multiple qualifications are required when we need to use two or more qualifications or fields for comparison. We use Boolean operators like AND and OR to connect two or more qualifications. Multiple qualifications can be used when we want to process a segment based on a range of possible values for a single field. Given below is the syntax of Multiple Qualifications − 
+01 QUALIFIED-SSA.
+   05  SEGMENT-NAME  PIC X(8).
+   05  FILLER        PIC X      VALUE '('.
+   05  FIELD-NAME1   PIC X(8).
+   05  REL-OPR       PIC X(2).
+   05  SEARCH-VALUE1 PIC X(m).
+   05  MUL-QUAL      PIC X      VALUE '&'.
+   05  FIELD-NAME2   PIC X(8).
+   05  REL-OPR       PIC X(2).
+   05  SEARCH-VALUE2 PIC X(n).
+   05  FILLER        PIC X(n+1) VALUE ')'.
+ MUL-QUAL is a short term for MULtiple QUALIification in which we can provide boolean operators like AND or OR.

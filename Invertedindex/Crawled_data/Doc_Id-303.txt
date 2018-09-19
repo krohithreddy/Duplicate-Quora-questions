@@ -1,0 +1,58 @@
+MySQL - LIKE Clause
+
+https://www.tutorialspoint.com/mysql/mysql-like-clause.htm
+
+Learning, MySQL, Programming, Database, Clauses, Commands, Functions, Like Clause, Queries, Simple, Steps, Basic, Advanced, Concepts.
+
+August-15-2017-02:34:19
+
+We have seen the SQL SELECT command to fetch data from the MySQL table. We can also use a conditional clause called as the WHERE clause to select the required records. A WHERE clause with the ‘equal to’ sign (=) works fine where we want to do an exact match. Like if "tutorial_author = 'Sanjay'". But there may be a requirement where we want to filter out all the results where tutorial_author name should contain "jay". This can be handled using SQL LIKE Clause along with the WHERE clause. If the SQL LIKE clause is used along with the % character, then it will work like a meta character (*) as in UNIX, while listing out all the files or directories at the command prompt. Without a % character, the LIKE clause is very same as the equal to sign along with the WHERE clause. Syntax The following code block has a generic SQL syntax of the SELECT command along with the LIKE clause to fetch data from a MySQL table. 
+SELECT field1, field2,...fieldN table_name1, table_name2...
+WHERE field1 LIKE condition1 [AND [OR]] filed2 = 'somevalue'
+ You can specify any condition using the WHERE clause. You can use the LIKE clause along with the WHERE clause. You can use the LIKE clause in place of the equals to sign. When LIKE is used along with % sign then it will work like a meta character search. You can specify more than one condition using AND or OR operators. A WHERE...LIKE clause can be used along with DELETE or UPDATE SQL command also to specify a condition. Using the LIKE clause at the Command Prompt This will use the SQL SELECT command with the WHERE...LIKE clause to fetch the selected data from the MySQL table – tutorials_tbl. Example The following example will return all the records from the tutorials_tbl table for which the author name ends with jay − 
+root@host# mysql -u root -p password;
+Enter password:*******
+mysql> use TUTORIALS;
+Database changed
+mysql> SELECT * from tutorials_tbl 
+    -> WHERE tutorial_author LIKE '%jay';
++-------------+----------------+-----------------+-----------------+
+| tutorial_id | tutorial_title | tutorial_author | submission_date |
++-------------+----------------+-----------------+-----------------+
+|      3      |  JAVA Tutorial |     Sanjay      |    2007-05-21   |   
++-------------+----------------+-----------------+-----------------+
+1 rows in set (0.01 sec)
+
+mysql>
+ Using LIKE clause inside PHP Script You can use similar syntax of the WHERE...LIKE clause into the PHP function – mysql_query(). This function is used to execute the SQL command and later another PHP function – mysql_fetch_array() can be used to fetch all the selected data, if the WHERE...LIKE clause is used along with the SELECT command. But if the WHERE...LIKE clause is being used with the DELETE or UPDATE command, then no further PHP function call is required. Example Try out the following example to return all the records from the tutorials_tbl table for which the author name contains jay − 
+<?php
+   $dbhost = 'localhost:3036';
+   $dbuser = 'root';
+   $dbpass = 'rootpassword';
+   $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+
+   if(! $conn ) {
+      die('Could not connect: ' . mysql_error());
+   }
+   $sql = 'SELECT tutorial_id, tutorial_title, 
+      tutorial_author, submission_date
+      FROM tutorials_tbl
+      WHERE tutorial_author LIKE "%jay%"';
+
+   mysql_select_db('TUTORIALS');
+   $retval = mysql_query( $sql, $conn );
+   
+   if(! $retval ) {
+      die('Could not get data: ' . mysql_error());
+   }
+
+   while($row = mysql_fetch_array($retval, MYSQL_ASSOC)) {
+      echo "Tutorial ID :{$row['tutorial_id']}  <br> ".
+      "Title: {$row['tutorial_title']} <br> ".
+      "Author: {$row['tutorial_author']} <br> ".
+      "Submission Date : {$row['submission_date']} <br> ".
+      "--------------------------------<br>";
+   } 
+   echo "Fetched data successfully\n";
+   mysql_close($conn);
+?>

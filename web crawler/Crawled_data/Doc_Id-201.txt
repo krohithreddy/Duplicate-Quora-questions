@@ -1,0 +1,51 @@
+MariaDB - Create Database
+
+https://www.tutorialspoint.com/mariadb/mariadb_create_database.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+Creation or deletion of databases in MariaDB requires privileges typically only given to root users or admins. Under these accounts, you have two options for creating a database − the mysqladmin binary and a PHP script. mysqladmin binary The following example demonstrates the use of the mysqladmin binary in creating a database with the name Products − 
+[root@host]# mysqladmin -u root -p create PRODUCTS
+Enter password:******
+ PHP Create Database Script PHP employs the mysql_query function in creating a MariaDB database. The function uses two parameters, one optional, and returns either a value of “true” when successful, or “false” when not. Syntax Review the following create database script syntax − 
+bool mysql_query( sql, connection );
+ The description of the parameters is given below − S.No Parameter & Description 1 sql This required parameter consists of the SQL query needed to perform the operation. 2 connection When not specified, this optional parameter uses the most recent connection used. Try the following example code for creating a database − 
+<html>
+   <head>
+      <title>Create a MariaDB Database</title>
+   </head>
+
+   <body>
+      <?php
+         $dbhost = 'localhost:3036';
+         $dbuser = 'root';
+         $dbpass = 'rootpassword';
+         $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+      
+         if(! $conn ) {
+            die('Could not connect: ' . mysql_error());
+         }
+
+         echo 'Connected successfully<br />';
+         $sql = 'CREATE DATABASE PRODUCTS';
+         $retval = mysql_query( $sql, $conn );
+      
+         if(! $retval ) {
+            die('Could not create database: ' . mysql_error());
+         }
+
+         echo "Database PRODUCTS created successfully\n";
+         mysql_close($conn);
+      ?>
+   </body>
+</html>
+ On successful deletion, you will see the following output − 
+mysql> Database PRODUCTS created successfully 
+mysql> SHOW DATABASES; 
++-----------------------+ 
+| Database              | 
++-----------------------+ 
+| PRODUCTS              | 
++-----------------------+

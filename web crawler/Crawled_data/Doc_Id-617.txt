@@ -1,0 +1,18 @@
+Redis - Pipelining
+
+https://www.tutorialspoint.com/redis/redis_pipelining.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis is a TCP server and supports request/response protocol. In Redis, a request is accomplished with the following steps − The client sends a query to the server, and reads from the socket, usually in a blocking way, for the server response. The server processes the command and sends the response back to the client. Meaning of Pipelining The basic meaning of pipelining is, the client can send multiple requests to the server without waiting for the replies at all, and finally reads the replies in a single step. Example To check the Redis pipelining, just start the Redis instance and type the following command in the terminal. 
+$(echo -en "PING\r\n SET tutorial redis\r\nGET tutorial\r\nINCR 
+visitor\r\nINCR visitor\r\nINCR visitor\r\n"; sleep 10) | nc localhost 6379  
++PONG 
++OK 
+redis 
+:1 
+:2 
+:3 
+ In the above example, we will check Redis connection by using PING command. We have set a string named tutorial with value redis. Later, we get that keys value and increment the visitor number three times. In the result, we can see that all commands are submitted to Redis once, and Redis provides the output of all commands in a single step. Benefits of Pipelining The benefit of this technique is a drastically improved protocol performance. The speedup gained by pipelining ranges from a factor of five for connections to localhost up to a factor of at least one hundred over slower internet connections.

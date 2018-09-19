@@ -1,0 +1,67 @@
+DocumentDB SQL - Parameterized
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_parameterized.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+In relational databases, a parameterized query is a query in which placeholders are used for parameters and the parameter values are supplied at execution time. DocumentDB also supports parameterized queries, and parameters in parameterized query can be expressed with the familiar @ notation. The most important reason to use parameterized queries is to avoid SQL injection attacks. It can also provide robust handling and escaping of user input. Let’s take a look at an example where we will be using the .Net SDK. Following is the code which will delete the collection. 
+private async static Task DeleteCollection(DocumentClient client, string collectionId) { 
+   Console.WriteLine(); 
+   Console.WriteLine(">>> Delete Collection {0} in {1} <<<", 
+   collectionId, _database.Id);  
+   var query = new SqlQuerySpec { 
+      QueryText = "SELECT * FROM c WHERE c.id = @id", 
+      Parameters = new SqlParameterCollection { new SqlParameter { Name = 
+         "@id", Value = collectionId } } 
+   };
+   
+   DocumentCollection collection = client.CreateDocumentCollectionQuery(database.SelfLink, 
+      query).AsEnumerable().First();  
+		
+   await client.DeleteDocumentCollectionAsync(collection.SelfLink);  
+	
+   Console.WriteLine("Deleted collection {0} from database {1}", 
+      collectionId, _database.Id); 
+}
+ The construction of a parameterized query is as follows. 
+var query = new SqlQuerySpec { 
+   QueryText = "SELECT * FROM c WHERE c.id = @id",
+   Parameters = new SqlParameterCollection { new SqlParameter { Name = 
+      "@id", Value = collectionId } } 
+};
+ We are not hardcoding the collectionId so this method can be used to delete any collection. We can use ‘@’ symbol to prefix parameter names, similar to SQL Server. In the above example, we are querying for a specific collection by Id where the Id parameter is defined in this SqlParameterCollection assigned to the parameter's property of this SqlQuerySpec. The SDK then does the work of constructing the final query string for DocumentDB with the collectionId embedded inside of it. We run the query and then use its SelfLink to delete the collection. Following is the CreateDocumentClient task implementation. 
+private static async Task CreateDocumentClient() { 
+   // Create a new instance of the DocumentClient 
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) { 
+      database = client.CreateDatabaseQuery("SELECT * FROM 
+         c WHERE c.id = 'earthquake'").AsEnumerable().First(); 
+			
+      collection = client.CreateDocumentCollectionQuery(database.CollectionsLink, 
+         "SELECT * FROM c WHERE c.id = 'myfirstdb'").AsEnumerable().First();
+			
+      await DeleteCollection(client, "MyCollection1"); 
+      await DeleteCollection(client, "MyCollection2"); 
+   } 
+}
+ When the code is executed, it produces the following output. 
+**** Delete Collection MyCollection1 in mydb **** 
+Deleted collection MyCollection1 from database myfirstdb 
+ 
+**** Delete Collection MyCollection2 in mydb **** 
+Deleted collection MyCollection2 from database myfirstdb
+ Let’s take a look at another example. We can write a query that takes last name and address state as parameters, and then executes it for various values of lastname and location.state based on the user input. 
+SELECT *  
+FROM Families f 
+WHERE f.lastName = @lastName AND f.location.state = @addressState
+ This request can then be sent to DocumentDB as a parameterized JSON query as shown in the following code. 
+{       
+   "query": "SELECT * FROM Families f WHERE f.lastName = @lastName AND 
+      f.location.state = @addressState", 
+		
+   "parameters": [           
+      {"name": "@lastName", "value": "Wakefield"},          
+      {"name": "@addressState", "value": "NY"},            
+   ]  
+}

@@ -1,0 +1,23 @@
+Redis - Sorted Set Zincrby Command
+
+https://www.tutorialspoint.com/redis/sorted_sets_zincrby.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis ZINCRBY command increments the score of member in the sorted set stored at the key by increment. If the member does not exist in the sorted set, it is added with increment as its score (as if its previous score was 0.0). If the key does not exist, a new sorted set with the specified member as its sole member is created. An error is returned when the key exists but does not hold a sorted set. Return Value String reply, the new score of the member (a double precision floating point number), represented as string. Syntax Following is the basic syntax of Redis ZINCRBY command. 
+redis 127.0.0.1:6379> ZINCRBY KEY INCREMENT MEMBER
+ Example 
+redis 127.0.0.1:6379> ZADD myset 1 "hello" 
+(integer) 1 
+redis 127.0.0.1:6379> ZADD myset 1 "foo" 
+(integer) 1 
+redis 127.0.0.1:6379> ZINCRBY myzset 2 "hello" 
+(integer) 3 
+redis 127.0.0.1:6379> ZRANGE myzset 0 -1 WITHSCORES 
+1) "foo" 
+2) "2" 
+3) "hello" 
+4) "3"
+ redis_sorted_sets.htm

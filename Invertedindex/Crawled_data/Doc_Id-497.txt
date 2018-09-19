@@ -1,0 +1,40 @@
+PL/SQL - IF-THEN-ELSE Statement
+
+https://www.tutorialspoint.com/plsql/plsql_if_then_else.htm
+
+PL/SQL, syntax, Environment Setup, Operators, Transactions, Date and Time, data types, variables, constants, records, conditional statements, iterative statements, cursors, procedures, functions, exception handling, triggers, packages, collections, external procedures, arrays, strings, dbms output.
+
+August-15-2017-02:34:06
+
+A sequence of IF-THEN statements can be followed by an optional sequence of ELSE statements, which execute when the condition is FALSE. Syntax Syntax for the IF-THEN-ELSE statement is − 
+IF condition THEN 
+   S1;  
+ELSE  
+   S2; 
+END IF;
+ Where, S1 and S2 are different sequence of statements. In the IF-THEN-ELSE statements, when the test condition is TRUE, the statement S1 is executed and S2 is skipped; when the test condition is FALSE, then S1 is bypassed and statement S2 is executed. For example − 
+IF color = red THEN 
+  dbms_output.put_line('You have chosen a red car') 
+ELSE 
+  dbms_output.put_line('Please choose a color for your car'); 
+END IF;
+ If the Boolean expression condition evaluates to true, then the if-then block of code will be executed otherwise the else block of code will be executed. Flow Diagram Example Let us try an example that will help you understand the concept − 
+DECLARE 
+   a number(3) := 100; 
+BEGIN 
+   -- check the boolean condition using if statement  
+   IF( a < 20 ) THEN 
+      -- if condition is true then print the following   
+      dbms_output.put_line('a is less than 20 ' ); 
+   ELSE 
+      dbms_output.put_line('a is not less than 20 ' ); 
+   END IF; 
+   dbms_output.put_line('value of a is : ' || a); 
+END; 
+/
+ When the above code is executed at the SQL prompt, it produces the following result − 
+a is not less than 20 
+value of a is : 100  
+
+PL/SQL procedure successfully completed. 
+ plsql_conditional_control.htm

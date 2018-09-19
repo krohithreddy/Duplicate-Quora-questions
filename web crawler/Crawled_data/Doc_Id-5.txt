@@ -1,0 +1,150 @@
+Apache Presto - Custom Function Application
+
+https://www.tutorialspoint.com/apache_presto/apache_presto_custom_function_application.htm
+
+Apache Presto, Tutorial, Learning, Overview, Architecture, Installation, Configuration Settings, Administration Tools, Basic SQL Operations, SQL Functions, MySQL, JMX, HIVE, KAFKA Connector, JDBC Interface, Custom Function Application.
+
+August-15-2017-02:34:16
+
+Create a Maven project to develop Presto custom function. SimpleFunctionsFactory.java Create SimpleFunctionsFactory class to implement FunctionFactory interface. 
+package com.tutorialspoint.simple.functions;  
+
+import com.facebook.presto.metadata.FunctionFactory; 
+import com.facebook.presto.metadata.FunctionListBuilder; 
+import com.facebook.presto.metadata.SqlFunction; 
+import com.facebook.presto.spi.type.TypeManager;  
+import java.util.List;  
+
+public class SimpleFunctionFactory implements FunctionFactory { 
+   
+   private final TypeManager typeManager;  
+   public SimpleFunctionFactory(TypeManager typeManager) { 
+      this.typeManager = typeManager; 
+   }  
+    @Override 
+    
+   public List<SqlFunction> listFunctions() { 
+      return new FunctionListBuilder(typeManager) 
+      .scalar(SimpleFunctions.class) 
+      .getFunctions(); 
+   } 
+}
+ SimpleFunctionsPlugin.java Create a SimpleFunctionsPlugin class to implement Plugin interface. 
+package com.tutorialspoint.simple.functions;  
+
+import com.facebook.presto.metadata.FunctionFactory; 
+import com.facebook.presto.spi.Plugin; 
+import com.facebook.presto.spi.type.TypeManager; 
+import com.google.common.collect.ImmutableList;  
+import javax.inject.Inject; 
+import java.util.List; 
+import static java.util.Objects.requireNonNull;  
+
+public class SimpleFunctionsPlugin implements Plugin {  
+   private TypeManager typeManager; 
+   @Inject 
+   
+   public void setTypeManager(TypeManager typeManager) { 
+      this.typeManager = requireNonNull(typeManager, "typeManager is null”); 
+      //Inject TypeManager class here 
+   }  
+   @Override 
+   
+   public <T> List<T> getServices(Class<T> type){ 
+      if (type == FunctionFactory.class) { 
+         return ImmutableList.of(type.cast(new SimpleFunctionFactory(typeManager))); 
+      } 
+      return ImmutableList.of(); 
+   } 
+}
+ Add Resource File Create a resource file which is specified in the implementation package. 
+(com.tutorialspoint.simple.functions.SimpleFunctionsPlugin)
+ Now move to the resource file location @ /path/to/resource/ Then add the changes, 
+com.facebook.presto.spi.Plugin 
+ pom.xml Add the following dependencies to pom.xml file. 
+<?xml version = "1.0"?> 
+<project xmlns = "http://maven.apache.org/POM/4.0.0"  
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+ xsi:schemaLocation = "http://maven.apache.org/POM/4.0.0  
+    http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+   
+   <modelVersion>4.0.0</modelVersion> 
+   <groupId>com.tutorialspoint.simple.functions</groupId> 
+   <artifactId>presto-simple-functions</artifactId>  
+   <packaging>jar</packaging>  
+   <version>1.0</version>
+   <name>presto-simple-functions</name>
+   <description>Simple test functions for Presto</description> 
+   <properties> 
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   </properties>  
+   <dependencies> 
+      <dependency> 
+         <groupId>com.facebook.presto</groupId> 
+         <artifactId>presto-spi</artifactId>
+         <version>0.149</version> 
+      </dependency>  
+      <dependency> 
+         <groupId>com.facebook.presto</groupId> 
+         <artifactId>presto-main</artifactId> 
+         <version>0.149</version> 
+      </dependency>  
+      <dependency> 
+         <groupId>javax.inject</groupId> 
+         <artifactId>javax.inject</artifactId> 
+         <version>1</version> 
+      </dependency>  
+      <dependency> 
+         <groupId>com.google.guava</groupId> 
+         <artifactId>guava</artifactId> 
+         <version>19.0</version> 
+      </dependency> 
+   </dependencies>  
+   <build> 
+      <finalName>presto-simple-functions</finalName>  
+      <plugins>  
+      <!-- Make this jar executable --> 
+         <plugin> 
+            <groupId>org.apache.maven.plugins</groupId> 
+            <artifactId>maven-jar-plugin</artifactId> 
+            <version>2.3.2</version> 
+         </plugin> 
+      </plugins> 
+   </build> 
+</project>
+ SimpleFunctions.java Create SimpleFunctions class using Presto attributes. 
+package com.tutorialspoint.simple.functions;  
+
+import com.facebook.presto.operator.Description; 
+import com.facebook.presto.operator.scalar.ScalarFunction; 
+import com.facebook.presto.operator.scalar.StringFunctions; 
+import com.facebook.presto.spi.type.StandardTypes; 
+import com.facebook.presto.type.LiteralParameters; 
+import com.facebook.presto.type.SqlType;  
+
+public final class SimpleFunctions { 
+   private SimpleFunctions() { 
+   }  
+    
+   @Description("Returns summation of two numbers") 
+   @ScalarFunction(“mysum") 
+   //function name 
+   @SqlType(StandardTypes.BIGINT) 
+    
+   public static long sum(@SqlType(StandardTypes.BIGINT) long num1, 
+   @SqlType(StandardTypes.BIGINT) long num2) { 
+      return num1 + num2; 
+   } 
+}
+ After the application is created compile and execute the application. It will produce the JAR file. Copy the file and move the JAR file into the target Presto server plugin directory. Compilation 
+mvn compile
+ Execution 
+mvn package
+ Now restart Presto server and connect Presto client. Then execute the custom function application as explained below, 
+$ ./presto --catalog mysql --schema default
+ Query 
+presto:default> select mysum(10,10);
+ Result 
+ _col0  
+------- 
+  20

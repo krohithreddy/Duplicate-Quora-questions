@@ -1,0 +1,39 @@
+OrientDB - Transactions
+
+https://www.tutorialspoint.com/orientdb/orientdb_transactions.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Like RDBMS, OrientDB supports transactions ACID properties. A transaction comprises a unit of work performed within a database management system. There are two main reasons to maintain transactions in a database environment. To allow concurrent recovery from failures and keep a database consistent even in case of system failures. To provide isolation between programs accessing a database concurrently. By default, the database transaction must follow ACID properties such as Atomic, Consistent, Isolated, and Durable properties. But OrientDB is an ACID compliant database, which means it does not contradict or negate the concept ACID, but it changes its perception while handling the NoSQL database. Take a look at how ACID properties work along with NoSQL database. Atomic − When you do something to change the database the change should work or fail as a whole. Consistent − The database should remain consistent. Isolated − If other transaction executions are executing at the same time, then the user will not be able to see the records in concurrent execution. Durable − If the system crashes (hardware or software), the database itself should be able to take a backup. Database transaction can be achieved by using Commit and Rollback commands. Commit Commit means closing the transaction by saving all changes to the database. Rollback means recover the database state to the point where you opened the transaction. The following statement is the basic syntax of the COMMIT database command. 
+COMMIT
+ Note − You can use this command only after connecting to a particular database and after beginning the transaction. Example In this example, we will use the same database named ‘demo’ that we created in an earlier chapter of this tutorial. We will see the operation of commit transaction and store a record using transactions. You need to first start the transaction using the following BEGIN command. 
+orientdb {db = demo}> BEGIN
+ Insert a record into an employee table with the values id = 12 and name = satish.P using the following command. 
+orientdb> INSERT INTO employee (id, name) VALUES (12, 'satish.P')
+ You can use the following command to commit the transaction. 
+orientdb> commit
+ If this transaction successfully committed, you will get the following output. 
+Transaction 2 has been committed in 4ms
+ Rollback Rollback means recovering the database state to the point where you opened the transaction. The following statement is the basic syntax of the ROLLBACK database command. 
+ROLLBACK
+ Note − You can use this command only after connecting to a particular database and after beginning the transaction. Example In this example, we will use the same database named ‘demo’ that we created in an earlier chapter of the tutorial. We will see the operation of rollback transaction and store a record using transactions. You have to first start the transaction using the following BEGIN command. 
+orientdb {db = demo}> BEGIN
+ Insert a record into an employee table with the values id = 12 and name = satish.P using the following command. 
+orientdb> INSERT INTO employee (id, name) VALUES (12, 'satish.P')
+ You can use the following command to retrieve the records of the table employee. 
+orientdb> SELECT FROM employee WHERE name LIKE '%.P'
+ If this command is executed successfully, you will get the following output. 
+---+-------+-------------------- 
+ # | ID   | name 
+---+-------+-------------------- 
+ 0 | 12   | satish.P 
+---+-------+-------------------- 
+1 item(s) found. Query executed in 0.076 sec(s). 
+ You can use the following command to Rollback this transaction. 
+orientdb> ROLLBACK
+ Check the select query again to retrieve the same record from the Employee table. 
+orientdb> SELECT FROM employee WHERE name LIKE '%.P' 
+ If the Rollback is executed successfully, you will get 0 records found in the output. 
+0 item(s) found. Query executed in 0.037 sec(s).

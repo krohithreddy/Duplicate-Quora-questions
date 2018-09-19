@@ -1,0 +1,50 @@
+MySQLi - Rollback
+
+https://www.tutorialspoint.com/mysqli/mysqli_rollback.htm
+
+MySQLi, Tutorial, Learning, Introduction, Installation, Administration, PHP Syntax, Connection, Create, Drop, Info, Select Database, Data Types, Create, Drop, Clone Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Sorting Results, Using Joins, NULL Values, Regexps, Transactions, Alter Command, Indexes, Temporary, Using Sequences, Handling Duplicate.
+
+August-15-2017-02:34:19
+
+Syntax 
+bool mysqli_rollback ( mysqli $link [, int $flags [, string $name ]] )
+ Definition and Usage It removes the named savepoint from the set of savepoints of the current transaction. Example Try out following example − 
+<?php
+   $servername = "localhost:3306";
+   $username = "root";
+   $password = "";
+   $dbname = "TUTORIALS";
+   $tmp = NULL;
+   $conn = new mysqli($servername, $username, $password, $dbname);
+   
+   if (!$conn->real_connect($servername, $username, $password, $dbname)) {
+      die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+   }
+   echo 'Success... ' . mysqli_get_host_info($conn) . "\n";
+   
+   mysqli_query($conn, "CREATE TABLE tutorials_test1 LIKE tutorials_auto");
+   mysqli_query($conn, "ALTER TABLE tutorials_test1 Type = InnoDB");
+   mysqli_query($conn, "INSERT INTO tutorials_test1 SELECT * FROM id LIMIT 50");
+   mysqli_commit($conn);
+   mysqli_query($conn, "DELETE FROM tutorials_test1");
+   
+   if ($result = mysqli_query($conn, "SELECT COUNT(*) FROM tutorials_test1")) {
+      $row = mysqli_fetch_row($result);
+      printf("%d rows in table tutorials_test1.\n", $row[0]);
+      mysqli_free_result($result);
+   }
+   mysqli_rollback($conn);
+
+   if ($result = mysqli_query($conn, "SELECT COUNT(*) FROM tutorials_test1")) {
+      $row = mysqli_fetch_row($result);
+      printf("%d rows in table tutorials_test1 (after rollback).\n", $row[0]);
+      mysqli_free_result($result);
+   }
+   mysqli_query($conn, "DROP TABLE tutorials_test1");
+   
+   $conn->close();
+?>
+ The sample output of the above code should be like this − 
+Success... localhost:3306 via TCP/IP 0 rows in table tutorials_test1. 
+0 rows in table tutorials_test1 (after rollback).
+ mysqli_useful_functions.htm

@@ -1,0 +1,18 @@
+OrientDB - Restore Database
+
+https://www.tutorialspoint.com/orientdb/orientdb_restore_database.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+As like RDBMS, OrientDB also supports restoring operation. Only from the console mode, you can execute this operation successfully. The following statement is the basic syntax for restoring operation. 
+orientdb> RESTORE DATABSE <url of the backup zip file>
+ Example You have to perform this operation only from the console mode. Therefore, first you have to start the OrientDB console using the following OrientDB command. 
+$ orientdb
+ Then, connect to the respective database to restore the backup. You can use the following command to connect to the database named demo. 
+orientdb> CONNECT PLOCAL:/opt/orientdb/databases/demo admin admin
+ After successful connection, you can use the following command to restore the backup from ‘backup-demo.zip’ file. Before executing, make sure the backup-demo.zip file is placed in the current directory. 
+Orientdb {db = demo}> RESTORE DATABASE backup-demo.zip
+ If this command is executed successfully, you will get some success notifications along with the following message. 
+Database restored in 0.26 seconds

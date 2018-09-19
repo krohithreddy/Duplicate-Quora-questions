@@ -1,0 +1,30 @@
+ebXML - Business Process
+
+https://www.tutorialspoint.com/ebxml/ebxml_business_process.htm
+
+ebXML, Tutorial, Learn, understanding, B2B, C2C, B2C, Message, Services, System, Registry, Repository, Core, Components, Architecture, Business, Processes, CPP, CPA, Collaboration, Context, Affect, Specifications, Standards, Vision, Goal, OASIS, UN/CEFACT, Agreement, Security, Resources.
+
+August-15-2017-02:34:17
+
+A Business Process is something that a business does, such as buying computer parts or selling a professional service. It involves the exchange of information between two or more trading partners in some predictable way. The specifications for business process definition enable an organization to express its business processes so that they are understandable by other organizations. It enables the integration of business processes within a company or among multiple companies. The ebXML Business Process Specification Schema (BPSS) provides the definition of an XML document that describes how an organization conducts its business. An ebXML BPSS is a declaration of the partners, roles, collaborations, choreography, and business document exchanges that make up a business process. Following diagram gives a conceptual view of Business Process. Business Collaborations A Business Collaboration is a choreographed set of business transaction activities, in which two trading partners exchange documents. The most common one is a Binary Collaboration, in which two partners exchange documents. A Multiparty Collaboration takes place when information is exchanged between more than two parties. Multiparty collaborations are actually choreographed Binary Collaborations. At its lowest level, a business collaboration can be broken down into business transactions. Business Transactions A Business Transaction is the atomic level of work in a business process. It either succeeds or fails completely. Business transactions are transactions in which trading partners actually transfer business documents. Business Document Flows: A business transaction is realized as a Business Document flows between requesting and responding roles. There is always a requesting business document, and optionally a responding business document, depending on the desired transaction semantics, for example, one-way notification vs. two-way conversation. Actual document definition is achieved using the ebXML core component specifications, or by some methodology external to ebXML but resulting in a DTD or Schema that an ebXML business process specification can point to. Choreography: Choreography is expressed in terms of states and the transitions between them. A business activity is known as an abstract state, with business collaborations and business transaction activities known as concrete states. The choreography is described in the ebXML business process specification schema using activity diagram concepts such as start state, completion state etc. Business Documents Business documents are composed of business information objects, or smaller chunks of information that have previously been identified. These chunks, or components, do not carry any information, of course. They are merely structures, such as an XML schema or a DTD, that define information and presentation. The end result is a predictable structure into which information is placed, so that the receiver of the final document can interpret it to extract the information. Business Process Specification Example A partial example of business process specification is given below: 
+<BusinessTransaction name="Create Order">
+
+   <RequestingBusinessActivity name=""
+      isNonRepudiationRequired="true"
+      timeToAcknowledgeReceipt="P2D"
+      timeToAcknowledgeAcceptance="P3D">
+
+      <DocumentEnvelope BusinessDocument="Purchase Order"/ >
+   </RequestingBusinessActivity>
+
+   <RespondingBusinessActivity name=""
+      isNonRepudiationRequired="true"
+      timeToAcknowledgeReceipt="P5D">
+
+   <DocumentEnvelope isPositiveResponse="true"
+      BusinessDocument="PO Acknowledgement"/>
+   </DocumentEnvelope>
+
+   </RespondingBusinessActivity>
+</BusinessTransaction>
+ Conclusion A business process specification: Describes collaboration between two partners Defines roles, relationships and responsibilities Defines choreography of business documents Expressed in platform and vendor neutral format Can be modeled with UMM (UN/CEFACT Modeling Methodology) Formally described by Business Process Specification Schema (BPSS) Referenced by CPP and CPA. Refers to business document definitions.

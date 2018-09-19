@@ -1,0 +1,54 @@
+SQLite - Transactions
+
+https://www.tutorialspoint.com/sqlite/sqlite_transactions.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+A transaction is a unit of work that is performed against a database. Transactions are units or sequences of work accomplished in a logical order, whether in a manual fashion by a user or automatically by some sort of a database program. A transaction is the propagation of one or more changes to the database. For example, if you are creating, updating, or deleting a record from the table, then you are performing transaction on the table. It is important to control transactions to ensure data integrity and to handle database errors. Practically, you will club many SQLite queries into a group and you will execute all of them together as part of a transaction. Properties of Transactions Transactions have the following four standard properties, usually referred to by the acronym ACID. Atomicity − Ensures that all operations within the work unit are completed successfully; otherwise, the transaction is aborted at the point of failure and previous operations are rolled back to their former state. Consistency − Ensures that the database properly changes states upon a successfully committed transaction. Isolation − Enables transactions to operate independently of and transparent to each other. Durability − Ensures that the result or effect of a committed transaction persists in case of a system failure. Transaction Control Following are the following commands used to control transactions: BEGIN TRANSACTION − To start a transaction. COMMIT − To save the changes, alternatively you can use END TRANSACTION command. ROLLBACK − To rollback the changes. Transactional control commands are only used with DML commands INSERT, UPDATE, and DELETE. They cannot be used while creating tables or dropping them because these operations are automatically committed in the database. BEGIN TRANSACTION Command Transactions can be started using BEGIN TRANSACTION or simply BEGIN command. Such transactions usually persist until the next COMMIT or ROLLBACK command is encountered. However, a transaction will also ROLLBACK if the database is closed or if an error occurs. Following is the simple syntax to start a transaction. 
+BEGIN;
+or 
+BEGIN TRANSACTION;
+ COMMIT Command COMMIT command is the transactional command used to save changes invoked by a transaction to the database. COMMIT command saves all transactions to the database since the last COMMIT or ROLLBACK command. Following is the syntax for COMMIT command. 
+COMMIT;
+or
+END TRANSACTION;
+ ROLLBACK Command ROLLBACK command is the transactional command used to undo transactions that have not already been saved to the database. ROLLBACK command can only be used to undo transactions since the last COMMIT or ROLLBACK command was issued. Following is the syntax for ROLLBACK command. 
+ROLLBACK;
+ Example Consider COMPANY table with the following records. 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Now, let's start a transaction and delete records from the table having age = 25. Then, use ROLLBACK command to undo all the changes. 
+sqlite> BEGIN;
+sqlite> DELETE FROM COMPANY WHERE AGE = 25;
+sqlite> ROLLBACK;
+ Now, if you check COMPANY table, it still has the following records − 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Let's start another transaction and delete records from the table having age = 25 and finally we use COMMIT command to commit all the changes. 
+sqlite> BEGIN;
+sqlite> DELETE FROM COMPANY WHERE AGE = 25;
+sqlite> COMMIT;
+ If you now check COMPANY table is still has the following records − 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+3           Teddy       23          Norway      20000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0

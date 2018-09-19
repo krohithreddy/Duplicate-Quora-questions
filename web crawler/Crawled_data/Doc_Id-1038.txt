@@ -1,0 +1,40 @@
+XSD - Complex Mix Element
+
+https://www.tutorialspoint.com/xsd/xsd_complex_mixed.htm
+
+XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+Complex Mix Element can have text and attribute and elements. See the following example − 
+<student rollno = "393">
+   Dear <firstname>Dinkar</firstname>    
+   <lastname>Kad</lastname>
+   <nickname>Dinkar</nickname>
+   <marks>85</marks>	 
+</student>
+ We can declare such Complex Text using the following ways − Use mixed=true Define complexType with attribute "mixed" set to true. "mixed" attribute allow to have character data between elements. 
+<xs:complexType name = "StudentType" mixed = "true">
+   <xs:sequence>
+      <xs:element name = "firstname" type = "xs:string"/>
+      <xs:element name = "lastname" type = "xs:string"/>
+      <xs:element name = "nickname" type = "xs:string"/>
+      <xs:element name = "marks" type="xs:positiveInteger"/>
+   </xs:sequence>
+   <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+</xs:complexType>
+
+<xs:element name = 'student' type = 'StudentType' />
+ Use ComplexType alone Define an element of complexType with the required attribute element only. 
+<xs:element name = 'student'>
+   <xs:complexType mixed = "true">
+      <xs:sequence>
+         <xs:element name = "firstname" type = "xs:string"/>
+         <xs:element name = "lastname" type = "xs:string"/>
+         <xs:element name = "nickname" type = "xs:string"/>
+         <xs:element name = "marks" type = "xs:string"/>
+      </xs:sequence>
+      <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+   </xs:complexType>			  
+</xs:element>
+ xsd_complex_types.htm

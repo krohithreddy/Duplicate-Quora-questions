@@ -1,0 +1,31 @@
+OrientDB - Delete Edge
+
+https://www.tutorialspoint.com/orientdb/orientdb_delete_edge.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Delete edge command is used to remove the database. This is equivalent of the delete command, with the addition of checking and maintaining consistency with vertices by removing all cross-references to the edge from both ‘in’ and ‘out’ vertex properties. The following statement is the basic syntax of Delete Edge command. 
+DELETE EDGE  
+   ( <rid> 
+      | 
+      [<rid> (, <rid>)*] 
+      | 
+      ( [ FROM (<rid> | <select_statement> ) ] [ TO ( <rid> | <select_statement> ) ] ) 
+      | 
+      [<class>]  
+   ( 
+      [WHERE <conditions>] 
+      [LIMIT <MaxRecords>]  
+      [BATCH <batch-size>]
+   ))
+   
+ Following are the details about the options in the above syntax. FROM − Defines the starting point vertex of the edge to delete. To − Defines the ending point vertex of the edge to delete. WHERE − Defines the filtering conditions. LIMIT − Defines the maximum number of edges to delete. BATCH − Defines the block size for the operation. Example Try the following examples to learn how to delete edges. Execute the following query to delete the edge between two vertices (#11:2, #11:10). But there might be a chance that might exist one or more edges between two vertices. So that we are using the date property for proper functionality. This query will delete the edges which are created on '2015-01-15' and later. 
+orientdb {db = demo}> DELETE EDGE FROM #11:2 TO #11:10 WHERE date >= "2012-01-15" 
+ If the above query is executed successfully, you will get the following output. 
+Delete record(s) '2' in 0.00200 sec(s)
+ Execute the following query to delete edges starting from the vertex ‘#11:5’ to the vertex ‘#11:10’ and which are related to ‘class = Customer’. 
+orientdb {db = demo}> DELETE EDGE FROM #11:5 TO #11:10 WHERE @class = 'Customer' 
+ If the above query is executed successfully, you will get the following output. 
+Delete record(s) '2' in 0.00200 sec(s)

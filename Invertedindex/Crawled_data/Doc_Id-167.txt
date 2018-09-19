@@ -1,0 +1,60 @@
+HSQLDB - LIKE Clause
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_like_clause.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+There is a WHERE clause in the RDBMS structure. You can use the WHERE clause with an equal to sign (=) where we want to do an exact match. But there may be a requirement where we want to filter out all the results where the author name should contain "john". This can be handled using the SQL LIKE clause along with the WHERE clause. If the SQL LIKE clause is used along with % characters, then it will work like a metacharacter (*) in UNIX while listing out all the files or directories at command prompt. Syntax Following is the generic SQL syntax of the LIKE clause. 
+SELECT field1, field2,...fieldN table_name1, table_name2...
+WHERE field1 LIKE condition1 [AND [OR]] filed2 = 'somevalue'
+ You can specify any condition using the WHERE clause. You can use the LIKE clause along with the WHERE clause. You can use the LIKE clause in place of the equal to sign. When the LIKE clause is used along with the % sign, then it will work like a metacharacter search. You can specify more than one conditions using AND or OR operators. A WHERE...LIKE clause can be used along with the DELETE or the UPDATE SQL command to specify a condition. Example Let us consider an example that retrieves the list of tutorials data where the author name starts with John. Following is the HSQLDB query for the given example. 
+SELECT * from tutorials_tbl WHERE author LIKE 'John%';
+ After execution of the above query, you will receive the following output. 
++-----+----------------+-----------+-----------------+
+|  id |      title     |   author  | submission_date |
++-----+----------------+-----------+-----------------+
+| 100 |    Learn PHP   | John Poul | 2016-06-20      |
++-----+----------------+-----------+-----------------+
+ HSQLDB – JDBC Program Following is the JDBC program that retrieves the list of tutorials data where the author name starts with John. Save the code into LikeClause.java. 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class LikeClause {
+   
+   public static void main(String[] args) {
+      Connection con = null;
+      Statement stmt = null;
+      ResultSet result = null;
+      
+      try {
+         Class.forName("org.hsqldb.jdbc.JDBCDriver");
+         con = DriverManager.getConnection(
+            "jdbc:hsqldb:hsql://localhost/testdb", "SA", "");
+         stmt = con.createStatement();
+         result = stmt.executeQuery(
+            "SELECT * from tutorials_tbl WHERE author LIKE 'John%';");
+         
+         while(result.next()){
+            System.out.println(result.getInt("id")+" |
+               "+result.getString("title")+" |
+               "+result.getString("author")+" |
+               "+result.getDate("submission_date"));
+         }
+      } catch (Exception e) {
+         e.printStackTrace(System.out);
+      }
+   }
+}
+ You can start the database using the following command. 
+\>cd C:\hsqldb-2.3.4\hsqldb
+hsqldb>java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0
+file:hsqldb/demodb --dbname.0 testdb
+ Compile and execute the above code using the following command. 
+\>javac LikeClause.java
+\>java LikeClause
+ After execution of the following command, you will receive the following output. 
+100 | Learn PHP | John Poul | 2016-06-20

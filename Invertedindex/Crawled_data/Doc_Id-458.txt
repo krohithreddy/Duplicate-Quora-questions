@@ -1,0 +1,43 @@
+OrientDB - Info Database
+
+https://www.tutorialspoint.com/orientdb/orientdb_info_database.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+This chapter explains how to get information of a particular database from the OrientDB command line. The following statement is the basic syntax of the Info command. 
+info
+ Note − You can use this command only after connecting to a particular database and it will retrieve the information of only the currently running database. Example In this example, we will use the same database named ‘demo’ that we created in the previous chapter. We will retrieve the basic information from demo database. You can use the following command to disconnect the database. 
+orientdb {db = demo}> info
+ If it is successfully disconnected, you will get the following output. 
+Current database: demo (url = plocal:/opt/orientdb/databases/demo)
+  
+DATABASE PROPERTIES 
+--------------------------------+---------------------------------------------+ 
+ NAME                           | VALUE                                       | 
+--------------------------------+---------------------------------------------+ 
+ Name                           | null                                        | 
+ Version                        | 14                                          | 
+ Conflict Strategy              | version                                     | 
+ Date format                    | yyyy-MM-dd                                  | 
+ Datetime format                | yyyy-MM-dd HH:mm:ss                         | 
+ Timezone                       | Asia/Kolkata                                | 
+ Locale Country                 | IN                                          | 
+ Locale Language                | en                                          | 
+ Charset                        | UTF-8                                       | 
+ Schema RID                     | #0:1                                        | 
+ Index Manager RID              | #0:2                                        | 
+ Dictionary RID                 | null                                        | 
+--------------------------------+---------------------------------------------+
+
+DATABASE CUSTOM PROPERTIES: 
+ +-------------------------------+--------------------------------------------+ 
+ | NAME                          | VALUE                                      | 
+ +-------------------------------+--------------------------------------------+ 
+ | strictSql                     | true                                       | 
+ +-------------------------------+--------------------------------------------+  
+CLUSTERS (collections) 
+---------------------------------+-------+-------------------+----------------+ 
+ NAME                            | ID    | CONFLICT STRATEGY | RECORDS        | 
+---------------------------------+-------+-------------------+----------------+

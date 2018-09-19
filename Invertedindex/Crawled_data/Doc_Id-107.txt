@@ -1,0 +1,25 @@
+DynamoDB - Aggregation
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_aggregation.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+DynamoDB does not provide aggregation functions. You must make creative use of queries, scans, indices, and assorted tools to perform these tasks. In all this, the throughput expense of queries/scans in these operations can be heavy. You also have the option to use libraries and other tools for your preferred DynamoDB coding language. Ensure their compatibility with DynamoDB prior to using it. Calculate Maximum or Minimum Utilize the ascending/descending storage order of results, the Limit parameter, and any parameters which set order to find the highest and lowest values. For example − 
+Map<String, AttributeValue> eaval = new HashMap<>(); 
+eaval.put(":v1", new AttributeValue().withS("hashval")); 
+queryExpression = new DynamoDBQueryExpression<Table>() 
+   .withIndexName("yourindexname") 
+   .withKeyConditionExpression("HK = :v1") 
+   .withExpressionAttributeValues(values) 
+   .withScanIndexForward(false);                //descending order 
+
+queryExpression.setLimit(1); 
+QueryResultPage<Lookup> res = 
+   dynamoDBMapper.queryPage(Table.class, queryExpression);
+ Calculate Count Use DescribeTable to get a count of the table items, however, note that it provides stale data. Also, utilize the Java getScannedCount method. Utilize LastEvaluatedKey to ensure it delivers all results. For example − 
+ScanRequest scanRequest = new ScanRequest().withTableName(yourtblName); 
+ScanResult yourresult = client.scan(scanRequest); 
+System.out.println("#items:" + yourresult.getScannedCount());
+ Calculating Average and Sum Utilize indices and a query/scan to retrieve and filter values before processing. Then simply operate on those values through an object.

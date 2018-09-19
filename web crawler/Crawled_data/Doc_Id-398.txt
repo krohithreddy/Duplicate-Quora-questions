@@ -1,0 +1,25 @@
+Neo4j - Skip Clause
+
+https://www.tutorialspoint.com/neo4j/neo4j_skip_clause.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+The SKIP clause is used to define from which row to start including the rows in the output. Example Before proceeding with the example, create 5 nodes as shown below. 
+CREATE(Dhawan:player{name:"shikar Dhawan", YOB: 1985, runs:363, country: "India"})
+CREATE(Jonathan:player{name:"Jonathan Trott", YOB:1981, runs:229, country:"South Africa"})
+CREATE(Sangakkara:player{name:"Kumar Sangakkara", YOB:1977, runs:222, country:"Srilanka"})
+CREATE(Rohit:player{name:"Rohit Sharma", YOB: 1987, runs:177, country:"India"})
+CREATE(Virat:player{name:"Virat Kohli", YOB: 1988, runs:176, country:"India"})
+ Following is a sample Cypher Query which returns all the nodes in the database skipping the first 3 nodes. 
+MATCH (n)  
+RETURN n.name, n.runs 
+ORDER BY n.runs DESC 
+SKIP 3 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Skip Using Expression You can skip the records of a result using an expression. Example Following is a sample Cypher Query which uses the SKIP clause with an expression. 
+MATCH (n)  
+RETURN n.name, n.runs 
+ORDER BY n.runs DESC 
+SKIP toInt (2*rand())+ 1 
+ Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result.

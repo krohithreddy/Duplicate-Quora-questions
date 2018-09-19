@@ -1,0 +1,45 @@
+OrientDB - Security
+
+https://www.tutorialspoint.com/orientdb/orientdb_security.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Like RDBMS, OrientDB also provides security based on well-known concepts, users, and roles. Each database has its own users and each user has one or more roles. Roles are the combination of working modes and set of permissions. Users By default OrientDB maintains three different users for all database in the server − Admin − This user has access to all functions on the database without limitation. Reader − This user is a read-only user. The reader can query any records in the database, but can't modify or delete them. It has no access to internal information, such as the users and roles themselves. Writer − This user is the same as the user reader, but it can also create, update, and delete records. Working with Users When you are connected to a database, you can query the current users on the database by using SELECT queries on the OUser class. 
+orientdb> SELECT RID, name, status FROM OUser 
+ If the above query is executed successfully, you will get the following output. 
+---+--------+--------+-------- 
+#  | @CLASS | name   | status 
+---+--------+--------+-------- 
+0  | null   | admin  | ACTIVE 
+1  | null   | reader | ACTIVE 
+2  | null   | writer | ACTIVE 
+---+--------+--------+-------- 
+3 item(s) found. Query executed in 0.005 sec(s). 
+ Creating a New User To create a new user, use the INSERT command. Remember, in doing so, you must set the status to ACTIVE and give it a valid role. 
+orientdb> INSERT INTO OUser SET 
+               name = 'jay', 
+               password = 'JaY',
+               status = 'ACTIVE',
+               roles = (SELECT FROM ORole WHERE name = 'reader')
+ Updating Users You can change the name for the user with the UPDATE statement. 
+orientdb> UPDATE OUser SET name = 'jay' WHERE name = 'reader'
+ In the same way, you can also change the password for the user. 
+orientdb> UPDATE OUser SET password = 'hello' WHERE name = 'reader'
+ OrientDB saves the password in a hash format. The trigger OUserTrigger encrypts the password transparently before it saves the record. Disabling Users To disable a user, use UPDATE to switch its status from ACTIVE to SUSPENDED. For instance, if you want to disable all users except for admin, use the following command − 
+orientdb> UPDATE OUser SET status = 'SUSPENDED' WHERE name <> 'admin'
+ Roles A role determines what operations a user can perform against a resource. Mainly, this decision depends on the working mode and the rules. The rules themselves work differently, depending on the working mode. Working with Roles When you are connected to a database, you can query the current roles on the database using SELECT queries on the ORole class. 
+orientdb> SELECT RID, mode, name, rules FROM ORole 
+ If the above query is executed successfully, you will get the following output. 
+--+------+----+--------+------------------------------------------------------- 
+# |@CLASS|mode| name   | rules 
+--+------+----+--------+------------------------------------------------------- 
+0 | null | 1  | admin  | {database.bypassRestricted = 15} 
+1 | null | 0  | reader | {database.cluster.internal = 2, database.cluster.orole = 0... 
+2 | null | 0  | writer | {database.cluster.internal = 2, database.cluster.orole = 0... 
+--+------+----+--------+------------------------------------------------------- 
+3 item(s) found.  Query executed in 0.002 sec(s). 
+ Creating New Roles To create a new role, use the INSERT statement. 
+orientdb> INSERT INTO ORole SET name = 'developer', mode = 0 
+ Working with Modes Where rules determine what users belonging to certain roles can do on the databases, working modes determine how OrientDB interprets these rules. There are two types of working modes, designated by 1 and 0. Allow All But (Rules) − By default it is the super user mode. Specify exceptions to this using the rules. If OrientDB finds no rules for a requested resource, then it allows the user to execute the operation. Use this mode mainly for power users and administrators. The default role admin uses this mode by default and has no exception rules. It is written as 1 in the database. Deny All But (Rules) − By default this mode allows nothing. Specify exceptions to this using the rules. If OrientDB finds rules for a requested resource, then it allows the user to execute the operation. Use this mode as the default for all classic users. The default roles, reader and writer, use this mode. It is written as 0 in the database.

@@ -1,0 +1,158 @@
+DocumentDB SQL - Between Keyword
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_between_keyword.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+The BETWEEN keyword is used to express queries against ranges of values like in SQL. BETWEEN can be used against strings or numbers. The main difference between using BETWEEN in DocumentDB and ANSI SQL is that you can express range queries against properties of mixed types. For example, in some document it is possible that you might have "grade" as a number and in other documents it might be strings. In these cases, a comparison between two different types of results is "undefined", and the document will be skipped. Let us consider the three documents from the previous example. Following is the AndersenFamily document. 
+{ 
+   "id": "AndersenFamily", 
+   "lastName": "Andersen", 
+	
+   "parents": [ 
+      { "firstName": "Thomas", "relationship":  "father" }, 
+      { "firstName": "Mary Kay", "relationship":  "mother" } 
+   ],
+	
+   "children": [ 
+      { 
+         "firstName": "Henriette Thaulow", 
+         "gender": "female", 
+         "grade": 5, 
+         "pets": [ { "givenName": "Fluffy", "type":  "Rabbit" } ] 
+      } 
+   ],
+	
+   "location": { "state": "WA", "county": "King", "city": "Seattle" }, 
+   "isRegistered": true 
+} 
+ Following is the SmithFamily document. 
+{ 
+   "id": "SmithFamily", 
+	
+   "parents": [ 
+      { "familyName": "Smith", "givenName": "James" }, 
+      { "familyName": "Curtis", "givenName": "Helen" }
+   ],
+	
+   "children": [ 
+      { 
+         "givenName": "Michelle", 
+         "gender": "female", 
+         "grade": 1 
+      }, 
+		
+      { 
+         "givenName": "John", 
+         "gender": "male", 
+         "grade": 7,
+			
+         "pets": [ 
+            { "givenName": "Tweetie", "type": "Bird" } 
+         ] 
+      } 
+   ],
+	
+   "location": { 
+      "state": "NY", 
+      "county": "Queens", 
+      "city": "Forest Hills" 
+   }, 
+	
+   "isRegistered": true 
+} 
+ Following is the WakefieldFamily document. 
+{ 
+   "id": "WakefieldFamily", 
+	
+   "parents": [ 
+      { "familyName": "Wakefield", "givenName": "Robin" }, 
+      { "familyName": "Miller", "givenName": "Ben" } 
+   ],
+	
+   "children": [ 
+      { 
+         "familyName": "Merriam", 
+         "givenName": "Jesse", 
+         "gender": "female", 
+         "grade": 6,
+			
+         "pets": [ 
+            { "givenName": "Charlie Brown", "type": "Dog" }, 
+            { "givenName": "Tiger", "type": "Cat" }, 
+            { "givenName": "Princess", "type": "Cat" } 
+         ] 
+      },
+		
+      { 
+         "familyName": "Miller", 
+         "givenName": "Lisa", 
+         "gender": "female", 
+         "grade": 3, 
+			
+         "pets": [ 
+            { "givenName": "Jake", "type": "Snake" } 
+         ] 
+      } 
+   ],
+	
+   "location": { "state": "NY", "county": "Manhattan", "city": "NY" }, 
+   "isRegistered": false 
+} 
+ Let’s take a look at an example, where the query returns all family documents in which the first child's grade is between 1-5 (both inclusive). Following is the query in which BETWEEN keyword is used and then AND logical operator. 
+SELECT * 
+FROM Families.children[0] c 
+WHERE c.grade BETWEEN 1 AND 5
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "givenName": "Michelle", 
+      "gender": "female", 
+      "grade": 1 
+   }, 
+	
+   { 
+      "firstName": "Henriette Thaulow", 
+      "gender": "female", 
+      "grade": 5, 
+		
+      "pets": [ 
+         { 
+            "givenName": "Fluffy",
+            "type": "Rabbit" 
+         } 
+      ] 
+   } 
+]
+ To display the grades outside the range of the previous example, use NOT BETWEEN as shown in the following query. 
+SELECT * 
+FROM Families.children[0] c 
+WHERE c.grade NOT BETWEEN 1 AND 5
+ When this query is executed. It produces the following output. 
+[ 
+   { 
+      "familyName": "Merriam", 
+      "givenName": "Jesse", 
+      "gender": "female", 
+      "grade": 6, 
+		
+      "pets": [ 
+         { 
+            "givenName": "Charlie Brown", 
+            "type": "Dog" 
+         }, 
+			
+         { 
+            "givenName": "Tiger", 
+            "type": "Cat" 
+         },
+			
+         {
+            "givenName": "Princess", 
+            "type": "Cat" 
+         } 
+      ] 
+   }
+]

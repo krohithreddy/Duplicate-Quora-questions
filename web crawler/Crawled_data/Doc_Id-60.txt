@@ -1,0 +1,266 @@
+DocumentDB - Data Modeling
+
+https://www.tutorialspoint.com/documentdb/documentdb_data_modeling.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+While schema-free databases, like DocumentDB, make it super easy to embrace changes to your data model, you should still spend some time thinking about your data. You have a lot of options. Naturally, you can just work JSON object graphs or even raw strings of JSON text, but you can also use dynamic objects that lets you bind to properties at runtime without defining a class at compile time. You can also work with real C# objects, or Entities as they are called, which might be your business domain classes. Relationships Let’s take a look at the document's hierarchal structure. It has a few top-level properties like the required id, as well as lastName and isRegistered, but it also has nested properties. 
+{ 
+   "id": "AndersenFamily", 
+   "lastName": "Andersen", 
+	
+   "parents": [ 
+      { "firstName": "Thomas", "relationship": "father" }, 
+      { "firstName": "Mary Kay", "relationship": "mother" } 
+   ],
+	
+   "children": [ 
+      { 
+         "firstName": "Henriette Thaulow", 
+         "gender": "female", 
+         "grade": 5, 
+         "pets": [ { "givenName": "Fluffy", "type": "Rabbit" } ] 
+      } 
+   ], 
+	
+   "location": { "state": "WA", "county": "King", "city": "Seattle"}, 
+   "isRegistered": true 
+}
+ For instance, the parents property is supplied as a JSON array as denoted by the square brackets. We also have another array for children, even though there's only one child in the array in this example. So this is how you model the equivalent of one-to-many relationships within a document. You simply use arrays where each element in the array could be a simple value or another complex object, even another array. So one family can have multiple parents and multiple children and if you look at the child objects, they have a pet’s property that is itself a nested array for a oneto-many relationship between children and pets. For the location property, we're combining three related properties, the state, county, and city into an object. Embedding an object this way rather than embedding an array of objects is similar to having a one-to-one relationship between two rows in separate tables in a relational database. Embedding Data When you start modeling data in a document store, such as DocumentDB, try to treat your entities as self-contained documents represented in JSON. When working with relational databases, we always normalize data. Normalizing your data typically involves taking an entity, such as a customer, and breaking it down into discreet pieces of data, like contact details and addresses. To read a customer, with all their contact details and addresses, you need to use JOINS to effectively aggregate your data at run time. Now let's take a look at how we would model the same data as a self-contained entity in a document database. 
+{
+   "id": "1", 
+   "firstName": "Mark", 
+   "lastName": "Upston", 
+	
+   "addresses": [ 
+      {             
+         "line1": "232 Main Street", 
+         "line2": "Unit 1", 
+         "city": "Brooklyn", 
+         "state": "NY", 
+         "zip": 11229
+      }
+   ],
+	
+   "contactDetails": [ 
+      {"email": "mark.upston@xyz.com"}, 
+      {"phone": "+1 356 545-86455", "extension": 5555} 
+   ]
+} 
+ As you can see that we have denormalized the customer record where all the information of the customer is embedded into a single JSON document. In NoSQL we have a free schema, so you can add contact details and addresses in different format as well. In NoSQL, you can retrieve a customer record from the database in a single read operation. Similarly, updating a record is also a single write operation. Following are the steps to create documents using .Net SDK. Step 1 − Instantiate DocumentClient. Then we will query for the myfirstdb database and also query for MyCollection collection, which we store in this private variable collection so that's it's accessible throughout the class. 
+private static async Task CreateDocumentClient() { 
+   // Create a new instance of the DocumentClient
+	
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) { 
+      database = client.CreateDatabaseQuery("SELECT * FROM c WHERE c.id =
+         'myfirstdb'").AsEnumerable().First(); 
+			
+      collection = client.CreateDocumentCollectionQuery(database.CollectionsLink,
+         "SELECT * FROM c WHERE c.id = 'MyCollection'").AsEnumerable().First();  
+			
+      await CreateDocuments(client); 
+   }
+
+}
+ Step 2 − Create some documents in CreateDocuments task. 
+private async static Task CreateDocuments(DocumentClient client) {
+   Console.WriteLine(); 
+   Console.WriteLine("**** Create Documents ****"); 
+   Console.WriteLine();
+	
+   dynamic document1Definition = new {
+      name = "New Customer 1", address = new { 
+         addressType = "Main Office", 
+         addressLine1 = "123 Main Street", 
+         location = new { 
+            city = "Brooklyn", stateProvinceName = "New York"
+         }, 
+         postalCode = "11229", countryRegionName = "United States" 
+      }, 
+   };
+	
+   Document document1 = await CreateDocument(client, document1Definition); 
+   Console.WriteLine("Created document {0} from dynamic object", document1.Id); 
+   Console.WriteLine(); 
+}
+ The first document will be generated from this dynamic object. This might look like JSON, but of course it isn't. This is C# code and we're creating a real .NET object, but there's no class definition. Instead the properties are inferred from the way the object is initialized. You can notice also that we haven't supplied an Id property for this document. Step 3 − Now let's take a look at the CreateDocument and it looks like the same pattern we saw for creating databases and collections. 
+private async static Task<Document> CreateDocument(DocumentClient client,
+   object documentObject) {
+   var result = await client.CreateDocumentAsync(collection.SelfLink, documentObject); 
+	
+   var document = result.Resource; 
+   Console.WriteLine("Created new document: {0}\r\n{1}", document.Id, document); 
+	
+   return result; 
+}
+ Step 4 − This time we call CreateDocumentAsync specifying the SelfLink of the collection we want to add the document to. We get back a response with a resource property that, in this case, represents the new document with its system-generated properties. In the following CreateDocuments task, we have created three documents. In the first document, the Document object is a defined class in the SDK that inherits from resource and so it has all the common resource properties, but it also includes the dynamic properties that define the schema-free document itself. 
+private async static Task CreateDocuments(DocumentClient client) {
+   Console.WriteLine(); 
+   Console.WriteLine("**** Create Documents ****"); 
+   Console.WriteLine();
+	
+   dynamic document1Definition = new {
+      name = "New Customer 1", address = new {
+         addressType = "Main Office", 
+         addressLine1 = "123 Main Street", 
+         location = new {
+            city = "Brooklyn", stateProvinceName = "New York" 
+         }, 
+         postalCode = "11229", 
+         countryRegionName = "United States" 
+      }, 
+   };
+	
+   Document document1 = await CreateDocument(client, document1Definition); 
+   Console.WriteLine("Created document {0} from dynamic object", document1.Id); 
+   Console.WriteLine();
+	
+   var document2Definition = @" {
+      ""name"": ""New Customer 2"", 
+		
+      ""address"": { 
+         ""addressType"": ""Main Office"", 
+         ""addressLine1"": ""123 Main Street"", 
+         ""location"": { 
+            ""city"": ""Brooklyn"", ""stateProvinceName"": ""New York"" 
+         }, 
+         ""postalCode"": ""11229"", 
+         ""countryRegionName"": ""United States"" 
+      } 
+   }"; 
+	
+   Document document2 = await CreateDocument(client, document2Definition); 
+   Console.WriteLine("Created document {0} from JSON string", document2.Id);
+   Console.WriteLine();
+	
+   var document3Definition = new Customer {
+      Name = "New Customer 3", 
+		
+      Address = new Address {
+         AddressType = "Main Office", 
+         AddressLine1 = "123 Main Street", 
+         Location = new Location {
+            City = "Brooklyn", StateProvinceName = "New York" 
+         }, 
+         PostalCode = "11229", 
+         CountryRegionName = "United States" 
+      }, 
+   };
+	
+   Document document3 = await CreateDocument(client, document3Definition); 
+   Console.WriteLine("Created document {0} from typed object", document3.Id); 
+   Console.WriteLine(); 
+}
+ This second document just works with a raw JSON string. Now we step into an overload for CreateDocument that uses the JavaScriptSerializer to de-serialize the string into an object, which it then passes on to the same CreateDocument method that we used to create the first document. In the third document, we have used the C# object Customer which is defined in our application. Let’s take a look at this customer, it has an Id and address property where the address is a nested object with its own properties including location, which is yet another nested object. 
+using Newtonsoft.Json; 
+
+using System; 
+using System.Collections.Generic; 
+using System.Linq; 
+using System.Text; 
+using System.Threading.Tasks;
+
+namespace DocumentDBDemo {
+ 
+   public class Customer { 
+      [JsonProperty(PropertyName = "id")] 
+      public string Id { get; set; }
+      // Must be nullable, unless generating unique values for new customers on client  
+      [JsonProperty(PropertyName = "name")] 
+      public string Name { get; set; }  
+      [JsonProperty(PropertyName = "address")] 
+      public Address Address { get; set; } 
+   }
+	
+   public class Address {
+      [JsonProperty(PropertyName = "addressType")] 
+      public string AddressType { get; set; }  
+		
+      [JsonProperty(PropertyName = "addressLine1")] 
+      public string AddressLine1 { get; set; }  
+		
+      [JsonProperty(PropertyName = "location")] 
+      public Location Location { get; set; }  
+		
+      [JsonProperty(PropertyName = "postalCode")] 
+      public string PostalCode { get; set; }  
+		
+      [JsonProperty(PropertyName = "countryRegionName")] 
+      public string CountryRegionName { get; set; } 
+   }
+	
+   public class Location { 
+      [JsonProperty(PropertyName = "city")] 
+      public string City { get; set; }  
+		
+      [JsonProperty(PropertyName = "stateProvinceName")]
+      public string StateProvinceName { get; set; } 
+   } 
+}
+ We also have JSON property attributes in place because we want to maintain proper conventions on both sides of the fence. So I just create my New Customer object along with its nested child objects and call into CreateDocument once more. Although our customer object does have an Id property we didn't supply a value for it and so DocumentDB generated one based on the GUID, just like it did for the previous two documents. When the above code is compiled and executed you will receive the following output. 
+**** Create Documents ****  
+Created new document: 575882f0-236c-4c3d-81b9-d27780206b2c 
+{ 
+  "name": "New Customer 1", 
+  "address": { 
+    "addressType": "Main Office", 
+    "addressLine1": "123 Main Street", 
+    "location": { 
+      "city": "Brooklyn", 
+      "stateProvinceName": "New York" 
+    }, 
+    "postalCode": "11229", 
+    "countryRegionName": "United States" 
+  }, 
+  "id": "575882f0-236c-4c3d-81b9-d27780206b2c", 
+  "_rid": "kV5oANVXnwDGPgAAAAAAAA==", 
+  "_ts": 1450037545, 
+  "_self": "dbs/kV5oAA==/colls/kV5oANVXnwA=/docs/kV5oANVXnwDGPgAAAAAAAA==/", 
+  "_etag": "\"00006fce-0000-0000-0000-566dd1290000\"", 
+  "_attachments": "attachments/" 
+} 
+Created document 575882f0-236c-4c3d-81b9-d27780206b2c from dynamic object  
+Created new document: 8d7ad239-2148-4fab-901b-17a85d331056 
+{ 
+  "name": "New Customer 2", 
+  "address": {
+    "addressType": "Main Office", 
+    "addressLine1": "123 Main Street", 
+    "location": { 
+      "city": "Brooklyn", 
+      "stateProvinceName": "New York" 
+    }, 
+    "postalCode": "11229", 
+    "countryRegionName": "United States" 
+  }, 
+  "id": "8d7ad239-2148-4fab-901b-17a85d331056", 
+  "_rid": "kV5oANVXnwDHPgAAAAAAAA==", 
+  "_ts": 1450037545, 
+  "_self": "dbs/kV5oAA==/colls/kV5oANVXnwA=/docs/kV5oANVXnwDHPgAAAAAAAA==/", 
+  "_etag": "\"000070ce-0000-0000-0000-566dd1290000\"", 
+  "_attachments": "attachments/" 
+} 
+Created document 8d7ad239-2148-4fab-901b-17a85d331056 from JSON string  
+Created new document: 49f399a8-80c9-4844-ac28-cd1dee689968 
+{ 
+  "id": "49f399a8-80c9-4844-ac28-cd1dee689968", 
+  "name": "New Customer 3", 
+  "address": { 
+    "addressType": "Main Office", 
+    "addressLine1": "123 Main Street", 
+    "location": { 
+      "city": "Brooklyn", 
+      "stateProvinceName": "New York" 
+    }, 
+    "postalCode": "11229", 
+    "countryRegionName": "United States" 
+  }, 
+  "_rid": "kV5oANVXnwDIPgAAAAAAAA==", 
+  "_ts": 1450037546, 
+  "_self": "dbs/kV5oAA==/colls/kV5oANVXnwA=/docs/kV5oANVXnwDIPgAAAAAAAA==/", 
+  "_etag": "\"000071ce-0000-0000-0000-566dd12a0000\"", 
+  "_attachments": "attachments/" 
+}
+Created document 49f399a8-80c9-4844-ac28-cd1dee689968 from typed object

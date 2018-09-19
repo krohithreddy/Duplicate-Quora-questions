@@ -1,0 +1,9 @@
+XSLT Overview
+
+https://www.tutorialspoint.com/xslt/xslt_overview.htm
+
+XSLT Overview, Syntax, <template>, <value-of>,<for-each>, <sort>, <if>, <choose>, <key>, <message>, <import>.
+
+August-15-2017-02:34:18
+
+XSL Before learning XSLT, we should first understand XSL which stands for EXtensible Stylesheet Language. It is similar to XML as CSS is to HTML. Need for XSL In case of HTML document, tags are predefined such as table, div, and span; and the browser knows how to add style to them and display those using CSS styles. But in case of XML documents, tags are not predefined. In order to understand and style an XML document, World Wide Web Consortium (W3C) developed XSL which can act as XML based Stylesheet Language. An XSL document specifies how a browser should render an XML document. Following are the main parts of XSL − XSLT − used to transform XML document into various other types of document. XPath − used to navigate XML document. XSL-FO − used to format XML document. What is XSLT XSLT, Extensible Stylesheet Language Transformations, provides the ability to transform XML data from one format to another automatically. How XSLT Works An XSLT stylesheet is used to define the transformation rules to be applied on the target XML document. XSLT stylesheet is written in XML format. XSLT Processor takes the XSLT stylesheet and applies the transformation rules on the target XML document and then it generates a formatted document in the form of XML, HTML, or text format. This formatted document is then utilized by XSLT formatter to generate the actual output which is to be displayed to the end-user. Advantages Here are the advantages of using XSLT − Independent of programming. Transformations are written in a separate xsl file which is again an XML document. Output can be altered by simply modifying the transformations in xsl file. No need to change any code. So Web designers can edit the stylesheet and can see the change in the output quickly.

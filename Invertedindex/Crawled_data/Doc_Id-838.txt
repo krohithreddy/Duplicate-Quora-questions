@@ -1,0 +1,59 @@
+AIML - <topic> Tag
+
+https://www.tutorialspoint.com/aiml/aiml_topic_tag.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+<topic> Tag is used in AIML to store a context so that later conversation can be done based on that context. Usually, <topic> tag is used in Yes/No type conversation. It helps AIML to search categories written within the context of the topic. Syntax Define a topic using <set> tag 
+<template> 
+   <set name = "topic"> topic-name </set>
+</template>
+ Define the category using <topic> tag 
+<topic name = "topic-name">
+   <category>
+      ...
+   </category>     
+</topic>
+ For example, consider the following conversation. 
+Human: let discuss movies
+Robot: Yes movies
+Human: Comedy movies are nice to watch
+Robot: Watching good movie refreshes our minds.
+Human: I like watching comedy
+Robot: I too like watching comedy.
+ Here bot responds taking "movie" as the topic. Example Create topic.aiml inside C > ab > bots > test > aiml and topic.aiml.csv inside C > ab > bots > test > aimlif directories. topic.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern>LET DISCUSS MOVIES</pattern>
+      <template>Yes <set name = "topic">movies</set></template>  
+   </category>
+   
+   <topic name = "movies">
+      <category>
+         <pattern> * </pattern>
+         <template>Watching good movie refreshes our minds.</template>
+      </category>
+      
+      <category>
+         <pattern> I LIKE WATCHING COMEDY! </pattern>
+         <template>I like comedy movies too.</template>
+      </category>
+      
+   </topic>
+</aiml>
+ that.aiml.csv 
+0,LET DISCUSS MOVIES,*,*,Yes <set name = "topic">movies</set>,topic.aiml
+0,*,*,movies,Watching good movie refreshes our minds.,topic.aiml
+0,I LIKE WATCHING COMEDY!,*,movies,I like comedy movies too.,topic.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You will see the following output − 
+Human: let discuss movies
+Robot: Yes movies
+Human: Comedy movies are nice to watch
+Robot: Watching good movie refreshes our minds.
+Human: I like watching comedy
+Robot: I too like watching comedy.

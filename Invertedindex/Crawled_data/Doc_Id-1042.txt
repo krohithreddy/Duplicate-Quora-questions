@@ -1,0 +1,37 @@
+XSD - Overview
+
+https://www.tutorialspoint.com/xsd/xsd_overview.htm
+
+ XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+XML Schema Definition, commonly known as XSD, is a way to describe precisely the XML language. XSD checks the validity of structure and vocabulary of an XML document against the grammatical rules of the appropriate XML language. An XML document can be defined as − Well-formed − If the XML document adheres to all the general XML rules such as tags must be properly nested, opening and closing tags must be balanced, and empty tags must end with '/>', then it is called as well-formed. OR Valid − An XML document said to be valid when it is not only well-formed, but it also conforms to available XSD that specifies which tags it uses, what attributes those tags can contain, and which tags can occur inside other tags, among other properties. The following diagram shows how XSD is used to structure XML documents − Here is a simple XSD code. Take a look at it. 
+<?xml version = "1.0"?>
+
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema">
+   targetNamespace = "http://www.tutorialspoint.com" 
+   xmlns = "http://www.tutorialspoint.com"
+   elementFormDefault = "qualified">
+
+   <xs:element name = 'class'>
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name = 'student' type = 'StudentType' minOccurs = '0' 
+               maxOccurs = 'unbounded' />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+
+   <xs:complexType name = "StudentType">
+      <xs:sequence>
+         <xs:element name = "firstname" type = "xs:string"/>
+         <xs:element name = "lastname" type = "xs:string"/>
+         <xs:element name = "nickname" type = "xs:string"/>
+         <xs:element name = "marks" type = "xs:positiveInteger"/>
+      </xs:sequence>
+      <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+   </xs:complexType>
+   
+</xs:schema>
+ Features Here is a list of some of the popular features of XSD − XSDs can be extensible for future additions. XSD is richer and more powerful than DTD. XSD is written in XML. XSD supports data types. XSD supports namespaces. XSD is W3C recommendation.

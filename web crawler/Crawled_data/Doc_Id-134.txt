@@ -1,0 +1,97 @@
+DynamoDB - Query Table
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_query_table.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+Querying a table primarily requires selecting a table, specifying a partition key, and executing the query; with the options of using secondary indexes and performing deeper filtering through scan operations. Utilize the GUI Console, Java, or another option to perform the task. Query Table using the GUI Console Perform some simple queries using the previously created tables. First, open the console at https://console.aws.amazon.com/dynamodb Choose Tables from the navigation pane and select Reply from the table list. Then select the Items tab to see the loaded data. Select the data filtering link (“Scan: [Table] Reply”) beneath the Create Item button. In the filtering screen, select Query for the operation. Enter the appropriate partition key value, and click Start. The Reply table then returns matching items. Query Table using Java Use the query method in Java to perform data retrieval operations. It requires specifying the partition key value, with the sort key as optional. Code a Java query by first creating a querySpec object describing parameters. Then pass the object to the query method. We use the partition key from the previous examples. You can review the following example − 
+import java.util.HashMap;
+import java.util.Iterator;
+
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+
+public class ProductsQuery {  
+   public static void main(String[] args) throws Exception {  
+      AmazonDynamoDBClient client = new AmazonDynamoDBClient() 
+         .withEndpoint("http://localhost:8000");  
+      
+      DynamoDB dynamoDB = new DynamoDB(client);  
+      Table table = dynamoDB.getTable("Products");  
+      HashMap<String, String> nameMap = new HashMap<String, String>(); 
+      nameMap.put("#ID", "ID");  
+      HashMap<String, Object> valueMap = new HashMap<String, Object>(); 
+      valueMap.put(":xxx", 122);
+      QuerySpec querySpec = new QuerySpec() 
+         .withKeyConditionExpression("#ID = :xxx") 
+         .withNameMap(new NameMap().with("#ID", "ID")) 
+         .withValueMap(valueMap);  
+      
+      ItemCollection<QueryOutcome> items = null; 
+      Iterator<Item> iterator = null; 
+      Item item = null;  
+      try { 
+         System.out.println("Product with the ID 122"); 
+         items = table.query(querySpec);  
+         iterator = items.iterator(); 
+         
+         while (iterator.hasNext()) { 
+            item = iterator.next(); 
+            System.out.println(item.getNumber("ID") + ": " 
+               + item.getString("Nomenclature")); 
+         } 
+      } catch (Exception e) { 
+         System.err.println("Cannot find products with the ID number 122"); 
+         System.err.println(e.getMessage()); 
+      } 
+   } 
+}
+ Note that the query uses the partition key, however, secondary indexes provide another option for queries. Their flexibility allows querying of non-key attributes, a topic which will be discussed later in this tutorial. The scan method also supports retrieval operations by gathering all the table data. The optional .withFilterExpression prevents items outside of specified criteria from appearing in results. Later in this tutorial, we will discuss scanning in detail. Now, take a look at the following example − 
+import java.util.Iterator;
+
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.spec.ScanSpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+
+public class ProductsScan {  
+   public static void main(String[] args) throws Exception {  
+      AmazonDynamoDBClient client = new AmazonDynamoDBClient() 
+         .withEndpoint("http://localhost:8000");  
+      
+      DynamoDB dynamoDB = new DynamoDB(client);  
+      Table table = dynamoDB.getTable("Products");  
+      ScanSpec scanSpec = new ScanSpec() 
+         .withProjectionExpression("#ID, Nomenclature , stat.sales") 
+         .withFilterExpression("#ID between :start_id and :end_id") 
+         .withNameMap(new NameMap().with("#ID",  "ID")) 
+         .withValueMap(new ValueMap().withNumber(":start_id", 120)
+         .withNumber(":end_id", 129));  
+      
+      try { 
+         ItemCollection<ScanOutcome> items = table.scan(scanSpec);  
+         Iterator<Item> iter = items.iterator(); 
+        
+         while (iter.hasNext()) {
+            Item item = iter.next(); 
+            System.out.println(item.toString()); 
+         } 
+      } catch (Exception e) { 
+         System.err.println("Cannot perform a table scan:"); 
+         System.err.println(e.getMessage()); 
+      } 
+   } 
+}

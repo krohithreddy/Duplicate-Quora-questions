@@ -1,0 +1,56 @@
+DOM - NamedNodeMap Object Method - getNamedItem
+
+https://www.tutorialspoint.com/dom/dom_namednodemap_getnameditem.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The method getNamedItem () retrieves the node specified by name. Syntax Following is the syntax for the usage of the getNamedItem() method. 
+nodemapObject.getNamedItem(name)
+ S.No. Parameter & Description 1 name This specifies the name of the node to retrieve. It is of type DOMString. This method returns the Node specified by name. Example node.xml contents are as below − 
+<Company>
+   <Employee category = "Technical">
+      <FirstName>Tanmay</FirstName>
+      <LastName>Patil</LastName>
+      <ContactNo>1234567890</ContactNo>
+      <Email>tanmaypatil@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Non-Technical">
+      <FirstName>Taniya</FirstName>
+      <LastName>Mishra</LastName>
+      <ContactNo>1234667898</ContactNo>
+      <Email>taniyamishra@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Management">
+      <FirstName>Tanisha</FirstName>
+      <LastName>Sharma</LastName>
+      <ContactNo>1234562350</ContactNo>
+      <Email>tanishasharma@xyz.com</Email>
+   </Employee>
+</Company>
+ Following example demonstrates the usage of the getNamedItem() method − 
+<!DOCTYPE html>
+<html>
+   <body>
+      <script>
+         if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+         } else {// code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+
+         xmlDoc = xmlDoc.getElementsByTagName('Employee')[0].attributes;
+         document.write("Name of attribute category for node Employee is: ");
+         document.write(xmlDoc.getNamedItem('category').nodeValue);
+     </script>
+   </body>
+</html>
+ Execution Save this file as namednodemapmethod_getnameditem.htm on the server path (this file and node_methods.xml should be on the same path in your server). We will get the output as shown below − 
+Name of attribute category for node Employee is: Technical
+ dom_namednodemap_object.htm

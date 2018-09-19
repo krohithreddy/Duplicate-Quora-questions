@@ -1,0 +1,35 @@
+PL/SQL - Loops
+
+https://www.tutorialspoint.com/plsql/plsql_loops.htm
+
+PL/SQL, syntax, Environment Setup, Operators, Transactions, Date and Time, data types, variables, constants, records, conditional statements, iterative statements, cursors, procedures, functions, exception handling, triggers, packages, collections, external procedures, arrays, strings, dbms output.
+
+August-15-2017-02:34:06
+
+In this chapter, we will discuss Loops in PL/SQL. There may be a situation when you need to execute a block of code several number of times. In general, statements are executed sequentially: The first statement in a function is executed first, followed by the second, and so on. Programming languages provide various control structures that allow for more complicated execution paths. A loop statement allows us to execute a statement or group of statements multiple times and following is the general form of a loop statement in most of the programming languages − PL/SQL provides the following types of loop to handle the looping requirements. Click the following links to check their detail. S.No Loop Type & Description 1 PL/SQL Basic LOOP In this loop structure, sequence of statements is enclosed between the LOOP and the END LOOP statements. At each iteration, the sequence of statements is executed and then control resumes at the top of the loop. 2 PL/SQL WHILE LOOP Repeats a statement or group of statements while a given condition is true. It tests the condition before executing the loop body. 3 PL/SQL FOR LOOP Execute a sequence of statements multiple times and abbreviates the code that manages the loop variable. 4 Nested loops in PL/SQL You can use one or more loop inside any another basic loop, while, or for loop. Labeling a PL/SQL Loop PL/SQL loops can be labeled. The label should be enclosed by double angle brackets (<< and >>) and appear at the beginning of the LOOP statement. The label name can also appear at the end of the LOOP statement. You may use the label in the EXIT statement to exit from the loop. The following program illustrates the concept − 
+DECLARE 
+   i number(1); 
+   j number(1); 
+BEGIN 
+   << outer_loop >> 
+   FOR i IN 1..3 LOOP 
+      << inner_loop >> 
+      FOR j IN 1..3 LOOP 
+         dbms_output.put_line('i is: '|| i || ' and j is: ' || j); 
+      END loop inner_loop; 
+   END loop outer_loop; 
+END; 
+/
+ When the above code is executed at the SQL prompt, it produces the following result − 
+i is: 1 and j is: 1 
+i is: 1 and j is: 2 
+i is: 1 and j is: 3 
+i is: 2 and j is: 1 
+i is: 2 and j is: 2 
+i is: 2 and j is: 3 
+i is: 3 and j is: 1 
+i is: 3 and j is: 2 
+i is: 3 and j is: 3  
+
+PL/SQL procedure successfully completed. 
+ The Loop Control Statements Loop control statements change execution from its normal sequence. When execution leaves a scope, all automatic objects that were created in that scope are destroyed. PL/SQL supports the following control statements. Labeling loops also help in taking the control outside a loop. Click the following links to check their details. S.No Control Statement & Description 1 EXIT statement The Exit statement completes the loop and control passes to the statement immediately after the END LOOP. 2 CONTINUE statement Causes the loop to skip the remainder of its body and immediately retest its condition prior to reiterating. 3 GOTO statement Transfers control to the labeled statement. Though it is not advised to use the GOTO statement in your program.

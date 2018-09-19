@@ -1,0 +1,25 @@
+OrientDB - Truncate Record
+
+https://www.tutorialspoint.com/orientdb/orientdb_truncate_record.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Truncate Record command is used to delete the values of a particular record. The following statement is the basic syntax of the Truncate command. 
+TRUNCATE RECORD <rid>* 
+ Where <rid>* indicates the Record ID to truncate. You can use multiple Rids separated by comma to truncate multiple records. It returns the number of records truncated. Example Let us consider the same Customer table that we have used in the previous chapter. Sr.No. Name Age 1 Satish 25 2 Krishna 26 3 Kiran 29 4 Javeed 21 5 Raja 28 Try the following query to truncate the record having Record ID #11:4. 
+Orientdb {db = demo}> TRUNCATE RECORD #11:4
+ If the above query is executed successfully, you will get the following output. 
+Truncated 1 record(s) in 0.008000 sec(s).
+ To check the record of Customer table you can use the following query. 
+Orientdb {db = demo}> SELECT FROM Customer
+ If the above query is executed successfully, you will get the following output. 
+----+-----+--------+----+-------+---- 
+#   |@RID |@CLASS  |id  |name   |age  
+----+-----+--------+----+-------+---- 
+0   |#11:0|Customer|1   |satish |25   
+1   |#11:1|Customer|2   |krishna|26   
+2   |#11:2|Customer|3   |kiran  |29 
+3   |#11:3|Customer|4   |javeed |21 
+----+-----+--------+----+-------+----

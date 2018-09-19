@@ -1,0 +1,40 @@
+OBIEE – Administration
+
+https://www.tutorialspoint.com/obiee/obiee_administration.htm
+
+OBIEE, Tutorial, Data Warehouse, Dimensional Modeling, Schema, Basics, Components, Architecture, Repositories, Business Layer, Presentation Layer, Testing Repository, Multiple Logical Table Sources, Calculation Measures, Dimension Hierarchies, Level-Based Measures, Aggregates, Variables, Dashboards, Filters, Views, Prompts, Security, Administration.
+
+August-15-2017-02:34:09
+
+In OBIEE 10g, most of OBIEE administration tasks were mostly performed either through the Administration tool, the web-based Presentation Server administration screen, or through editing files in the filesystem. There were around 700 or so configuration options spread over multiple tools and configuration files, with some options like users and groups were embedded in unrelated repositories (the RPD). In OBIEE 11g, all administration and configuration tasks are moved into Fusion Middleware Control also called as Enterprise Manager. Administration tool that was present in OBIEE 10g is also present in 11g and is used to maintain the semantic model used by the BI Server. It has few enhancements in terms of dimension handling and new data sources. A major change is around security - when you open the Security Manager dialog − Go to Manage → Identity → Security Manager Dialog box appears. Users and Application Roles are now defined in the WebLogic Server admin console. You use the Security Manager to define additional links through to other LDAP servers, register custom authenticators and set up filters, etc. In the above screenshot, the users shown in the users list are those that are held in WebLogic Server’s JPS (Java Platform Security) service, and there are no longer any users and groups in the RPD itself. There is no administrator user in above snapshot. It has standard administrator user that you set up as the WebLogic Server administrator when you install OBIEE, which typically has the username weblogic. There are also two additional default users: OracleSystemUser - this user is used by the various OBIEE web services to communicate with the BI Server and BISystemUser is used by BI Publisher to connect to the BI Server as a data source. In Application Roles tab, you can see a list default application roles - BISystem, BIAdministrator, BIAuthor and BIConsumer - which are used to grant access to Presentation Server functionality. Create a User in OBIEE To create a new user, log on to the WebLogic Server admin console → Go to Security Realms from the Fusion Middleware Control menu → Select myrealm → Select Users and Groups. Click on Users tab, it will show you a list of existing users. Click the New. → New user dialog box opens up → enter the user’s details. You can also use the Groups tab to define a group for the user, or assign the user to an existing group. Configuration and Metadata Files Following are the key file locations In OBIEE 11g − RPD Directory 
+C:\Middleware\instances\instance1\bifoundation\OracleBIServerComponent\
+coreapplication_obis1\repository
+ NQSConfig.INI 
+C:\Middleware\instances\instance1\config\OracleBIServerComponent\coreapplication_obis1\
+nqsconfig.INI
+ NQClusterConfig.INI 
+C:\Middleware\instances\instance1\config\OracleBIApplication\coreapplication\
+NQClusterConfig.INI
+ nqquery.log 
+C:\Middleware\instances\instance1\diagnostics\logs\OracleBIServerComponent\
+coreapplication_obis1\nqquery.log
+ nqserver.log 
+C:\Middleware\instances\instance1\diagnostics\logs\OracleBIServerComponent\
+coreapplication_obis1\nqserver.log
+ nqsserver.exe 
+C:\Middleware\Oracle_BI1\bifoundation\server\bin\nqsserver.exe
+ WebCat Directory 
+C:\Middleware\instances\instance1\bifoundation\OracleBIPresentationServicesComponent\
+coreapplication_obips1\catalog\
+ instanceconfig.xml 
+C:\Middleware\instances\instance1\config\OracleBIPresentationServicesComponent\
+coreapplication_obips1\instanceconfig.xml
+ xdo.cfg 
+C:\Middleware\instances\instance1\config\OracleBIPresentationServicesComponent\
+coreapplication_obips1\xdo.cfg
+ sawlog0.log 
+C:\Middleware\instances\instance1\diagnostics\logs\OracleBIPresentationServicesComponent\
+coreapplication_obips1\sawlog0.log
+ sawserver.exe 
+C:\Middleware\Oracle_BI1\bifoundation\web\bin\sawserver.exe
+ Go to Overview. You can also stop, start and restart all of the system components like BI Server, Presentation Server etc. via OPMN. You can click the Capacity Management, Diagnostics, Security or Deployment tabs to perform further maintenance. Capacity Management We have the following four options available for capacity management − Metrics gathered via DMS. Availability of all the individual system components (allowing you to stop, start and restart them individually). Scalability is used to increase the number of BI Servers, Presentation Servers, Cluster Controllers and Schedulers in the cluster in conjunction with the “scale out” install option. Performance option allows you to turn caching on or off and modify other parameters associated with response time. Diagnostics − Log Messages show you view of all server errors and warnings. Log Configuration allows you to limit the size of logs and information gets included in them. Security − It is used for enabling SSO and selecting the SSO provider. Deployment − Presentation allows you to set dashboard defaults, section headings, etc. Scheduler is used to set the connection details for the scheduler schema. Marketing is for configuring the Siebel Marketing Content Server connection. Mail option is used for setting up the mail server to deliver for email alerts. Repository is used to upload new RPDs for use by the BI Server.

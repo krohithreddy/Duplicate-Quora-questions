@@ -1,0 +1,59 @@
+SQLite - NULL Values
+
+https://www.tutorialspoint.com/sqlite/sqlite_null_values.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+SQLite NULL is the term used to represent a missing value. A NULL value in a table is a value in a field that appears to be blank. A field with a NULL value is a field with no value. It is very important to understand that a NULL value is different than a zero value or a field that contains spaces. Syntax Following is the basic syntax of using NULL while creating a table. 
+SQLite> CREATE TABLE COMPANY(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+ Here, NOT NULL signifies that the column should always accept an explicit value of the given data type. There are two columns where we did not use NOT NULL which means these columns could be NULL. A field with a NULL value is one that has been left blank during record creation. Example The NULL value can cause problems when selecting data, because when comparing an unknown value to any other value, the result is always unknown and not included in the final results. Consider the following table, COMPANY with the following records − 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Let us use UPDATE statement to set a few nullable values as NULL as follows − 
+sqlite> UPDATE COMPANY SET ADDRESS = NULL, SALARY = NULL where ID IN(6,7);
+ Now, COMPANY table will have the following records. 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22
+7           James       24
+ Next, let us see the usage of IS NOT NULL operator to list down all the records where SALARY is not NULL. 
+sqlite> SELECT  ID, NAME, AGE, ADDRESS, SALARY
+        FROM COMPANY
+        WHERE SALARY IS NOT NULL;
+ The above SQLite statement will produce the following result − 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+ Following is the usage of IS NULL operator, which will list down all the records where SALARY is NULL. 
+sqlite> SELECT  ID, NAME, AGE, ADDRESS, SALARY
+        FROM COMPANY
+        WHERE SALARY IS NULL;
+ The above SQLite statement will produce the following result. 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+6           Kim         22
+7           James       24

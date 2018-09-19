@@ -1,0 +1,9 @@
+OBIEE – Aggregates
+
+https://www.tutorialspoint.com/obiee/obiee_aggregates.htm
+
+OBIEE, Tutorial, Data Warehouse, Dimensional Modeling, Schema, Basics, Components, Architecture, Repositories, Business Layer, Presentation Layer, Testing Repository, Multiple Logical Table Sources, Calculation Measures, Dimension Hierarchies, Level Based Measures, Aggregates, Variables, Dashboards, Filters, Views, Prompts, Security, Administration.
+
+August-15-2017-02:34:09
+
+Aggregations are used to implement query performance optimization while running the reports. This eliminates the time taken by query to run the calculations and delivers the results at fast speed. Aggregate tables has less number of rows as compared to a normal table. How Aggregation Works in OBIEE? When you execute a query in OBIEE, BI server looks for the resources which has information to answer the query. Out of all available sources, the server selects the most aggregated source to answer that query. Adding Aggregation in a Repository Open the Repository in an offline mode in the Administrator tool. Go to File → Open → Offline. Import the metadata and create logical table source in BMM layer. Expand the table name and click on source table name to open logical table source dialog box. Go to column mapping tab to see map columns in Physical table. Go to content tab → Aggregate content group by selecting the logical level. You can select different logical levels as per the columns in fact tables like Product Total, Total Revenue, and Quarter/Year for Time as per dimension hierarchies. Click OK to close dialog box → save the repository. When you define Aggregate in logical fact tables they are defined as per dimension hierarchies.

@@ -1,0 +1,346 @@
+DynamoDB - Local Secondary Indexes
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_local_secondary_indexes.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+Some applications only perform queries with the primary key, but some situations benefit from an alternate sort key. Allow your application a choice by creating a single or multiple local secondary indexes. Complex data access requirements, such as combing millions of items, make it necessary to perform more efficient queries/scans. Local secondary indices provide an alternate sort key for a partition key value. They also hold copies of all or some table attributes. They organize data by table partition key, but use a different sort key. Using a local secondary index removes the need for a whole table scan, and allows a simple and quick query using a sort key. All the local secondary indexes must satisfy certain conditions − Identical partition key and source table partition key. A sort key of only one scalar attribute. Projection of the source table sort key acting as a non-key attribute. All the local secondary indexes automatically hold partition and sort keys from parent tables. In queries, this means efficient gathering of projected attributes, and also retrieval of attributes not projected. The storage limit for a local secondary index remains 10GB per partition key value, which includes all table items, and index items sharing a partition key value. Projecting an Attribute Some operations require excess reads/fetching due to complexity. These operations can consume substantial throughput. Projection allows you to avoid costly fetching and perform rich queries by isolating these attributes. Remember projections consist of attributes copied into a secondary index. When making a secondary index, you specify the attributes projected. Recall the three options provided by DynamoDB: KEYS_ONLY, INCLUDE, and ALL. When opting for certain attributes in projection, consider the associated cost tradeoffs − If you project only a small set of necessary attributes, you dramatically reduce the storage costs. If you project frequently accessed non-key attributes, you offset scan costs with storage costs. If you project most or all non-key attributes, this maximizes flexibility and reduces throughput (no retrievals); however, storage costs rise. If you project KEYS_ONLY for frequent writes/updates and infrequent queries, it minimizes size, but maintains query preparation. Local Secondary Index Creation Use the LocalSecondaryIndex parameter of CreateTable to make a single or multiple local secondary indexes. You must specify one non-key attribute for the sort key. On table creation, you create local secondary indices. On deletion, you delete these indexes. Tables with a local secondary index must obey a limit of 10GB in size per partition key value, but can store any amount of items. Local Secondary Index Queries and Scans A query operation on local secondary indexes returns all items with a matching partition key value when multiple items in the index share sort key values. Matching items do not return in a certain order. Queries for local secondary indexes use either eventual or strong consistency, with strongly consistent reads delivering the latest values. A scan operation returns all local secondary index data. Scans require you to provide a table and index name, and allow the use of a filter expression to discard data. Item Writing On creation of a local secondary index, you specify a sort key attribute and its data type. When you write an item, its type must match the data type of the key schema if the item defines an attribute of an index key. DynamoDB imposes no one-to-one relationship requirements on table items and local secondary index items. The tables with multiple local secondary indexes carry higher write costs than those with less. Throughput Considerations in Local Secondary Indexes Read capacity consumption of a query depends on the nature of data access. Queries use either eventual or strong consistency, with strongly consistent reads using one unit compared to half a unit in eventually consistent reads. Result limitations include a 1MB size maximum. Result sizes come from the sum of matching index item size rounded up to the nearest 4KB, and matching table item size also rounded up to the nearest 4KB. The write capacity consumption remains within provisioned units. Calculate the total provisioned cost by finding the sum of consumed units in table writing and consumed units in updating indices. You can also consider the key factors influencing cost, some of which can be − When you write an item defining an indexed attribute or update an item to define an undefined indexed attribute, a single write operation occurs. When a table update changes an indexed key attribute value, two writes occur to delete and then – add an item. When a write causes the deletion of an indexed attribute, one write occurs to remove the old item projection. When an item does not exist within the index prior to or after an update, no writes occur. Local Secondary Index Storage On a table item write, DynamoDB automatically copies the right attribute set to the required local secondary indexes. This charges your account. The space used results from the sum of table primary key byte size, index key attribute byte size, any present projected attribute byte size, and 100 bytes in overhead for each index item. The estimate storage is got by estimating average index item size and multiplying by table item quantity. Using Java to Work with Local Secondary Indexes Create a local secondary index by first creating a DynamoDB class instance. Then, create a CreateTableRequest class instance with necessary request information. Finally, use the createTable method. Example 
+DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient( 
+   new ProfileCredentialsProvider()));
+String tableName = "Tools";  
+CreateTableRequest createTableRequest = new 
+   CreateTableRequest().withTableName(tableName);
+   
+//Provisioned Throughput
+createTableRequest.setProvisionedThroughput (
+   new ProvisionedThroughput()
+   .withReadCapacityUnits((long)5)
+   .withWriteCapacityUnits(( long)5));
+   
+//Attributes 
+ArrayList<AttributeDefinition> attributeDefinitions = 
+   new ArrayList<AttributeDefinition>();
+   attributeDefinitions.add(new AttributeDefinition()
+   .withAttributeName("Make")
+   .withAttributeType("S"));
+   
+attributeDefinitions.add(new AttributeDefinition()
+   .withAttributeName("Model")
+   .withAttributeType("S"));
+   
+attributeDefinitions.add(new AttributeDefinition()
+   .withAttributeName("Line")
+   .withAttributeType("S"));
+   
+createTableRequest.setAttributeDefinitions(attributeDefinitions);
+
+//Key Schema 
+ArrayList<KeySchemaElement> tableKeySchema = new 
+   ArrayList<KeySchemaElement>();
+   
+tableKeySchema.add(new KeySchemaElement()
+   .withAttributeName("Make")
+   .withKeyType(KeyType.HASH));                    //Partition key
+   
+tableKeySchema.add(new KeySchemaElement()
+   .withAttributeName("Model")
+   .withKeyType(KeyType.RANGE));                   //Sort key
+   
+createTableRequest.setKeySchema(tableKeySchema);
+ArrayList<KeySchemaElement> indexKeySchema = new 
+   ArrayList<KeySchemaElement>();
+   
+indexKeySchema.add(new KeySchemaElement()
+   .withAttributeName("Make")
+   .withKeyType(KeyType.HASH));                   //Partition key
+   
+indexKeySchema.add(new KeySchemaElement()
+   .withAttributeName("Line")
+   .withKeyType(KeyType.RANGE));                   //Sort key
+   
+Projection projection = new Projection()
+   .withProjectionType(ProjectionType.INCLUDE);
+
+ArrayList<String> nonKeyAttributes = new ArrayList<String>(); 
+nonKeyAttributes.add("Type"); 
+nonKeyAttributes.add("Year"); 
+projection.setNonKeyAttributes(nonKeyAttributes);  
+
+LocalSecondaryIndex localSecondaryIndex = new LocalSecondaryIndex() 
+   .withIndexName("ModelIndex")
+   .withKeySchema(indexKeySchema)
+   .withProjection(p rojection);  
+
+ArrayList<LocalSecondaryIndex> localSecondaryIndexes = new 
+   ArrayList<LocalSecondaryIndex>(); 
+
+localSecondaryIndexes.add(localSecondaryIndex); 
+createTableRequest.setLocalSecondaryIndexes(localSecondaryIndexes);  
+Table table = dynamoDB.createTable(createTableRequest); 
+System.out.println(table.getDescription());
+ Retrieve information about a local secondary index with the describe method. Simply create a DynamoDB class instance, create a Table class instance, and pass the table to the describe method. Example 
+DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient( 
+   new ProfileCredentialsProvider()));
+   
+String tableName = "Tools";
+Table table = dynamoDB.getTable(tableName);
+TableDescription tableDescription = table.describe();
+
+List<LocalSecondaryIndexDescription> localSecondaryIndexes = 
+   tableDescription.getLocalSecondaryIndexes();
+   
+Iterator<LocalSecondaryIndexDescription> lsiIter = 
+   localSecondaryIndexes.iterator();
+   
+while (lsiIter.hasNext()) {  
+   LocalSecondaryIndexDescription lsiDescription = lsiIter.next(); 
+   System.out.println("Index info " + lsiDescription.getIndexName() + ":"); 
+   Iterator<KeySchemaElement> kseIter = lsiDescription.getKeySchema().iterator(); 
+   
+   while (kseIter.hasNext()) { 
+      KeySchemaElement kse = kseIter.next(); 
+      System.out.printf("\t%s: %s\n", kse.getAttributeName(), kse.getKeyType()); 
+   }
+   
+   Projection projection = lsiDescription.getProjection(); 
+   System.out.println("\tProjection type: " + projection.getProjectionType()); 
+   
+   if (projection.getProjectionType().toString().equals("INCLUDE")) { 
+      System.out.println("\t\tNon-key projected attributes: " + 
+         projection.getNonKeyAttributes()); 
+   } 
+}
+ Perform a query by using the same steps as a table query. Merely create a DynamoDB class instance, a Table class instance, an Index class instance, a query object, and utilize the query method. Example 
+DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient( 
+   new ProfileCredentialsProvider()));
+   
+String tableName = "Tools";  
+Table table = dynamoDB.getTable(tableName); 
+Index index = table.getIndex("LineIndex");  
+QuerySpec spec = new QuerySpec() 
+   .withKeyConditionExpression("Make = :v_make and Line = :v_line") 
+   .withValueMap(new ValueMap() 
+   .withString(":v_make", "Depault") 
+   .withString(":v_line", "SuperSawz"));
+      
+ItemCollection<QueryOutcome> items = index.query(spec);
+Iterator<Item> itemsIter = items.iterator();
+
+while (itemsIter.hasNext()) { 
+   Item item = itemsIter.next(); 
+   System.out.println(item.toJSONPretty()); 
+}
+ You can also review the following example. Note − The following example may assume a previously created data source. Before attempting to execute, acquire supporting libraries and create necessary data sources (tables with required characteristics, or other referenced sources). The following example also uses Eclipse IDE, an AWS credentials file, and the AWS Toolkit within an Eclipse AWS Java Project. Example 
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Index;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+
+import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
+import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
+import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
+import com.amazonaws.services.dynamodbv2.model.KeyType;
+import com.amazonaws.services.dynamodbv2.model.LocalSecondaryIndex;
+import com.amazonaws.services.dynamodbv2.model.Projection;
+import com.amazonaws.services.dynamodbv2.model.ProjectionType;
+import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
+import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
+import com.amazonaws.services.dynamodbv2.model.Select;
+
+public class LocalSecondaryIndexSample {  
+   static DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient( 
+      new ProfileCredentialsProvider()));  
+   public static String tableName = "ProductOrders";  
+   
+   public static void main(String[] args) throws Exception {  
+      createTable();
+      query(null); 
+      query("IsOpenIndex"); 
+      query("OrderCreationDateIndex"); 
+   }
+   public static void createTable() { 
+      CreateTableRequest createTableRequest = new CreateTableRequest() 
+         .withTableName(tableName) 
+         .withProvisionedThroughput(new ProvisionedThroughput() 
+         .withReadCapacityUnits((long) 1) 
+         .withWriteCapacityUnits((long) 1));
+         
+      // Table partition and sort keys attributes 
+      ArrayList<AttributeDefinition> attributeDefinitions = new 
+         ArrayList<AttributeDefinition>(); 
+      
+      attributeDefinitions.add(new AttributeDefinition() 
+         .withAttributeName("CustomerID") 
+         .withAttributeType("S"));
+         
+      attributeDefinitions.add(new AttributeDefinition() 
+         .withAttributeName("OrderID") 
+         .withAttributeType("N"));
+         
+      // Index primary key attributes 
+      attributeDefinitions.add(new AttributeDefinition() 
+         .withAttributeName("OrderDate") 
+         .withAttributeType("N"));
+         
+      attributeDefinitions.add(new AttributeDefinition() 
+         .withAttributeName("OpenStatus") 
+         .withAttributeType("N"));  
+      createTableRequest.setAttributeDefinitions(attributeDefinitions);
+      
+      // Table key schema 
+      ArrayList<KeySchemaElement> tableKeySchema = new
+         ArrayList<KeySchemaElement>(); 
+      tableKeySchema.add(new KeySchemaElement()  
+         .withAttributeName("CustomerID") 
+         .withKeyType(KeyType.HASH));                    //Partition key
+         
+      tableKeySchema.add(new KeySchemaElement() 
+         .withAttributeName("OrderID") 
+         .withKeyType(KeyType.RANGE));                   //Sort key
+         
+      createTableRequest.setKeySchema(tableKeySchema);  
+      ArrayList<LocalSecondaryIndex> localSecondaryIndexes = new 
+         ArrayList<LocalSecondaryIndex>();  
+      
+      // OrderDateIndex 
+      LocalSecondaryIndex orderDateIndex = new LocalSecondaryIndex() 
+         .withIndexName("OrderDateIndex");
+         
+      // OrderDateIndex key schema 
+      ArrayList<KeySchemaElement> indexKeySchema = new 
+         ArrayList<KeySchemaElement>(); 
+      indexKeySchema.add(new KeySchemaElement() 
+         .withAttributeName("CustomerID") 
+         .withKeyType(KeyType.HASH));                   //Partition key
+         
+      indexKeySchema.add(new KeySchemaElement() 
+         .withAttributeName("OrderDate") 
+         .withKeyType(KeyType.RANGE));                   //Sort key
+      orderDateIndex.setKeySchema(indexKeySchema);
+      
+      // OrderCreationDateIndex projection w/attributes list 
+      Projection projection = new Projection() 
+         .withProjectionType(ProjectionType.INCLUDE); 
+      
+      ArrayList<String> nonKeyAttributes = new ArrayList<String>(); 
+      nonKeyAttributes.add("ProdCat"); 
+      nonKeyAttributes.add("ProdNomenclature"); 
+      projection.setNonKeyAttributes(nonKeyAttributes);
+      orderCreationDateIndex.setProjection(projection);  
+      localSecondaryIndexes.add(orderDateIndex);  
+      
+      // IsOpenIndex 
+      LocalSecondaryIndex isOpenIndex = new LocalSecondaryIndex() 
+         .withIndexName("IsOpenIndex");  
+      
+      // OpenStatusIndex key schema 
+      indexKeySchema = new ArrayList<KeySchemaElement>(); 
+      indexKeySchema.add(new KeySchemaElement() 
+         .withAttributeName("CustomerID") 
+         .withKeyType(KeyType.HASH));                   //Partition key
+         
+      indexKeySchema.add(new KeySchemaElement() 
+         .withAttributeName("OpenStatus") 
+         .withKeyType(KeyType.RANGE));                   //Sort key
+         
+      // OpenStatusIndex projection 
+      projection = new Projection() .withProjectionType(ProjectionType.ALL);  
+      OpenStatusIndex.setKeySchema(indexKeySchema); 
+      OpenStatusIndex.setProjection(projection);  
+      localSecondaryIndexes.add(OpenStatusIndex);  
+      
+      // Put definitions in CreateTable request 
+      createTableRequest.setLocalSecondaryIndexes(localSecondaryIndexes);  
+      System.out.println("Spawning table " + tableName + "..."); 
+      System.out.println(dynamoDB.createTable(createTableRequest));  
+      
+      // Pause for ACTIVE status 
+      System.out.println("Waiting for ACTIVE table:" + tableName); 
+      try { 
+         Table table = dynamoDB.getTable(tableName);
+         table.waitForActive(); 
+      } catch (InterruptedException e) { 
+         e.printStackTrace(); 
+      } 
+   }
+   public static void query(String indexName) {  
+      Table table = dynamoDB.getTable(tableName);  
+      System.out.println("\n*************************************************\n"); 
+      System.out.println("Executing query on" + tableName);  
+      QuerySpec querySpec = new QuerySpec() 
+         .withConsistentRead(true) 
+         .withScanIndexForward(true) 
+         .withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
+      
+      if (indexName == "OpenStatusIndex") {  
+         System.out.println("\nEmploying index: '" + indexName 
+            + "' open orders for this customer.");
+            
+         System.out.println( 
+            "Returns only user-specified attribute list\n"); 
+         Index index = table.getIndex(indexName); 
+             
+         querySpec.withKeyConditionExpression("CustomerID = :v_custmid and 
+            OpenStatus = :v_openstat") 
+            .withValueMap(new ValueMap() 
+            .withString(":v_custmid", "jane@sample.com") 
+            .withNumber(":v_openstat", 1));  
+         
+         querySpec.withProjectionExpression( 
+            "OrderDate, ProdCat, ProdNomenclature, OrderStatus"); 
+            ItemCollection<QueryOutcome> items = index.query(querySpec); 
+            Iterator<Item> iterator = items.iterator();  
+            System.out.println("Printing query results...");  
+            
+         while (iterator.hasNext()) { 
+            System.out.println(iterator.next().toJSONPretty()); 
+         }  
+      } else if (indexName == "OrderDateIndex") { 
+         System.out.println("\nUsing index: '" + indexName 
+            + "': this customer's orders placed after 05/22/2016."); 
+         System.out.println("Projected attributes are returned\n"); 
+         Index index = table.getIndex(indexName); 
+             
+         querySpec.withKeyConditionExpression("CustomerID = :v_custmid and OrderDate 
+            >= :v_ordrdate") 
+            .withValueMap(new ValueMap() 
+            .withString(":v_custmid", "jane@sample.com") 
+            .withNumber(":v_ordrdate", 20160522));
+               
+         querySpec.withSelect(Select.ALL_PROJECTED_ATTRIBUTES);  
+         ItemCollection<QueryOutcome> items = index.query(querySpec); 
+         Iterator<Item> iterator = items.iterator();  
+         System.out.println("Printing query results...");  
+            
+         while (iterator.hasNext()) { 
+            System.out.println(iterator.next().toJSONPretty()); 
+         }  
+      } else { 
+         System.out.println("\nNo index: All Jane's orders by OrderID:\n"); 
+         querySpec.withKeyConditionExpression("CustomerID = :v_custmid") 
+            .withValueMap(new ValueMap()
+            .withString(":v_custmid", "jane@example.com"));  
+         
+         ItemCollection<QueryOutcome> items = table.query(querySpec); 
+         Iterator<Item> iterator = items.iterator();  
+         System.out.println("Printing query results...");  
+         
+         while (iterator.hasNext()) { 
+            System.out.println(iterator.next().toJSONPretty()); 
+         } 
+      } 
+   } 
+}

@@ -1,0 +1,43 @@
+MySQLi - Get Client Stats
+
+https://www.tutorialspoint.com/mysqli/mysqli_get_client_stats.htm
+
+MySQLi, Tutorial, Learning, Introduction, Installation, Administration, PHP Syntax, Connection, Create, Drop, Info, Select Database, Data Types, Create, Drop, Clone Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Sorting Results, Using Joins, NULL Values, Regexps, Transactions, Alter Command, Indexes, Temporary, Using Sequences, Handling Duplicate.
+
+August-15-2017-02:34:19
+
+Syntax 
+array mysqli_get_client_stats ( void )
+ Definition and Usage It returns client per-process statistics. Example Try out following example − 
+<?php
+   $servername = "localhost:3306";
+   $username = "root";
+   $password = "";
+   $dbname = "TUTORIALS";
+   $conn = new mysqli($servername, $username, $password, $dbname);
+
+   if ($conn->connect_error) {
+      die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+      exit();
+   } 
+   if (!mysqli_query($conn, "SET a = 1")) {
+      printf("Errorcode: %d\n", mysqli_error($conn));
+   }
+   echo 'Success... ' . mysqli_get_host_info($conn) . "\n";
+   print_r(mysqli_get_client_stats());
+?>
+ The sample output of the above code should be like this − 
+Errorcode: 0 Success... localhost:3306 via TCP/IP Array ( [bytes_sent] => 1840 
+[bytes_received] => 2802 [packets_sent] => 106 [packets_received] => 96 
+[protocol_overhead_in] => 384 [protocol_overhead_out] => 424 
+[bytes_received_ok_packet] => 0 [bytes_received_eof_packet] => 0 
+[bytes_received_rset_header_packet] => 108 [bytes_received_rset_field_meta_packet] => 0 
+[bytes_received_rset_row_packet] => 482 [bytes_received_prepare_response_packet] => 828 
+[bytes_received_change_user_packet] => 210 [packets_sent_command] => 42 
+[packets_received_ok] => 0 [packets_received_eof] => 0 
+[packets_received_rset_header] => 12 [packets_received_rset_field_meta] => 0 
+[packets_received_rset_row] => 26 [packets_received_prepare_response] => 12 
+[packets_received_change_user] => 24 [result_set_queries] => 6 
+[non_result_set_queries] => 12 [no_index_used] => 6 [bad_index_used] => 0 
+[slow_queries] => 0 [buffered_sets] => 6 
+ mysqli_useful_functions.htm

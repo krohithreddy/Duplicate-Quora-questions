@@ -1,0 +1,60 @@
+PouchDB - Read Document
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_read_document.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+You can read/retrieve the contents of a document in PouchDB using the db.get() method. Syntax Following is the syntax of using the db.get() method of PouchDB. This method accepts the document id and an optional callback function. 
+db.get(document, callback)
+ Example Following is an example of reading the contents of a document in PouchDB using the get() method. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//Reading the contents of a Document
+db.get('001', function(err, doc) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(doc);
+   }
+});
+ Save the above code in a file with name Read_Document.js. Open the command prompt and execute the JavaScript file using node as shown in the following command. 
+C:\PouchDB_Examples >node Read_Document.js
+ This reads the contents of the given document that exists in the database named my_database which is stored locally. The following message gets displayed on the console. 
+{
+   name: 'Raju',
+   age: 23,
+   designation: 'Designer',
+   _id: '001',
+   _rev: '1-ba7f6914ac80098e6f63d2bfb0391637'
+}
+ Reading a Document from a Remote Database You can also read a document from the database that is stored remotely on the server (CouchDB). To do so, instead of a database name, you need to pass the path to the database in CouchDB, which contains the document that is to be read. Example Suppose, there is a database named my_database in the CouchDB server. Then, if you verify the list of databases in CouchDB using the URL http://127.0.0.1:5984/_utils/index.html you will get the following screenshot. By clicking on the database named my_database you can see the following screenshot. Here, you can observe that this database contains a document with id 001. Following is an example of reading the contents of the document having id as “001” that exists in a database named my_database, which is stored in the CouchDB server. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('http://localhost:5984/my_database');
+
+//Reading the contents of a document
+db.get('001', function(err, doc) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(doc);
+   }
+});
+ Save the above code in a file with the name Remote_Read_Document.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Remote_Read_Document.js
+ This reads the contents of the given document that exists in the database named my_database which is stored in CouchDB. The following message is displayed on the console. 
+{ 
+   _id: '001',
+   _rev: '3-552920d1ca372986fad7b996ce365f5d',
+   name: 'Raju',
+   age: 23,
+   designation: 'Designer' 
+}

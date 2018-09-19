@@ -1,0 +1,9 @@
+SQL Fundamentals Certification
+
+https://www.tutorialspoint.com/sql_certificate/index.htm
+
+Oracle, Database 11g, Sun, Certificate, SQL, Fundamentals, Free, Preparation, Mock, Exams, Technical, certification, Technical, Projects.
+
+August-15-2017-02:34:06
+
+(Oracle Certified Oracle Database 11g Administrator) Oracle's Oracle Database 11g: SQL Fundamentals exam is part of the Oracle Certified Oracle Database 11g Administrator track, combining training, experience, and testing to endorse candidates with a strong foundation and expertise in the industry’s most advanced database management system. This certification is to put you on the short list for winning Oracle SQL-Based projects. An Oracle Technical Certification is a valuable, industry-recognized credential that signifies a proven level of knowledge and skill. Oracle Database: SQL Fundamentals I - only available as part of Oracle Database: Introduction to SQL (Bundle) in some regions and Exam 051 has been validated against Oracle Database 10g and 11g Release 2 version 11.2.0.1.0. This exam can be taken online as a non-proctored exam, or in a test center as a proctored exam. Exam Number 1Z0-051 Exam Name Oracle Database 11g: SQL Fundamentals Certification Track Oracle Certified Oracle Database 11g Administrator Exam Product Version SQL and PL/SQL Exam Fees US$ 125 Number of Questions 70 Duration 120 Minutes Passing Score 60% Questions format Multiple Choice Audience This certification is primarily good for developer, application developers, PL/SQL developer, forms developer, system analysts, business analysts and data warehouse administrator. It is also recommended to the entry-level and junior programmers wishing to start and/or continue down the path of using SQL technologies and same time software developers and technical leads wishing to solidify their SQL-related skill sets.

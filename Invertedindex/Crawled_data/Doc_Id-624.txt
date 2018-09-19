@@ -1,0 +1,27 @@
+Redis - Sorted Sets
+
+https://www.tutorialspoint.com/redis/redis_sorted_sets.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis Sorted Sets are similar to Redis Sets with the unique feature of values stored in a set. The difference is, every member of a Sorted Set is associated with a score, that is used in order to take the sorted set ordered, from the smallest to the greatest score. In Redis sorted set, add, remove, and test for the existence of members in O(1) (constant time regardless of the number of elements contained inside the set). Maximum length of a list is 232 - 1 elements (4294967295, more than 4 billion of elements per set). Example 
+redis 127.0.0.1:6379> ZADD tutorials 1 redis 
+(integer) 1 
+redis 127.0.0.1:6379> ZADD tutorials 2 mongodb 
+(integer) 1 
+redis 127.0.0.1:6379> ZADD tutorials 3 mysql 
+(integer) 1 
+redis 127.0.0.1:6379> ZADD tutorials 3 mysql 
+(integer) 0 
+redis 127.0.0.1:6379> ZADD tutorials 4 mysql 
+(integer) 0 
+redis 127.0.0.1:6379> ZRANGE tutorials 0 10 WITHSCORES  
+1) "redis" 
+2) "1" 
+3) "mongodb" 
+4) "2" 
+5) "mysql" 
+6) "4" 
+ In the above example, three values are inserted with its score in Redis sorted set named ‘tutorials’ by the command ZADD. Redis Sorted Sets Commands Following table lists some basic commands related to sorted sets. S.No Command & Description 1 ZADD key score1 member1 [score2 member2] Adds one or more members to a sorted set, or updates its score, if it already exists 2 ZCARD key Gets the number of members in a sorted set 3 ZCOUNT key min max Counts the members in a sorted set with scores within the given values 4 ZINCRBY key increment member Increments the score of a member in a sorted set 5 ZINTERSTORE destination numkeys key [key ...] Intersects multiple sorted sets and stores the resulting sorted set in a new key 6 ZLEXCOUNT key min max Counts the number of members in a sorted set between a given lexicographical range 7 ZRANGE key start stop [WITHSCORES] Returns a range of members in a sorted set, by index 8 ZRANGEBYLEX key min max [LIMIT offset count] Returns a range of members in a sorted set, by lexicographical range 9 ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT] Returns a range of members in a sorted set, by score 10 ZRANK key member Determines the index of a member in a sorted set 11 ZREM key member [member ...] Removes one or more members from a sorted set 12 ZREMRANGEBYLEX key min max Removes all members in a sorted set between the given lexicographical range 13 ZREMRANGEBYRANK key start stop Removes all members in a sorted set within the given indexes 14 ZREMRANGEBYSCORE key min max Removes all members in a sorted set within the given scores 15 ZREVRANGE key start stop [WITHSCORES] Returns a range of members in a sorted set, by index, with scores ordered from high to low 16 ZREVRANGEBYSCORE key max min [WITHSCORES] Returns a range of members in a sorted set, by score, with scores ordered from high to low 17 ZREVRANK key member Determines the index of a member in a sorted set, with scores ordered from high to low 18 ZSCORE key member Gets the score associated with the given member in a sorted set 19 ZUNIONSTORE destination numkeys key [key ...] Adds multiple sorted sets and stores the resulting sorted set in a new key 20 ZSCAN key cursor [MATCH pattern] [COUNT count] Incrementally iterates sorted sets elements and associated scores

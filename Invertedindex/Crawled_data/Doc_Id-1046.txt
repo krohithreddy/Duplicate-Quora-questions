@@ -1,0 +1,43 @@
+XSD - Restriction
+
+https://www.tutorialspoint.com/xsd/xsd_restriction.htm
+
+ XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+Restriction element is used to define accepted values that an XML element can take. Syntax 
+<xs:restriction base = "element-type"> restrictions </xs:restriction>
+ base Type of the Element on which restriction is to be applied. For example, 
+<xs:restriction base = "xs:integer">
+ specifies that this restriction is specific to an element of type int. restriction restriction is normally a range of conditions to be applied on the element's value. In this example, we've set a restriction on marks that marks should be in range of 0 to 100 with both values are included. 
+<xs:minInclusive value = "0"/>
+<xs:maxInclusive value = "100"/>
+ Examples Restriction on Value. Condition − Marks should be in range of 0 to 100. 
+<xs:element name = "marks">
+   <xs:simpleType>
+      <xs:restriction base = "xs:integer">
+         <xs:minInclusive value = "0"/>
+         <xs:maxInclusive value = "100"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:element>
+ Restriction on Set of Values. Condition − Grades should only be A, B or C. 
+<xs:element name = "grades">
+   <xs:simpleType>
+      <xs:restriction base = "xs:string">
+         <xs:enumeration value = "A"/>
+         <xs:enumeration value = "B"/>
+         <xs:enumeration value = "C"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:element>
+ Restriction using regular pattern. Condition − firstname should be in alphabets only. 
+<xs:element name = "firstname">
+   <xs:simpleType>
+      <xs:restriction base = "xs:string">
+         <xs:pattern value = "[a-z]"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:element>
+ Types of Restrictions S.No. Restriction & Description 1 enumeration Defines a list of values which are acceptable. 2 fractionDigits Defines the maximum number of decimal places allowed(zero or more). 3 length Defines length in terms of characters of string or items in a list(zero or more). 4 maxExclusive Defines upper bounds for numeric values excluding this number. 5 maxInclusive Defines upper bounds for numeric values including this number. 6 maxLength Defines maximum length in terms of characters of string or items in a list(zero or more). 7 minExclusive Defines lower bounds for numeric values excluding this number. 8 minInclusive Defines lower bounds for numeric values including this number. 9 minLength Defines minimum length in terms of characters of string or items in a list(zero or more). 10 pattern Defines the exact sequence of characters identified by the pattern that are acceptable 11 totalDigits Defines the exact number of digits allowed in the number(always greater than zero) 12 whiteSpace Defines the way in which white space characters (line feeds, tabs, spaces, and carriage returns) are handled xsd_simple_types.htm

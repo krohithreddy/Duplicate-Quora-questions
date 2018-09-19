@@ -1,0 +1,20 @@
+SQLite - VACUUM
+
+https://www.tutorialspoint.com/sqlite/sqlite_vacuum.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+VACUUM command cleans the main database by copying its contents to a temporary database file and reloading the original database file from the copy. This eliminates free pages, aligns table data to be contiguous, and otherwise cleans up the database file structure. VACUUM command may change the ROWID of entries in tables that do not have an explicit INTEGER PRIMARY KEY. The VACUUM command only works on the main database. It is not possible to VACUUM an attached database file. VACUUM command will fail if there is an active transaction. VACUUM command is a no-op for in-memory databases. As the VACUUM command rebuilds the database file from scratch, VACUUM can also be used to modify many database-specific configuration parameters. Manual VACUUM Following is a simple syntax to issue a VACUUM command for the whole database from command prompt − 
+$sqlite3 database_name "VACUUM;"
+ You can run VACUUM from SQLite prompt as well as follows − 
+sqlite> VACUUM;
+ You can also run VACUUM on a particular table as follows − 
+sqlite> VACUUM table_name;
+ Auto-VACCUM SQLite Auto-VACUUM does not do the same as VACUUM rather it only moves free pages to the end of the database thereby reducing the database size. By doing so it can significantly fragment the database while VACUUM ensures defragmentation. Hence, Auto-VACUUM just keeps the database small. You can enable/disable SQLite auto-vacuuming by the following pragmas running at SQLite prompt − 
+sqlite> PRAGMA auto_vacuum = NONE; -- 0 means disable auto vacuum
+sqlite> PRAGMA auto_vacuum = FULL; -- 1 means enable full auto vacuum
+sqlite> PRAGMA auto_vacuum = INCREMENTAL; -- 2 means enable incremental vacuum
+ You can run the following command from the command prompt to check the auto-vacuum setting − 
+$sqlite3 database_name "PRAGMA auto_vacuum;"

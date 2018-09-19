@@ -1,0 +1,259 @@
+DocumentDB SQL - Composite SQL Queries
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_composite_sql_queries.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+Composite Query enables you to combine data from existing queries and then apply filters, aggregates, and so on before presenting the report results, which show the combined data set. Composite Query retrieves multiple levels of related information on existing queries and presents the combined data as a single and flattened query result. Using Composite Query, you also have the option to − Select the SQL pruning option to remove tables and fields that are not needed based on users’ attribute selections. Set the ORDER BY and GROUP BY clauses. Set the WHERE clause as a filter over the result set of a composite query. The above operators can be composed to form more powerful queries. Since DocumentDB supports nested collections, the composition can either be concatenated or nested. Let’s consider the following documents for this example. AndersenFamily document is as follows. 
+{ 
+   "id": "AndersenFamily", 
+   "lastName": "Andersen", 
+	
+   "parents": [ 
+      { "firstName": "Thomas", "relationship":  "father" }, 
+      { "firstName": "Mary Kay", "relationship":  "mother" } 
+   ],
+   
+   "children": [ 
+      { 
+         "firstName": "Henriette Thaulow", 
+         "gender": "female", 
+         "grade": 5, 
+         "pets": [ { "givenName": "Fluffy", "type":  "Rabbit" } ] 
+      } 
+   ],
+   
+   "location": { "state": "WA", "county": "King", "city": "Seattle" }, 
+   "isRegistered": true 
+}
+ SmithFamily document is as follows. 
+{ 
+   "id": "SmithFamily", 
+	
+   "parents": [ 
+      { "familyName": "Smith", "givenName": "James" }, 
+      { "familyName": "Curtis", "givenName": "Helen" } 
+   ],
+   
+   "children": [ 
+      { 
+         "givenName": "Michelle", 
+         "gender": "female", 
+         "grade": 1 
+      }, 
+		
+      { 
+         "givenName": "John", 
+         "gender": "male", 
+         "grade": 7, 
+			
+         "pets": [ 
+            { "givenName": "Tweetie", "type": "Bird" } 
+         ] 
+      } 
+   ],
+   
+   "location": { 
+      "state": "NY", 
+      "county": "Queens", 
+      "city": "Forest Hills" 
+   },
+   
+   "isRegistered": true 
+} 
+ WakefieldFamily document is as follows. 
+{ 
+   "id": "WakefieldFamily", 
+	
+   "parents": [ 
+      { "familyName": "Wakefield", "givenName": "Robin" }, 
+      { "familyName": "Miller", "givenName": "Ben" } 
+   ],
+   
+   "children": [ 
+      { 
+         "familyName": "Merriam", 
+         "givenName": "Jesse", 
+         "gender": "female", 
+         "grade": 6,
+			
+         "pets": [ 
+            { "givenName": "Charlie Brown", "type": "Dog" }, 
+            { "givenName": "Tiger", "type": "Cat" }, 
+            { "givenName": "Princess", "type": "Cat" } 
+         ] 
+      },
+		
+      { 
+         "familyName": "Miller", 
+         "givenName": "Lisa", 
+         "gender": "female", 
+         "grade": 3,
+			
+         "pets": [ 
+            { "givenName": "Jake", "type": "Snake" } 
+         ] 
+      } 
+   ],
+   
+   "location": { "state": "NY", "county": "Manhattan", "city": "NY" }, 
+   "isRegistered": false 
+} 
+ Let’s take a look at an example of concatenated query. Following is the query which will retrieve the id and location of the family where the first child givenName is Michelle. 
+SELECT f.id,f.location 
+FROM Families f 
+WHERE f.children[0].givenName = "Michelle"
+ When the above query is executed, it produces the following output. 
+[
+   { 
+      "id": "SmithFamily", 
+      "location": { 
+         "state": "NY", 
+         "county": "Queens", 
+         "city": "Forest Hills" 
+      }
+   }
+]
+ Let’s consider another example of concatenated query. Following is the query which will return all the documents where the first child grade greater than 3. 
+SELECT * 
+FROM Families f 
+WHERE ({grade: f.children[0].grade}.grade > 3)
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "id": "WakefieldFamily", 
+      "parents": [ 
+         { 
+            "familyName": "Wakefield", 
+            "givenName": "Robin" 
+         },
+		
+         { 
+            "familyName": "Miller", 
+            "givenName": "Ben"
+         } 
+      ],
+	  
+      "children": [ 
+         { 
+            "familyName": "Merriam", 
+            "givenName": "Jesse", 
+            "gender": "female", 
+            "grade": 6,
+				
+            "pets": [ 
+               { 
+                  "givenName": "Charlie Brown", 
+                  "type": "Dog" 
+               },
+				
+               { 
+                  "givenName": "Tiger", 
+                  "type": "Cat" 
+               },
+				
+               { 
+                  "givenName": "Princess", 
+                  "type": "Cat" 
+               } 
+            ] 
+         }, 
+			
+         { 
+            "familyName": "Miller", 
+            "givenName": "Lisa", 
+            "gender": "female", 
+            "grade": 3,
+				
+            "pets": [ 
+               { 
+                  "givenName": "Jake", 
+                  "type": "Snake" 
+               } 
+            ] 
+         } 
+      ],
+	  
+      "location": { 
+         "state": "NY", 
+         "county": "Manhattan",
+         "city": "NY" 
+      },
+	  
+      "isRegistered": false, 
+      "_rid": "Ic8LAJFujgECAAAAAAAAAA==", 
+      "_ts": 1450541623, 
+      "_self": "dbs/Ic8LAA==/colls/Ic8LAJFujgE=/docs/Ic8LAJFujgECAAAAAAAAAA==/", 
+      "_etag": "\"00000500-0000-0000-0000-567582370000\"", 
+      "_attachments": "attachments/" 
+   },
+	
+   { 
+      "id": "AndersenFamily", 
+      "lastName": "Andersen",
+		
+      "parents": [ 
+         { 
+            "firstName": "Thomas", 
+            "relationship": "father" 
+         },
+			
+         { 
+            "firstName": "Mary Kay", 
+            "relationship": "mother" 
+         } 
+      ],
+	  
+      "children": [ 
+         { 
+            "firstName": "Henriette Thaulow", 
+            "gender": "female", 
+            "grade": 5,
+				
+            "pets": [ 
+               { 
+                  "givenName": "Fluffy", 
+                  "type": "Rabbit" 
+               } 
+            ] 
+         } 
+      ],
+	  
+      "location": { 
+         "state": "WA", 
+         "county": "King", 
+         "city": "Seattle"
+      },
+   
+      "isRegistered": true, 
+      "_rid": "Ic8LAJFujgEEAAAAAAAAAA==", 
+      "_ts": 1450541624, 
+      "_self": "dbs/Ic8LAA==/colls/Ic8LAJFujgE=/docs/Ic8LAJFujgEEAAAAAAAAAA==/", 
+      "_etag": "\"00000700-0000-0000-0000-567582380000\"", 
+      "_attachments": "attachments/" 
+   } 
+]	  
+ Let’s take a look at an example of nested queries. Following is the query which will iterate all the parents and then return the document where familyName is Smith. 
+SELECT * 
+FROM p IN Families.parents 
+WHERE p.familyName = "Smith"
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "familyName": "Smith", 
+      "givenName": "James" 
+   } 
+]
+ Let’s consider another example of nested query. Following is the query which will return all the familyName. 
+SELECT VALUE p.familyName
+FROM Families f 
+JOIN p IN f.parents
+ When the above query is executed, it produces he following output. 
+[ 
+   "Wakefield", 
+   "Miller", 
+   "Smith", 
+   "Curtis" 
+]

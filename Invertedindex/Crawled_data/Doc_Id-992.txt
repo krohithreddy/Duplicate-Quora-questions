@@ -1,0 +1,51 @@
+WSDL - <portType> Element
+
+https://www.tutorialspoint.com/wsdl/wsdl_port_type.htm
+
+WSDL, tutorial, basic, advanced, elements, examples, definition, types, message, port, binding, service.
+
+August-15-2017-02:34:07
+
+The <portType> element combines multiple message elements to form a complete one-way or round-trip operation. For example, a <portType> can combine one request and one response message into a single request/response operation. This is most commonly used in SOAP services. A portType can define multiple operations. Let us take a piece of code from the WSDL Example chapter: 
+<portType name="Hello_PortType">
+   <operation name="sayHello">
+      <input message="tns:SayHelloRequest"/>
+      <output message="tns:SayHelloResponse"/>
+   </operation>
+</portType>
+ The portType element defines a single operation, called sayHello. The operation consists of a single input message SayHelloRequest and an output message SayHelloResponse. Patterns of Operation WSDL supports four basic patterns of operation: One-way The service receives a message. The operation therefore has a single input element. The grammar for a one-way operation is: 
+<wsdl:definitions .... > 
+   <wsdl:portType .... > *
+      <wsdl:operation name="nmtoken">
+         <wsdl:input name="nmtoken"? message="qname"/>
+      </wsdl:operation>
+   </wsdl:portType >
+</wsdl:definitions>
+ Request-response The service receives a message and sends a response. The operation therefore has one input element, followed by one output element. To encapsulate errors, an optional fault element can also be specified. The grammar for a request-response operation is: 
+<wsdl:definitions .... >
+   <wsdl:portType .... > *
+      <wsdl:operation name="nmtoken" parameterOrder="nmtokens">
+         <wsdl:input name="nmtoken"? message="qname"/>
+         <wsdl:output name="nmtoken"? message="qname"/>
+         <wsdl:fault name="nmtoken" message="qname"/>*
+      </wsdl:operation>
+   </wsdl:portType >
+</wsdl:definitions>
+ Solicit-response The service sends a message and receives a response. The operation therefore has one output element, followed by one input element. To encapsulate errors, an optional fault element can also be specified. The grammar for a solicit-response operation is: 
+<wsdl:definitions .... >
+   <wsdl:portType .... > *
+      <wsdl:operation name="nmtoken" parameterOrder="nmtokens">
+         <wsdl:output name="nmtoken"? message="qname"/>
+         <wsdl:input name="nmtoken"? message="qname"/>
+         <wsdl:fault name="nmtoken" message="qname"/>*
+      </wsdl:operation>
+   </wsdl:portType >
+</wsdl:definitions>
+ Notification The service sends a message. The operation therefore has a single outputelement. Following is the grammar for a notification operation: 
+<wsdl:definitions .... >
+   <wsdl:portType .... > *
+      <wsdl:operation name="nmtoken">
+         <wsdl:output name="nmtoken"? message="qname"/>
+      </wsdl:operation>
+   </wsdl:portType >
+</wsdl:definitions>

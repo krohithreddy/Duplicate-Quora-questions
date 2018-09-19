@@ -1,0 +1,26 @@
+Redis - Sorted Set Zrange Command
+
+https://www.tutorialspoint.com/redis/sorted_sets_zrange.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis ZRANGE command returns the specified range of elements in the sorted set stored at the key. The elements are considered to be ordered from the lowest to the highest score. Lexicographical order is used for elements with an equal score. Both start and stop are zero-based indexes, where 0 is the first element, 1 is the next element and so on. They can also be negative numbers indicating offsets from the end of the sorted set, with -1 being the last element of the sorted set, -2 the penultimate element and so on. Return Value Array reply, list of elements in the specified range (optionally with their scores). Syntax Following is the basic syntax of Redis ZRANGE command. 
+redis 127.0.0.1:6379> ZRANGE KEY START STOP [WITHSCORES] 
+ Example 
+redis 127.0.0.1:6379> ZADD myzset 0 a 0 b 0 c 0 d 0 e 
+(integer) 5 
+redis 127.0.0.1:6379> ZADD myzset 0 f 0 g 
+(integer) 2 
+redis 127.0.0.1:6379> ZRANGE myzset 0 -1 
+1) "a" 
+2) "b" 
+3) "c" 
+4) "d" 
+5) "e" 
+6) "f" 
+7) "g" 
+redis 127.0.0.1:6379> ZLEXCOUNT myzset [b [f 
+(integer) 5
+ redis_sorted_sets.htm

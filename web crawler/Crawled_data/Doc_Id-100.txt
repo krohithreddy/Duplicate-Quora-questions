@@ -1,0 +1,63 @@
+DocumentDB SQL - Spatial Function
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_spatial_functions.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+DocumentDB also supports the Open Geospatial Consortium (OGC) built-in functions for geospatial querying. Following is a list of built-in supported spatial functions. S.No. Function & Description 1 ST_DISTANCE (point_expr, point_expr) Returns the distance between the two GeoJSON point expressions. 2 ST_WITHIN (point_expr, polygon_expr) Returns a Boolean expression indicating whether the GeoJSON point specified in the first argument is within the GeoJSON polygon in the second argument. 3 ST_ISVALID Returns a Boolean value indicating whether the specified GeoJSON point or polygon expression is valid. 4 ST_ISVALIDDETAILED Returns a JSON value containing a Boolean value if the specified GeoJSON point or polygon expression is valid, and if invalid, additionally the reason as a string value. In this example, we will use the following two documents of universities which contains the location in the form of coordinates. Following is the Case University document. 
+{  
+   "id": "case-university", 
+   "name": "CASE: Center For Advanced Studies In Engineering", 
+   "city": "Islamabad",
+	
+   "location": { 
+      "type": "Point", 
+      "coordinates": [ 
+         33.7194136, 
+         -73.0964862 
+      ] 
+   } 
+}
+ Following is the Nust University document. 
+{ 
+   "id": "nust", 
+   "name": "National University of Sciences and Technology", 
+   "city": "Islamabad", 
+	
+   "location": { 
+      "type": "Point", 
+      "coordinates": [ 
+         33.6455715, 
+         72.9903447 
+      ] 
+   } 
+}
+ Let’s take a look at another example of ST_DISTANCE. Following is the query that returns id and name of the universities documents that are within 30 km of the specified location. 
+SELECT u.id, u.name  
+FROM Universities u 
+WHERE ST_DISTANCE(u.location, {'type': 'Point', 'coordinates':[33.7, -73.0]}) < 30000
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "id": "case-university", 
+      "name": "CASE: Center For Advanced Studies In Engineering" 
+   } 
+]
+ Let’s take a look at another example. Following is the query which contains ST_ISVALID and ST_ISVALIDDETAILED. 
+SELECT  
+   ST_ISVALID({ "type": "Point", "coordinates": [32.9, -132.8] }) AS Point1,
+   
+   ST_ISVALIDDETAILED({ "type": "Point", "coordinates": [31.9, -132.8] }) AS Point2
+ When the above query is executed, it produces the following output. 
+[ 
+   {
+      "Point1": false, 
+      "Point2": { 
+         "valid": false, 
+         "reason": "Latitude values must be between -90 and 90 degrees." 
+      } 
+   }
+]
+ The above output shows that ST_ISVALIDDETAILED also returns the reason why this point is invalid, but ST_ISVALID only returns the Boolean value. documentdb_sql_builtin_function.htm

@@ -1,0 +1,59 @@
+PL/SQL - Basic Loop Statement
+
+https://www.tutorialspoint.com/plsql/plsql_basic_loop.htm
+
+PL/SQL, syntax, Environment Setup, Operators, Transactions, Date and Time, data types, variables, constants, records, conditional statements, iterative statements, cursors, procedures, functions, exception handling, triggers, packages, collections, external procedures, arrays, strings, dbms output.
+
+August-15-2017-02:34:06
+
+Basic loop structure encloses sequence of statements in between the LOOP and END LOOP statements. With each iteration, the sequence of statements is executed and then control resumes at the top of the loop. Syntax The syntax of a basic loop in PL/SQL programming language is − 
+LOOP 
+   Sequence of statements; 
+END LOOP; 
+ Here, the sequence of statement(s) may be a single statement or a block of statements. An EXIT statement or an EXIT WHEN statement is required to break the loop. Example 
+DECLARE 
+   x number := 10; 
+BEGIN 
+   LOOP 
+      dbms_output.put_line(x); 
+      x := x + 10; 
+      IF x > 50 THEN 
+         exit; 
+      END IF; 
+   END LOOP; 
+   -- after exit, control resumes here  
+   dbms_output.put_line('After Exit x is: ' || x); 
+END; 
+/
+ When the above code is executed at the SQL prompt, it produces the following result − 
+10 
+20 
+30 
+40 
+50 
+After Exit x is: 60  
+
+PL/SQL procedure successfully completed. 
+ You can use the EXIT WHEN statement instead of the EXIT statement − 
+DECLARE 
+   x number := 10; 
+BEGIN 
+   LOOP 
+      dbms_output.put_line(x); 
+      x := x + 10; 
+      exit WHEN x > 50; 
+   END LOOP; 
+   -- after exit, control resumes here 
+   dbms_output.put_line('After Exit x is: ' || x); 
+END; 
+/
+ When the above code is executed at the SQL prompt, it produces the following result − 
+10 
+20 
+30 
+40  
+50 
+After Exit x is: 60  
+
+PL/SQL procedure successfully completed. 
+ plsql_loops.htm

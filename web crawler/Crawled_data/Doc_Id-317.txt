@@ -1,0 +1,50 @@
+MySQL - Between Clause
+
+https://www.tutorialspoint.com/mysql/mysql-between-clause.htm
+
+Learning, MySQL, Programming, Database, Clauses, Commands, Functions, MySQL Between Clause, Queries, Simple, Steps, Basic, Advanced, Concepts.
+
+August-15-2017-02:34:19
+
+You can use BETWEEN clause to replace a combination of "greater than equal AND less than equal" conditions. To understand BETWEEN clause, consider an employee_tbl table, which is having following records − 
+mysql> SELECT * FROM employee_tbl;
++------+------+------------+--------------------+
+|  id  | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|   1  | John | 2007-01-24 |        250         |
+|   2  | Ram  | 2007-05-27 |        220         |
+|   3  | Jack | 2007-05-06 |        170         |
+|   3  | Jack | 2007-04-06 |        100         |
+|   4  | Jill | 2007-04-06 |        220         |
+|   5  | Zara | 2007-06-06 |        300         |
+|   5  | Zara | 2007-02-06 |        350         |
++------+------+------------+--------------------+
+7 rows in set (0.00 sec)
+ Now, suppose based on the above table you want to fetch records with conditions daily_typing_pages more than 170 and equal and less than 300 and equal. This can be done using >= and <= conditions as follows − 
+mysql>SELECT * FROM employee_tbl 
+   ->WHERE daily_typing_pages >= 170 AND
+   ->daily_typing_pages <= 300;
++------+------+------------+--------------------+
+|  id  | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|   1  | John | 2007-01-24 |        250         |
+|   2  | Ram  | 2007-05-27 |        220         |
+|   3  | Jack | 2007-05-06 |        170         |
+|   4  | Jill | 2007-04-06 |        220         |
+|   5  | Zara | 2007-06-06 |        300         |
++------+------+------------+--------------------+
+5 rows in set (0.03 sec)
+ Same can be achieved using BETWEEN clause as follows − 
+mysql> SELECT * FROM employee_tbl 
+   -> WHERE daily_typing_pages BETWEEN 170 AND 300; 
++------+------+------------+--------------------+
+|  id  | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|   1  | John | 2007-01-24 |        250         |
+|   2  | Ram  | 2007-05-27 |        220         |
+|   3  | Jack | 2007-05-06 |        170         |
+|   4  | Jill | 2007-04-06 |        220         |
+|   5  | Zara | 2007-06-06 |        300         |
++------+------+------------+--------------------+
+5 rows in set (0.03 sec)
+ mysql-useful-functions.htm

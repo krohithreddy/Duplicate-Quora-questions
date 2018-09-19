@@ -1,0 +1,23 @@
+Neo4j - Create Unique Constraint
+
+https://www.tutorialspoint.com/neo4j/neo4j_create_unique_constraint.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+In Neo4j database, CQL CREATE command always creates a new node or relationship which means even though you use the same values, it inserts a new row. As per our application requirements for some nodes or relationships, we have to avoid this duplication. For this, we should use some database constraints to create a rule on one or more properties of a node or relationship. Like SQL, Neo4j database also supports UNIQUE constraint on node or relationship properties. UNIQUE constraint is used to avoid duplicate records and to enforce data integrity rule. Create UNIQUE Constraint Neo4j CQL provides "CREATE CONSTRAINT" command to create unique constraints on node or relationship properties. Syntax Following is the syntax to create a UNIQUE constraint in Neo4j. 
+MATCH (root {name: "Dhawan"}) 
+CREATE UNIQUE (root)-[:LOVES]-(someone) 
+RETURN someone 
+ Example Before proceeding with the example, create 4 nodes as shown below. 
+CREATE(Dhawan:player{id:001, name: "shikar Dhawan", YOB: 1995, POB: "Delhi"}) 
+CREATE(Jonathan:player {id:002, name: "Jonathan Trott", YOB: 1981, POB: "CapeTown"}) 
+CREATE(Sangakkara:player {id:003, name: "Kumar Sangakkara", YOB: 1977, POB: "Matale"}) 
+CREATE(Rohit:player {id:004, name: "Rohit Sharma", YOB: 1987, POB: "Nagpur"}) 
+CREATE(Virat:player {id:005, name: "Virat Kohli", YOB: 1988, POB: "Delhi"}) 
+ Following is a sample Cypher Query to create a UNIQUE constraint on the property id using Neo4j. 
+CREATE CONSTRAINT ON (n:player) ASSERT n.id IS UNIQUE
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Verification Now, try to add another node with a redundant id value. Here, we are trying to create a node with id 002. 
+CREATE (Jadeja:player {id:002, name: "Ravindra Jadeja", YOB: 1988, POB: "NavagamGhed"}) 
+ If you execute this query, you will get an error message as shown in the following screenshot.

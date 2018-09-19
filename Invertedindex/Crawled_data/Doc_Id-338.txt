@@ -1,0 +1,46 @@
+MySQLi - Connection
+
+https://www.tutorialspoint.com/mysqli/mysqli_connection.htm
+
+MySQLi, Tutorial, Learning, Introduction, Installation, Administration, PHP Syntax, Connection, Create, Drop, Info, Select Database, Data Types, Create, Drop, Clone Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Sorting Results, Using Joins, NULL Values, Regexps, Transactions, Alter Command, Indexes, Temporary, Using Sequences, Handling Duplicate.
+
+August-15-2017-02:34:19
+
+MySQLi Connection using mysql binary You can establish MySQLi database using mysql binary at command prompt. Example Here is a simple example to connect to MySQL server to establish mysqli database from command prompt − 
+[root@host]# mysql -u root -p
+Enter password:******
+ This will give you mysql> command prompt where you will be able to execute any SQL command. Following is the result of above command − 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2854760 to server version: 5.0.9
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+ In above example, we have used root as a user but you can use any other user. Any user will be able to perform all the SQL operations, which are allowed to that user. You can disconnect from MySQL database any time using exit command at mysql> prompt. 
+mysql> exit
+Bye
+ MySQLi Connection using PHP Script PHP provides mysqli_connect() function to open a database connection. This function takes five parameters and returns a MySQLi link identifier on success or FALSE on failure. Syntax 
+connection mysqli_connect(server,user,passwd,new_link,client_flag);
+ Sr.No. Parameter & Description 1 server Optional - The host name running database server. If not specified, then default value is localhost:3306. 2 user Optional - The username accessing the database. If not specified, then default is the name of the user that owns the server process. 3 passwd Optional - The password of the user accessing the database. If not specified, then default is an empty password. 4 new_link Optional - If a second call is made to mysqli_connect() with the same arguments, no new connection will be established; instead, the identifier of the already opened connection will be returned. 5 client_flags Optional - A combination of the following constants − MYSQLI_CLIENT_SSL - Use SSL encryption MYSQLI_CLIENT_COMPRESS - Use compression protocol MYSQLI_CLIENT_IGNORE_SPACE - Allow space after function names MYSQLI_CLIENT_INTERACTIVE - Allow interactive timeout seconds of inactivity before closing the connection You can disconnect from MySQLi database anytime using another PHP function mysqli_close(). This function takes a single parameter, which is a connection returned by mysqli_connect() function. Syntax 
+bool mysqli_close ( resource $link_identifier );
+ If a resource is not specified then last opened database is closed. This function returns true if it closes connection successfully otherwise it returns false. Example Try out the following example to connect to a MySQL server − 
+<html>
+   <head>
+      <title>Connecting MySQLi Server</title>
+   </head>
+   
+   <body>
+      <?php
+         $dbhost = 'localhost:3306';
+         $dbuser = 'guest';
+         $dbpass = 'guest123';
+         $conn = mysqli_connect($dbhost, $dbuser, $dbpass);
+   
+         if(! $conn ){
+            die('Could not connect: ' . mysqli_error());
+         }
+         echo 'Connected successfully';
+         mysqli_close($conn);
+      ?>
+   </body>
+</html>
+ If above example is connected with MySQLi, then the output should be like this on your browser − 
+Connected successfully

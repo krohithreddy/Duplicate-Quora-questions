@@ -1,0 +1,27 @@
+MariaDB - Backup Loading Methods
+
+https://www.tutorialspoint.com/mariadb/mariadb_backup_loading_methods.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+In this chapter, we will learn about various backup loading methods. Restoring a database from a backup is a simple and sometimes terribly long process. There are three options in loading data: the LOAD DATA statement, mysqlimport, and a simple mysqldump restore. Using LOAD DATA The LOAD DATA statement functions as a bulk loader. Review an example of its use that loads a text file − 
+mysql> LOAD DATA LOCAL INFILE 'products_copy.txt' INTO TABLE empty_tbl;
+ Note the following qualities of a LOAD DATA statement − Use the LOCAL keyword to prevent MariaDB from performing a deep search of the host, and use a very specific path. The statement assumes a format consisting of lines terminated by linefeeds (newlines) and data values separated by tabs. Use the FIELDS clause to explicitly specify formatting of fields on a line. Use the LINES clause to specify line ending. Review an example below. 
+mysql> LOAD DATA LOCAL INFILE 'products_copy.txt' INTO TABLE empty_tbl
+   FIELDS TERMINATED BY '|'
+   LINES TERMINATED BY '\n';
+ The statement assumes columns within the datafile use the same order of the table. If you need to set a different order, you can load the file as follows − 
+mysql> LOAD DATA LOCAL INFILE 'products_copy.txt' INTO TABLE empty_tbl (c, b, a);
+ Using MYSQLIMPORT The mysqlimport tool acts as a LOAD DATA wrapper allowing the same operations from the command line. Load data as follows − 
+$ mysqlimport -u root -p --local database_name source_file.txt
+ Specify formatting as follows − 
+$ mysqlimport -u root -p --local --fields-terminated-by="|" \
+   --lines-terminated-by="\n" database_name source_file.txt
+ Use the --columns option to specify column order − 
+$ mysqlimport -u root -p --local --columns=c,b,a \
+   database_name source_file.txt
+ Using MYSQLDUMP Restoring with mysqldump requires this simple statement for loading the dump file back into the host − 
+shell> mysql database_name < source_file.sql
+ SPECIAL CHARACTERS AND QUOTES In a LOAD DATA statement, quotes and special characters may not be interpreted correctly. The statement assumes unquoted values and treats backslashes as escape characters. Use the FIELDS clause to specify formatting. Point to quotes with “ENCLOSED BY,” which causes the stripping of quotes from data values. Change escapes with “ESCAPED BY.”

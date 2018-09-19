@@ -1,0 +1,74 @@
+OrientDB - Java Interface
+
+https://www.tutorialspoint.com/orientdb/orientdb_java_interface.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Similar to RDBMS, OrientDB supports JDBC. For this, first we need to configure the environment for JDBC programming. Following is the procedure to create a connection between your application and database. First, we need to download the JDBC Driver. Visit the following link https://code.google.com/archive/p/orient/downloads to download OrientDB-JDBC. Following are the basic five steps to achieve OrientDB-jdbc connectivity. Load JDBC driver Create Connection Create statement Execute statement Close connection Example Try the following example to understand OrientDB-JDBC connectivity. Let us consider we have an employee table which contains the following fields and its types. Sr.No. Field Name Type 1 Id Integer 2 Name String 3 Salary Integer 4 Join date Date You can create a Schema (table) by executing the following commands. 
+CREATE DATABASE PLOCAL:/opt/orientdb/databases/testdb 
+CREATE CLASS Employee 
+CREATE PROPERTY Customer.id integer 
+CREATE PROPERTY Customer.name String 
+CREATE PROPERTY Customer.salary integer 
+CREATE PROPERTY Customer.join_date date 
+ After executing all the commands, you will get the Employee table with the following fields, employee name with id, age, and join_date fields. Save the following code into OrientJdbcDemo.java file. 
+import com.orientechnologies.common.log.OLogManager; 
+import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx; 
+import org.junit.After; 
+import org.junit.Before; 
+import org.junit.BeforeClass;
+  
+import java.io.File; 
+import java.sql.DriverManager; 
+import java.util.Properties;
+  
+import static com.orientechnologies.orient.jdbc.OrientDbCreationHelper.createSchemaDB; 
+import static com.orientechnologies.orient.jdbc.OrientDbCreationHelper.loadDB; 
+import static java.lang.Class.forName;
+  
+public abstract class OrientJdbcDemo {
+  
+   protected OrientJdbcConnection conn; 
+   
+   public static void main(String ar[]){ 
+       
+      //load Driver 
+      forName(OrientJdbcDriver.class.getName()); 
+      String dbUrl = "memory:testdb"; 
+      ODatabaseDocumentTx db = new ODatabaseDocumentTx(dbUrl); 
+      String username = "admin"; 
+      String password = "admin"; 
+      createSchemaDB(db); 
+      loadDB(db, 20); 
+      dbtx.create(); 
+       
+      //Create Connection 
+      Properties info = new Properties(); 
+      info.put("user", username); 
+      info.put("password", password); 
+      conn = (OrientJdbcConnection) DriverManager.getConnection("jdbc:orient:" + dbUrl, info); 
+	  
+      //create and execute statement 
+      Statement stmt = conn.createStatement(); 
+      int updated = stmt.executeUpdate("INSERT into emplyoee 
+         (intKey, text, salary, date) values ('001','satish','25000','" 
+          + date.toString() + "')"); 
+			 
+      int updated = stmt.executeUpdate("INSERT into emplyoee 
+         (intKey, text, salary, date) values ('002','krishna','25000','" 
+         + date.toString() + "')"); 
+			
+      System.out.println("Records successfully inserted"); 
+	  
+      //Close Connection 
+      if (conn != null && !conn.isClosed()) 
+         conn.close(); 
+   } 
+}
+ The following command is used to compile the above program. 
+$ javac –classpath:.:orientdb-jdbc-1.0-SNAPSHOT.jar OrientJdbcDemo.java  
+$ java –classpath:.:orientdb-jdbc-1.0-SNAPSHOT.jar OrientJdbcDemo 
+ If the above command is executed successfully, you will get the following output. 
+Records Successfully Inserted

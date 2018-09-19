@@ -1,0 +1,39 @@
+Neo4j - Order By Clause
+
+https://www.tutorialspoint.com/neo4j/neo4j_order_by_clause.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+You can arrange the result data in order using the ORDER BY clause. Syntax Following is the syntax of the ORDER BY clause. 
+MATCH (n)  
+RETURN n.property1, n.property2 . . . . . . . .  
+ORDER BY n.property
+ Example Before proceeding with the example, create 5 nodes in Neo4j database as shown below. 
+CREATE(Dhawan:player{name:"shikar Dhawan", YOB: 1985, runs:363, country: "India"})
+CREATE(Jonathan:player{name:"Jonathan Trott", YOB:1981, runs:229, country:"South Africa"})
+CREATE(Sangakkara:player{name:"Kumar Sangakkara", YOB:1977, runs:222, country:"Srilanka"})
+CREATE(Rohit:player{name:"Rohit Sharma", YOB: 1987, runs:177, country:"India"})
+CREATE(Virat:player{name:"Virat Kohli", YOB: 1988, runs:176, country:"India"})
+ Following is a sample Cypher Query which returns the above created nodes in the order of the runs scored by the player using the ORDERBY clause. 
+MATCH (n)  
+RETURN n.name, n.runs 
+ORDER BY n.runs 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Ordering Nodes by Multiple Properties You can arrange the nodes based on multiple properties using ORDEYBY clause. Syntax Following is the syntax to arrange nodes by multiple properties using the ORDERBY clause. 
+MATCH (n) 
+RETURN n 
+ORDER BY n.age, n.name 
+ Example Following is a sample Cypher Query which arranges the nodes created earlier in this chapter based on the properties - runs and country. 
+MATCH (n) 
+RETURN n.name, n.runs, n.country 
+ORDER BY n.runs, n.country
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Ordering Nodes by Descending Order You can arrange the nodes in a database in a descending order using the ORDERBY clause. Syntax Following is the syntax to arrange the nodes in a database. 
+MATCH (n) 
+RETURN n 
+ORDER BY n.name DESC 
+ Example Following is a sample Cypher Query which arranges the nodes in a database in a descending order using the ORDERBY clause. 
+MATCH (n)  
+RETURN n.name, n.runs 
+ORDER BY n.runs DESC 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result.

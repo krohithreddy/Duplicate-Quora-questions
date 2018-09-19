@@ -1,0 +1,32 @@
+PostgreSQL - CREATE Database
+
+https://www.tutorialspoint.com/postgresql/postgresql_create_database.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+This chapter discusses about how to create a new database in your PostgreSQL. PostgreSQL provides two ways of creating a new database − Using CREATE DATABASE, an SQL command. Using createdb a command-line executable. Using CREATE DATABASE This command will create a database from PostgreSQL shell prompt, but you should have appropriate privilege to create a database. By default, the new database will be created by cloning the standard system database template1. Syntax The basic syntax of CREATE DATABASE statement is as follows − 
+CREATE DATABASE dbname;
+ where dbname is the name of a database to create. Example The following is a simple example, which will create testdb in your PostgreSQL schema 
+postgres=# CREATE DATABASE testdb;
+postgres-# 
+ Using createdb Command PostgreSQL command line executable createdb is a wrapper around the SQL command CREATE DATABASE. The only difference between this command and SQL command CREATE DATABASE is that the former can be directly run from the command line and it allows a comment to be added into the database, all in one command. Syntax The syntax for createdb is as shown below − 
+createdb [option...] [dbname [description]]
+ Parameters The table given below lists the parameters with their descriptions. S. No. Parameter & Description 1 dbname The name of a database to create. 2 description Specifies a comment to be associated with the newly created database. 3 options command-line arguments, which createdb accepts. Options The following table lists the command line arguments createdb accepts − S. No. Option & Description 1 -D tablespace Specifies the default tablespace for the database. 2 -e Echo the commands that createdb generates and sends to the server. 3 -E encoding Specifies the character encoding scheme to be used in this database. 4 -l locale Specifies the locale to be used in this database. 5 -T template Specifies the template database from which to build this database. 6 --help Show help about createdb command line arguments, and exit. 7 -h host Specifies the host name of the machine on which the server is running. 8 -p port Specifies the TCP port or the local Unix domain socket file extension on which the server is listening for connections. 9 -U username User name to connect as. 10 -w Never issue a password prompt. 11 -W Force createdb to prompt for a password before connecting to a database. Open the command prompt and go to the directory where PostgreSQL is installed. Go to the bin directory and execute the following command to create a database. 
+createdb -h localhost -p 5432 -U postgres testdb
+password ******
+ The above given command will prompt you for password of the PostgreSQL admin user, which is postgres, by default. Hence, provide a password and proceed to create your new database Once a database is created using either of the above-mentioned methods, you can check it in the list of databases using \l, i.e., backslash el command as follows − 
+postgres-# \l
+                             List of databases
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+-----------+----------+----------+---------+-------+-----------------------
+ postgres  | postgres | UTF8     | C       | C     | 
+ template0 | postgres | UTF8     | C       | C     | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ template1 | postgres | UTF8     | C       | C     | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ testdb    | postgres | UTF8     | C       | C     | 
+(4 rows)
+
+postgres-#

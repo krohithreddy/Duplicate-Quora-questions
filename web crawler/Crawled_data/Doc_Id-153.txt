@@ -1,0 +1,20 @@
+H2 Database - Rollback
+
+https://www.tutorialspoint.com/h2_database/h2_database_rollback.htm
+
+H2 Database, Tutorial, Learning, Introduction, Installation, Data Manipulation Select, Insert, Update, Delete, Backup, Call, Explain, Merge, Show, Data Definition Create, Alter, Drop, Truncate, Commit, Grant, Savepoint, Rollback, JDBC Connection.
+
+August-15-2017-02:34:24
+
+ROLLBACK is a command from the SQL grammar used to roll back the transaction to a Savepoint or to the previous transaction. By using this command, we can either roll back to the specific Savepoint or we can roll back to the previous executed transaction. Syntax There are two different syntaxes for ROLLABCK command. Following is the generic syntax for the rollback command. 
+ROLLBACK [ TO SAVEPOINT savepointName ] 
+ Following is the generic syntax of the Rollback command to the specific transaction. 
+ROLLBACK TRANSACTION transactionName 
+ Example 1 In this example, we will roll back the current transaction to a Savepoint named sp1_test using the following command. 
+ROLLBACK sp1_test; 
+ The above command produces the following output. 
+Rollback successfully 
+ Example 2 In the following example, we will roll back the complete transaction named tx_test using the given command. 
+ROLLBACK TRANSACTION tx_test;
+ The above command produces the following output. 
+Rollback successfully

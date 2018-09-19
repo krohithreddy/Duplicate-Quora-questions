@@ -1,0 +1,75 @@
+ebXML - CPP & CPA
+
+https://www.tutorialspoint.com/ebxml/ebxml_cpp_and_cpa.htm
+
+ebXML, Tutorial, Learn, understanding, B2B, C2C, B2C, Message, Services, System, Registry, Repository, Core, Components, Architecture, Business, Processes, CPP, CPA, Collaboration, Context, Affect, Specifications, Standards, Vision, Goal, OASIS, UN/CEFACT, Agreement, Security, Resources.
+
+August-15-2017-02:34:17
+
+A Collaboration Protocol Profile (CPP) provides all the necessary information on how a particular trading partner intends to do electronic business. A CPP defines the following attributes of a trading partner: Business capabilities through business process. The role (buyer or insurer) they play within a collaboration. Delivery channels and transport protocols. (HTTP, SMTP, etc.) Packaging way of business documents. Security constraints (SSL, Digital Certificates). Per-party configuration to business process specifications. A CPP is stored in ebXML registry with a Globally Unique Identifier (GUID) and business partners can find each other's CPP through registry. The information within the CPP is available to be searched on, so a potential trading partner can determine whether the organization has the capabilities to do business. Structure of a CPP CPP defines namespaces on its root element and a version to distinguish any subsequent changes. The structure of a CPP consists of a root Collaboration Protocol Profile element with following elements: PartyInfo: The PartyInfo element provides information about the organization. Packaging: The Packaging element provides information about the way in which messages are actually constructed. Messages are processed as SOAP Messages. Signature: Optional part of the document Comment elements: can be included. 
+<CollaborationProtocolProfile
+xmlns="http://www.ebxml.org/namespaces/tradePartner"
+xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+xmlns:xlink="http://www.w3.org/1999/xlink"
+version="1.1">
+<PartyInfo>
+    ...
+    <!--REQUIRED, Repeatable-->
+...
+</PartyInfo>
+<Packaging id="ID">
+    ...
+    <!--REQUIRED-->
+    ...
+<Packaging>
+<ds:Signature>
+    ...
+    <!--OPTIONAL-->
+    ...
+</ds:Signature>
+<Comment>
+    ...
+    <!-- OPTIONAL -->
+    ...
+</Comment>
+</CollaborationProtocolProfile>
+ Trading Partner Agreement A Trading Partner Agreement (TPA) is a contract defining both the legal terms and conditions and the technical specifications for both partners in the trading relationship. A CPA is derived from CPP's of trading partners. The rules specified by the electronic TPA are independent of the business processes at either party. A technical description of the terms and conditions from the TPA is expressed in an XML document, which configures each IT systems to operate under the agreement rules. TPA properties include its name, partner names, starting and ending dates, roles, and other parameters. Typically, one party generates a CPA and offers it to the other party for approval. Once both sides have reached agreement, they each take an electronic copy of the same CPA and use it to configure their systems. The CPA may also be added to the registry for reference, but this is not a standard requirement. Structure of a CPA CPA defines namespaces on its root element and a version to distinguish any subsequent changes. The structure of a CPP consists of a root Collaboration Protocol Agreement element along with the following elements: Start and End: These elements represent, in coordinated universal time, the beginning and end of the period during which this CPA is active. PartyInfo: The PartyInfo element provides information about the organization. Here PartyInfo elements are included for both parties involved in the agreement. Packaging: The Packaging element provides information about the way in which messages are actually constructed. Messages are processed as SOAP messages. Signature: Optional part of the document. Comment elements: can be included. 
+<CollaborationProtocolAgreement
+xmlns="http://www.ebxml.org/namespaces/tradePartner"
+xmlns:ds = "http://www.w3.org/2000/09/xmldsig#"
+xmlns:xlink = "http://www.w3.org/1999/xlink"
+cpaid="http://www.example.com/cpas/CPAS"
+version="1.7">
+
+<Status value = "proposed"/>
+<Start>1998-04-07T18:50:00</Start>
+<End>1999-04-07T18:50:00</End>
+
+<ConversationConstraints invocationLimit = "150" concurrentConversations = "10"/>
+
+<PartyInfo>
+    ...
+    <!--REQUIRED, repeatable-->
+    ...
+</PartyInfo>
+
+<PartyInfo>
+    ...
+    <!--REQUIRED, repeatable-->
+    ...
+</PartyInfo>
+
+<Packaging id="N20">
+    ...
+    <!--REQUIRED, repeatable-->
+    ...
+</Packaging>
+
+<ds:Signature>
+    <!--OPTIONAL-->
+</ds:Signature>
+
+<Comment xml:lang="en-gb">
+    <!--OPTIONAL-->
+</Comment>
+</CollaborationProtocolAgreement>

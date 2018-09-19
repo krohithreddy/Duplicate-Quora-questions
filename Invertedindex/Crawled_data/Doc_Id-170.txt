@@ -1,0 +1,43 @@
+HSQLDB - Regular Expressions
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_regular_expressions.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+HSQLDB supports some special symbols for pattern matching operation based on regular expressions and the REGEXP operator. Following is the table of pattern, which can be used along with REGEXP operator. Pattern What the Pattern Matches ^ Beginning of the string $ End of the string . Any single character [...] Any character listed between the square brackets [^...] Any character not listed between the square brackets p1|p2|p3 Alternation; matches any of the patterns p1, p2, or p3 * Zero or more instances of the preceding element + One or more instances of the preceding element {n} n instances of the preceding element {m,n} m through n instances of the preceding element Example Let us try different example queries to meet our requirements. Take a look at the following given queries. Try this Query to find all the authors whose name starts with '^A'. 
+SELECT author FROM tcount_tbl WHERE REGEXP_MATCHES(author,'^A.*');
+ After execution of the above query, you will receive the following output. 
++-----------------+
+|     author      |
++-----------------+
+|     Abdul S     |
+|    Ajith kumar  |
++-----------------+
+ Try this Query to find all the authors whose name ends with 'ul$'. 
+SELECT author FROM tcount_tbl WHERE REGEXP_MATCHES(author,'.*ul$');
+ After execution of the above query, you will receive the following output. 
++-----------------+
+|     author      |
++-----------------+
+|    John Poul    |
++-----------------+
+ Try this Query to find all the authors whose name contains 'th'. 
+SELECT author FROM tcount_tbl WHERE REGEXP_MATCHES(author,'.*th.*');
+ After execution of the above query, you will receive the following output. 
++-----------------+
+|     author      |
++-----------------+
+|    Ajith kumar  | 
+|     Abdul S     |
++-----------------+
+ Try this query to find all the authors whose name starts with vowel (a, e, i, o, u). 
+SELECT author FROM tcount_tbl WHERE REGEXP_MATCHES(author,'^[AEIOU].*');
+ After execution of the above query, you will receive the following output. 
++-----------------+
+|     author      |
++-----------------+
+|     Abdul S     |
+|    Ajith kumar  |
++-----------------+

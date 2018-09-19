@@ -1,0 +1,33 @@
+T-SQL - Date Functions
+
+https://www.tutorialspoint.com/t_sql/t_sql_date_functions.htm
+
+T-SQL, Tutorial, Learning, Beginners, Overview, Data Types, Create Tables, Drop Tables, INSERT Statement, SELECT Statement, UPDATE Statement, DELETE Statement, WHERE Clause, LIKE Clause, ORDER BY Clause, GROUP BY Clause, DISTINCT Clause, Joining Tables, Sub-Queries, Stored Procedures, Transactions, Indexes, Functions, String Functions, Date Functions, Numeric Functions.
+
+August-15-2017-02:34:09
+
+Following is the list of date functions in MS SQL Server. GETDATE() It will return the current date along with time. Syntax Syntax for the above function − 
+GETDATE()
+ Example The following query will return the current date along with time in MS SQL Server. 
+Select getdate() as currentdatetime
+ DATEPART() It will return the part of date or time. Syntax Syntax for the above function − 
+DATEPART(datepart, datecolumnname)
+ Example Example 1 − The following query will return the part of current date in MS SQL Server. 
+Select datepart(day, getdate()) as currentdate
+ Example 2 − The following query will return the part of current month in MS SQL Server. 
+Select datepart(month, getdate()) as currentmonth
+ DATEADD() It will display the date and time by add or subtract date and time interval. Syntax Syntax for the above function − 
+DATEADD(datepart, number, datecolumnname)
+ Example The following query will return the after 10 days date and time from the current date and time in MS SQL Server. 
+Select dateadd(day, 10, getdate()) as after10daysdatetimefromcurrentdatetime 
+ DATEDIFF() It will display the date and time between two dates. Syntax Syntax for the above function − 
+DATEDIFF(datepart, startdate, enddate)
+ Example The following query will return the difference of hours between 2015-11-16 and 2015-11-11 dates in MS SQL Server. 
+Select datediff(hour, 2015-11-16, 2015-11-11) as 
+differencehoursbetween20151116and20151111 
+ CONVERT() It will display the date and time in different formats. Syntax Syntax for the above function − 
+CONVERT(datatype, expression, style)
+ Example The following queries will return the date and time in different format in MS SQL Server. 
+SELECT CONVERT(VARCHAR(19),GETDATE()) 
+SELECT CONVERT(VARCHAR(10),GETDATE(),10) 
+SELECT CONVERT(VARCHAR(10),GETDATE(),110)

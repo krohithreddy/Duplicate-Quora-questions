@@ -1,0 +1,45 @@
+MySQL - SUM Function
+
+https://www.tutorialspoint.com/mysql/mysql-sum-function.htm
+
+Learning, MySQL, Programming, Database, Clauses, Commands, Functions, MySQL Between Clause, Queries, Simple, Steps, Basic, Advanced, Concepts.
+
+August-15-2017-02:34:19
+
+MySQL SUM function is used to find out the sum of a field in various records. To understand SUM function, consider an employee_tbl table, which is having the following records − 
+mysql> SELECT * FROM employee_tbl;
++------+------+------------+--------------------+
+|  id  | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|   1  | John | 2007-01-24 |        250         |
+|   2  | Ram  | 2007-05-27 |        220         |
+|   3  | Jack | 2007-05-06 |        170         |
+|   3  | Jack | 2007-04-06 |        100         |
+|   4  | Jill | 2007-04-06 |        220         |
+|   5  | Zara | 2007-06-06 |        300         |
+|   5  | Zara | 2007-02-06 |        350         |
++------+------+------------+--------------------+
+7 rows in set (0.00 sec)
+ Now, suppose based on the above table you want to calculate total of all the dialy_typing_pages, then you can do so by using the following command − 
+mysql> SELECT SUM(daily_typing_pages)
+   -> FROM employee_tbl;
++-------------------------+
+| SUM(daily_typing_pages) |
++-------------------------+
+|          1610           |
++-------------------------+
+1 row in set (0.00 sec)
+ You can take sum of various records set using GROUP BY clause. Following example will sum up all the records related to a single person and you will have total typed pages by every person. 
+mysql> SELECT name, SUM(daily_typing_pages)
+   -> FROM employee_tbl GROUP BY name;
++------+-------------------------+
+| name | SUM(daily_typing_pages) |
++------+-------------------------+
+| Jack |           270           |
+| Jill |           220           |
+| John |           250           |
+| Ram  |           220           |
+| Zara |           650           |
++------+-------------------------+
+5 rows in set (0.17 sec)
+ mysql-useful-functions.htm

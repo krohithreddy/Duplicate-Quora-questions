@@ -1,0 +1,30 @@
+IMS DB - Control Blocks
+
+https://www.tutorialspoint.com/ims_db/ims_db_control_blocks.htm
+
+IMS DB, Overview, STRUCTURE, DL/I TERMINOLOGY, DL/I PROCESSING, CONTROL BLOCKS, PROGRAMMING, COBOL BASICS, DL/I FUNCTIONS, PCB MASK, SSA, DATA RETRIEVAL, DATA MANIPULATION, SECONDARY INDEXING, LOGICAL DATABASE, RECOVERY, INTERVIEW QUESTIONS.
+
+August-07-2017-01:26:44
+
+IMS Control Blocks define the structure of the IMS database and a program's access to them. The following diagram shows the structure of IMS control blocks. DL/I uses the following three types of Control Blocks − Database Descriptor (DBD) Program Specification Block (PSB) Access Control Block (ACB) Database Descriptor (DBD) Points to note − DBD describes the complete physical structure of the database once all the segments have been defined. While installing a DL/I database, one DBD must be created as it is required to access the IMS database. Applications can use different views of the DBD. They are called Application Data Structures and they are specified in the Program Specification Block. The Database Administrator creates a DBD by coding DBDGEN control statements. DBDGEN DBDGEN is a Database Descriptor Generator. Creating control blocks is the responsibility of the Database Administrator. All the load modules are stored in the IMS library. Assembly Language macro statements are used to create control blocks. Given below is a sample code that shows how to create a DBD using DBDGEN control statements − 
+PRINT	NOGEN
+DBD	NAME=LIBRARY,ACCESS=HIDAM
+DATASET	DD1=LIB,DEVICE=3380
+SEGM	NAME=LIBSEG,PARENT=0,BYTES=10
+FIELD	NAME=(LIBRARY,SEQ,U),BYTES=10,START=1,TYPE=C
+SEGM	NAME=BOOKSEG,PARENT=LIBSEG,BYTES=5
+FIELD	NAME=(BOOKS,SEQ,U),BYTES=10,START=1,TYPE=C
+SEGM	NAME=MAGSEG,PARENT=LIBSEG,BYTES=9
+FIELD	NAME=(MAGZINES,SEQ),BYTES=8,START=1,TYPE=C
+DBDGEN
+FINISH
+END
+ Let us understand the terms used in the above DBDGEN − When you execute the above control statements in JCL, it creates a physical structure where LIBRARY is the root segment, and BOOKS and MAGZINES are its child segments. The first DBD macro statement identifies the database. Here, we need to mention the NAME and ACCESS which is used by DL/I to access this database. The second DATASET macro statement identifies the file that contains the database. The segment types are defined using the SEGM macro statement. We need to specify the PARENT of that segment. If it is a Root segment, then mention PARENT=0. The following table shows parameters used in FIELD macro statement − S.No Parameter & Description 1 Name Name of the field, typically 1 to 8 characters long 2 Bytes Length of the field 3 Start Position of field within segment 4 Type Data type of the field 5 Type C Character data type 6 Type P Packed decimal data type 7 Type Z Zoned decimal data type 8 Type X Hexadecimal data type 9 Type H Half word binary data type 10 Type F Full word binary data type Program Specification Block (PSB) The fundamentals of PSB are as given below − A database has a single physical structure defined by a DBD but the application programs that process it can have different views of the database. These views are called application data structure and are defined in the PSB. No program can use more than one PSB in a single execution. Application programs have their own PSB and it is common for application programs that have similar database processing requirements to share a PSB. PSB consists of one or more control blocks called Program Communication Blocks (PCBs). The PSB contains one PCB for each DL/I database the application program will access. We will discuss more about PCBs in the upcoming modules. PSBGEN must be performed to create a PSB for the program. PSBGEN PSBGEN is known as Program Specification Block Generator. The following example creates a PSB using PSBGEN − 
+PRINT   NOGEN
+PCB     TYPE=DB,DBDNAME=LIBRARY,KEYLEN=10,PROCOPT=LS
+SENSEG  NAME=LIBSEG
+SENSEG  NAME=BOOKSEG,PARENT=LIBSEG
+SENSEG  NAME=MAGSEG,PARENT=LIBSEG
+PSBGEN  PSBNAME=LIBPSB,LANG=COBOL
+END
+ Let us understand the terms used in the above DBDGEN − The first macro statement is the Program Communication Block (PCB) that describes the database Type, Name, Key-Length, and Processing Option. DBDNAME parameter on the PCB macro specifies the name of the DBD. KEYLEN specifies the length of the longest concatenated key. The program can process in the database. PROCOPT parameter specifies the program's processing options. For example, LS means only LOAD Operations. SENSEG is known as Segment Level Sensitivity. It defines the program's access to parts of the database and it is identified at the segment level. The program has access to all the fields within the segments to which it is sensitive. A program can also have field-level sensitivity. In this, we define a segment name and the parent name of the segment. The last macro statement is PCBGEN. PSBGEN is the last statement telling there are no more statements to process. PSBNAME defines the name given to the output PSB module. The LANG parameter specifies the language in which the application program is written, e.g., COBOL. Access Control Block (ACB) Listed below are the points to note about access control blocks − Access Control Blocks for an application program combines the Database Descriptor and the Program Specification Block into an executable form. ACBGEN is known as Access Control Blocks Generator. It is used to generate ACBs. For online programs, we need to pre-build ACBs. Hence the ACBGEN utility is executed before executing the application program. For batch programs, ACBs can be generated at execution time too.

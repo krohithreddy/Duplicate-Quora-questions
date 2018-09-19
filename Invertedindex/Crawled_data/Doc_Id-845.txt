@@ -1,0 +1,9 @@
+DOM - CDATASection Object
+
+https://www.tutorialspoint.com/dom/dom_cdatasection_object.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+In this chapter, we will study about the XML DOM CDATASection Object. The text present within an XML document is parsed or unparsed depending on what it is declared. If the text is declared as Parse Character Data (PCDATA), it is parsed by the parser to convert an XML document into an XML DOM Object. On the other hand, if the text is declared as the unparsed Character Data (CDATA) the text within is not parsed by the XML parser. These are not considered as the markup and will not expand the entities. The purpose of using the CDATASection object is to escape the blocks of text containing characters that would otherwise be regarded as markup. "]]>", this is the only delimiter recognized in a CDATA section that ends the CDATA section. The CharacterData.data attribute holds the text that is contained by the CDATA section. This interface inherits the CharatcterData interface through the Text interface. There are no methods and attributes defined for the CDATASection object. It only directly implements the Text interface.

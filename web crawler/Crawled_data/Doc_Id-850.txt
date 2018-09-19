@@ -1,0 +1,47 @@
+DOM - DocumentType Object Attribute - publicId
+
+https://www.tutorialspoint.com/dom/dom_documenttype_publicid.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The attribute publicId returns the public identifier of the external subset. Syntax Following is the syntax for the usage of the publicId attribute. 
+document.doctype.publicId;
+ Example notation.xml contents are as below − 
+<?xml version = "1.0" encoding = "UTF-8" standalone = "no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" 
+   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<address id = "firstelement">
+   <name>Tanmay Patil</name >
+   <company>TutorialsPoint</company>
+   <phone>(011) 123-4567</phone>
+</address>
+ Following example demonstrates the usage of the publicId attribute − 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/notation_xhtml.xml");
+         document.write("<b>publicid :</b> "+xmlDoc.doctype.publicId);
+      </script>
+   </body>
+</html>
+ Execution Save this file as documenttype_publicid.html on the server path (this file and notation.xml should be on the same path in your server). We will get the output as shown below − 
+publicid : -//W3C//DTD XHTML 1.1//EN 
+ dom_documenttype_object.htm

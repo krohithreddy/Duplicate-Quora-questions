@@ -1,0 +1,23 @@
+SQL - DEFAULT Constraint
+
+https://www.tutorialspoint.com/sql/sql-default.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+The DEFAULT constraint provides a default value to a column when the INSERT INTO statement does not provide a specific value. Example For example, the following SQL creates a new table called CUSTOMERS and adds five columns. Here, the SALARY column is set to 5000.00 by default, so in case the INSERT INTO statement does not provide a value for this column, then by default this column would be set to 5000.00. 
+CREATE TABLE CUSTOMERS(
+   ID   INT              NOT NULL,
+   NAME VARCHAR (20)     NOT NULL,
+   AGE  INT              NOT NULL,
+   ADDRESS  CHAR (25) ,
+   SALARY   DECIMAL (18, 2) DEFAULT 5000.00,       
+   PRIMARY KEY (ID)
+);
+ If the CUSTOMERS table has already been created, then to add a DEFAULT constraint to the SALARY column, you would write a query like the one which is shown in the code block below. ALTER TABLE CUSTOMERS 
+MODIFY SALARY  DECIMAL (18, 2) DEFAULT 5000.00; 
+ Drop Default Constraint To drop a DEFAULT constraint, use the following SQL query. 
+ALTER TABLE CUSTOMERS
+   ALTER COLUMN SALARY DROP DEFAULT;
+ sql-rdbms-concepts.htm

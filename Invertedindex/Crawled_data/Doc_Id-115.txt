@@ -1,0 +1,53 @@
+DynamoDB - Create Table
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_create_table.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+Creating a table generally consists of spawning the table, naming it, establishing its primary key attributes, and setting attribute data types. Utilize the GUI Console, Java, or another option to perform these tasks. Create Table using the GUI Console Create a table by accessing the console at https://console.aws.amazon.com/dynamodb. Then choose the “Create Table” option. Our example generates a table populated with product information, with products of unique attributes identified by an ID number (numeric attribute). In the Create Table screen, enter the table name within the table name field; enter the primary key (ID) within the partition key field; and enter “Number” for the data type. After entering all information, select Create. Create Table using Java Use Java to create the same table. Its primary key consists of the following two attributes − ID − Use a partition key, and the ScalarAttributeType N, meaning number. Nomenclature − Use a sort key, and the ScalarAttributeType S, meaning string. Java uses the createTable method to generate a table; and within the call, table name, primary key attributes, and attribute data types are specified. You can review the following example − 
+import java.util.Arrays;
+ 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient; 
+import com.amazonaws.services.dynamodbv2.document.DynamoDB; 
+import com.amazonaws.services.dynamodbv2.document.Table; 
+
+import com.amazonaws.services.dynamodbv2.model.AttributeDefinition; 
+import com.amazonaws.services.dynamodbv2.model.KeySchemaElement; 
+import com.amazonaws.services.dynamodbv2.model.KeyType; 
+import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput; 
+import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
+ 
+public class ProductsCreateTable {  
+   public static void main(String[] args) throws Exception { 
+      AmazonDynamoDBClient client = new AmazonDynamoDBClient() 
+         .withEndpoint("http://localhost:8000");  
+      
+      DynamoDB dynamoDB = new DynamoDB(client); 
+      String tableName = "Products";  
+      try { 
+         System.out.println("Creating the table, wait..."); 
+         Table table = dynamoDB.createTable (tableName, 
+            Arrays.asList ( 
+               new KeySchemaElement("ID", KeyType.HASH), // the partition key 
+                                                         // the sort key 
+               new KeySchemaElement("Nomenclature", KeyType.RANGE)
+            ),
+            Arrays.asList ( 
+               new AttributeDefinition("ID", ScalarAttributeType.N), 
+               new AttributeDefinition("Nomenclature", ScalarAttributeType.S)
+            ),
+            new ProvisionedThroughput(10L, 10L)
+         );
+         table.waitForActive(); 
+         System.out.println("Table created successfully.  Status: " + 
+            table.getDescription().getTableStatus());
+            
+      } catch (Exception e) {
+         System.err.println("Cannot create the table: "); 
+         System.err.println(e.getMessage()); 
+      } 
+   } 
+}
+ In the above example, note the endpoint: .withEndpoint. It indicates the use of a local install by using the localhost. Also, note the required ProvisionedThroughput parameter, which the local install ignores.

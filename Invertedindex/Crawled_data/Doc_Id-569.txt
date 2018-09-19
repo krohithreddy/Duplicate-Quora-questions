@@ -1,0 +1,49 @@
+PostgreSQL - SELECT Query
+
+https://www.tutorialspoint.com/postgresql/postgresql_select_query.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+PostgreSQL SELECT statement is used to fetch the data from a database table, which returns data in the form of result table. These result tables are called result-sets. Syntax The basic syntax of SELECT statement is as follows − 
+SELECT column1, column2, columnN FROM table_name;
+ Here, column1, column2...are the fields of a table, whose values you want to fetch. If you want to fetch all the fields available in the field then you can use the following syntax − 
+SELECT * FROM table_name;
+ Example Consider the table COMPANY having records as follows − 
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+ The following is an example, which would fetch ID, Name and Salary fields of the customers available in CUSTOMERS table − 
+testdb=# SELECT ID, NAME, SALARY FROM COMPANY ;
+ This would produce the following result − 
+  id | name  | salary
+ ----+-------+--------
+   1 | Paul  |  20000
+   2 | Allen |  15000
+   3 | Teddy |  20000
+   4 | Mark  |  65000
+   5 | David |  85000
+   6 | Kim   |  45000
+   7 | James |  10000
+(7 rows)
+ If you want to fetch all the fields of CUSTOMERS table, then use the following query − 
+testdb=# SELECT * FROM COMPANY;
+ This would produce the following result − 
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)

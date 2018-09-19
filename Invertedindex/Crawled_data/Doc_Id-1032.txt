@@ -1,0 +1,74 @@
+XQuery - XPath
+
+https://www.tutorialspoint.com/xquery/xquery_xpath.htm
+
+Overview, Environment Setup, First Application, FLWOR, HTML Format, XPath, Sequences, Sequence functions, count, distinct-values, subsequence, sum, avg, min, max, insert-before, remove, reverse, index-of, last, position, String functions, string-length, concat, string-join, Date functions, current-date, current-time, current-dateTime, Regular Expressions, matches, replaces, tokenize, if then else, custom functions
+
+August-15-2017-02:34:10
+
+XQuery is XPath compliant. It uses XPath expressions to restrict the search results on XML collections. For more details on how to use XPath, see our XPath Tutorial. Recall the following XPath expression which we have used earlier to get the list of books. 
+doc("books.xml")/books/book
+ XPath Examples We will use the books.xml file and apply XQuery to it. books.xml 
+<?xml version="1.0" encoding="UTF-8"?>
+<books>
+   
+   <book category="JAVA">
+      <title lang="en">Learn Java in 24 Hours</title>
+      <author>Robert</author>
+      <year>2005</year>
+      <price>30.00</price>
+   </book>
+   
+   <book category="DOTNET">
+      <title lang="en">Learn .Net in 24 hours</title>
+      <author>Peter</author>
+      <year>2011</year>
+      <price>40.50</price>
+   </book>
+   
+   <book category="XML">
+      <title lang="en">Learn XQuery in 24 hours</title>
+      <author>Robert</author>
+      <author>Peter</author> 
+      <year>2013</year>
+      <price>50.00</price>
+   </book>
+   
+   <book category="XML">
+      <title lang="en">Learn XPath in 24 hours</title>
+      <author>Jay Ban</author>
+      <year>2010</year>
+      <price>16.50</price>
+   </book>
+   
+</books>
+ We have given here three versions of an XQuery statement that fulfil the same objective of displaying the book titles having a price value greater than 30. XQuery – Version 1 
+(: read the entire xml document :)
+let $books := doc("books.xml")
+
+for $x in $books/books/book
+where $x/price > 30
+return $x/title
+ Output 
+<title lang="en">Learn .Net in 24 hours</title>
+<title lang="en">Learn XQuery in 24 hours</title>
+ XQuery – Version 2 
+(: read all books :)
+let $books := doc("books.xml")/books/book
+
+for $x in $books
+where $x/price > 30
+return $x/title
+ Output 
+<title lang="en">Learn .Net in 24 hours</title>
+<title lang="en">Learn XQuery in 24 hours</title>
+ XQuery – Version 3 
+(: read books with price > 30 :)
+let $books := doc("books.xml")/books/book[price > 30]
+
+for $x in $books
+return $x/title
+ Output 
+<title lang="en">Learn .Net in 24 hours</title>
+<title lang="en">Learn XQuery in 24 hours</title>
+ Verify the Result To verify the result, replace the contents of books.xqy (given in the Environment Setup chapter) with the above XQuery expression and execute the XQueryTester java program.

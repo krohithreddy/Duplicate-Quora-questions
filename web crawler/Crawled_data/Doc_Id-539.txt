@@ -1,0 +1,27 @@
+PostgreSQL - DROP Table
+
+https://www.tutorialspoint.com/postgresql/postgresql_drop_table.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+The PostgreSQL DROP TABLE statement is used to remove a table definition and all associated data, indexes, rules, triggers, and constraints for that table. You have to be careful while using this command because once a table is deleted then all the information available in the table would also be lost forever. Syntax Basic syntax of DROP TABLE statement is as follows − 
+DROP TABLE table_name;
+ Example We had created the tables DEPARTMENT and COMPANY in the previous chapter. First, verify these tables (use \d to list the tables) − 
+testdb-# \d
+ This would produce the following result − 
+           List of relations
+ Schema |    Name    | Type  |  Owner
+--------+------------+-------+----------
+ public | company    | table | postgres
+ public | department | table | postgres
+(2 rows)
+ This means DEPARTMENT and COMPANY tables are present. So let us drop them as follows − 
+testdb=# drop table department, company;
+ This would produce the following result − 
+DROP TABLE
+testdb=# \d
+relations found.
+testdb=# 
+ The message returned DROP TABLE indicates that drop command is executed successfully.

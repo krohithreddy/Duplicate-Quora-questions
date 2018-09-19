@@ -1,0 +1,62 @@
+DynamoDB - CloudTrail
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_cloudtrail.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+DynamoDB includes CloudTrail integration. It captures low-level API requests from or for DynamoDB in an account, and sends log files to a specified S3 bucket. It targets calls from the console or API. You can use this data to determine requests made and their source, user, timestamp, and more. When enabled, it tracks actions in log files, which include other service records. It supports eight actions and two streams − The eight actions are as follows − CreateTable DeleteTable DescribeTable ListTables UpdateTable DescribeReservedCapacity DescribeReservedCapacityOfferings PurchaseReservedCapacityOfferings While, the two streams are − DescribeStream ListStreams All the logs contain information about accounts making requests. You can determine detailed information like whether root or IAM users made the request, or whether with temporary credentials or federated. The log files remain in storage for however long you specify, with settings for archiving and deletion. The default creates encrypted logs. You can set alerts for new logs. You can also organize multiple logs, across regions and accounts, into a single bucket. Interpreting Log Files Each file contains a single or multiple entries. Each entry consists of multiple JSON format events. An entry represents a request, and includes associated information; with no guarantee of order. You can review the following sample log file − 
+{"Records": [ 
+   { 
+      "eventVersion": "5.05",  
+      "userIdentity": {
+         "type": "AssumedRole", 
+         "principalId": "AKTTIOSZODNN8SAMPLE:jane", 
+         "arn": "arn:aws:sts::155522255533:assumed-role/users/jane", 
+         "accountId": "155522255533", 
+         "accessKeyId": "AKTTIOSZODNN8SAMPLE", 
+         
+         "sessionContext": { 
+            "attributes": { 
+               "mfaAuthenticated": "false", 
+               "creationDate": "2016-05-11T19:01:01Z" 
+            },
+            
+            "sessionIssuer": { 
+               "type": "Role", 
+               "principalId": "AKTTI44ZZ6DHBSAMPLE", 
+               "arn": "arn:aws:iam::499955777666:role/admin-role", 
+               "accountId": "499955777666", 
+               "userName": "jill" 
+            } 
+         } 
+      },
+      
+      "eventTime": "2016-05-11T14:33:20Z", 
+      "eventSource": "dynamodb.amazonaws.com", 
+      "eventName": "DeleteTable", 
+      "awsRegion": "us-west-2", 
+      "sourceIPAddress": "192.0.2.0", 
+      "userAgent": "console.aws.amazon.com", 
+      "requestParameters": {"tableName": "Tools"}, 
+      
+      "responseElements": {"tableDescription": { 
+         "tableName": "Tools", 
+         "itemCount": 0, 
+         
+         "provisionedThroughput": { 
+            "writeCapacityUnits": 25, 
+            "numberOfDecreasesToday": 0, 
+            "readCapacityUnits": 25 
+         },
+         "tableStatus": "DELETING", 
+         "tableSizeBytes": 0
+      }},
+      "requestID": "4D89G7D98GF7G8A7DF78FG89AS7GFSO5AEMVJF66Q9ASUAAJG", 
+      "eventID": "a954451c-c2fc-4561-8aea-7a30ba1fdf52", 
+      "eventType": "AwsApiCall", 
+      "apiVersion": "2013-04-22", 
+      "recipientAccountId": "155522255533" 
+   } 
+]}

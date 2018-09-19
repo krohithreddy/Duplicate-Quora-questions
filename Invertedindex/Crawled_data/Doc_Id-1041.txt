@@ -1,0 +1,17 @@
+XSD - Numeric Data Types
+
+https://www.tutorialspoint.com/xsd/xsd_numeric.htm
+
+XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+Numeric data types are used to represent numbers in XML documents. <xs:decimal> data type The <xs:decimal> data type is used to represent numeric values. It supports decimal numbers up to 18 digits. <xs:decimal> Example Element declaration in XSD − 
+<xs:element name = "score" type = "xs:decimal"/>
+ Element usage in XML − 
+<score>9.12</score>
+ <xs:integer> data type The <xs:integer> data type is used to represent integer values. <xs:integer> Example Element declaration in XSD − 
+<xs:element name = "score" type = "xs:integer"/>
+ Element usage in XML − 
+<score>9</score>
+ Numeric Data Types Following is the list of commonly used numeric data types. S.No. Name & Description 1. byte A signed 8 bit integer 2. decimal A decimal value 3. int A signed 32 bit integer 4. integer An integer value 5. long A signed 64 bit integer 6. negativeInteger An integer having only negative values (..,-2,-1) 7. nonNegativeInteger An integer having only non-negative values (0,1,2,..) 8. nonPositiveInteger An integer having only non-positive values (..,-2,-1,0) 9. positiveInteger An integer having only positive values (1,2,..) 10. short A signed 16 bit integer 11. unsignedLong An unsigned 64 bit integer 12. unsignedInt An unsigned 32 bit integer 13. unsignedShort An unsigned 16 bit integer 14. unsignedByte An unsigned 8 bit integer Restrictions Following types of restrictions can be used with Date data types − enumeration fractionDigits maxExclusive maxInclusive minExclusive minInclusive pattern totalDigits whiteSpace

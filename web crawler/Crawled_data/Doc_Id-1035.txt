@@ -1,0 +1,76 @@
+XSD - <anyAttribute>
+
+https://www.tutorialspoint.com/xsd/xsd_complex_anyattribute.htm
+
+XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+<xs:anyAttribute> element is used to extend the XSD functionality. It is used to extend a complexType element defined in one xsd by an attribute which is not defined in the schema. Consider an example − person.xsd has defined person complexType element. attributes.xsd has defined age attribute. person.xsd 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema"
+   targetNamespace = "http://www.tutorialspoint.com"
+   xmlns = "http://www.tutorialspoint.com"
+   elementFormDefault = "qualified">
+
+   <xs:element name = "person">
+      <xs:complexType >
+         <xs:sequence>
+            <xs:element name = "firstname" type = "xs:string"/>
+            <xs:element name = "lastname" type = "xs:string"/>
+            <xs:element name = "nickname" type = "xs:string"/>     
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+	
+</xs:schema>
+ attributes.xsd 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema"
+   targetNamespace = "http://www.tutorialspoint.com"
+   xmlns = "http://www.tutorialspoint.com"
+   elementFormDefault = "qualified">
+
+   <xs:attribute name = "age">
+      <xs:simpleType>
+         <xs:restriction base = "xs:integer">
+            <xs:pattern value = "[0-100]"/>
+         </xs:restriction>
+      </xs:simpleType>
+   </xs:attribute>
+	
+</xs:schema>
+ If we want to define a person with age in XML, then the following declaration will be invalid. person.xml 
+<?xml version = "1.0"?>
+<class xmlns = "http://www.tutorialspoint.com"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.tutorialspoint.com person.xsd
+   http://www.tutorialspoint.com attributes.xsd">  
+
+   <person age = "20">
+      <firstname>Dinkar</firstname>
+      <lastname>Kad</lastname>
+      <nickname>Dinkar</lastname>  
+   </person>
+	
+</class>
+ Use <xs:anyAttribute> In order to validate above person.xml, add <xs:anyAttribute> to person element in person.xsd. person.xsd 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema"
+   targetNamespace = "http://www.tutorialspoint.com"
+   xmlns = "http://www.tutorialspoint.com"
+   elementFormDefault = "qualified">
+
+   <xs:element name = "person">
+      <xs:complexType >
+         <xs:sequence>
+            <xs:element name = "firstname" type = "xs:string"/>
+            <xs:element name = "lastname" type = "xs:string"/>
+            <xs:element name = "nickname" type = "xs:string"/>            
+         </xs:sequence>
+         <xs:anyAttribute/>
+      </xs:complexType>
+   </xs:element>
+
+</xs:schema>
+ Now person.xml will be validated against person.xsd and attributes.xsd. xsd_complex_types.htm

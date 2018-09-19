@@ -1,0 +1,54 @@
+DynamoDB - Error Handling
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_error_handling.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+On unsuccessful processing of a request, DynamoDB throws an error. Each error consists of the following components: HTTP status code, exception name, and message. Error management rests on your SDK, which propagates errors, or your own code. Codes and Messages Exceptions fall into different HTTP header status codes. The 4xx and 5xx hold errors related to request issues and AWS. A selection of exceptions in the HTTP 4xx category are as follows − AccessDeniedException − The client failed to sign the request correctly. ConditionalCheckFailedException − A condition evaluated to false. IncompleteSignatureException − The request included an incomplete signature. Exceptions in the HTTP 5xx category are as follows − Internal Server Error Service Unavailable Retries and Backoff Algorithms Errors come from a variety of sources such as servers, switches, load balancers, and other pieces of structures and systems. Common solutions consist of simple retries, which supports reliability. All SDKs include this logic automatically, and you can set retry parameters to suit your application needs. For example − Java offers a maxErrorRetry value to stop retries. Amazon recommends using a backoff solution in addition to retries in order to control flow. This consists of progressively increasing wait periods between retries and eventually stopping after a fairly short period. Note SDKs perform automatic retries, but not exponential backoff. The following program is an example of the retry backoff − 
+public enum Results { 
+   SUCCESS,  
+   NOT_READY,  
+   THROTTLED,  
+   SERVER_ERROR 
+}
+public static void DoAndWaitExample() {  
+   try {
+      // asynchronous operation. 
+      long token = asyncOperation();  
+      int retries = 0; 
+      boolean retry = false;  
+      
+      do { 
+         long waitTime = Math.min(getWaitTime(retries), MAX_WAIT_INTERVAL);  
+         System.out.print(waitTime + "\n");  
+         
+         // Pause for result 
+         Thread.sleep(waitTime);  
+         
+         // Get result 
+         Results result = getAsyncOperationResult(token);  
+         
+         if (Results.SUCCESS == result) { 
+            retry = false; 
+         } else if (Results.NOT_READY == result) { 
+            retry = true; 
+         } else if (Results.THROTTLED == result) { 
+            retry = true; 
+         } else if (Results.SERVER_ERROR == result) { 
+            retry = true; 
+         } else { 
+            
+            // stop on other error 
+            retry = false; 
+         }  
+      } while (retry && (retries++ < MAX_RETRIES)); 
+   }
+   catch (Exception ex) { 
+   } 
+}
+public static long getWaitTime(int retryCount) {  
+   long waitTime = ((long) Math.pow(3, retryCount) * 100L);  
+   return waitTime; 
+}

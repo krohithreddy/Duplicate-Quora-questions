@@ -1,0 +1,98 @@
+T-SQL - Transactions
+
+https://www.tutorialspoint.com/t_sql/t_sql_transactions.htm
+
+T-SQL, Tutorial, Learning, Beginners, Overview, Data Types, Create Tables, Drop Tables, INSERT Statement, SELECT Statement, UPDATE Statement, DELETE Statement, WHERE Clause, LIKE Clause, ORDER BY Clause, GROUP BY Clause, DISTINCT Clause, Joining Tables, Sub-Queries, Stored Procedures, Transactions, Indexes, Functions, String Functions, Date Functions, Numeric Functions.
+
+August-15-2017-02:34:09
+
+A transaction is a unit of work that is performed against a database. Transactions are units or sequences of work accomplished in a logical order, whether in a manual fashion by a user or automatically by some sort of a database program. A transaction is the propagation of one or more changes to the database. For example, if you are creating a record or updating a record or deleting a record from the table, then you are performing a transaction on the table. It is important to control transactions to ensure data integrity and to handle database errors. Practically, you will club many SQL queries into a group and you will execute all of them together as a part of a transaction. Properties of Transactions Transactions have the following four standard properties, usually referred to by the acronym ACID − Atomicity − Ensures that all operations within the work unit are completed successfully; otherwise, the transaction is aborted at the point of failure, and previous operations are rolled back to their former state. Consistency − Ensures that the database properly changes state upon a successfully committed transaction. Isolation − Enables transactions to operate independently of and transparent to each other. Durability − Ensures that the result or effect of a committed transaction persists in case of a system failure. Transaction Control There are following commands used to control transactions − COMMIT − To save the changes. ROLLBACK − To roll back the changes. SAVEPOINT − Creates points within groups of transactions in which to ROLLBACK. SET TRANSACTION − Places a name on a transaction. Transactional control commands are only used with the DML commands INSERT, UPDATE and DELETE only. They cannot be used while creating tables or dropping them because these operations are automatically committed in the database. In order to use transactional control commands in MS SQL Server, we have to begin transaction with ‘begin tran’ or begin transaction command otherwise these commands will not work. COMMIT Command The COMMIT command is the transactional command used to save changes invoked by a transaction to the database. This command saves all transactions to the database since the last COMMIT or ROLLBACK command. Syntax Following is the syntax for COMMIT command. 
+COMMIT; 
+ Example Consider the CUSTOMERS table having the following records. 
+ID  NAME       AGE       ADDRESS           SALARY 
+1   Ramesh     32        Ahmedabad         2000.00 
+2   Khilan     25        Delhi             1500.00 
+3   kaushik    23        Kota              2000.00 
+4   Chaitali   25        Mumbai            6500.00 
+5   Hardik     27        Bhopal            8500.00 
+6   Komal      22        MP                4500.00 
+7   Muffy      24        Indore            10000.00 
+ Following command example will delete records from the table having age = 25 and then COMMIT the changes in the database. 
+Begin Tran 
+DELETE FROM CUSTOMERS 
+   WHERE AGE = 25 
+COMMIT 
+ As a result, two rows from the table would be deleted and SELECT statement will produce the following output. 
+ID  NAME       AGE       ADDRESS           SALARY 
+1   Ramesh     32        Ahmedabad         2000.00
+3   kaushik    23        Kota              2000.00
+5   Hardik     27        Bhopal            8500.00 
+6   Komal      22        MP                4500.00 
+7   Muffy      24        Indore            10000.00 
+ ROLLBACK Command The ROLLBACK command is the transactional command used to undo transactions that have not already been saved to the database. This command can only be used to undo transactions since the last COMMIT or ROLLBACK command was issued. Syntax Following is the syntax for ROLLBACK command. 
+ROLLBACK
+ Example Consider the CUSTOMERS table having the following records. 
+ID  NAME       AGE       ADDRESS            SALARY 
+1   Ramesh     32        Ahmedabad          2000.00 
+2   Khilan     25        Delhi              1500.00 
+3   kaushik    23        Kota               2000.00 
+4   Chaitali   25        Mumbai             6500.00 
+5   Hardik     27        Bhopal             8500.00 
+6   Komal      22        MP                 4500.00 
+7   Muffy      24        Indore             10000.00 
+ Following command example will delete records from the table having age = 25 and then ROLLBACK the changes in the database. 
+Begin Tran 
+DELETE FROM CUSTOMERS 
+   WHERE AGE = 25; 
+ROLLBACK
+ As a result, delete operation will not impact the table and SELECT statement will produce the following result. 
+ID  NAME       AGE       ADDRESS          SALARY 
+1   Ramesh     32        Ahmedabad        2000.00 
+2   Khilan     25        Delhi            1500.00 
+3   kaushik    23        Kota             2000.00 
+4   Chaitali   25        Mumbai           6500.00 
+5   Hardik     27        Bhopal           8500.00 
+6   Komal      22        MP               4500.00 
+7   Muffy      24        Indore           10000.00 
+ SAVEPOINT Command SAVEPOINT is a point in a transaction when you can roll the transaction back to a certain point without rolling back the entire transaction. Syntax Following is the syntax for SAVEPOINT command. 
+SAVE TRANSACTION SAVEPOINT_NAME
+ This command serves only in the creation of a SAVEPOINT among transactional statements. The ROLLBACK command is used to undo a group of transactions. Following is the syntax for rolling back to a SAVEPOINT. 
+ROLLBACK TO SAVEPOINT_NAME
+ In the following example, we will delete three different records from the CUSTOMERS table. We will have to create a SAVEPOINT before each delete, so that we can ROLLBACK to any SAVEPOINT at any time to return the appropriate data to its original state. Example Consider the CUSTOMERS table having the following records − 
+ID  NAME       AGE       ADDRESS          SALARY 
+1   Ramesh     32        Ahmedabad        2000.00 
+2   Khilan     25        Delhi            1500.00 
+3   kaushik    23        Kota             2000.00 
+4   Chaitali   25        Mumbai           6500.00 
+5   Hardik     27        Bhopal           8500.00 
+6   Komal      22        MP               4500.00 
+7   Muffy      24        Indore           10000.00 
+ Following are the series of operations − 
+Begin Tran 
+SAVE Transaction SP1 
+Savepoint created. 
+DELETE FROM CUSTOMERS WHERE ID = 1  
+1 row deleted. 
+SAVE Transaction SP2 
+Savepoint created. 
+DELETE FROM CUSTOMERS WHERE ID = 2 
+1 row deleted.
+SAVE Transaction SP3 
+Savepoint created. 
+DELETE FROM CUSTOMERS WHERE ID = 3 
+1 row deleted.
+ The three deletions have taken place, however, we have changed our mind and decide to ROLLBACK to the SAVEPOINT that we identified as SP2. Because SP2 was created after the first deletion, the last two deletions are undone − 
+ROLLBACK Transaction SP2 
+Rollback complete. 
+ Notice that only the first deletion took place since we rolled back to SP2. 
+SELECT * FROM CUSTOMERS 
+ 6 rows selected. 
+ID  NAME       AGE       ADDRESS          SALARY 
+2   Khilan     25        Ahmedabad        1500.00 
+3   kaushik    23        Kota             2000.00 
+4   Chaitali   25        Mumbai           6500.00 
+5   Hardik     27        Bhopal           8500.00 
+6   Komal      22        MP               4500.00 
+7   Muffy      24        Indore           10000.00 
+ SET TRANSACTION Command SET TRANSACTION command can be used to initiate a database transaction. This command is used to specify characteristics for the transaction that follows. Syntax Following is the syntax for SET TRANSACTION. 
+SET TRANSACTION ISOLATION LEVEL <Isolationlevel_name>

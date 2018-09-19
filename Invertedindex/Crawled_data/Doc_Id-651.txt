@@ -1,0 +1,30 @@
+Creating a Table from an Existing Table
+
+https://www.tutorialspoint.com/sql/sql-create-table-using-tables.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+A copy of an existing table can be created using a combination of the CREATE TABLE statement and the SELECT statement. The new table has the same column definitions. All columns or specific columns can be selected. When you will create a new table using the existing table, the new table would be populated using the existing values in the old table. Syntax The basic syntax for creating a table from another table is as follows − 
+CREATE TABLE NEW_TABLE_NAME AS
+   SELECT [ column1, column2...columnN ]
+   FROM EXISTING_TABLE_NAME
+   [ WHERE ]
+ Here, column1, column2... are the fields of the existing table and the same would be used to create fields of the new table. Example Following is an example, which would create a table SALARY using the CUSTOMERS table and having the fields customer ID and customer SALARY − 
+SQL> CREATE TABLE SALARY AS
+   SELECT ID, SALARY
+   FROM CUSTOMERS;
+ This would create a new table SALARY which will have the following records − 
++----+----------+
+| ID | SALARY   |
++----+----------+
+|  1 |  2000.00 |
+|  2 |  1500.00 |
+|  3 |  2000.00 |
+|  4 |  6500.00 |
+|  5 |  8500.00 |
+|  6 |  4500.00 |
+|  7 | 10000.00 |
++----+----------+
+ sql-create-table.htm

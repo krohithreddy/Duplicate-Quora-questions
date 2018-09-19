@@ -1,0 +1,19 @@
+Redis - String Set Command
+
+https://www.tutorialspoint.com/redis/strings_set.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis SET command is used to set some string value in Redis key. Return Value Simple string reply. OK, if the value is set in the key. Null, if the value does not set. Syntax Following is the basic syntax of Redis SET command. 
+redis 127.0.0.1:6379> SET KEY_NAME VALUE
+ Example 
+redis 127.0.0.1:6379> SET tutorialspoint redis 
+OK 
+ Options In SET command, there are many options available, that modify the behavior of command. Following is the basic syntax of SET command with available options. 
+redis 127.0.0.1:6379> SET KEY VALUE [EX seconds] [PX milliseconds] [NX|XX]
+ EX seconds − Sets the specified expire time, in seconds. PX milliseconds − Sets the specified expire time, in milliseconds. NX − Only sets the key if it does not already exist. XX − Only sets the key if it already exists. Example 
+redis 127.0.0.1:6379> SET tutorialspoint redis EX 60 NX  
+OK
+ The above example will set the key ‘tutorialspoint’, with expiry of 60 seconds, if the key does not exist. redis_strings.htm

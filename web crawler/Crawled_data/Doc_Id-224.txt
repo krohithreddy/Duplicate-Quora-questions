@@ -1,0 +1,18 @@
+MariaDB - Temporary Tables
+
+https://www.tutorialspoint.com/mariadb/mariadb_temporary_tables.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+Some operations can benefit from temporary tables due to speed or disposable data. The life of a temporary table ends at the termination of a session whether you employ them from the command prompt, with a PHP script, or through a client program. It also does not appear in the system in a typical fashion. The SHOW TABLES command will not reveal a list containing temporary tables. Create a Temporary Table The TEMPORARY keyword within a CREATE TABLE statement spawns a temporary table. Review an example given below − 
+mysql>CREATE TEMPORARY TABLE order (
+   item_name VARCHAR(50) NOT NULL
+      , price DECIMAL(7,2) NOT NULL DEFAULT 0.00
+      , quantity INT UNSIGNED NOT NULL DEFAULT 0
+);
+ In creating a temporary table, you can clone existing tables, meaning all their general characteristics, with the LIKE clause. The CREATE TABLE statement used to spawn the temporary table will not commit transactions as a result of the TEMPORARY keyword. Though temporary tables stand apart from non-temporary and drop at the end of a session, they may have certain conflicts − They sometimes conflict with ghost temporary tables from expired sessions. They sometimes conflict with shadow names of non-temporary tables. Note − Temporary tables are permitted to have the same name as an existing non-temporary table because MariaDB views it as a difference reference. Administration MariaDB requires granting privileges to users for creating temporary tables. Utilize a GRANT statement to give this privilege to non-admin users. 
+GRANT CREATE TEMPORARY TABLES ON orders TO 'machine122'@'localhost';
+ Drop a Temporary Table Though temporary tables are essentially removed at the end of sessions, you have the option to delete them. Dropping a temporary table requires the use of the TEMPORARY keyword, and best practices suggest dropping temporary tables before any non-temporary. 
+mysql> DROP TABLE order;

@@ -1,0 +1,36 @@
+DB2 - Alias
+
+https://www.tutorialspoint.com/db2/db2_alias.htm
+
+DB2 Bufferpools, introduction to db2, db2 server installation, db2 instance, databases, buffer pools, table spaces, storage groups, schemas, data type, tables, alias, constraints, indexes, triggers, sequences, views, db2 with xml, backup and recovery, database security, roles, ldap etc.
+
+August-15-2017-02:34:24
+
+This chapter describes the creation of alias and retrieving data using alias of database objects. Introduction Alias is an alternative name for database objects. It can be used to reference the database object. You can say, it is a nick name for database objects. Alias are defined for the objects to make their name short, thereby reducing the query size and increasing readability of the query. Creating database object aliases You can create database object alias as shown below: Syntax: 
+db2 create alias <alias_name> for <table_name>    
+ Example: Creating alias name for table “professional.customer” table 
+db2 create alias pro_cust for professional.customer    
+ If you pass “SELECT * FROM PRO_CUST” or “SELECT * FROM PROFESSIONAL.CUSTOMER” the database server will show the same result. Syntax: [To retrieve values from a table directly with schema name] 
+db2 select * from <schema_name>.<table_name>    
+ Example: [To retrieve values from table customer] 
+db2 select * from professional.customer    
+ Output: 
+CUSTID  FULLNAME    PHONE
+------- ---------   ------------ 
+100     ravi        9898989 
+101     krathi      87996659 
+102     gopal       768678687 
+  
+  3 record(s) selected.    
+ Retrieving values using alias name of the table You can retrieve values from database using alias name as shown below: Syntax: [To retrieve values from table by calling alias name of the table] 
+db2 select * from <alias_name>    
+ Example: [To retrieve values from table customer using alias name] 
+db2 select * from pro_cust
+ Output: 
+CUSTID  FULLNAME    PHONE
+------- ---------   ------------ 
+100     ravi        9898989 
+101     krathi      87996659 
+102     gopal       768678687 
+  
+  3 record(s) selected.

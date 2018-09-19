@@ -1,0 +1,87 @@
+OrientDB - Display Records
+
+https://www.tutorialspoint.com/orientdb/orientdb_display_records.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Similar to RDBMS, OrientDB supports different types of SQL queries to retrieve the records from the database. While retrieving the records we have different variations or options of queries along with the select statement. The following statement is the basic syntax of the SELECT command. 
+SELECT [ <Projections> ] [ FROM <Target> [ LET <Assignment>* ] ] 
+   [ WHERE <Condition>* ] 
+   [ GROUP BY <Field>* ] 
+   [ ORDER BY <Fields>* [ ASC|DESC ] * ] 
+   [ UNWIND <Field>* ] 
+   [ SKIP <SkipRecords> ] 
+   [ LIMIT <MaxRecords> ] 
+   [ FETCHPLAN <FetchPlan> ] 
+   [ TIMEOUT <Timeout> [ <STRATEGY> ] ]
+   [ LOCK default|record ] 
+   [ PARALLEL ] 
+   [ NOCACHE ] 
+ Following are the details about the options in the above syntax. <Projections> − Indicates the data you want to extract from the query as a result records set. FROM − Indicates the object to query. This can be a class, cluster, single Record ID, set of Record IDs. You can specify all these objects as target. WHERE − Specifies the condition to filter the result-set. LET − Indicates the context variable which are used in projections, conditions or sub queries. GROUP BY − Indicates the field to group the records. ORDER BY − Indicates the filed to arrange a record in order. UNWIND − Designates the field on which to unwind the collection of records. SKIP − Defines the number of records you want to skip from the start of the result-set. LIMIT − Indicates the maximum number of records in the result-set. FETCHPLAN − Specifies the strategy defining how you want to fetch results. TIMEOUT − Defines the maximum time in milliseconds for the query. LOCK − Defines the locking strategy. DEFAULT and RECORD are the available lock strategies. PARALLEL − Executes the query against ‘x’ concurrent threads. NOCACHE − Defines whether you want to use cache or not. Example Let’s consider the following Customer table created in the previous chapter. Sr.No. Name Age 1 Satish 25 2 Krishna 26 3 Kiran 29 4 Javeed 21 5 Raja 29 Try different select queries to retrieve the data records from the Customer table. Method 1 − You can use the following query to select all records from the Customer table. 
+orientdb {db = demo}> SELECT FROM Customer 
+ If the above query is executed successfully, you will get the following output. 
+----+-----+--------+----+-------+---- 
+#   |@RID |@CLASS  |id  |name   |age  
+----+-----+--------+----+-------+---- 
+0   |#11:0|Customer|1   |satish |25   
+1   |#11:1|Customer|2   |krishna|26   
+2   |#11:2|Customer|3   |kiran  |29 
+3   |#11:3|Customer|4   |javeed |21 
+4   |#11:4|Customer|5   |raja   |29   
+----+-----+--------+----+-------+----
+ Method 2 − Select all records whose name starts with the letter 'k'. 
+orientdb {db = demo}> SELECT FROM Customer WHERE name LIKE 'k%'
+ OR you can use the following query for the above example. 
+orientdb {db = demo}> SELECT FROM Customer WHERE name.left(1) = 'k'
+ If the above query is executed successfully, you will get the following output. 
+----+-----+--------+----+-------+---- 
+#   |@RID |@CLASS  |id  |name   |age  
+----+-----+--------+----+-------+---- 
+0   |#11:1|Customer|2   |krishna|26   
+1   |#11:2|Customer|3   |kiran  |29 
+----+-----+--------+----+-------+----
+ Method 3 − Select id, name records from the Customer table with names in uppercase letters. 
+orientdb {db = demo}> SELECT id, name.toUpperCase() FROM Customer
+ If the above query is executed successfully, you will get the following output. 
+----+--------+----+------- 
+#   |@CLASS  |id  |name     
+----+--------+----+------- 
+0   |null    |1   |SATISH   
+1   |null    |2   |KRISHNA  
+2   |null    |3   |KIRAN   
+3   |null    |4   |JAVEED  
+4   |null    |5   |RAJA      
+----+--------+----+------- 
+ Method 4 − Select all records from the Customer table where age is in the range of 25 to 29. 
+orientdb {db = demo}> SELECT FROM Customer WHERE age in [25,29]
+ If the above query is executed successfully, you will get the following output. 
+----+-----+--------+----+-------+---- 
+#   |@RID |@CLASS  |id  |name   |age  
+----+-----+--------+----+-------+---- 
+0   |#11:0|Customer|1   |satish |25   
+1   |#11:2|Customer|3   |kiran  |29 
+2   |#11:4|Customer|5   |raja   |29   
+----+-----+--------+----+-------+---- 
+ Method 5 − Select all records from the Customer table where any field contains the word ‘sh’. 
+orientdb {db = demo}> SELECT FROM Customer WHERE ANY() LIKE '%sh%' 
+ If the above query is executed successfully, you will get the following output. 
+----+-----+--------+----+-------+---- 
+#   |@RID |@CLASS  |id  |name   |age  
+----+-----+--------+----+-------+---- 
+0   |#11:0|Customer|1   |satish |25   
+1   |#11:1|Customer|2   |krishna|26   
+----+-----+--------+----+-------+---- 
+ Method 6 − Select all records from the Customer table, ordered by age in descending order. 
+orientdb {db = demo}> SELECT FROM Customer ORDER BY age DESC 
+ If the above query is executed successfully, you will get the following output. 
+----+-----+--------+----+-------+---- 
+#   |@RID |@CLASS  |id  |name   |age  
+----+-----+--------+----+-------+---- 
+0   |#11:2|Customer|3   |kiran  |29 
+1   |#11:4|Customer|5   |raja   |29   
+2   |#11:1|Customer|2   |krishna|26   
+3   |#11:0|Customer|1   |satish |25   
+4   |#11:3|Customer|4   |javeed |21 
+----+-----+--------+----+-------+----

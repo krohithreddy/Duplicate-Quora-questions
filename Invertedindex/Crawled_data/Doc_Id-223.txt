@@ -1,0 +1,23 @@
+MariaDB - Table Cloning
+
+https://www.tutorialspoint.com/mariadb/mariadb_table_cloning.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Cloning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+Some situations require producing an exact copy of an existing table. The CREATE...SELECT statement cannot produce this output because it neglects things like indexes and default values. The procedure for a duplicating a table is as follows − Utilize SHOW CREATE TABLE to produce a CREATE TABLE statement that details the entire structure of the source table. Edit the statement to give the table a new name, and execute it. Use an INSERT INTO...SELECT statement if you also need the table data copied. 
+mysql> INSERT INTO inventory_copy_tbl (
+   product_id,product_name,product_manufacturer,ship_date)
+   
+   SELECT product_id,product_name,product_manufacturer,ship_date,
+   FROM inventory_tbl;
+ Another method for creating a duplicate uses a CREATE TABLE AS statement. The statement copies all columns, column definitions, and populates the copy with the source table's data. Review its syntax given below − 
+CREATE TABLE clone_tbl AS
+   SELECT columns
+   FROM original_tbl
+   WHERE conditions];
+ Review an example of its use below − 
+CREATE TABLE products_copy_tbl AS
+   SELECT *
+   FROM products_tbl;

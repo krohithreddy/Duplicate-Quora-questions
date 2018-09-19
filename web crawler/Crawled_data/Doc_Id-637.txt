@@ -1,0 +1,27 @@
+Redis - Sorted Set Zadd Command
+
+https://www.tutorialspoint.com/redis/sorted_sets_zadd.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis ZADD command adds all the specified members with the specified scores to the sorted set stored at the key. It is possible to specify multiple score/member pairs. If a specified member is already a member of the sorted set, the score is updated and the element is reinserted at the right position to ensure correct ordering. If the key does not exist, a new sorted set with the specified members as sole members is created, like if the sorted set was empty. If the key exists but does not hold a sorted set, an error is returned. Return Value Integer reply. The number of elements added to the sorted sets, not including elements already existing for which the score was updated. Syntax Following is the basic syntax of Redis ZADD command. 
+redis 127.0.0.1:6379> ZADD KEY_NAME SCORE1 VALUE1.. SCOREN VALUEN
+ Example 
+redis 127.0.0.1:6379> ZADD myset 1 "hello" 
+(integer) 1
+redis 127.0.0.1:6379> ZADD myset 1 "foo" 
+(integer) 1 
+redis 127.0.0.1:6379> ZADD myset 2 "world" 3 "bar" 
+(integer) 2 
+redis 127.0.0.1:6379> ZRANGE myzset 0 -1 WITHSCORES 
+1) "hello" 
+2) "1" 
+3) "foo" 
+4) "1" 
+5) "world" 
+6) "2" 
+7) "bar" 
+8) "3"
+ redis_sorted_sets.htm

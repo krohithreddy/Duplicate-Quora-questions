@@ -1,0 +1,52 @@
+MariaDB - Drop Tables
+
+https://www.tutorialspoint.com/mariadb/mariadb_drop_tables.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+In this chapter, we will learn to delete tables. Table deletion is very easy, but remember all deleted tables are irrecoverable. The general syntax for table deletion is as follows − 
+DROP TABLE table_name ;
+ Two options exist for performing a table drop: use the command prompt or a PHP script. The Command Prompt At the command prompt, simply use the DROP TABLE SQL command − 
+root@host# mysql -u root -p
+Enter password:*******
+mysql> use PRODUCTS;
+Database changed
+mysql> DROP TABLE products_tbl
+
+mysql> SELECT * from products_tbl
+ERROR 1146 (42S02): Table 'products_tbl' doesn't exist
+ PHP Drop Table Script PHP provides mysql_query() for dropping tables. Simply pass its second argument the appropriate SQL command − 
+<html>
+   <head>
+      <title>Create a MariaDB Table</title>
+   </head>
+
+   <body>
+      <?php
+         $dbhost = 'localhost:3036';
+         $dbuser = 'root';
+         $dbpass = 'rootpassword';
+         $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+         
+         if(! $conn ) {
+            die('Could not connect: ' . mysql_error());
+         }
+         echo 'Connected successfully<br />';
+         
+         $sql = "DROP TABLE products_tbl";
+         mysql_select_db( 'PRODUCTS' );
+         $retval = mysql_query( $sql, $conn );
+      
+         if(! $retval ) {
+            die('Could not delete table: ' . mysql_error());
+         }
+         echo "Table deleted successfully\n";
+         
+         mysql_close($conn);
+      ?>
+   </body>
+</html>
+ On successful table deletion, you will see the following output − 
+mysql> Table deleted successfully

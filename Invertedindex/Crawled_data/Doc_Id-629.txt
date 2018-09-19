@@ -1,0 +1,12 @@
+Redis - Server Client Kill Command
+
+https://www.tutorialspoint.com/redis/server_client_kill.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis CLIENT KILL command closes a given client connection. Return Value Simple string reply: OK if the connection exists and has been closed. Syntax Following is the basic syntax of Redis CLIENT KILL command. 
+redis 127.0.0.1:6379> CLIENT KILL [ip:port] [ID client-id] 
+[TYPE normal|slave|pubsub] [ADDR ip:port] [SKIPME yes/no]
+ With Redis 2.8.12 or greater, the command can be run with multiple options as shown below − CLIENT KILL ADDR ip:port. This is exactly the same as the old three-arguments behavior. CLIENT KILL ID client-id. Allows to kill a client by its unique ID field, which was introduced in the CLIENT LIST command starting from Redis 2.8.12. CLIENT KILL TYPE type, where type is one of normal, slave, pubsub. This closes the connections of all the clients in the specified class. Note: Clients blocked into the MONITOR command are considered to belong to the normal class. CLIENT KILL SKIPME yes/no. By default, this option is set to yes, that is, the client calling the command will not get killed. However, setting this option to no will have the effect of also killing the client calling the command. redis_server.htm

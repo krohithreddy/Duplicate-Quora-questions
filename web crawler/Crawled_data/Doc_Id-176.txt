@@ -1,0 +1,56 @@
+IMS DB - Cobol Basics
+
+https://www.tutorialspoint.com/ims_db/ims_db_cobol_basics.htm
+
+IMS DB, Overview, STRUCTURE, DL/I TERMINOLOGY, DL/I PROCESSING, CONTROL BLOCKS, PROGRAMMING, COBOL BASICS, DL/I FUNCTIONS, PCB MASK, SSA, DATA RETRIEVAL, DATA MANIPULATION, SECONDARY INDEXING, LOGICAL DATABASE, RECOVERY, INTERVIEW QUESTIONS.
+
+August-07-2017-01:26:44
+
+We include DL/I calls inside COBOL application program to communicate with IMS database. We use the following DL/I statements in COBOL program to access the database − Entry Statement Goback Statement Call Statement Entry Statement It is used to pass the control from the DL/I to the COBOL program. Here is the syntax of the entry statement − 
+ENTRY 'DLITCBL' USING pcb-name1
+                     [pcb-name2]
+ The above statement is coded in the Procedure Division of a COBOL program. Let us go into the details of the entry statement in COBOL program − The batch initialization module triggers the application program and is executed under its control. The DL/I loads the required control blocks and modules and the application program, and control is given to the application program. DLITCBL stands for DL/I to COBOL. The entry statement is used to define the entry point in the program. When we call a sub-program in COBOL, its address is also provided. Likewise, when the DL/I gives the control to the application program, it also provides the address of each PCB defined in the program's PSB. All the PCBs used in the application program must be defined inside the Linkage Section of the COBOL program because PCB resides outside the application program. The PCB definition inside the Linkage Section is called as PCB Mask. The relation between PCB masks and actual PCBs in storage is created by listing the PCBs in the entry statement. The sequence of listing in the entry statement should be same as they appear in the PSBGEN. Goback Statement It is used to pass the control back to the IMS control program. Following is the syntax of the Goback statement − 
+GOBACK
+ Listed below are the fundamental points to note about the Goback statement − GOBACK is coded at the end of the application program. It returns the control to DL/I from the program. We should not use STOP RUN as it returns the control to the operating system. If we use STOP RUN, the DL/I never gets a chance to perform its terminating functions. That is why, in DL/I application programs, Goback statement is used. Before issuing a Goback statement, all the non-DL/I datasets used in the COBOL application program must be closed, otherwise the program will terminate abnormally. Call Statement Call statement is used to request for DL/I services such as executing certain operations on the IMS database. Here is the syntax of the call statement − 
+CALL 'CBLTDLI' USING DLI Function Code
+                        PCB Mask
+                        Segment I/O Area
+                        [Segment Search Arguments]
+ The syntax above shows parameters which you can use with the call statement. We will discuss each of them in the following table − S.No. Parameter & Description 1 DLI Function Code Identifies the DL/I function to be performed. This argument is the name of the four character fields that describe the I/O operation. 2 PCB Mask The PCB definition inside the Linkage Section is called as PCB Mask. They are used in the entry statement. No SELECT, ASSIGN, OPEN, or CLOSE statements are required. 3 Segment I/O Area Name of an input/output work area. This is an area of the application program into which the DL/I puts a requested segment. 4 Segment Search Arguments These are optional parameters depending on the type of the call issued. They are used to search data segments inside the IMS database. Given below are the points to note about the Call statement − CBLTDLI stands for COBOL to DL/I. It is the name of an interface module that is link edited with your program’s object module. After each DL/I call, the DLI stores a status code in the PCB. The program can use this code to determine whether the call succeeded or failed. Example For more understanding of COBOL, you can go through our COBOL tutorial here. The following example shows the structure of a COBOL program that uses IMS database and DL/I calls. We will discuss in detail each of the parameters used in the example in the upcoming chapters. 
+IDENTIFICATION DIVISION.
+PROGRAM-ID. TEST1.
+DATA DIVISION.
+WORKING-STORAGE SECTION.
+01 DLI-FUNCTIONS.
+   05 DLI-GU        PIC X(4)    VALUE 'GU  '.
+   05 DLI-GHU       PIC X(4)    VALUE 'GHU '.
+   05 DLI-GN        PIC X(4)    VALUE 'GN  '.
+   05 DLI-GHN       PIC X(4)    VALUE 'GHN '.
+   05 DLI-GNP       PIC X(4)    VALUE 'GNP '.
+   05 DLI-GHNP      PIC X(4)    VALUE 'GHNP'.
+   05 DLI-ISRT      PIC X(4)    VALUE 'ISRT'.
+   05 DLI-DLET      PIC X(4)    VALUE 'DLET'.
+   05 DLI-REPL      PIC X(4)    VALUE 'REPL'.
+   05 DLI-CHKP      PIC X(4)    VALUE 'CHKP'.
+   05 DLI-XRST      PIC X(4)    VALUE 'XRST'.
+   05 DLI-PCB       PIC X(4)    VALUE 'PCB '.
+01  SEGMENT-I-O-AREA        PIC X(150).
+LINKAGE SECTION.
+01  STUDENT-PCB-MASK.
+   05 STD-DBD-NAME              PIC X(8).
+   05 STD-SEGMENT-LEVEL         PIC XX.
+   05 STD-STATUS-CODE           PIC XX.
+   05 STD-PROC-OPTIONS          PIC X(4).
+   05 FILLER                    PIC S9(5) COMP.
+   05 STD-SEGMENT-NAME          PIC X(8).
+   05 STD-KEY-LENGTH            PIC S9(5) COMP.
+   05 STD-NUMB-SENS-SEGS        PIC S9(5) COMP.
+   05 STD-KEY                   PIC X(11).
+PROCEDURE DIVISION.
+ENTRY 'DLITCBL' USING STUDENT-PCB-MASK.
+A000-READ-PARA.
+110-GET-INVENTORY-SEGMENT.
+   CALL ‘CBLTDLI’ USING DLI-GN
+                  STUDENT-PCB-MASK
+                  SEGMENT-I-O-AREA.
+GOBACK.

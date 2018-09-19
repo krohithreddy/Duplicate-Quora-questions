@@ -1,0 +1,16 @@
+Memcached - Environment
+
+https://www.tutorialspoint.com/memcached/memcached_environment.htm
+
+Memcached, Tutorial, Beginners, Overview, Environment, Connection,  Set Data, Add Data, Replace Data, Append Data, Prepend Data, Get Data, Delete Data, Stats, Clear Data
+
+August-15-2017-02:34:11
+
+Installing Memcached on Ubuntu To install Memcached on Ubuntu, go to terminal and type the following commands − 
+$sudo apt-get update
+$sudo apt-get install memcached
+ Confirming Memcached Installation To check if Memcached is presently running or not, run the command given below − 
+$ps aux | grep memcached
+ This command should show that Memcached is running on the default port 11211. To run Memcached server on a different port, run the command given below − 
+$memcached -p 11111 -U 11111 -u user -d
+ It should start the server and listen on TCP port 11111 and UDP port 11111 as a daemon process. This command is explained below − -p is for TCP port number -U is for UDP port number -u is for user name -d runs memcached as daemon process You can run multiple instances of Memcached server through a single installation. Memcached Java Environment Setup To use Memcached in your Java program, you need to download spymemcached-2.10.3.jar and setup this jar into the classpath.

@@ -1,0 +1,50 @@
+PostgreSQL - UPDATE Query
+
+https://www.tutorialspoint.com/postgresql/postgresql_update_query.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+The PostgreSQL UPDATE Query is used to modify the existing records in a table. You can use WHERE clause with UPDATE query to update the selected rows. Otherwise, all the rows would be updated. Syntax The basic syntax of UPDATE query with WHERE clause is as follows − 
+UPDATE table_name
+SET column1 = value1, column2 = value2...., columnN = valueN
+WHERE [condition];
+ You can combine N number of conditions using AND or OR operators. Example Consider the table COMPANY, having records as follows − 
+testdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+ The following is an example, which would update ADDRESS for a customer, whose ID is 6 − 
+testdb=# UPDATE COMPANY SET SALARY = 15000 WHERE ID = 3;
+ Now, COMPANY table would have the following records − 
+ id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  1 | Paul  |  32 | California |  20000
+  2 | Allen |  25 | Texas      |  15000
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  5 | David |  27 | Texas      |  85000
+  6 | Kim   |  22 | South-Hall |  45000
+  7 | James |  24 | Houston    |  10000
+  3 | Teddy |  23 | Norway     |  15000
+(7 rows)
+ If you want to modify all ADDRESS and SALARY column values in COMPANY table, you do not need to use WHERE clause and UPDATE query would be as follows − 
+testdb=# UPDATE COMPANY SET ADDRESS = 'Texas', SALARY=20000;
+ Now, COMPANY table will have the following records − 
+ id | name  | age | address | salary
+----+-------+-----+---------+--------
+  1 | Paul  |  32 | Texas   |  20000
+  2 | Allen |  25 | Texas   |  20000
+  4 | Mark  |  25 | Texas   |  20000
+  5 | David |  27 | Texas   |  20000
+  6 | Kim   |  22 | Texas   |  20000
+  7 | James |  24 | Texas   |  20000
+  3 | Teddy |  23 | Texas   |  20000
+(7 rows)

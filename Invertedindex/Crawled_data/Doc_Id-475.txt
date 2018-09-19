@@ -1,0 +1,32 @@
+OrientDB - Sequences
+
+https://www.tutorialspoint.com/orientdb/orientdb_sequences.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Sequences is a concept used in auto increment mechanism and it is introduced in OrientDB v2.2. In database terminology, sequence is a structure that manages the counter field. Simply said sequences are mostly used when you need a number that always increments. It supports two types− ORDERED − Each time the pointer calls the .next method that returns a new value. CACHED − The sequence will cache ‘N’ items on each node. To call each item we use .next(), which is preferred when the cache contains more than one item. Create Sequence Sequence is usually used to auto increment the id value of a person. Like other SQL concepts of OrientDB it also preforms similar operations as Sequence in RDBMS. The following statement is the basic syntax to create sequences. 
+CREATE SEQUENCE <sequence> TYPE <CACHED|ORDERED> [START <start>]  
+[INCREMENT <increment>] [CACHE <cache>]
+ Following are the details about the options in the above syntax. <Sequence> − Local name for sequence. TYPE − Defines the sequence type ORDERED or CACHED. START − Defines the initial value. INCREMENT − Defines the increment for each .next method call. CACHE − Defines the number of value to pre-cache, in the event that you used to cache sequence type. Let us create a sequence named ‘seqid’ which starts with number 1201. Try the following queries to implement this example with sequence. 
+CREATE SEQUENCE seqid START 1201
+ If the above query is executed successfully, you will get the following output. 
+Sequence created successfully
+ Try the following query to use sequence ‘seqid’ to insert the id value of Account table. 
+INSERT INTO Account SET id = sequence('seqid').next() 
+ If the above query is executed successfully, you will get the following output. 
+Insert 1 record(s) in 0.001000 sec(s) 
+ Alter Sequence Alter sequence is a command used to change the properties of a sequence. It will modify all the sequence options except sequence type. The following statement is the basic syntax to alter sequence. 
+ALTER SEQUENCE <sequence> [START <start-point>] 
+[INCREMENT <increment>] [CACHE <cache>]
+ Following are the details about the options in the above syntax. <Sequence> − Defines the sequence you want to change. START − Defines the initial value. INCREMENT − Defines the increment for each .next method call. CACHE − Defines the number of value to pre-cache in the event that you used to cache sequence type. Try the following query to alter the start value from ‘1201 to 1000’ of a sequence named seqid. 
+ALTER SEQUENCE seqid START 1000
+ If the above query is executed successfully, you will get the following output. 
+Altered sequence successfully 
+ Drop Sequence Drop sequence is a command used to drop a sequence. The following statement is the basic syntax to drop a sequence. 
+DROP SEQUENCE <sequence>
+ Where <Sequence> defines the sequence you want to drop. Try the following query to drop a sequence named ‘seqid’. 
+DROP SEQUENCE seqid
+ If the above query is executed successfully, you will get the following output. 
+Sequence dropped successfully

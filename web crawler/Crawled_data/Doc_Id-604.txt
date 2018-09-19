@@ -1,0 +1,33 @@
+Redis - Benchmarks
+
+https://www.tutorialspoint.com/redis/redis_benchmarks.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis benchmark is the utility to check the performance of Redis by running n commands simultaneously. Syntax Following is the basic syntax of Redis benchmark. 
+redis-benchmark [option] [option value] 
+ Example Following example checks Redis by calling 100000 commands. 
+redis-benchmark -n 100000  
+
+PING_INLINE: 141043.72 requests per second 
+PING_BULK: 142857.14 requests per second 
+SET: 141442.72 requests per second 
+GET: 145348.83 requests per second 
+INCR: 137362.64 requests per second 
+LPUSH: 145348.83 requests per second 
+LPOP: 146198.83 requests per second 
+SADD: 146198.83 requests per second 
+SPOP: 149253.73 requests per second 
+LPUSH (needed to benchmark LRANGE): 148588.42 requests per second 
+LRANGE_100 (first 100 elements): 58411.21 requests per second 
+LRANGE_300 (first 300 elements): 21195.42 requests per second 
+LRANGE_500 (first 450 elements): 14539.11 requests per second 
+LRANGE_600 (first 600 elements): 10504.20 requests per second 
+MSET (10 keys): 93283.58 requests per second 
+ Following is a list of available options in Redis benchmark. S.No Option Description Default Value 1 -h Specifies server host name 127.0.0.1 2 -p Specifies server port 6379 3 -s Specifies server socket 4 -c Specifies the number of parallel connections 50 5 -n Specifies the total number of requests 10000 6 -d Specifies data size of SET/GET value in bytes 2 7 -k 1=keep alive, 0=reconnect 1 8 -r Use random keys for SET/GET/INCR, random values for SADD 9 -p Pipeline <numreq> requests 1 10 -h Specifies server host name 11 -q Forces Quiet to Redis. Just shows query/sec values 12 --csv Output in CSV format 13 -l Generates loop, Run the tests forever 14 -t Only runs the comma-separated list of tests 15 -I Idle mode. Just opens N idle connections and wait Example Following example shows the multiple usage options in Redis benchmark utility. 
+redis-benchmark -h 127.0.0.1 -p 6379 -t set,lpush -n 100000 -q  
+
+SET: 146198.83 requests per second 
+LPUSH: 145560.41 requests per second

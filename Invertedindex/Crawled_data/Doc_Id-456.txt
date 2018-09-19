@@ -1,0 +1,154 @@
+OrientDB - Hooks
+
+https://www.tutorialspoint.com/orientdb/orientdb_hooks.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+OrientDB Hooks are nothing but triggers in the database terminology that enable internal events before and after each CRUD operations in the user applications. You can use hooks to write custom validation rules, to enforce security, or to arrange external events like replicating against a relational DBMS. OrientDB supports two kinds of hooks − Dynamic Hook − Triggers, which can be built at class level and/or Document level. Java (Native) Hook − Triggers, which can be built using Java classes. Dynamic Hooks Dynamic hooks are more flexible than Java hooks, because they can be changed at runtime and can run per document if needed, but are slower than Java hooks. To execute hooks against your documents, first allow your classes to extend OTriggered base class. Later, define a custom property for the interested event. Following are the available events. onBeforeCreate − Called before creating a new document. onAfterCreate − Called after creating a new document. onBeforeRead − Called before reading a document. onAfterRead − Called after reading a document. onBeforeUpdate − Called before updating a document. onAfterUpdate − Called after updating a document. onBeforeDelete − Called before deleting a document. onAfterDelete − Called after deleting a document. Dynamic Hooks can call − Functions, written in SQL, Javascript or any language supported by OrientDB and JVM. Java static methods. Class Level Hooks Class level hooks are defined for all the documents that relate to a class. Following is an example to set up a hook that acts at class level against Invoice documents. 
+CREATE CLASS Invoice EXTENDS OTriggered 
+ALTER CLASS Invoice CUSTOM onAfterCreate = invoiceCreated 
+ Let's create the function invoiceCreated in Javascript that prints in the server console the invoice number created. 
+CREATE FUNCTION invoiceCreated "print('\\nInvoice created: ' + doc.field ('number'));"
+LANGUAGE Javascript
+ Now try the hook by creating a new Invoice document. 
+INSERT INTO Invoice CONTENT {number: 100, notes: 'This is a test}
+ If this command is executed successfully, you will get the following output. 
+Invoice created: 100
+ Document Level Hook You can define a special action only against one or more documents. To do this, allow your class to extend OTriggered class. For example let us execute a trigger, as Javascript function, against an existent Profile class, for all the documents with property account = 'Premium'. The trigger will be called to prevent deletion of documents. 
+ALTER CLASS Profile SUPERCLASS OTriggered UPDATE Profile 
+SET onBeforeDelete = 'preventDeletion' WHERE account = 'Premium' 
+ Let's create the preventDeletion() Javascript function. 
+CREATE FUNCTION preventDeletion "throw new java.lang.RuntimeException('Cannot 
+delete Premium profile ' + doc)" LANGUAGE Javascript
+ And then test the hook by trying to delete a ‘Premium’ account. 
+DELETE FROM #12:1 
+java.lang.RuntimeException: Cannot delete Premium profile
+profile#12:1{onBeforeDelete:preventDeletion,account:Premium,name:Jill} v-1 
+(<Unknown source>#2) in <Unknown source> at line number 2
+ JAVA Hooks One common use case for OrientDB Hooks (triggers) is to manage created and updated dates for any or all classes. For example, you can set a CreatedDate field whenever a record is created and set an UpdatedDate field whenever a record is updated, and do it in a way where you implement the logic once at the database layer and never have to worry about it again at the application layer. Before creating, you will have to download orientdb-core.jar file by visit the following link download OrientDB core. And later copy that jar file into the folder where you want to store the Java source file. Create Hook File Create a Java file named HookTest.java, which will test the Hook mechanism using Java language. 
+import java.io.BufferedReader; 
+import java.io.FileNotFoundException; 
+import java.io.InputStream; 
+import java.io.InputStreamReader; 
+import java.io.StringReader; 
+import java.util.ArrayList; 
+import java.util.List; 
+import java.util.concurrent.locks.ReentrantLock; 
+import com.orientechnologies.orient.core.hook.ODocumentHookAbstract; 
+import com.orientechnologies.orient.core.hook.ORecordHook; 
+import com.orientechnologies.orient.core.hook.ORecordHookAbstract; 
+import com.orientechnologies.orient.core.db.ODatabaseLifecycleListener; 
+import com.orientechnologies.orient.core.db.ODatabase; 
+import com.orientechnologies.orient.core.record.ORecord; 
+import com.orientechnologies.orient.core.record.impl.ODocument;
+  
+public class HookTest extends ODocumentHookAbstract implements ORecordHook { 
+   public HookTest() {
+  
+   }
+  
+   @Override 
+   public DISTRIBUTED_EXECUTION_MODE getDistributedExecutionMode() { 
+      return DISTRIBUTED_EXECUTION_MODE.BOTH; 
+   } 
+   public RESULT onRecordBeforeCreate( ODocument iDocument ) { 
+      System.out.println("Ran create hook"); 
+      return ORecordHook.RESULT.RECORD_NOT_CHANGED; 
+   } 
+   public RESULT onRecordBeforeUpdate( ODocument iDocument ) { 
+      System.out.println("Ran update hook"); 
+      return ORecordHook.RESULT.RECORD_NOT_CHANGED;  
+   }  
+} 
+ The above sample code prints the appropriate comment every time you create or update a record of that class. Let's add one more hook file setCreatedUpdatedDates.java as follows − 
+import java.io.BufferedReader; 
+import java.io.FileNotFoundException; 
+import java.io.InputStream; 
+import java.io.InputStreamReader; 
+import java.io.StringReader; 
+import java.util.ArrayList; 
+import java.util.List; 
+import java.util.concurrent.locks.ReentrantLock; 
+import com.orientechnologies.orient.core.hook.ODocumentHookAbstract; 
+import com.orientechnologies.orient.core.hook.ORecordHook; 
+import com.orientechnologies.orient.core.hook.ORecordHookAbstract; 
+import com.orientechnologies.orient.core.db.ODatabaseLifecycleListener; 
+import com.orientechnologies.orient.core.db.ODatabase; 
+import com.orientechnologies.orient.core.record.ORecord; 
+import com.orientechnologies.orient.core.record.impl.ODocument; 
+ 
+public class setCreatedUpdatedDates extends ODocumentHookAbstract implements ORecordHook { 
+   public setCreatedUpdatedDates() { 
+   
+   }
+   
+   @Override 
+   public DISTRIBUTED_EXECUTION_MODE getDistributedExecutionMode() { 
+      return DISTRIBUTED_EXECUTION_MODE.BOTH; 
+   } 
+   public RESULT onRecordBeforeCreate( ODocument iDocument ) { 
+      if ((iDocument.getClassName().charAt(0) == 't') || (iDocument.getClassName().charAt(0)=='r')) { 
+         iDocument.field("CreatedDate", System.currentTimeMillis() / 1000l); 
+         iDocument.field("UpdatedDate", System.currentTimeMillis() / 1000l); 
+         return ORecordHook.RESULT.RECORD_CHANGED; 
+      } else { 
+         return ORecordHook.RESULT.RECORD_NOT_CHANGED; 
+      } 
+   } 
+   
+   public RESULT onRecordBeforeUpdate( ODocument iDocument ) { 
+      if ((iDocument.getClassName().charAt(0) == 't') || (iDocument.getClassName().charAt(0)=='r')) { 
+         iDocument.field("UpdatedDate", System.currentTimeMillis() / 1000l); 
+         return ORecordHook.RESULT.RECORD_CHANGED; 
+      } else { 
+         return ORecordHook.RESULT.RECORD_NOT_CHANGED; 
+      } 
+   }  
+}
+ What the above code does is look for any class that starts with the letters ‘r’ or ‘t’ and sets CreatedDate and UpdatedDate when the record gets created and sets just UpdatedDate every time the record gets updated. Compile Java Hooks Compile Java code by using the following command. Note: Keep the downloaded jar file and these Java files into the same folder. 
+$ jar cf hooks-1.0-SNAPSHOT.jar *.java
+ Move Compiled Code to Where OrientDB Server Can Find It You need to copy the finished .jar file to the directory where your OrientDB server will look for them. This means the ‘./lib’ folder under your OrientDB Server root directory will look like this − 
+$ cp hooks-1.0-SNAPSHOT.jar "$ORIENTDB_HOME/lib"
+ Enable Test Hook in the OrientDB Server Configuration File Edit $ORIENTDB_HOME/config/orientdb-server-config.xml and add the following section near the end of the file. 
+   <hooks> 
+      <hook class = "HookTest" position = "REGULAR"/> 
+   </hooks> 
+   ... 
+</orient-server>
+ Restart OrientDB Server Once you restart OrientDB Server, the hook you defined in orientdb-server-config.xml is now active. Launch an OrientDB console, connect it to your database, and run the following command − 
+INSERT INTO V SET ID = 1;
+ If this command is executed successfully, you will get the following output. 
+Ran create hook 
+ Now run the following command − 
+UPDATE V SET ID = 2 WHERE ID = 1; 
+ If this command is executed successfully, you will get the following output. 
+Ran update hook
+ Enable Real Hook in the OrientDB Server Configuration File Edit $ORIENTDB_HOME/config/orientdb-server-config.xml and change the hooks section as follows − 
+   <hooks> 
+      <hook class="setCreatedUpdatedDates" position="REGULAR"/> 
+   </hooks> 
+   ... 
+</orient-server>
+ Restart OrientDB Server Create a new class that starts with the letter ‘r’ or ‘t’ − 
+CREATE CLASS tTest EXTENDS V;
+ Now insert a record − 
+INSERT INTO tTest SET ID = 1 
+SELECT FROM tTest 
+ If this command is executed successfully, you will get the following output. 
+----+-----+------+----+-----------+----------- 
+#   |@RID |@CLASS|ID  |CreatedDate|UpdatedDate 
+----+-----+------+----+-----------+----------- 
+0   |#19:0|tTest |1   |1427597275 |1427597275 
+----+-----+------+----+-----------+-----------
+ Even though you did not specify values to set for CreatedDate and UpdatedDate, OrientDB has set these fields automatically for you. Next you need to update the record using the following command − 
+UPDATE tTest SET ID = 2 WHERE ID = 1; 
+SELECT FROM tTest; 
+ If this command is executed successfully, you will get the following output. 
+----+-----+------+----+-----------+----------- 
+#   |@RID |@CLASS|ID  |CreatedDate|UpdatedDate 
+----+-----+------+----+-----------+----------- 
+0   |#19:0|tTest |2   |1427597275 |1427597306 
+----+-----+------+----+-----------+----------- 
+ You can see that OrientDB has changed the UpdatedDate but has let the CreatedDate remain unchanged. OrientDB Java Hooks can be an extremely valuable tool to help automate work you would otherwise have to do in application code. As many DBAs are not always Java experts, hopefully the information contained in this tutorial will give you a head start and make you feel comfortable with the technology, empowering you to successfully create database triggers as the need arises.

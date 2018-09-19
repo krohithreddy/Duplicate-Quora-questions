@@ -1,0 +1,49 @@
+PouchDB - Delete Database
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_delete_database.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+You can delete a database in PouchDB using the db.destroy() method. Syntax Following is the syntax of using the db.destroy() method. This method accepts a callback function as a parameter. 
+db.destroy()
+ Example Following is an example of deleting a database in PouchDB using the destroy() method. Here, we are deleting the database named my_database, created in the previous chapters. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//deleting database
+db.destroy(function (err, response) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log ("Database Deleted”);
+   }
+});
+ Save the above code in a file with the name Delete_Database.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Delete_Database.js
+ This will delete the database named my_database which is stored locally displaying the following message. 
+Database Deleted
+ Deleting a Remote Database In the same way, you can delete a database that is stored remotely on the server (CouchDB). To do so, instead of a database name, you need to pass the path to the database that is required to be deleted, in CouchDB. Example Suppose there is a database named my_database in the CouchDB server. Then, if you verify the list of databases in CouchDB using the URL http://127.0.0.1:5984/_utils/index.html you will get the following screenshot. Following is an example of deleting a database named my_database that is saved in the CouchDB server. 
+//Requiring the package
+var PouchDB = require('pouchdb');
+
+//Creating the database object
+var db = new PouchDB('http://localhost:5984/my_database');
+
+//deleting database
+db.destroy(function (err, response) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log("Database Deleted");
+   }
+});
+ Save the above code in a file with the name Remote_Database_Delete.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >Remote_Database_Delete.js
+ This deletes the specified database from PouchDB displaying the following message. 
+Database Deleted
+ Verification After executing the above program, if you visit the URL again, you will get the following screenshot. Here you can observe only two databases since my_database was deleted.

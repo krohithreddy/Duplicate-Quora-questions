@@ -1,0 +1,21 @@
+SQL - NOT NULL Constraint
+
+https://www.tutorialspoint.com/sql/sql-not-null.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+By default, a column can hold NULL values. If you do not want a column to have a NULL value, then you need to define such a constraint on this column specifying that NULL is now not allowed for that column. A NULL is not the same as no data, rather, it represents unknown data. Example For example, the following SQL query creates a new table called CUSTOMERS and adds five columns, three of which, are ID NAME and AGE, In this we specify not to accept NULLs − 
+CREATE TABLE CUSTOMERS(
+   ID   INT              NOT NULL,
+   NAME VARCHAR (20)     NOT NULL,
+   AGE  INT              NOT NULL,
+   ADDRESS  CHAR (25) ,
+   SALARY   DECIMAL (18, 2),       
+   PRIMARY KEY (ID)
+);
+ If CUSTOMERS table has already been created, then to add a NOT NULL constraint to the SALARY column in Oracle and MySQL, you would write a query like the one that is shown in the following code block. 
+ALTER TABLE CUSTOMERS
+   MODIFY SALARY  DECIMAL (18, 2) NOT NULL;
+ sql-rdbms-concepts.htm

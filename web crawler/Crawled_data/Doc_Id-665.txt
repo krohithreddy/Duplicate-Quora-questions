@@ -1,0 +1,27 @@
+SQL - INDEX Constraint
+
+https://www.tutorialspoint.com/sql/sql-index.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+The INDEX is used to create and retrieve data from the database very quickly. An Index can be created by using a single or group of columns in a table. When the index is created, it is assigned a ROWID for each row before it sorts out the data. Proper indexes are good for performance in large databases, but you need to be careful while creating an index. A Selection of fields depends on what you are using in your SQL queries. Example For example, the following SQL syntax creates a new table called CUSTOMERS and adds five columns in it. 
+CREATE TABLE CUSTOMERS(
+   ID   INT              NOT NULL,
+   NAME VARCHAR (20)     NOT NULL,
+   AGE  INT              NOT NULL,
+   ADDRESS  CHAR (25) ,
+   SALARY   DECIMAL (18, 2),       
+   PRIMARY KEY (ID)
+);
+ Now, you can create an index on a single or multiple columns using the syntax given below. 
+CREATE INDEX index_name
+   ON table_name ( column1, column2.....);
+ To create an INDEX on the AGE column, to optimize the search on customers for a specific age, you can use the follow SQL syntax which is given below − 
+CREATE INDEX idx_age
+   ON CUSTOMERS ( AGE );
+ DROP an INDEX Constraint To drop an INDEX constraint, use the following SQL syntax. 
+ALTER TABLE CUSTOMERS
+   DROP INDEX idx_age;
+ sql-rdbms-concepts.htm

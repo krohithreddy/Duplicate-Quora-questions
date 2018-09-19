@@ -1,0 +1,23 @@
+HSQLDB - Indexes
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_indexes.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+A database index is a data structure that improves the speed of operations in a table. Indexes can be created using one or more columns, providing the basis for both rapid random lookups and efficient ordering of access to the records. While creating an index, it should be considered what are the columns which will be used to make SQL queries, and create one or more indexes on those columns. Practically, indexes are also type of tables, which keep the primary key or the index field and a pointer to each record into the actual table. The users cannot see the indexes. They are just used to speed up queries and will be used by the Database Search Engine to quickly locate records. The INSERT and UPDATE statements take more time on tables having indexes, whereas SELECT statements run faster on those tables. The reason being while inserting or updating, the database needs to insert or update the index values as well. Simple & Unique Index You can create a unique index on a table. A unique index means that two rows cannot have the same index value. Following is the syntax to create an Index on a table. 
+CREATE UNIQUE INDEX index_name
+ON table_name (column1, column2,...);
+ You can use one or more columns to create an index. For example, create an index on tutorials_tbl using tutorial_author. 
+CREATE UNIQUE INDEX AUTHOR_INDEX
+ON tutorials_tbl (tutorial_author)
+ You can create a simple index on a table. Just omit the UNIQUE keyword from the query to create a simple index. A simple index allows duplicate values in a table. If you want to index the values in a column in a descending order, you can add the reserved word DESC after the column name. 
+CREATE UNIQUE INDEX AUTHOR_INDEX
+ON tutorials_tbl (tutorial_author DESC)
+ ALTER Command to Add & Drop INDEX There are four types of statements for adding indexes to a table − ALTER TABLE tbl_name ADD PRIMARY KEY (column_list) − This statement adds a PRIMARY KEY, which means that indexed values must be unique and cannot be NULL. ALTER TABLE tbl_name ADD UNIQUE index_name (column_list) − This statement creates an index for which the values must be unique (with the exception of NULL values, which may appear multiple times). ALTER TABLE tbl_name ADD INDEX index_name (column_list) − This adds an ordinary index in which any value may appear more than once. ALTER TABLE tbl_name ADD FULLTEXT index_name (column_list) − This creates a special FULLTEXT index that is used for text-searching purposes. Following is the query to add index in an existing table. 
+ALTER TABLE testalter_tbl ADD INDEX (c);
+ You can drop any INDEX by using the DROP clause along with the ALTER command. Following is the query to drop the above-created index. 
+ALTER TABLE testalter_tbl DROP INDEX (c);
+ Displaying INDEX Information You can use the SHOW INDEX command to list out all the indexes associated with a table. Vertical-format output (specified by \G) often is useful with this statement, to avoid long line wraparound. Following is the generic syntax to display the index information about a table. 
+SHOW INDEX FROM table_name\G

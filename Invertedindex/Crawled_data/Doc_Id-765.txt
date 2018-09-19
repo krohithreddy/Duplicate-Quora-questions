@@ -1,0 +1,56 @@
+SQLite - EXPLAIN
+
+https://www.tutorialspoint.com/sqlite/sqlite_explain.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+SQLite statement can be preceded by the keyword "EXPLAIN" or by the phrase "EXPLAIN QUERY PLAN" used for describing the details of a table. Either modification causes the SQLite statement to behave as a query and to return information about how the SQLite statement would have operated if the EXPLAIN keyword or phrase had been omitted. The output from EXPLAIN and EXPLAIN QUERY PLAN is intended for interactive analysis and troubleshooting only. The details of the output format are subject to change from one release of SQLite to the next. Applications should not use EXPLAIN or EXPLAIN QUERY PLAN since their exact behavior is variable and only partially documented. Syntax syntax for EXPLAIN is as follows − 
+EXPLAIN [SQLite Query]
+ syntax for EXPLAIN QUERY PLAN is as follows − 
+EXPLAIN  QUERY PLAN [SQLite Query]
+ Example Consider COMPANY table with the following records − 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Now, let us check the following sub-query with SELECT statement − 
+sqlite> EXPLAIN SELECT * FROM COMPANY WHERE Salary >= 20000;
+ This will produce the following result. 
+addr        opcode      p1          p2          p3
+----------  ----------  ----------  ----------  ----------
+0           Goto        0           19
+1           Integer     0           0
+2           OpenRead    0           8
+3           SetNumColu  0           5
+4           Rewind      0           17
+5           Column      0           4
+6           RealAffini  0           0
+7           Integer     20000       0
+8           Lt          357         16          collseq(BI
+9           Rowid       0           0
+10          Column      0           1
+11          Column      0           2
+12          Column      0           3
+13          Column      0           4
+14          RealAffini  0           0
+15          Callback    5           0
+16          Next        0           5
+17          Close       0           0
+18          Halt        0           0
+19          Transactio  0           0
+20          VerifyCook  0           38
+21          Goto        0           1
+22          Noop        0           0
+ Now, let us check the following Explain Query Plan with SELECT statement − 
+SQLite> EXPLAIN QUERY PLAN SELECT * FROM COMPANY WHERE Salary >= 20000;
+
+order       from        detail
+----------  ----------  -------------
+0           0           TABLE COMPANY

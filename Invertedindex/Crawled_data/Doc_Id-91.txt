@@ -1,0 +1,102 @@
+DocumentDB SQL - Linq to SQL Translation
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_linq_to_sql_translation.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+In DocumentDB, we actually use SQL to query documents. If we are doing .NET development, there is also a LINQ provider that can be used and which can generate appropriate SQL from a LINQ query. Supported Data Types In DocumentDB, all JSON primitive types are supported in the LINQ provider included with the DocumentDB .NET SDK which are as follows − Numeric Boolean String Null Supported Expression The following scalar expressions are supported in the LINQ provider included with the DocumentDB .NET SDK. Constant Values − Includes constant values of the primitive data types. Property/Array Index Expressions − Expressions refer to the property of an object or an array element. Arithmetic Expressions − Includes common arithmetic expressions on numerical and Boolean values. String Comparison Expression − Includes comparing a string value to some constant string value. Object/Array Creation Expression − Returns an object of compound value type or anonymous type or an array of such objects. These values can be nested. Supported LINQ Operators Here is a list of supported LINQ operators in the LINQ provider included with the DocumentDB .NET SDK. Select − Projections translate to the SQL SELECT including object construction. Where − Filters translate to the SQL WHERE, and support translation between && , || and ! to the SQL operators. SelectMany − Allows unwinding of arrays to the SQL JOIN clause. Can be used to chain/nest expressions to filter array elements. OrderBy and OrderByDescending − Translates to ORDER BY ascending/descending. CompareTo − Translates to range comparisons. Commonly used for strings since they’re not comparable in .NET. Take − Translates to the SQL TOP for limiting results from a query. Math Functions − Supports translation from .NET’s Abs, Acos, Asin, Atan, Ceiling, Cos, Exp, Floor, Log, Log10, Pow, Round, Sign, Sin, Sqrt, Tan, Truncate to the equivalent SQL built-in functions. String Functions − Supports translation from .NET’s Concat, Contains, EndsWith, IndexOf, Count, ToLower, TrimStart, Replace, Reverse, TrimEnd, StartsWith, SubString, ToUpper to the equivalent SQL built-in functions. Array Functions − Supports translation from .NET’s Concat, Contains, and Count to the equivalent SQL built-in functions. Geospatial Extension Functions − Supports translation from stub methods Distance, Within, IsValid, and IsValidDetailed to the equivalent SQL built-in functions. User-Defined Extension Function − Supports translation from the stub method UserDefinedFunctionProvider.Invoke to the corresponding user-defined function. Miscellaneous − Supports translation of coalesce and conditional operators. Can translate Contains to String CONTAINS, ARRAY_CONTAINS or the SQL IN depending on context. Let’s take a look at an example where we will be using the .Net SDK. Following are the three documents which we will be consider for this example. New Customer 1 
+{ 
+   "name": "New Customer 1", 
+   "address": { 
+      "addressType": "Main Office", 
+      "addressLine1": "123 Main Street", 
+		
+      "location": { 
+         "city": "Brooklyn", 
+         "stateProvinceName": "New York" 
+      },
+	  
+      "postalCode": "11229", 
+      "countryRegionName": "United States" 
+   }, 
+}
+ New Customer 2 
+{ 
+   "name": "New Customer 2", 
+	
+   "address": {
+      "addressType": "Main Office", 
+      "addressLine1": "678 Main Street", 
+		
+      "location": { 
+         "city": "London", 
+         "stateProvinceName": " London " 
+      }, 
+	  
+      "postalCode": "11229", 
+      "countryRegionName": "United Kingdom" 
+   }, 
+}
+ New Customer 3 
+{ 
+   "name": "New Customer 3", 
+	
+   "address": { 
+      "addressType": "Main Office", 
+      "addressLine1": "12 Main Street", 
+		
+      "location": { 
+         "city": "Brooklyn", 
+         "stateProvinceName": "New York" 
+      },
+	  
+      "postalCode": "11229", 
+      "countryRegionName": "United States" 
+   },
+}
+ Following is the code in which we query using LINQ. We've defined a LINQ query in q, but it won't execute until we run .ToList on it. 
+private static void QueryDocumentsWithLinq(DocumentClient client) { 
+   Console.WriteLine(); 
+   Console.WriteLine("**** Query Documents (LINQ) ****"); 
+   Console.WriteLine();  
+   Console.WriteLine("Quering for US customers (LINQ)"); 
+   var q = 
+      from d in client.CreateDocumentQuery<Customer>(collection.DocumentsLink) 
+      where d.Address.CountryRegionName == "United States" 
+		
+   select new { 
+      Id = d.Id, 
+      Name = d.Name, 
+      City = d.Address.Location.City 
+   };
+   
+   var documents = q.ToList();  
+   Console.WriteLine("Found {0} US customers", documents.Count); 
+	
+   foreach (var document in documents) { 
+      var d = document as dynamic; 
+      Console.WriteLine(" Id: {0}; Name: {1}; City: {2}", d.Id, d.Name, d.City); 
+   }
+   
+   Console.WriteLine(); 
+}
+ The SDK will convert our LINQ query into SQL syntax for DocumentDB, generating a SELECT and WHERE clause based on our LINQ syntax. Let’s call the above queries from the CreateDocumentClient task. 
+private static async Task CreateDocumentClient() { 
+   // Create a new instance of the DocumentClient 
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) { 
+      database = client.CreateDatabaseQuery("SELECT * FROM c WHERE c.id = 
+         'myfirstdb'").AsEnumerable().First(); 
+      collection = client.CreateDocumentCollectionQuery(database.CollectionsLink, 
+         "SELECT * FROM c WHERE c.id = 'MyCollection'").AsEnumerable().First();  
+      QueryDocumentsWithLinq(client); 
+   } 
+}
+ When the above code is executed, it produces the following output. 
+**** Query Documents (LINQ) **** 
+ 
+Quering for US customers (LINQ) 
+Found 2 US customers 
+   Id: 7e9ad4fa-c432-4d1a-b120-58fd7113609f; Name: New Customer 1; City: Brooklyn 
+   Id: 34e9873a-94c8-4720-9146-d63fb7840fad; Name: New Customer 1; City: Brooklyn

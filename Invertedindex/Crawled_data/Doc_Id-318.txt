@@ -1,0 +1,46 @@
+MySQL - CONCAT Function
+
+https://www.tutorialspoint.com/mysql/mysql-concat-function.htm
+
+Learning, MySQL, Programming, Database, Clauses, Commands, Functions, MySQL Between Clause, Queries, Simple, Steps, Basic, Advanced, Concepts.
+
+August-15-2017-02:34:19
+
+MySQL CONCAT function is used to concatenate two strings to form a single string. Try out the following example − 
+mysql> SELECT CONCAT('FIRST ', 'SECOND');
++----------------------------+
+| CONCAT('FIRST ', 'SECOND') |
++----------------------------+
+|        FIRST SECOND        |
++----------------------------+
+1 row in set (0.00 sec)
+ To understand CONCAT function in more detail, consider an employee_tbl table, which is having the following records − 
+mysql> SELECT * FROM employee_tbl;
++------+------+------------+--------------------+
+|  id  | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|   1  | John | 2007-01-24 |        250         |
+|   2  | Ram  | 2007-05-27 |        220         |
+|   3  | Jack | 2007-05-06 |        170         |
+|   3  | Jack | 2007-04-06 |        100         |
+|   4  | Jill | 2007-04-06 |        220         |
+|   5  | Zara | 2007-06-06 |        300         |
+|   5  | Zara | 2007-02-06 |        350         |
++------+------+------------+--------------------+
+7 rows in set (0.00 sec)
+ Now, suppose based on the above table you want to concatenate all the names employee ID and work_date, then you can do it using the following command − 
+mysql> SELECT CONCAT(id, name, work_date)
+   -> FROM employee_tbl;
++-----------------------------+
+| CONCAT(id, name, work_date) |
++-----------------------------+
+|      1John2007-01-24        |
+|      2Ram2007-05-27         |
+|      3Jack2007-05-06        |
+|      3Jack2007-04-06        |
+|      4Jill2007-04-06        |
+|      5Zara2007-06-06        |
+|      5Zara2007-02-06        |
++-----------------------------+
+7 rows in set (0.00 sec)
+ mysql-useful-functions.htm

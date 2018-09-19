@@ -1,0 +1,45 @@
+AIML - <random> Tag
+
+https://www.tutorialspoint.com/aiml/aiml_random_tag.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+<random> Tag is used to get random responses. This tag enables AIML to respond differently for the same input. <random> tag is used along with <li> tags. <li> tags carry different responses that are to be delivered to the user on a random basis. Syntax 
+<random>
+   <li> pattern1 </li>
+   <li> pattern2 </li>
+   ...
+   <li> patternN </li>
+</random>
+ For example, consider the following conversation. 
+Human: Hi
+Robot: Hello!
+Human: Hi
+Robot: Hi! Nice to meet you!
+ Example Create random.aiml inside C > ab > bots > test > aiml and random.aiml.csv inside C > ab > bots > test > aimlif directories. random.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding ="UTF-8"?>
+   <category>
+      <pattern>HI</pattern>
+      
+      <template>
+         <random>
+            <li> Hello! </li>
+            <li> Hi! Nice to meet you! </li>
+         </random>
+      </template>
+      
+   <category>      
+</aiml>
+ random.aiml.csv 
+0,HI,*,*, <random><li> Hello! </li><li> Hi! Nice to meet you! </li></random>,random.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You will see the following output − 
+Human: Hi
+Robot: Hi! Nice to meet you!
+Human: Hi
+Robot: Hello!
+ Here, the response may vary considering random responses.

@@ -1,0 +1,63 @@
+PostgreSQL - Logical Operators
+
+https://www.tutorialspoint.com/postgresql/postgresql_logical-operators.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+Consider the table COMPANY having records as follows − 
+testdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+ Here are simple examples showing the usage of PostgreSQL LOGICAL Operators. The following SELECT statement lists down all the records where AGE is greater than or equal to 25 and salary is greater than or equal to 65000.00. 
+testdb=# SELECT * FROM COMPANY WHERE AGE >= 25 AND SALARY >= 6500;
+ The above given PostgreSQL statement will produce the following result − 
+ id | name  | age |                      address                  | salary
+----+-------+-----+-----------------------------------------------+--------
+  1 | Paul  |  32 | California                                    |  20000
+  2 | Allen |  25 | Texas                                         |  15000
+  4 | Mark  |  25 | Rich-Mond                                     |  65000
+  5 | David |  27 | Texas                                         |  85000
+(4 rows)
+ The following SELECT statement lists down all the records where AGE is greater than or equal to 25 OR salary is greater than or equal to 65000.00 − 
+testdb=# SELECT * FROM COMPANY WHERE AGE >= 25 OR SALARY >= 6500;
+ The above given PostgreSQL statement will produce the following result − 
+ id | name  | age |  address    | salary
+----+-------+-----+-------------+--------
+  1 | Paul  |  32 | California  |  20000
+  2 | Allen |  25 | Texas       |  15000
+  3 | Teddy |  23 | Norway      |  20000
+  4 | Mark  |  25 | Rich-Mond   |  65000
+  5 | David |  27 | Texas       |  85000
+  6 | Kim   |  22 | South-Hall  |  45000
+  7 | James |  24 | Houston     |  10000
+  8 | Paul  |  24 | Houston     |  20000
+  9 | James |  44 | Norway      |   5000
+ 10 | James |  45 | Texas       |   5000
+(10 rows)
+ The following SELECT statement lists down all the records where AGE is not NULL, which means all the records because none of the record is having AGE equal to NULL − 
+testdb=#  SELECT * FROM COMPANY WHERE SALARY IS NOT NULL;
+ The above given PostgreSQL statement will produce the following result − 
+ id | name  | age |  address    | salary
+----+-------+-----+-------------+--------
+  1 | Paul  |  32 | California  |  20000
+  2 | Allen |  25 | Texas       |  15000
+  3 | Teddy |  23 | Norway      |  20000
+  4 | Mark  |  25 | Rich-Mond   |  65000
+  5 | David |  27 | Texas       |  85000
+  6 | Kim   |  22 | South-Hall  |  45000
+  7 | James |  24 | Houston     |  10000
+  8 | Paul  |  24 | Houston     |  20000
+  9 | James |  44 | Norway      |   5000
+ 10 | James |  45 | Texas       |   5000
+(10 rows)
+ postgresql_operators.htm

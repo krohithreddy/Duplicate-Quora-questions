@@ -1,0 +1,37 @@
+Database - Second Normal Form (2NF)
+
+https://www.tutorialspoint.com/sql/second-normal-form.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+The Second Normal Form states that it should meet all the rules for 1NF and there must be no partial dependences of any of the columns on the primary key − Consider a customer-order relation and you want to store customer ID, customer name, order ID and order detail and the date of purchase − 
+CREATE TABLE CUSTOMERS(
+   CUST_ID    INT              NOT NULL,
+   CUST_NAME VARCHAR (20)      NOT NULL,
+   ORDER_ID   INT              NOT NULL,
+   ORDER_DETAIL VARCHAR (20)  NOT NULL,
+   SALE_DATE  DATETIME,
+   PRIMARY KEY (CUST_ID, ORDER_ID)
+);
+ This table is in the first normal form; in that it obeys all the rules of the first normal form. In this table, the primary key consists of the CUST_ID and the ORDER_ID. Combined, they are unique assuming the same customer would hardly order the same thing. However, the table is not in the second normal form because there are partial dependencies of primary keys and columns. CUST_NAME is dependent on CUST_ID and there's no real link between a customer's name and what he purchased. The order detail and purchase date are also dependent on the ORDER_ID, but they are not dependent on the CUST_ID, because there is no link between a CUST_ID and an ORDER_DETAIL or their SALE_DATE. To make this table comply with the second normal form, you need to separate the columns into three tables. First, create a table to store the customer details as shown in the code block below − 
+CREATE TABLE CUSTOMERS(
+   CUST_ID    INT              NOT NULL,
+   CUST_NAME VARCHAR (20)      NOT NULL,
+   PRIMARY KEY (CUST_ID)
+);
+ The next step is to create a table to store the details of each order − 
+CREATE TABLE ORDERS(
+   ORDER_ID   INT              NOT NULL,
+   ORDER_DETAIL VARCHAR (20)  NOT NULL,
+   PRIMARY KEY (ORDER_ID)
+);
+ Finally, create a third table storing just the CUST_ID and the ORDER_ID to keep a track of all the orders for a customer − 
+CREATE TABLE CUSTMERORDERS(
+   CUST_ID    INT              NOT NULL,
+   ORDER_ID   INT              NOT NULL,
+   SALE_DATE  DATETIME,
+   PRIMARY KEY (CUST_ID, ORDER_ID)
+);
+ sql-rdbms-concepts.htm

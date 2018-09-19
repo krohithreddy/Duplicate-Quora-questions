@@ -1,0 +1,19 @@
+DB2 - Indexes
+
+https://www.tutorialspoint.com/db2/db2_indexes.htm
+
+DB2 Bufferpools, introduction to db2, db2 server installation, db2 instance, databases, buffer pools, table spaces, storage groups, schemas, data type, tables, alias, constraints, indexes, triggers, sequences, views, db2 with xml, backup and recovery, database security, roles, ldap etc.
+
+August-15-2017-02:34:24
+
+This chapter covers introduction to indexes, their types, creation and dropping. Introduction Index is a set of pointers, which can refer to rows in a table, blocks in MDC or ITC tables, XML data in an XML storage object that are logically ordered by the values of one or more keys. It is created on DB2 table columns to speed up the data access for the queries, and to cluster and partition the data efficiently. It can also improve the performance of operation on the view. A table with a unique index can have rows with unique keys. Depending on the table requirements, you can take different types of indexes. Types of indexes Unique and Non-Unique indexes Clustered and non-clustered indexes Creating indexes For creating unique indexes, you use following syntax: Syntax: 
+db2 create unique index <index_name> on 
+<table_name>(<unique_column>) include (<column_names..>) 
+ Example: To create index for “shopper.sales1” table. 
+db2 create unique index sales1_indx on 
+shopper.sales1(id) include (itemname) 
+ Dropping indexes For dropping the index, you use the following syntax: Syntax: 
+db2 drop unique index <index_name> on 
+<table_name>(<unique_column>) include (<column_names..>) 
+ Example: 
+db2 drop index sales_index

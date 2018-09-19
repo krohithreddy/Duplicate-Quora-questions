@@ -1,0 +1,49 @@
+AIML - <star> Tag
+
+https://www.tutorialspoint.com/aiml/aiml_star_tag.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+<star> Tag is used to match wild card * character(s) in <pattern> Tag. Syntax 
+<star index = "n"/>
+ n signifies the position of * within the user input in <pattern> Tag. Consider the following example − 
+<category>
+   <pattern> A * is a *. </pattern>
+   
+   <template>
+      When a <star index = "1"/> is not a <star index = "2"/>?
+   </template>
+   
+</category>
+ If the user enters "A mango is a fruit." then bot will respond as "When a mango is not a fruit?" Example Create star.aiml inside C > ab > bots > test > aiml and star.aiml.csv inside C > ab > bots > test > aimlif directories. star.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   
+   <category>
+      <pattern>I LIKE *</pattern>
+      <template>
+         I too like <star/>.
+      </template>
+   </category>
+   
+   <category>
+      <pattern>A * IS A *</pattern>
+      <template>
+         How <star index = "1"/> can not be a <star index = "2"/>?
+      </template>
+   </category>
+   
+</aiml>
+ star.aiml.csv 
+0,I LIKE *,*,*,I too like <star/>.,star.aiml
+0,A * IS A *,*,*,How <star index = "1"/> can not be a <star index = "2"/>?,star.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You will see the following output − 
+Human: I like mango
+Robot: I too like mango.
+Human: A mango is a fruit
+Robot: How mango can not be a fruit? 
+ <star index = "1"/> is often used as <star />

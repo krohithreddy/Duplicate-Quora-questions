@@ -1,0 +1,22 @@
+Redis - Sets
+
+https://www.tutorialspoint.com/redis/redis_sets.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis Sets are an unordered collection of unique strings. Unique means sets does not allow repition of data in a key. In Redis set add, remove, and test for the existence of members in O(1) (constant time regardless of the number of elements contained inside the Set). The maximum length of a list is 232 - 1 elements (4294967295, more than 4 billion of elements per set). Example 
+redis 127.0.0.1:6379> SADD tutorials redis 
+(integer) 1 
+redis 127.0.0.1:6379> SADD tutorials mongodb 
+(integer) 1 
+redis 127.0.0.1:6379> SADD tutorials mysql 
+(integer) 1 
+redis 127.0.0.1:6379> SADD tutorials mysql 
+(integer) 0 
+redis 127.0.0.1:6379> SMEMBERS tutorials  
+1) "mysql" 
+2) "mongodb" 
+3) "redis"
+ In the above example, three values are inserted in Redis set named ‘tutorials’ by the command SADD. Redis Sets Commands Following table lists some basic commands related to sets. S.No Command & Description 1 SADD key member1 [member2] Adds one or more members to a set 2 SCARD key Gets the number of members in a set 3 SDIFF key1 [key2] Subtracts multiple sets 4 SDIFFSTORE destination key1 [key2] Subtracts multiple sets and stores the resulting set in a key 5 SINTER key1 [key2] Intersects multiple sets 6 SINTERSTORE destination key1 [key2] Intersects multiple sets and stores the resulting set in a key 7 SISMEMBER key member Determines if a given value is a member of a set 8 SMOVE source destination member Moves a member from one set to another 9 SPOP key Removes and returns a random member from a set 10 SRANDMEMBER key [count] Gets one or multiple random members from a set 11 SREM key member1 [member2] Removes one or more members from a set 12 SUNION key1 [key2] Adds multiple sets 13 SUNIONSTORE destination key1 [key2] Adds multiple sets and stores the resulting set in a key 14 SSCAN key cursor [MATCH pattern] [COUNT count] Incrementally iterates set elements

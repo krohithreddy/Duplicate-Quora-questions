@@ -1,0 +1,22 @@
+OrientDB - Load Record
+
+https://www.tutorialspoint.com/orientdb/orientdb_load_record.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Load Record is used to load a particular record from the schema. Load record will load the record with the help of Record ID. It is represented with @rid symbol in the resultset. The following statement is the basic syntax of the LOAD Record command. 
+LOAD RECORD <record-id> 
+ Where <record-id> defines the record id of the record you want to load. If you don’t know the Record ID of a particular record, then you can execute any query against the table. In the result-set you will find the Record ID (@rid) of the respective record. Example Let us consider the same Customer table that we have used in previous chapters. Sr.No. Name Age 1 Satish 25 2 Krishna 26 3 Kiran 29 4 Javeed 21 5 Raja 29 Try the following query to retrieve the record having Record ID @rid: #11:0. 
+orientdb {db = demo}> LOAD RECORD #11:0 
+ If the above query is executed successfully, you will get the following output. 
++---------------------------------------------------------------------------+ 
+| Document - @class: Customer        @rid: #11:0           @version: 1      | 
++---------------------------------------------------------------------------+ 
+|                     Name | Value                                          | 
++---------------------------------------------------------------------------+ 
+|                       id | 1                                              | 
+|                     name | satish                                         | 
+|                      age | 25                                             | 
++---------------------------------------------------------------------------+

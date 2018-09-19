@@ -1,0 +1,87 @@
+SQLite - Subqueries
+
+https://www.tutorialspoint.com/sqlite/sqlite_sub_queries.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+A Subquery or Inner query or Nested query is a query within another SQLite query and embedded within the WHERE clause. A subquery is used to return data that will be used in the main query as a condition to further restrict the data to be retrieved. Subqueries can be used with the SELECT, INSERT, UPDATE, and DELETE statements along with the operators such as =, <, >, >=, <=, IN, BETWEEN, etc. There are a few rules that subqueries must follow − Subqueries must be enclosed within parentheses. A subquery can have only one column in the SELECT clause, unless multiple columns are in the main query for the subquery to compare its selected columns. An ORDER BY cannot be used in a subquery, although the main query can use an ORDER BY. The GROUP BY can be used to perform the same function as the ORDER BY in a subquery. Subqueries that return more than one row can only be used with multiple value operators, such as the IN operator. BETWEEN operator cannot be used with a subquery; however, BETWEEN can be used within the subquery. Subqueries with SELECT Statement Subqueries are most frequently used with the SELECT statement. The basic syntax is as follows − 
+SELECT column_name [, column_name ]
+FROM table1 [, table2 ]
+WHERE column_name OPERATOR
+   (SELECT column_name [, column_name ]
+      FROM table1 [, table2 ]
+      [WHERE])
+ Example Consider COMPANY table with the following records. 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Now, let us check the following sub-query with SELECT statement. 
+sqlite> SELECT * 
+   FROM COMPANY 
+   WHERE ID IN (SELECT ID 
+      FROM COMPANY 
+      WHERE SALARY > 45000) ;
+ This will produce the following result. 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+ Subqueries with INSERT Statement Subqueries can also be used with INSERT statements. The INSERT statement uses the data returned from the subquery to insert into another table. The selected data in the subquery can be modified with any of the character, date, or number functions. Following is the basic syntax is as follows − 
+INSERT INTO table_name [ (column1 [, column2 ]) ]
+   SELECT [ *|column1 [, column2 ]
+   FROM table1 [, table2 ]
+   [ WHERE VALUE OPERATOR ]
+ Example Consider a table COMPANY_BKP with similar structure as COMPANY table and can be created using the same CREATE TABLE using COMPANY_BKP as the table name. To copy the complete COMPANY table into COMPANY_BKP, following is the syntax − 
+sqlite> INSERT INTO COMPANY_BKP
+   SELECT * FROM COMPANY 
+   WHERE ID IN (SELECT ID 
+      FROM COMPANY) ;
+ Subqueries with UPDATE Statement The subquery can be used in conjunction with the UPDATE statement. Either single or multiple columns in a table can be updated when using a subquery with the UPDATE statement. Following is the basic syntax is as follows − 
+UPDATE table
+SET column_name = new_value
+[ WHERE OPERATOR [ VALUE ]
+   (SELECT COLUMN_NAME
+      FROM TABLE_NAME)
+   [ WHERE) ]
+ Example Assuming, we have COMPANY_BKP table available which is a backup of COMPANY table. Following example updates SALARY by 0.50 times in COMPANY table for all the customers, whose AGE is greater than or equal to 27. 
+sqlite> UPDATE COMPANY
+   SET SALARY = SALARY * 0.50
+   WHERE AGE IN (SELECT AGE FROM COMPANY_BKP
+      WHERE AGE >= 27 );
+ This would impact two rows and finally COMPANY table would have the following records − 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  10000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       42500.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Subqueries with DELETE Statement Subquery can be used in conjunction with the DELETE statement like with any other statements mentioned above. Following is the basic syntax is as follows − 
+DELETE FROM TABLE_NAME
+[ WHERE OPERATOR [ VALUE ]
+   (SELECT COLUMN_NAME
+      FROM TABLE_NAME)
+   [ WHERE) ]
+ Example Assuming, we have COMPANY_BKP table available which is a backup of COMPANY table. Following example deletes records from COMPANY table for all the customers whose AGE is greater than or equal to 27. 
+sqlite> DELETE FROM COMPANY
+   WHERE AGE IN (SELECT AGE FROM COMPANY_BKP
+   WHERE AGE > 27 );
+ This will impact two rows and finally COMPANY table will have the following records − 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       42500.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0

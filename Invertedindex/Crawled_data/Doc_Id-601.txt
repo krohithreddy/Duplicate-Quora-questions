@@ -1,0 +1,145 @@
+PouchDB - Synchronization
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_synchronization.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+You can synchronize the databases stored locally in PouchDB with those that are stored in CouchDB. In the previous chapter, we have seen how to replicate databases using PouchDB. There we have used the method PouchDB.replicate(source, destination). In addition to this, we can also replicate the data, from the local database to the remote database, and from the remote database to the local database using replicate.to() and replicate.from() methods as shown below. 
+//Replicating data from local database to remote database 
+localDB.replicate.to(remoteDB);
+
+//Replicating data from remote database to local database 
+localDB.replicate.from(remoteDB);
+ Where, localDB is an object of database stored locally in PouchDB and remoteDB is an object of a database that is stored in CouchDB. Example Suppose there is a database with the name local_database in PouchDB, and it contains 3 documents, doc1, doc2, and doc3, having contents as shown below. 
+doc1 = {_id: '003', name: 'Ram', age: 26, Designation: 'Programmer'} 
+doc2 = {_id: '004', name: 'Robert', age: 27, Designation: 'Programmer'} 
+doc3 = {_id: '005', name: 'Rahim', age: 28, Designation: 'Programmer'}
+ And there is a database with the name Remote_Database in CouchDB and it contains 2 documents doc1, doc2, having contents as shown below. 
+doc1 = {_id: '001', name: 'Geeta', age: 25, Designation: 'Programmer'} 
+doc2 = {_id: '002', name: 'Zara Ali', age: 24, Designation: 'Manager'}
+ Following is an example of synchronizing these two databases, where one is stored in PouchDB and other is stored in CouchDB, using the replicate.to() and replicate.from() methods. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating local database object
+var localDB = new PouchDB('local_database');
+
+//Creating remote database object
+var remoteDB = new PouchDB('http://localhost:5984/remote_database');
+
+//Synchronising both databases
+localDB.replicate.to(remoteDB);
+remoteDB.replicate.from(localDB);
+console.log("Databases synchronized successfully");
+ Save the above code in a file with the name Synchronising_databases.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Synchronising_databases.js
+ This synchronizes the two databases remoteDB and localDB, and displays a message on the console as shown below. 
+Databases synchronized successfully.
+ After synchronizing the two databases visit the http://127.0.0.1:5984/_utils/index.html and select the remote_database. You can observe that the documents of local database (003, 004, 005) were copied in this database as shown below. In the same way, if you fetch the contents of the local_database stored in PouchDB you can get to observe that documents of the database that is stored in CouchDB were copied here. 
+[ 
+   { 
+      id: '001',
+      key: '001',
+      value: { rev: '1-23cf3767e32a682c247053b16caecedb' },
+      doc: { 
+         name: 'Geeta',
+         age: 25,
+         Designation: 'Programmer',
+         _id: '001',
+         _rev: '1-23cf3767e32a682c247053b16caecedb' 
+      } 
+   },
+   { 
+      id: '002',
+      key: '002',
+      value: { rev: '1-d5bcfafbd4d4fae92fd7fc4fdcaa3a79' },
+      doc: { 
+         name: 'Zara Ali',
+         age: 24,
+         Designation: 'Manager',
+         _id: '002',
+         _rev: '1-d5bcfafbd4d4fae92fd7fc4fdcaa3a79' 
+      } 
+   },
+   { 
+      id: '003',
+      key: '003',
+      value: { rev: '1-bf4619471ac346fdde46cfa8fbf3587f' },
+      doc: { 
+         name: 'Ram',
+         age: 26,
+         Designation: 'Programmer',
+         _id: '003',
+         _rev: '1-bf4619471ac346fdde46cfa8fbf3587f' 
+      } 
+   },
+   { 
+      id: '004',
+      key: '004',
+      value: { rev: '1-29b8f803958c994e3eb37912a45d869c' },
+      doc: { 
+         name: 'Robert',
+         age: 27,
+         Designation: 'Programmer',
+         _id: '004',
+         _rev: '1-29b8f803958c994e3eb37912a45d869c' 
+      } 
+   },
+   { 
+      id: '005',
+      key: '005',
+      value: { rev: '1-0eb89f71998ffa8430a640fdb081abd2' },
+      doc: { 
+         name: 'Rahim',
+         age: 28,
+         Designation: 'Programmer',
+         _id: '005',
+         _rev: '1-0eb89f71998ffa8430a640fdb081abd2' 
+      } 
+   } 
+]
+ You can rewrite the above program using the sync() method provided by PouchDB instead of the two methods replicate.to() and replicate.from() as shown below. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating local database object
+var localDB = new PouchDB('local');
+
+//Creating remote database object
+var remoteDB = new PouchDB('http://localhost:5984/remote_database');
+
+//Synchronising Remote and local databases
+localDB.sync(remoteDB, function(err, response) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(response);
+   }
+});
+ On executing the above program, it synchronizes the two databases displaying the following message. 
+{ 
+   push: { 
+      ok: true,
+      start_time: Fri Mar 25 2016 15:54:37 GMT+0530 (India Standard Time),
+      docs_read: 6,
+      docs_written: 6,
+      doc_write_failures: 0,
+      errors: [],
+      last_seq: 10,
+      status: 'complete',
+      end_time: Fri Mar 25 2016 15:54:37 GMT+0530 (India Standard Time) 
+   },
+   pull: { 
+      ok: true,
+      start_time: Fri Mar 25 2016 15:54:37 GMT+0530 (India Standard Time),
+      docs_read: 0,
+      docs_written: 0,
+      doc_write_failures: 0,
+      errors: [],
+      last_seq: 2,
+      status: 'complete',
+      end_time: Fri Mar 25 2016 15:54:37 GMT+0530 (India Standard Time) 
+   } 
+}

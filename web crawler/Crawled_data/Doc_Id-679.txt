@@ -1,0 +1,32 @@
+Database - First Normal Form (1NF)
+
+https://www.tutorialspoint.com/sql/first-normal-form.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+The First normal form (1NF) sets basic rules for an organized database − Define the data items required, because they become the columns in a table. Place the related data items in a table. Ensure that there are no repeating groups of data. Ensure that there is a primary key. First Rule of 1NF You must define the data items. This means looking at the data to be stored, organizing the data into columns, defining what type of data each column contains and then finally putting the related columns into their own table. For example, you put all the columns relating to locations of meetings in the Location table, those relating to members in the MemberDetails table and so on. Second Rule of 1NF The next step is ensuring that there are no repeating groups of data. Consider we have the following table − 
+CREATE TABLE CUSTOMERS(
+   ID   INT              NOT NULL,
+   NAME VARCHAR (20)     NOT NULL,
+   AGE  INT              NOT NULL,
+   ADDRESS  CHAR (25),
+   ORDERS   VARCHAR(155)
+);
+ So, if we populate this table for a single customer having multiple orders, then it would be something as shown below − ID NAME AGE ADDRESS ORDERS 100 Sachin 36 Lower West Side Cannon XL-200 100 Sachin 36 Lower West Side Battery XL-200 100 Sachin 36 Lower West Side Tripod Large But as per the 1NF, we need to ensure that there are no repeating groups of data. So, let us break the above table into two parts and then join them using a key as shown in the following program − CUSTOMERS table − 
+CREATE TABLE CUSTOMERS(
+   ID   INT              NOT NULL,
+   NAME VARCHAR (20)     NOT NULL,
+   AGE  INT              NOT NULL,
+   ADDRESS  CHAR (25),
+   PRIMARY KEY (ID)
+);
+ This table would have the following record − ID NAME AGE ADDRESS 100 Sachin 36 Lower West Side ORDERS table − 
+CREATE TABLE ORDERS(
+   ID   INT              NOT NULL,
+   CUSTOMER_ID INT       NOT NULL,
+   ORDERS   VARCHAR(155),
+   PRIMARY KEY (ID)
+);
+ This table would have the following records − ID CUSTOMER_ID ORDERS 10 100 Cannon XL-200 11 100 Battery XL-200 12 100 Tripod Large Third Rule of 1NF The final rule of the first normal form, create a primary key for each table which we have already created. sql-rdbms-concepts.htm

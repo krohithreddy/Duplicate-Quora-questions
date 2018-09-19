@@ -1,0 +1,57 @@
+DOM - Element Object method - getAttribute
+
+https://www.tutorialspoint.com/dom/dom_element_getattribute.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The getAttribute method gives the value of the attribute if it exists for a specified element. Syntax Following is the syntax for the usage of the getAttribute method. 
+elementObj.getAttribute(name)
+ S.No. Parameter & Description 1 Name It holds the name of the attribute to retrieve. This method returns the value of the attribute as a string if present, otherwise it will be specified as null. Example node.xml contents are as below − 
+<?xml version = "1.0"?>
+<Company>
+   <Employee category = "Technical">
+      <FirstName>Tanmay</FirstName>
+      <LastName>Patil</LastName>
+      <ContactNo>1234567890</ContactNo>
+      <Email>tanmaypatil@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Non-Technical">
+      <FirstName>Taniya</FirstName>
+      <LastName>Mishra</LastName>
+      <ContactNo>1234667898</ContactNo>
+      <Email>taniyamishra@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Management">
+      <FirstName>Tanisha</FirstName>
+      <LastName>Sharma</LastName>
+      <ContactNo>1234562350</ContactNo>
+      <Email>tanishasharma@xyz.com</Email>
+   </Employee>
+</Company>
+ Following example demonstrates the usage of the getAttribute method − 
+<!DOCTYPE html>
+<html>
+   <body>
+      <script>
+         if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+         } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+         x = xmlDoc.getElementsByTagName('Employee')[2];
+         document.write("The attribute is: ");
+         document.write(x.getAttribute('category'));
+
+      </script>
+   </body>
+</html>
+ Execution Save this file as elementattribute_getattribute.html on the server path (this file and node.xml should be on the same path in your server). We will get the output as shown below − 
+The attribute is: Management
+ dom_element_object.htm

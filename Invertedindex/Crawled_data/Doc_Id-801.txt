@@ -1,0 +1,43 @@
+SQLite - Views
+
+https://www.tutorialspoint.com/sqlite/sqlite_views.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+A view is nothing more than a SQLite statement that is stored in the database with an associated name. It is actually a composition of a table in the form of a predefined SQLite query. A view can contain all rows of a table or selected rows from one or more tables. A view can be created from one or many tables which depends on the written SQLite query to create a view. Views which are kind of virtual tables, allow the users to − Structure data in a way that users or classes of users find natural or intuitive. Restrict access to the data such that a user can only see limited data instead of a complete table. Summarize data from various tables, which can be used to generate reports. SQLite views are read-only and thus you may not be able to execute a DELETE, INSERT or UPDATE statement on a view. However, you can create a trigger on a view that fires on an attempt to DELETE, INSERT, or UPDATE a view and do what you need in the body of the trigger. Creating Views SQLite views are created using the CREATE VIEW statement. SQLite views can be created from a single table, multiple tables, or another view. Following is the basic CREATE VIEW syntax. 
+CREATE [TEMP | TEMPORARY] VIEW view_name AS
+SELECT column1, column2.....
+FROM table_name
+WHERE [condition];
+ You can include multiple tables in your SELECT statement in a similar way as you use them in a normal SQL SELECT query. If the optional TEMP or TEMPORARY keyword is present, the view will be created in the temp database. Example Consider COMPANY table with the following records − 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Following is an example to create a view from COMPANY table. This view will be used to have only a few columns from COMPANY table. 
+sqlite> CREATE VIEW COMPANY_VIEW AS
+SELECT ID, NAME, AGE
+FROM  COMPANY;
+ You can now query COMPANY_VIEW in a similar way as you query an actual table. Following is an example − 
+sqlite> SELECT * FROM COMPANY_VIEW;
+ This will produce the following result. 
+ID          NAME        AGE
+----------  ----------  ----------
+1           Paul        32
+2           Allen       25
+3           Teddy       23
+4           Mark        25
+5           David       27
+6           Kim         22
+7           James       24
+ Dropping Views To drop a view, simply use the DROP VIEW statement with the view_name. The basic DROP VIEW syntax is as follows − 
+sqlite> DROP VIEW view_name;
+ The following command will delete COMPANY_VIEW view, which we created in the last section. 
+sqlite> DROP VIEW COMPANY_VIEW;

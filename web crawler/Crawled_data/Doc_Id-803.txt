@@ -1,0 +1,46 @@
+T-SQL - Create Tables
+
+https://www.tutorialspoint.com/t_sql/t_sql_create_tables.htm
+
+T-SQL, Tutorial, Learning, Beginners, Overview, Data Types, Create Tables, Drop Tables, INSERT Statement, SELECT Statement, UPDATE Statement, DELETE Statement, WHERE Clause, LIKE Clause, ORDER BY Clause, GROUP BY Clause, DISTINCT Clause, Joining Tables, Sub-Queries, Stored Procedures, Transactions, Indexes, Functions, String Functions, Date Functions, Numeric Functions.
+
+August-15-2017-02:34:09
+
+Creating a basic table involves naming the table and defining its columns and each column's data type. The SQL Server CREATE TABLE statement is used to create a new table. Syntax Following is the basic syntax of CREATE TABLE statement − 
+CREATE TABLE table_name( 
+   column1 datatype, 
+   column2 datatype, 
+   column3 datatype, 
+   ..... 
+   columnN datatype, 
+   PRIMARY KEY( one or more columns ));
+ CREATE TABLE is the keyword telling the database system what you want to do. In this case, you want to create a new table. The unique name or identifier for the table follows the CREATE TABLE statement. Then in brackets comes the list defining each column in the table and what sort of data type it is. The syntax becomes clearer to understand with the following example. A copy of an existing table can be created using a combination of the CREATE TABLE statement and the SELECT statement. You can check complete details at Create Table Using another Table. Example In this example, let’s create a CUSTOMERS table with ID as primary key and NOT NULL are the constraints showing that these fields cannot be NULL while creating records in this table − 
+CREATE TABLE CUSTOMERS( 
+   ID   INT              NOT NULL, 
+   NAME VARCHAR (20)     NOT NULL, 
+   AGE  INT              NOT NULL, 
+   ADDRESS  CHAR (25) , 
+   SALARY   DECIMAL (18, 2),        
+   PRIMARY KEY (ID));
+ You can verify if your table has been created successfully by looking at the message displayed by the SQL server, otherwise you can use the following command − 
+exec sp_columns CUSTOMERS
+ The above command produces the following output. 
+TABLE_QUALIFIER   TABLE_OWNER   TABLE_NAME   COLUMN_NAME   DATA_TYPE   TYPE_NAME
+   PRECISION   LENGTH SCALE   RADIX   NULLABLE   REMARKS   COLUMN_DEF   SQL_DATA_TYPE 
+   SQL_DATETIME_SUB   CHAR_OCTET_LENGTH   ORDINAL_POSITION   IS_NULLABLE   SS_DATA_TYPE
+   
+TestDB    dbo    CUSTOMERS   ID        4    int      10   4    0      10     0
+   NULL   NULL   4   NULL    NULL      1    NO       56 
+   
+TestDB    dbo    CUSTOMERS   NAME      12   varchar  20   20   NULL   NULL   0
+   NULL   NULL   12   NULL   20        2    NO       39
+  
+TestDB    dbo    CUSTOMERS   AGE       4    int      10   4    0      10     0
+   NULL   NULL   4   NULL    NULL      3    NO       56 
+ 
+TestDB    dbo    CUSTOMERS   ADDRESS   1    char     25   25   NULL   NULL   1
+   NULL   NULL   1   NULL    25   4    YES  39  
+
+TestDB    dbo    CUSTOMERS   SALARY    3    decimal  18   20   2      10     1
+   NULL   NULL   3   NULL    NULL      5    YES      106 
+ You can now see that CUSTOMERS table is available in your database which you can use to store required information related to customers.

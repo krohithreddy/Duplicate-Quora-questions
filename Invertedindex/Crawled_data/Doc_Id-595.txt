@@ -1,0 +1,41 @@
+PouchDB - Miscellaneous
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_miscellaneous.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+In this chapter, we will discuss the concepts like, compaction and retrieval of bulk data from PouchDB. Compaction You can reduce the size of a database by removing the unused data using compact() method. You can compact a local database as well as remote database using this method. Following is an example demonstrating the usage of the compact() method in PouchDB. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('sample_database');
+
+db.compact(function (err, result) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(result);
+   }
+});
+ Retrieving Bulk Data You can retrieve a set of documents in bulk using the bulkGet() method. To this method, you need to pass a set of id’s and _rev’s. Following is an example demonstrating the usage of the bulkGet() method in PouchDB. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//Preparing documents
+//Inserting Document
+db.bulkGet({docs: [
+   { id: "001", rev: "1-5dc593eda0e215c806677df1d12d5c47"},
+   { id: "002", rev: "1-2bfad8a9e66d2679b99c0cab24bd9cc8"},
+   { id: "003", rev: "1-7cff4a5da1f97b077a909ff67bd5b047"} ]}, function(err, result) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(result);
+   }
+});

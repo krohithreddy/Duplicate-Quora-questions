@@ -1,0 +1,144 @@
+DocumentDB SQL - From Clause
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_from_clause.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+In this chapter, we will cover the FROM clause, which works nothing like a standard FROM clause in regular SQL. Queries always run within the context of a specific collection and cannot join across documents within the collection, which makes us wonder why we need a FROM clause. In fact, we don't, but if we don't include it, then we won't be querying documents in the collection. The purpose of this clause is to specify the data source upon which the query must operate. Commonly the whole collection is the source, but one can specify a subset of the collection instead. The FROM <from_specification> clause is optional unless the source is filtered or projected later in the query. Let’s take a look at the same example again. Following is the AndersenFamily document. 
+{ 
+   "id": "AndersenFamily", 
+   "lastName": "Andersen",
+	
+   "parents": [ 
+      { "firstName": "Thomas", "relationship":  "father" }, 
+      { "firstName": "Mary Kay", "relationship":  "mother" } 
+   ], 
+	
+   "children": [ 
+      { 
+         "firstName": "Henriette Thaulow", 
+         "gender": "female", 
+         "grade": 5, 
+         "pets": [ { "givenName": "Fluffy", "type":  "Rabbit" } ] 
+      } 
+   ], 
+	
+   "location": { "state": "WA", "county": "King", "city": "Seattle" }, 
+   "isRegistered": true 
+}
+ Following is the SmithFamily document. 
+{ 
+   "id": "SmithFamily", 
+	
+   "parents": [ 
+      { "familyName": "Smith", "givenName": "James" }, 
+      { "familyName": "Curtis", "givenName": "Helen" } 
+   ], 
+	
+   "children": [ 
+      { 
+         "givenName": "Michelle", 
+         "gender": "female", 
+         "grade": 1 
+      }, 
+		
+      { 
+         "givenName": "John", 
+         "gender": "male", 
+         "grade": 7,
+			
+         "pets": [ 
+            { "givenName": "Tweetie", "type": "Bird" } 
+         ] 
+      } 
+   ], 
+	
+   "location": { 
+      "state": "NY", 
+      "county": "Queens", 
+      "city": "Forest Hills" 
+   }, 
+	
+   "isRegistered": true 
+} 
+ Following is the WakefieldFamily document. 
+{ 
+   "id": "WakefieldFamily", 
+	 
+   "parents": [ 
+      { "familyName": "Wakefield", "givenName": "Robin" }, 
+      { "familyName": "Miller", "givenName": "Ben" } 
+   ],
+   
+   "children": [ 
+      { 
+         "familyName": "Merriam", 
+         "givenName": "Jesse", 
+         "gender": "female", 
+         "grade": 6, 
+			
+         "pets": [ 
+            { "givenName": "Charlie Brown", "type": "Dog" }, 
+            { "givenName": "Tiger", "type": "Cat" }, 
+            { "givenName": "Princess", "type": "Cat" } 
+         ] 
+      }, 
+		
+      { 
+         "familyName": "Miller", 
+         "givenName": "Lisa", 
+         "gender": "female", 
+         "grade": 3,
+			
+         "pets": [ 
+            { "givenName": "Jake", "type": "Snake" } 
+         ] 
+      } 
+   ], 
+	
+   "location": { "state": "NY", "county": "Manhattan", "city": "NY" }, 
+   "isRegistered": false 
+} 
+ In the above query, “SELECT * FROM c” indicates that the entire Families collection is the source over which to enumerate. Sub-documents The source can also be reduced to a smaller subset. When we want to retrieve only a subtree in each document, the sub-root could then become the source, as shown in the following example. When we run the following query − 
+SELECT * FROM Families.parents
+ The following sub-documents will be retrieved. 
+[ 
+   [ 
+      { 
+         "familyName": "Wakefield", 
+         "givenName": "Robin" 
+      },
+		
+      { 
+         "familyName": "Miller", 
+         "givenName": "Ben" 
+      } 
+   ],
+	
+   [ 
+      { 
+         "familyName": "Smith", 
+         "givenName": "James"
+      },
+		
+      { 
+         "familyName": "Curtis", 
+         "givenName": "Helen" 
+      } 
+   ],
+	
+   [ 
+      { 
+         "firstName": "Thomas", 
+         "relationship": "father" 
+      },
+		
+      { 
+         "firstName": "Mary Kay", 
+         "relationship": "mother" 
+      } 
+   ] 
+]
+ As a result of this query, we can see that only the parents sub-documents are retrieved.

@@ -1,0 +1,38 @@
+Database - Third Normal Form (3NF)
+
+https://www.tutorialspoint.com/sql/third-normal-form.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+A table is in a third normal form when the following conditions are met − It is in second normal form. All nonprimary fields are dependent on the primary key. The dependency of these non-primary fields is between the data. For example, in the following table – the street name, city and the state are unbreakably bound to their zip code. 
+CREATE TABLE CUSTOMERS(
+   CUST_ID       INT              NOT NULL,
+   CUST_NAME     VARCHAR (20)      NOT NULL,
+   DOB           DATE,
+   STREET        VARCHAR(200),
+   CITY          VARCHAR(100),
+   STATE         VARCHAR(100),
+   ZIP           VARCHAR(12),
+   EMAIL_ID      VARCHAR(256),
+   PRIMARY KEY (CUST_ID)
+);
+ The dependency between the zip code and the address is called as a transitive dependency. To comply with the third normal form, all you need to do is to move the Street, City and the State fields into their own table, which you can call as the Zip Code table. − 
+CREATE TABLE ADDRESS(
+   ZIP           VARCHAR(12),
+   STREET        VARCHAR(200),
+   CITY          VARCHAR(100),
+   STATE         VARCHAR(100),
+   PRIMARY KEY (ZIP)
+);
+ The next step is to alter the CUSTOMERS table as shown below − 
+CREATE TABLE CUSTOMERS(
+   CUST_ID       INT              NOT NULL,
+   CUST_NAME     VARCHAR (20)      NOT NULL,
+   DOB           DATE,
+   ZIP           VARCHAR(12),
+   EMAIL_ID      VARCHAR(256),
+   PRIMARY KEY (CUST_ID)
+);
+ The advantages of removing transitive dependencies are mainly two-fold. First, the amount of data duplication is reduced and therefore your database becomes smaller. The second advantage is data integrity. When duplicated data changes, there is a big risk of updating only some of the data, especially if it is spread out in many different places in the database. For example, if the address and the zip code data were stored in three or four different tables, then any changes in the zip codes would need to ripple out to every record in those three or four tables. sql-rdbms-concepts.htm

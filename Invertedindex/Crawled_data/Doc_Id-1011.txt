@@ -1,0 +1,68 @@
+XPath - Node Functions
+
+https://www.tutorialspoint.com/xpath/xpath_node_functions.htm
+
+XPath, Tutorial, Learning, Overview, Expression, Nodes, Element, Attribute, Text, comment, Absolute Path, Relative Path, Axes, Operators, Wildcard, Predicates.
+
+August-15-2017-02:34:16
+
+XPath defines the following operators on nodes to be used with the XPath expressions. S.No. Operator & Description 1 / used to select node under a specific node. 2 // used to select node from root node 3 [...] used to check node value 4 | used for union of two node sets XPath defines the following functions on nodes to be used with the XPath expressions. S.No. Function & Description 1 comment() selects nodes which are comments. 2 node() selects all kinds of nodes. 3 processing-instruction() selects nodes which are processing instruction. 4 text() selects a text node. 5 name() provides the name of the node. 6 position() provides the position of the node. 7 last() selects the last node relative to current node; Example This example creates a table of <student> element with their details, by iterating over each student. It calculates the position of the student node then prints the student(s) details along with serial no. students.xml 
+<?xml version = "1.0"?>
+<?xml-stylesheet type = "text/xsl" href = "students.xsl"?>
+<class>
+   <student rollno = "393">
+      <firstname>Dinkar</firstname>
+      <lastname>Kad</lastname>
+      <nickname>Dinkar</nickname>
+      <marks>85</marks>
+   </student>
+   <student rollno = "493">
+      <firstname>Vaneet</firstname>
+      <lastname>Gupta</lastname>
+      <nickname>Vinni</nickname>
+      <marks>95</marks>
+   </student>
+   <student rollno = "593">
+      <firstname>Jasvir</firstname>
+      <lastname>Singh</lastname>
+      <nickname>Jazz</nickname>
+      <marks>90</marks>
+   </student>
+</class>
+ students.xsl 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xsl:stylesheet version = "1.0"
+   xmlns:xsl = "http://www.w3.org/1999/XSL/Transform">  
+
+   <xsl:template match = "/">
+      <html>
+         <body>
+            <h2>Students</h2>
+				
+            <table border = "1">
+               <tr bgcolor = "#9acd32">
+                  <th>Serial No</th>
+                  <th>Roll No</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Nick Name</th>
+                  <th>Marks</th>	  
+               </tr>
+					 
+               <xsl:for-each select = "class/student">
+                  <tr>
+                     <td><xsl:value-of select = "position()"/></td>
+                     <td><xsl:value-of select = "@rollno"/></td>
+                     <td><xsl:value-of select = "firstname"/></td>
+                     <td><xsl:value-of select = "lastname"/></td>
+                     <td><xsl:value-of select = "nickname"/></td>
+                     <td><xsl:value-of select = "marks"/></td>	 
+                  </tr>	
+               </xsl:for-each>
+					
+            </table>
+         </body>
+      </html>
+   </xsl:template>
+</xsl:stylesheet>
+ Verify the output xpath_operators.htm

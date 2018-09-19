@@ -1,0 +1,27 @@
+Step 1:
+Number of Terms : 17887
+Maximum Length of Postings List : 1058
+Minimum Length of Postings List : 1
+Average Length of Postings List : 16.193045228378153
+Size of the file that stores the inverted index : 2.3 Mb
+
+Step 2:
+Number of Terms : 16925
+Maximum Length of Postings List : 802
+Minimum Length of Postings List : 1
+Average Length of Postings List : 12.828833087149187
+Size of the file that stores the inverted index : 1.8 Mb
+
+Step 3:
+Number of Terms : 9892
+Maximum Length of Postings List : 982
+Minimum Length of Postings List : 1
+Average Length of Postings List : 15.800343712090578
+Size of the file that stores the inverted index : 1.3 Mb
+
+Step 4:
+Number of Terms : 330
+Maximum Length of Postings List : 982
+Minimum Length of Postings List : 103
+Average Length of Postings List : 242.3181818181818
+Size of the file that stores the inverted index : 557 kb

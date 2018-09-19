@@ -1,0 +1,88 @@
+Apache Presto - MySQL Connector
+
+https://www.tutorialspoint.com/apache_presto/apache_presto_mysql_connector.htm
+
+Apache Presto, Tutorial, Learning, Overview, Architecture, Installation, Configuration Settings, Administration Tools, Basic SQL Operations, SQL Functions, MySQL, JMX, HIVE, KAFKA Connector, JDBC Interface, Custom Function Application.
+
+August-15-2017-02:34:16
+
+The MySQL connector is used to query an external MySQL database. Prerequisites MySQL server installation. Configuration Settings Hopefully you have installed mysql server on your machine. To enable mysql properties on Presto server, you must create a file “mysql.properties” in “etc/catalog” directory. Issue the following command to create a mysql.properties file. 
+$ cd etc 
+$ cd catalog 
+$ vi mysql.properties   
+
+connector.name = mysql 
+connection-url = jdbc:mysql://localhost:3306 
+connection-user = root 
+connection-password = pwd 
+ Save the file and quit the terminal. In the above file, you must enter your mysql password in connection-password field. Create Database in MySQL Server Open MySQL server and create a database using the following command. 
+create database tutorials
+ Now you have created “tutorials” database in the server. To enable database type, use the command “use tutorials” in the query window. Create Table Let’s create a simple table on “tutorials” database. 
+create table author(auth_id int not null, auth_name varchar(50),topic varchar(100))
+ Insert Table After creating a table, insert three records using the following query. 
+insert into author values(1,'Doug Cutting','Hadoop') 
+insert into author values(2,’James Gosling','java') 
+insert into author values(3,'Dennis Ritchie’,'C')
+ Select Records To retrieve all the records, type the following query. Query 
+select * from author
+ Result 
+auth_id    auth_name      topic  
+1        Doug Cutting     Hadoop 
+2        James Gosling    java 
+3        Dennis Ritchie     C 
+ As of now, you have queried data using MySQL server. Let’s connect Mysql storage plugin to Presto server. Connect Presto CLI Type the following command to connect MySql plugin on Presto CLI. 
+./presto --server localhost:8080 --catalog mysql --schema tutorials 
+ You will receive the following response. 
+presto:tutorials> 
+ Here “tutorials” refers to schema in mysql server. List Schemas To list out all the schemas in mysql, type the following query in Presto server. Query 
+presto:tutorials> show schemas from mysql;
+ Result 
+      Schema 
+-------------------- 
+ information_schema 
+ performance_schema 
+ sys 
+ tutorials
+ From this result, we can conclude the first three schemas as predefined and the last one as created by yourself. List Tables from Schema Following query lists out all the tables in tutorials schema. Query 
+presto:tutorials> show tables from mysql.tutorials; 
+ Result 
+  Table 
+-------- 
+ author
+ We have created only one table in this schema. If you have created multiple tables, it will list out all the tables. Describe Table To describe the table fields, type the following query. Query 
+presto:tutorials> describe mysql.tutorials.author;
+ Result 
+  Column   |     Type     | Comment 
+-----------+--------------+--------- 
+ auth_id   | integer      | 
+ auth_name | varchar(50)  | 
+ topic     | varchar(100) |
+ Show Columns from Table Query 
+presto:tutorials> show columns from mysql.tutorials.author; 
+ Result 
+ Column    |     Type     | Comment 
+-----------+--------------+--------- 
+ auth_id   | integer      | 
+ auth_name | varchar(50)  | 
+ topic     | varchar(100) |
+ Access Table Records To fetch all the records from mysql table, issue the following query. Query 
+presto:tutorials> select * from mysql.tutorials.author; 
+ Result 
+auth_id  |   auth_name    | topic 
+---------+----------------+-------- 
+       1 | Doug Cutting   | Hadoop 
+       2 | James Gosling  | java 
+       3 | Dennis Ritchie | C
+ From this result, you can retrieve mysql server records in Presto. Create Table Using as Command Mysql connector doesn’t support create table query but you can create a table using as command. Query 
+presto:tutorials> create table mysql.tutorials.sample as 
+select * from mysql.tutorials.author; 
+ Result 
+CREATE TABLE: 3 rows
+ You can’t insert rows directly because this connector has some limitations. It cannot support the following queries − create insert update delete drop To view the records in the newly created table, type the following query. Query 
+presto:tutorials> select * from mysql.tutorials.sample; 
+ Result 
+auth_id  |   auth_name    | topic 
+---------+----------------+-------- 
+       1 | Doug Cutting   | Hadoop 
+       2 | James Gosling  | java 
+       3 | Dennis Ritchie | C

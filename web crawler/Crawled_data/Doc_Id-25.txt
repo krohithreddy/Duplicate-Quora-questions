@@ -1,0 +1,30 @@
+CouchDB - Updating a Document
+
+https://www.tutorialspoint.com/couchdb/couchdb_updating_a_document.htm
+
+CouchDB, Introduction, Installation, Curl and Futon, Http API, Creating a Database, Deleting a Database, Creating a Document, Updating a Document, Deleting a Document, Attaching Files.
+
+August-15-2017-02:34:06
+
+Updating Documents using cURL You can update a document in CouchDB by sending an HTTP request to the server using PUT method through cURL utility. Following is the syntax to update a document. 
+curl -X PUT http://127.0.0.1:5984/database_name/document_id/ -d '{ "field" : "value", "_rev" : "revision id" }'
+ Example Suppose there is a document with id 001 in the database named my_database. First of all, get the revision id of the document that is to be updated. You can find the _rev of the document in the document itself, as shown below − 
+$ curl -X GET http://127.0.0.1:5984/my_database/001
+{
+   "_id" : "001",
+   "_rev" : "2-04d8eac1680d237ca25b68b36b8899d3 " ,
+   "age" : "23"
+}
+ Use revision id _rev from the document. In this example, we are updating the age from 23 to 24. 
+$ curl -X PUT http://127.0.0.1:5984/my_database/001/ -d
+' { " age " : " 24 " , " _rev " : " 1-1c2fae390fa5475d9b809301bbf3f25e " } '
+
+{ " ok " : true , " id " : " 001 " , " rev " : " 2-04d8eac1680d237ca25b68b36b8899d3 " }
+ Verification To verify the document, get the document again using GET request as shown below − 
+$ curl -X GET http://127.0.0.1:5984/my_database/001
+{
+   " _id " : " 001 ",
+   " _rev " : " 2-04d8eac1680d237ca25b68b36b8899d3 " ,
+   " age " : " 23 "
+ }
+ Note − Following are some important points to be noted while updating a document. The URL we send in the request containing the database name and the document id. Updating an existing document is same as updating the entire document. You cannot add a field to an existing document. You can only write an entirely new version of the document into the database with the same document ID. We have to supply the revision number as a part of the JSON request. In return JSON contains the success message, the ID of the document being updated, and the new revision information. If you want to update the new version of the document, you have to quote this latest revision number. Updating Documents using Futon To delete a document open the http://127.0.0.1:5984/_utils/ url to get an Overview/index page of CouchDB as shown below. Select the database in which the document to be updated exists and click it. Here we are updating a document in the database named tutorials_point. You will get the list of documents in the database as shown below. Select a document that you want to update and click on it. You will get the contents of the documents as shown below. Here, to update the location from Delhi to Hyderabad, click on the text box, edit the field, and click the green button to save the changes as shown below.

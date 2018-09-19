@@ -1,0 +1,52 @@
+Redis - Server Command Info Command
+
+https://www.tutorialspoint.com/redis/server_command_info.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis COMMAND INFO returns the details about multiple Redis commands. Return Value Array reply – The nested list of command details. Syntax Following is the basic syntax of Redis COMMAND INFO command. 
+redis 127.0.0.1:6379> COMMAND INFO command-name [command-name ...] 
+ Example 
+redis 127.0.0.1:6379> COMMAND INFO get set eval  
+1) 1) "get" 
+   2) (integer) 2 
+   3) 1) readonly 
+      2) fast 
+   4) (integer) 1 
+   5) (integer) 1 
+   6) (integer) 1 
+2) 1) "set" 
+   2) (integer) -3 
+   3) 1) write 
+      2) denyoom 
+   4) (integer) 1 
+   5) (integer) 1 
+   6) (integer) 1 
+3) 1) "eval" 
+   2) (integer) -3 
+   3) 1) noscript 
+      2) movablekeys 
+   4) (integer) 0 
+   5) (integer) 0 
+   6) (integer) 0 
+redis> COMMAND INFO foo evalsha config bar 
+1) (nil) 
+2) 1) "evalsha" 
+   2) (integer) -3 
+   3) 1) noscript 
+      2) movablekeys 
+   4) (integer) 0 
+   5) (integer) 0 
+   6) (integer) 0 
+3) 1) "config" 
+   2) (integer) -2 
+   3) 1) readonly 
+      2) admin 
+      3) stale 
+   4) (integer) 0 
+   5) (integer) 0 
+   6) (integer) 0 
+4) (nil)
+ redis_server.htm

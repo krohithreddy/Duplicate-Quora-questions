@@ -1,0 +1,119 @@
+DOM - XMLHttpRequest Object
+
+https://www.tutorialspoint.com/dom/dom_xmlhttprequest_object.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+XMLHttpRequest object establishes a medium between a web page's client-side and server-side that can be used by the many scripting languages like JavaScript, JScript, VBScript and other web browser to transfer and manipulate the XML data. With the XMLHttpRequest object it is possible to update the part of a web page without reloading the whole page, request and receive the data from a server after the page has been loaded and send the data to the server. Syntax An XMLHttpRequest object can be instatiated as follows − 
+xmlhttp = new XMLHttpRequest();
+ To handle all browsers, including IE5 and IE6, check if the browser supports the XMLHttpRequest object as below − 
+if(window.XMLHttpRequest) // for Firefox, IE7+, Opera, Safari, ... {
+   xmlHttp = new XMLHttpRequest();
+} else if(window.ActiveXObject) // for Internet Explorer 5 or 6 {
+   xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+}
+ Examples to load an XML file using the XMLHttpRequest object can be referred here Methods The following table lists the methods of the XMLHttpRequest object − S.No. Method & Description 1 abort() Terminates the current request made. 2 getAllResponseHeaders() Returns all the response headers as a string, or null if no response has been received. 3 getResponseHeader() Returns the string containing the text of the specified header, or null if either the response has not yet been received or the header doesn't exist in the response. 4 open(method,url,async,uname,pswd) It is used in conjugation with the Send method to send the request to the server. The open method specifies the following parameters − method − specifies the type of request i.e. Get or Post. url − it is the location of the file. async − indicates how the request should be handled. It is boolean value. where, 'true' means the request is processed asynchronously without waiting for a Http response. 'false' means the request is processed synchronously after receiving the Http response. uname − is the username. pswd − is the password. 5 send(string) It is used to send the request working in conjugation with the Open method. 6 setRequestHeader() Header contains the label/value pair to which the request is sent. Attributes The following table lists the attributes of the XMLHttpRequest object − S.No. Attribute & Description 1 onreadystatechange It is an event based property which is set on at every state change. 2 readyState This describes the present state of the XMLHttpRequest object. There are five possible states of the readyState property − readyState = 0 − means request is yet to initialize. readyState = 1 − request is set. readyState = 2 − request is sent. readyState = 3 − request is processing. readyState = 4 − request is completed. 3 responseText This property is used when the response from the server is a text file. 4 responseXML This property is used when the response from the server is an XML file. 5 statusGives the status of the Http request object as a number. For example, "404" or "200". 6 statusText Gives the status of the Http request object as a string. For example, "Not Found" or "OK". Examples node.xml contents are as below − 
+<?xml version = "1.0"?>
+<Company>
+   <Employee category = "Technical">
+      <FirstName>Tanmay</FirstName>
+      <LastName>Patil</LastName>
+      <ContactNo>1234567890</ContactNo>
+      <Email>tanmaypatil@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Non-Technical">
+      <FirstName>Taniya</FirstName>
+      <LastName>Mishra</LastName>
+      <ContactNo>1234667898</ContactNo>
+      <Email>taniyamishra@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Management">
+      <FirstName>Tanisha</FirstName>
+      <LastName>Sharma</LastName>
+      <ContactNo>1234562350</ContactNo>
+      <Email>tanishasharma@xyz.com</Email>
+   </Employee>
+</Company>
+ Retrieve specific information of a resource file Following example demonstrates how to retrive specific information of a resource file using the method getResponseHeader() and the property readState. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta http-equiv = "content-type" content = "text/html; charset = iso-8859-2" />
+         <script>
+            function loadXMLDoc() {
+               var xmlHttp = null;
+               if(window.XMLHttpRequest) // for Firefox, IE7+, Opera, Safari, ... {
+                  xmlHttp = new XMLHttpRequest();
+               }
+               else if(window.ActiveXObject) // for Internet Explorer 5 or 6 {
+                  xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+               }
+
+               return xmlHttp;
+            }
+
+            function makerequest(serverPage, myDiv) {
+               var request =  loadXMLDoc();
+               request.open("GET", serverPage);
+               request.send(null);
+
+               request.onreadystatechange = function() {
+                  if (request.readyState == 4) {
+                     document.getElementById(myDiv).innerHTML = request.getResponseHeader("Content-length");
+                  }
+               }
+            }
+      </script>
+   </head>
+   <body>
+      <button type = "button" onclick="makerequest('/dom/node.xml', 'ID')">Click me to get the specific ResponseHeader</button>
+      <div id = "ID">Specific header information is returned.</div>
+   </body>
+</html>
+ Execution Save this file as elementattribute_removeAttributeNS.htm on the server path (this file and node_ns.xml should be on the same path in your server). We will get the output as shown below − 
+Before removing the attributeNS: en
+After removing the attributeNS: null
+ Retrieve header infomation of a resource file Following example demonstrates how to retrieve the header information of a resource file, using the method getAllResponseHeaders() using the property readyState. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta http-equiv="content-type" content="text/html; charset=iso-8859-2" />
+      <script>
+         function loadXMLDoc() {
+            var xmlHttp = null;
+
+            if(window.XMLHttpRequest) // for Firefox, IE7+, Opera, Safari, ... {
+               xmlHttp = new XMLHttpRequest();
+            } else if(window.ActiveXObject) //  for Internet Explorer 5 or 6 {
+               xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            return xmlHttp;
+         }
+
+         function makerequest(serverPage, myDiv) {
+            var request =  loadXMLDoc();
+            request.open("GET", serverPage);
+            request.send(null);
+            request.onreadystatechange = function() {
+               if (request.readyState == 4) {
+                  document.getElementById(myDiv).innerHTML = request.getAllResponseHeaders();
+               }
+            }
+         }
+      </script>
+   </head>
+   <body>
+      <button type = "button" onclick = "makerequest('/dom/node.xml', 'ID')">
+         Click me to load the AllResponseHeaders</button>
+      <div id = "ID"></div>
+   </body>
+</html>
+ Execution Save this file as http_allheader.html on the server path (this file and node.xml should be on the same path in your server). We will get the output as shown below (depends on the browser) − 
+Date: Sat, 27 Sep 2014 07:48:07 GMT Server: Apache Last-Modified: 
+      Wed, 03 Sep 2014 06:35:30 GMT Etag: "464bf9-2af-50223713b8a60" Accept-Ranges: bytes Vary: Accept-Encoding,User-Agent 
+      Content-Encoding: gzip Content-Length: 256 Content-Type: text/xml

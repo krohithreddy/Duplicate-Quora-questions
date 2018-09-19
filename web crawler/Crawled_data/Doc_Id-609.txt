@@ -1,0 +1,22 @@
+Redis - Hashes
+
+https://www.tutorialspoint.com/redis/redis_hashes.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis Hashes are maps between the string fields and the string values. Hence, they are the perfect data type to represent objects. In Redis, every hash can store up to more than 4 billion field-value pairs. Example 
+redis 127.0.0.1:6379> HMSET tutorialspoint name "redis tutorial" 
+description "redis basic commands for caching" likes 20 visitors 23000 
+OK 
+redis 127.0.0.1:6379> HGETALL tutorialspoint  
+1) "name" 
+2) "redis tutorial" 
+3) "description" 
+4) "redis basic commands for caching" 
+5) "likes" 
+6) "20" 
+7) "visitors" 
+8) "23000"
+ In the above example, we have set Redis tutorials detail (name, description, likes, visitors) in hash named ‘tutorialspoint’. Redis Hash Commands Following table lists some basic commands related to hash. S.No Command & Description 1 HDEL key field2 [field2] Deletes one or more hash fields. 2 HEXISTS key field Determines whether a hash field exists or not. 3 HGET key field Gets the value of a hash field stored at the specified key. 4 HGETALL key Gets all the fields and values stored in a hash at the specified key 5 HINCRBY key field increment Increments the integer value of a hash field by the given number 6 HINCRBYFLOAT key field increment Increments the float value of a hash field by the given amount 7 HKEYS key Gets all the fields in a hash 8 HLEN key Gets the number of fields in a hash 9 HMGET key field1 [field2] Gets the values of all the given hash fields 10 HMSET key field1 value1 [field2 value2 ] Sets multiple hash fields to multiple values 11 HSET key field value Sets the string value of a hash field 12 HSETNX key field value Sets the value of a hash field, only if the field does not exist 13 HVALS key Gets all the values in a hash

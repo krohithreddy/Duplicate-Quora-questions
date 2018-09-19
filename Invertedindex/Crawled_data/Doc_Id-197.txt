@@ -1,0 +1,27 @@
+MariaDB - Alter Command
+
+https://www.tutorialspoint.com/mariadb/mariadb_alter_command.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+The ALTER command provides a way to change an existing table's structure, meaning modifications like removing or adding columns, modifying indices, changing data types, or changing names. ALTER also waits to apply changes when a metadata lock is active. Using ALTER to Modify Columns ALTER paired with DROP removes an existing column. However, it fails if the column is the only remaining column. Review the example given below − 
+mysql> ALTER TABLE products_tbl DROP version_num;
+ Use an ALTER...ADD statement to add columns − 
+mysql> ALTER TABLE products_tbl ADD discontinued CHAR(1);
+ Use the keywords FIRST and AFTER to specify placement of the column − 
+ALTER TABLE products_tbl ADD discontinued CHAR(1) FIRST;
+ALTER TABLE products_tbl ADD discontinued CHAR(1) AFTER quantity;
+ Note the FIRST and AFTER keywords only apply to ALTER...ADD statements. Furthermore, you must drop a table and then add it in order to reposition it. Change a column definition or name by using the MODIFY or CHANGE clause in an ALTER statement. The clauses have similar effects, but utilize substantially different syntax. Review a CHANGE example given below − 
+mysql> ALTER TABLE products_tbl CHANGE discontinued status CHAR(4);
+ In a statement using CHANGE, specify the original column and then the new column that will replace it. Review a MODIFY example below − 
+mysql> ALTER TABLE products_tbl MODIFY discontinued CHAR(4);
+ The ALTER command also allows for changing default values. Review an example − 
+mysql> ALTER TABLE products_tbl ALTER discontinued SET DEFAULT N;
+ You can also use it to remove default constraints by pairing it with a DROP clause − 
+mysql> ALTER TABLE products_tbl ALTER discontinued DROP DEFAULT;
+ Using ALTER to Modify Tables Change table type with the TYPE clause − 
+mysql> ALTER TABLE products_tbl TYPE = INNODB;
+ Rename a table with the RENAME keyword − 
+mysql> ALTER TABLE products_tbl RENAME TO products2016_tbl;

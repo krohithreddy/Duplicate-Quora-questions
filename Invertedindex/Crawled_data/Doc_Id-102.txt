@@ -1,0 +1,35 @@
+DocumentDB SQL - Type Checking Function
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_type_checking_functions.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+The type checking functions allow you to check the type of an expression within SQL queries. It can be used to determine the type of properties within documents on the fly when it is variable or unknown. Following are the supported built-in type checking functions. S.No. Function & Description 1 IS_ARRAY (expr) Returns a Boolean indicating if the type of the value is an array. 2 IS_BOOL (expr) Returns a Boolean indicating if the type of the value is a Boolean. 3 IS_NULL (expr) Returns a Boolean indicating if the type of the value is null. 4 IS_NUMBER (expr) Returns a Boolean indicating if the type of the value is a number. 5 IS_OBJECT (expr) Returns a Boolean indicating if the type of the value is a JSON object. 6 IS_STRING (expr) Returns a Boolean indicating if the type of the value is a string. 7 IS_DEFINED (expr) Returns a Boolean indicating if the property has been assigned a value. 8 IS_PRIMITIVE (expr) Returns a Boolean indicating if the type of the value is a string, number, Boolean or null. Let’s take a look at another example where some built-in type checking functions are used. Following is the query with type checking functions. 
+SELECT 
+   IS_ARRAY(6) AS IsArray1, 
+   IS_ARRAY([6]) AS IsArray2, 
+	
+   IS_BOOL(6) AS IsBool1, 
+   IS_BOOL(false) AS IsBool2, 
+	
+   IS_NULL(6) AS IsNull1, 
+   IS_NULL(null) AS IsNull2, 
+	
+   IS_OBJECT("hello") AS IsObject1, 
+   IS_OBJECT({"word": "hello"}) AS IsObject2 
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "IsArray1": false, 
+      "IsArray2": true, 
+      "IsBool1": false, 
+      "IsBool2": true,
+      "IsNull1": false, 
+      "IsNull2": true, 
+      "IsObject1": false, 
+      "IsObject2": true 
+   } 
+]
+ documentdb_sql_builtin_function.htm

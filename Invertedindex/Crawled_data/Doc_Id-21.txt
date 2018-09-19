@@ -1,0 +1,26 @@
+CouchDB - Deleting a Document
+
+https://www.tutorialspoint.com/couchdb/couchdb_deleting_a_document.htm
+
+CouchDB, Introduction, Installation, Curl and Futon, Http API, Creating a Database, Deleting a Database, Creating a Document, Updating a Document, Deleting a Document, Attaching Files.
+
+August-15-2017-02:34:06
+
+Deleting a Document using cURL Utility You can delete a document in CouchDB by sending an HTTP request to the server using DELETE method through cURL utility. Following is the syntax to delete a document. 
+curl -X DELETE http://127.0.0.1:5984/database_name/database_id?_rev
+ Using −X, we can specify a custom request method of HTTP we are using, while communicating with the HTTP server. In this case, we are using Delete method. To delete a database /database_name/database_id/ is not enough. You have to pass the recent revision id through the url. To mention attributes of any data structure "?" is used. Example Suppose there is a document in database named my_database with document id 001. To delete this document, you have to get the rev id of the document. Get the document data as shown below. 
+$ curl -X GET http://127.0.0.1:5984/my_database/001
+{
+   " _id " : " 001 ",
+   " _rev " : " 2-04d8eac1680d237ca25b68b36b8899d3 " ,
+   " age " : " 23 "
+}
+ Now specify the revision id of the document to be deleted, id of the document, and database name the document belongs to, as shown below − 
+$ curl -X DELETE http://127.0.0.1:5984/my_database/001?rev=1-
+3fcc78daac7a90803f0a5e383f4f1e1e
+
+{"ok":true,"id":"001","rev":"2-3a561d56de1ce3305d693bd15630bf96"}
+ Verification To verify whether the document is deleted, try to fetch the document by using the GET method. Since you are fetching a deleted document, this will give you an error message as shown below − 
+$ curl -X GET http://127.0.0.1:5984/my_database/001
+{"error":"not_found","reason":"deleted"}
+ Deleting a Document using Futon First of all, verify the documents in the database. Following is the snapshot of the database named tutorials_point. Here you can observe, the database consists of three documents. To delete any of the documents say 003, do the following − Click on the document, you will get a page showing the contents of selected document in the form of field-value pairs. This page also contains four options namely Save Document, Add Field, Upload Attachment, Delete Document. Click on Delete Document option. You will get a dialog box saying "Are you sure you want to delete this document?" Click on delete, to delete the document.

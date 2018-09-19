@@ -1,0 +1,179 @@
+DocumentDB SQL - Where Clause
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_where_clause.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+In this chapter, we will cover the WHERE clause, which is also optional like FROM clause. It is used to specify a condition while fetching the data in the form of JSON documents provided by the source. Any JSON document must evaluate the specified conditions to be "true" to be considered for the result. If the given condition is satisfied, only then it returns specific data in the form of JSON document(s). We can use WHERE clause to filter the records and fetch only necessary records. We will consider the same three documents in this example. Following is the AndersenFamily document. 
+{ 
+   "id": "AndersenFamily", 
+   "lastName": "Andersen", 
+	
+   "parents": [ 
+      { "firstName": "Thomas", "relationship":  "father" }, 
+      { "firstName": "Mary Kay", "relationship":  "mother" } 
+   ], 
+	
+   "children": [ 
+      { 
+         "firstName": "Henriette Thaulow", 
+         "gender": "female", 
+         "grade": 5, 
+         "pets": [ { "givenName": "Fluffy", "type":  "Rabbit" } ] 
+      } 
+   ],
+	
+   "location": { "state": "WA", "county": "King", "city": "Seattle" }, 
+   "isRegistered": true 
+}
+ Following is the SmithFamily document. 
+{ 
+   "id": "SmithFamily", 
+	
+   "parents": [ 
+      { "familyName": "Smith", "givenName": "James" }, 
+      { "familyName": "Curtis", "givenName": "Helen" } 
+   ],
+	
+   "children": [  
+      { 
+         "givenName": "Michelle", 
+         "gender": "female", 
+         "grade": 1 
+      },
+		
+      { 
+         "givenName": "John", 
+         "gender": "male", 
+         "grade": 7,
+			
+         "pets": [ 
+            { "givenName": "Tweetie", "type": "Bird" } 
+         ] 
+      } 
+   ],
+	
+   "location": { 
+      "state": "NY", 
+      "county": "Queens", 
+      "city": "Forest Hills" 
+   },
+	
+   "isRegistered": true 
+}
+ Following is the WakefieldFamily document. 
+{ 
+   "id": "WakefieldFamily", 
+	
+   "parents": [ 
+      { "familyName": "Wakefield", "givenName": "Robin" }, 
+      { "familyName": "Miller", "givenName": "Ben" } 
+   ], 
+
+   "children": [ 
+      { 
+         "familyName": "Merriam", 
+         "givenName": "Jesse", 
+         "gender": "female", 
+         "grade": 6, 
+			
+         "pets": [
+            { "givenName": "Charlie Brown", "type": "Dog" }, 
+            { "givenName": "Tiger", "type": "Cat" }, 
+            { "givenName": "Princess", "type": "Cat" } 
+         ] 
+      },
+		
+      { 
+         "familyName": "Miller", 
+         "givenName": "Lisa", 
+         "gender": "female", 
+         "grade": 3, 
+			
+         "pets": [ 
+            { "givenName": "Jake", "type": "Snake" } 
+         ] 
+      } 
+   ],
+	
+   "location": { "state": "NY", "county": "Manhattan", "city": "NY" }, 
+   "isRegistered": false 
+}
+ Let’s take a look at a simple example in which WHERE clause is used. In this query, in WHERE clause, the (WHERE f.id = "WakefieldFamily") condition is specified. 
+SELECT * 
+FROM f  
+WHERE f.id = "WakefieldFamily"
+ When the above query is executed, it will return the complete JSON document for WakefieldFamily as shown in the following output. 
+[ 
+   { 
+      "id": "WakefieldFamily", 
+		
+      "parents": [ 
+         { 
+            "familyName": "Wakefield", 
+            "givenName": "Robin" 
+         },
+			
+         { 
+            "familyName": "Miller", 
+            "givenName": "Ben" 
+         } 
+      ],
+		
+      "children": [ 
+         { 
+            "familyName": "Merriam", 
+            "givenName": "Jesse", 
+            "gender": "female", 
+            "grade": 6,
+				
+            "pets": [ 
+               { 
+                  "givenName": "Charlie Brown", 
+                  "type": "Dog" 
+               }, 
+					
+               { 
+                  "givenName": "Tiger", 
+                  "type": "Cat" 
+               }, 
+					
+               { 
+                  "givenName": "Princess", 
+                  "type": "Cat" 
+               } 
+            ] 
+         }, 
+			
+         { 
+            "familyName": "Miller", 
+            "givenName": "Lisa", 
+            "gender": "female", 
+            "grade": 3, 
+				
+            "pets": [ 
+               { 
+                  "givenName": "Jake", 
+                  "type": "Snake" 
+               }
+            ]
+				
+         } 
+      ],
+		
+      "location": { 
+         "state": "NY", 
+         "county": "Manhattan", 
+         "city": "NY" 
+      },
+		
+      "isRegistered": false, 
+      "_rid": "Ic8LAJFujgECAAAAAAAAAA==", 
+      "_ts": 1450541623, 
+      "_self": "dbs/Ic8LAA==/colls/Ic8LAJFujgE=/docs/Ic8LAJFujgECAAAAAAAAAA==/", 
+      "_etag": "\"00000500-0000-0000-0000-567582370000\"", 
+      "_attachments": "attachments/" 
+   } 
+]

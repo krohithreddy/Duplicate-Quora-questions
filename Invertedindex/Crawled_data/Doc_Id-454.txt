@@ -1,0 +1,34 @@
+OrientDB - Export Record
+
+https://www.tutorialspoint.com/orientdb/orientdb_export_record.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Export Record is the command used to export the loaded record into the requested and supported format. If you are executing any wrong syntax, it will give the list of supported formats. OrientDB is a family of Document database, therefore JSON is the default supported format. The following statement is the basic syntax of the Export Record command. 
+EXPORT RECORD <format> 
+ Where <Format> defines the format you want to get the record. Note − Export command will export the loaded record based on Record ID. Example Let us consider the same Customer table that we have used in the previous chapter. Sr.No. Name Age 1 Satish 25 2 Krishna 26 3 Kiran 29 4 Javeed 21 5 Raja 29 Try the following query to retrieve the record having Record ID @rid: #11:0. 
+orientdb {db = demo}> LOAD RECORD #11:0
+ If the above query is executed successfully, you will get the following output. 
++---------------------------------------------------------------------------+ 
+| Document - @class: Customer        @rid: #11:0           @version: 1      | 
++---------------------------------------------------------------------------+ 
+|                     Name | Value                                          | 
++---------------------------------------------------------------------------+ 
+|                       id | 1                                              | 
+|                     name | satish                                         | 
+|                      age | 25                                             | 
++---------------------------------------------------------------------------+ 
+ Use the following query to export he loaded record (#11:0) into JSON format. 
+orientdb {db = demo}> EXPORT RECORD json 
+ If the above query is executed successfully, you will get the following output. 
+{ 
+   "@type": "d", 
+      "@rid": "#11:0", 
+   "@version": 1, 
+   "@class": "Customer", 
+      "id": 1, 
+      "name": "satish", 
+      "age": 25 
+}

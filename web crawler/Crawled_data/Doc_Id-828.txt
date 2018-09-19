@@ -1,0 +1,15 @@
+AIML - Environment Setup
+
+https://www.tutorialspoint.com/aiml/aiml_environment.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+This tutorial will guide you on how to prepare a development environment to start your work with AIML to create auto chat software. Program AB is a reference implementation of AIML 2.0 developed and being maintained by ALICE A.I. Foundation. This tutorial will also teach you how to set up JDK, before you setup Program AB library − Step 1 - Set up Java Development Kit (JDK) You can download the latest version of SDK from Oracle's Java site − Java SE Downloads. You will find instructions for installing JDK in downloaded files, follow the given instructions to install and configure the setup. Finally set PATH and JAVA_HOME environment variables to refer to the directory that contains java and javac, typically java_install_dir/bin and java_install_dir respectively. If you are running Windows and installed the JDK in C:\jdk1.7.0_75, you would have to put the following line in your C:\autoexec.bat file. 
+set PATH = C:\jdk1.7.0_75\bin;%PATH%
+set JAVA_HOME = C:\jdk1.7.0_75
+ Alternatively, on Windows NT/2000/XP, you could also right-click on My Computer, select Properties, then Advanced, then Environment Variables. Then, you would update the PATH value and press the OK button. On Unix (Solaris, Linux, etc.), if the SDK is installed in /usr/local/jdk1.7.0_75 and you use the C shell, you would put the following into your .cshrc file. 
+setenv PATH /usr/local/jdk1.7.0_75/bin:$PATH
+setenv JAVA_HOME /usr/local/jdk1.7.0_75
+ Alternatively, if you use an Integrated Development Environment (IDE) like Borland JBuilder, Eclipse, IntelliJ IDEA, or Sun ONE Studio, compile and run a simple program to confirm that the IDE knows where you installed Java, otherwise do proper setup as given document of the IDE. Step 2 - Set up Program AB Now if everything is fine, then you can proceed to setup your Program AB. Following are the simple steps to download and install the library on your machine. Make a choice whether you want to install AIML on Windows, or Unix and then proceed to the next step to download .zip file Download the latest version of Program AB binaries from https://code.google.com/p/program-ab/ using its program-ab-0.0.4.3.zip link. At the time of writing this tutorial, I downloaded program-ab-0.0.4.3.zip on my Windows machine and when you unzip the downloaded file it will give you directory structure inside C:\ab as follows. S.No. Directory & Description 1 c:/ab/bots Stores AIML bots 2 c:/ab/lib Stores Java libraries 3 c:/ab/out Java class file directory 4 c:/ab/run.bat batch file for running Program AB Once you are done with this last step, you are ready to proceed with your first AIML Example which you will see in the next chapter.

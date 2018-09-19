@@ -1,0 +1,46 @@
+SQL - SQRT Function
+
+https://www.tutorialspoint.com/sql/sql-sqrt-function.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+SQL SQRT function is used to find out the square root of any number. You can Use SELECT statement to find out square root of any number as follows − 
+SQL>  select SQRT(16);
++----------+
+| SQRT(16) |
++----------+
+| 4.000000 |
++----------+
+1 row in set (0.00 sec)
+ You are seeing float value here because internally SQL will manipulate square root in float data type. You can use SQRT function to find out square root of various records as well. To understand SQRT function in more detail consider, an employee_tbl, table which is having the following records − 
+SQL> SELECT * FROM employee_tbl;
++------+------+------------+--------------------+
+| id   | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|    1 | John | 2007-01-24 |                250 |
+|    2 | Ram  | 2007-05-27 |                220 |
+|    3 | Jack | 2007-05-06 |                170 |
+|    3 | Jack | 2007-04-06 |                100 |
+|    4 | Jill | 2007-04-06 |                220 |
+|    5 | Zara | 2007-06-06 |                300 |
+|    5 | Zara | 2007-02-06 |                350 |
++------+------+------------+--------------------+
+7 rows in set (0.00 sec)
+ Now suppose based on the above table you want to calculate square root of all the dialy_typing_pages, then you can do so by using the following command − 
+SQL> SELECT name, SQRT(daily_typing_pages)
+   -> FROM employee_tbl;
++------+--------------------------+
+| name | SQRT(daily_typing_pages) |
++------+--------------------------+
+| John |                15.811388 |
+| Ram  |                14.832397 |
+| Jack |                13.038405 |
+| Jack |                10.000000 |
+| Jill |                14.832397 |
+| Zara |                17.320508 |
+| Zara |                18.708287 |
++------+--------------------------+
+7 rows in set (0.00 sec)
+ sql-useful-functions.htm

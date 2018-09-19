@@ -1,0 +1,18 @@
+Neo4j - Count Function
+
+https://www.tutorialspoint.com/neo4j/neo4j_count_function.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+Assume we have created a graph in the database with the following details. Count The count() function is used to count the number of rows. Syntax Following is the syntax of the count function. 
+MATCH (n { name: 'A' })-->(x) 
+RETURN n, count(*) 
+ Example Following is a sample Cypher Query which demonstrates the usage of the count() function. 
+Match(n{name: "India", result: "Winners"})--(x)  
+RETURN n, count(*) 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Group Count The COUNT clause is also used to count the groups of relationship types. Example Following is a sample Cypher Query which counts and returns the number of nodes participating in each relation. 
+Match(n{name: "India", result: "Winners"})-[r]-(x)  
+RETURN type (r), count(*) 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result.

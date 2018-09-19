@@ -1,0 +1,60 @@
+DOM - Element Object Method - setAttributeNS
+
+https://www.tutorialspoint.com/dom/dom_element_setAttributeNS.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The method setAttributeNS adds a new attribute. If an attribute with the same local name and namespace URI is already present on the element, its prefix is changed to be the prefix part of the qualifiedName, and its value is changed to be the value parameter. Syntax Following is the syntax for the usage of the setAttributeNS method. 
+elementObj.setAttributeNS(namespace,name,value)
+ S.No. Parameter & Description 1 namespace It is a string specifying the namespace of the attribute. 2 name It is a string identifying the attribute to be set. 3 value It is the desired string value of the new attribute. Example node_ns.xml contents are as below − 
+<?xml version = "1.0"?>
+<Company>
+   <Employee xmlns:e = "http://www.tutorials.com/technical/" category = "technical">
+      <e:FirstName e:lang = "en">Tanmay</e:FirstName>
+      <e:LastName>Patil</e:LastName>
+      <e:ContactNo>1234567890</e:ContactNo>
+      <e:Email>tanmaypatil@xyz.com</e:Email>
+   </Employee>
+   
+   <Employee xmlns:n = "http://www.tutorials.com/non-technical/" category = "non-technical">
+      <n:FirstName n:lang = "en">Taniya</n:FirstName>
+      <n:LastName>Mishra</n:LastName>
+      <n:ContactNo>1234667898</n:ContactNo>
+      <n:Email>taniyamishra@xyz.com</n:Email>
+   </Employee>
+</Company>
+ Following example demonstrates the usage of the setAttributeNS method − 
+<!DOCTYPE html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node_ns.xml");
+         x = xmlDoc.getElementsByTagName('FirstName')[0];
+         ns="http://www.tutorials.com/technical/";
+         document.write("<b>Before using setattributeNS method: </b> ");
+         document.write(x.getAttributeNS(ns,"lang"));
+         x.setAttributeNS(ns,"lang","DE");
+         document.write("<br><b>After using setattributeNS method: </b> ");
+         document.write(x.getAttributeNS(ns,"lang"));
+      </script>
+   </body>
+</html>
+ Execution Save this file as elementattribute_setAttributeNS.htm on the server path (this file and node_ns.xml should be on the same path in your server). We will get the output as shown below − 
+Before using setattributeNS method: en
+After using setattributeNS method: DE
+ dom_element_object.htm

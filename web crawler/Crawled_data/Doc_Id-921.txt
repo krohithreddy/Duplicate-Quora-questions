@@ -1,0 +1,177 @@
+XML DOM - Create Node
+
+https://www.tutorialspoint.com/dom/xml_dom_create_node.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+In this chapter, we will discuss how to create new nodes using a couple of methods of the document object. These methods provide a scope to create new element node, text node, comment node, CDATA section node and attribute node. If the newly created node already exists in the element object, it is replaced by the new one. Following sections demonstrate this with examples. Create new Element node The method createElement() creates a new element node. If the newly created element node exists in the element object, it is replaced by the new one. Syntax Syntax to use the createElement() method is as follows − 
+var_name = xmldoc.createElement("tagname");
+ Where, var_name − is the user-defined variable name which holds the name of new element. ("tagname") − is the name of new element node to be created. Example The following example (createnewelement_example.htm) parses an XML document (node.xml) into an XML DOM object and creates a new element node PhoneNo in the XML document. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+
+         new_element = xmlDoc.createElement("PhoneNo");
+
+         x = xmlDoc.getElementsByTagName("FirstName")[0];
+         x.appendChild(new_element);
+
+         document.write(x.getElementsByTagName("PhoneNo")[0].nodeName);
+      </script>
+   </body>
+</html>
+ new_element = xmlDoc.createElement("PhoneNo"); creates the new element node <PhoneNo> x.appendChild(new_element); x holds the name of the specified child node <FirstName> to which the new element node is appended. Execution Save this file as createnewelement_example.htm on the server path (this file and node.xml should be on the same path in your server). In the output we get the attribute value as PhoneNo. Create new Text node The method createTextNode() creates a new text node. Syntax Syntax to use createTextNode() is as follows − 
+var_name = xmldoc.createTextNode("tagname");
+ Where, var_name − it is the user-defined variable name which holds the name of new text node. ("tagname") − within the parenthesis is the name of new text node to be created. Example The following example (createtextnode_example.htm) parses an XML document (node.xml) into an XML DOM object and creates a new text node Im new text node in the XML document. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+
+         create_e = xmlDoc.createElement("PhoneNo");
+         create_t = xmlDoc.createTextNode("Im new text node");
+         create_e.appendChild(create_t);
+
+         x = xmlDoc.getElementsByTagName("Employee")[0];
+         x.appendChild(create_e);
+
+
+         document.write(" PhoneNO: ");
+         document.write(x.getElementsByTagName("PhoneNo")[0].childNodes[0].nodeValue);
+      </script>
+    </body>
+</html>
+ Details of the above code are as below − create_e = xmlDoc.createElement("PhoneNo"); creates a new element <PhoneNo>. create_t = xmlDoc.createTextNode("Im new text node"); creates a new text node "Im new text node". x.appendChild(create_e); the text node, "Im new text node" is appended to the element, <PhoneNo>. document.write(x.getElementsByTagName("PhoneNo")[0].childNodes[0].nodeValue); writes the new text node value to the element <PhoneNo>. Execution Save this file as createtextnode_example.htm on the server path (this file and node.xml should be on the same path in your server). In the output, we get the attribute value as i.e. PhoneNO: Im new text node. Create new Comment node The method createComment() creates a new comment node. Comment node is included in the program for the easy understanding of the code functionality. Syntax Syntax to use createComment() is as follows − 
+var_name = xmldoc.createComment("tagname");
+ Where, var_name − is the user-defined variable name which holds the name of new comment node. ("tagname") − is the name of the new comment node to be created. Example The following example (createcommentnode_example.htm) parses an XML document (node.xml) into an XML DOM object and creates a new comment node, "Company is the parent node" in the XML document. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            }
+            else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+
+         create_comment = xmlDoc.createComment("Company is the parent node");
+
+         x = xmlDoc.getElementsByTagName("Company")[0];
+
+         x.appendChild(create_comment);
+
+         document.write(x.lastChild.nodeValue);
+      </script>
+   </body>
+</html>
+ In the above example − create_comment = xmlDoc.createComment("Company is the parent node") creates a specified comment line. x.appendChild(create_comment) In this line, 'x' holds the name of the element <Company> to which the comment line is appended. Execution Save this file as createcommentnode_example.htm on the server path (this file and the node.xml should be on the same path in your server). In the output, we get the attribute value as Company is the parent node . Create New CDATA Section Node The method createCDATASection() creates a new CDATA section node. If the newly created CDATA section node exists in the element object, it is replaced by the new one. Syntax Syntax to use createCDATASection() is as follows − 
+var_name = xmldoc.createCDATASection("tagname");
+ Where, var_name − is the user-defined variable name which holds the name of new the CDATA section node. ("tagname") − is the name of new CDATA section node to be created. Example The following example (createcdatanode_example.htm) parses an XML document (node.xml) into an XML DOM object and creates a new CDATA section node, "Create CDATA Example" in the XML document. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            }
+            else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+
+         create_CDATA = xmlDoc.createCDATASection("Create CDATA Example");
+
+         x = xmlDoc.getElementsByTagName("Employee")[0];
+         x.appendChild(create_CDATA);
+         document.write(x.lastChild.nodeValue);
+      </script>
+   </body>
+</html>
+ In the above example − create_CDATA = xmlDoc.createCDATASection("Create CDATA Example") creates a new CDATA section node, "Create CDATA Example" x.appendChild(create_CDATA) here, x holds the specified element <Employee> indexed at 0 to which the CDATA node value is appended. Execution Save this file as createcdatanode_example.htm on the server path (this file and node.xml should be on the same path in your server). In the output, we get the attribute value as Create CDATA Example. Create new Attribute node To create a new attribute node, the method setAttributeNode() is used. If the newly created attribute node exists in the element object, it is replaced by the new one. Syntax Syntax to use the createElement() method is as follows − 
+var_name = xmldoc.createAttribute("tagname");
+ Where, var_name − is the user-defined variable name which holds the name of new attribute node. ("tagname") − is the name of new attribute node to be created. Example The following example (createattributenode_example.htm) parses an XML document (node.xml) into an XML DOM object and creates a new attribute node section in the XML document. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+
+         create_a = xmlDoc.createAttribute("section");
+         create_a.nodeValue = "A";
+
+         x = xmlDoc.getElementsByTagName("Employee");
+         x[0].setAttributeNode(create_a);
+         document.write("New Attribute: ");
+         document.write(x[0].getAttribute("section"));
+
+      </script>
+   </body>
+</html>
+ In the above example − create_a=xmlDoc.createAttribute("Category") creates an attribute with the name <section>. create_a.nodeValue="Management" creates the value "A" for the attribute <section>. x[0].setAttributeNode(create_a) this attribute value is set to the node element <Employee> indexed at 0.

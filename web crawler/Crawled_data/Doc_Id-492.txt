@@ -1,0 +1,44 @@
+PL/SQL - DBMS Output
+
+https://www.tutorialspoint.com/plsql/plsql_dbms_output.htm
+
+PL/SQL, syntax, Environment Setup, Operators, Transactions, Date and Time, data types, variables, constants, records, conditional statements, iterative statements, cursors, procedures, functions, exception handling, triggers, packages, collections, external procedures, arrays, strings, dbms output.
+
+August-15-2017-02:34:06
+
+In this chapter, we will discuss the DBMS Output in PL/SQL. The DBMS_OUTPUT is a built-in package that enables you to display output, debugging information, and send messages from PL/SQL blocks, subprograms, packages, and triggers. We have already used this package throughout our tutorial. Let us look at a small code snippet that will display all the user tables in the database. Try it in your database to list down all the table names − 
+BEGIN 
+   dbms_output.put_line  (user || ' Tables in the database:'); 
+   FOR t IN (SELECT table_name FROM user_tables) 
+   LOOP 
+      dbms_output.put_line(t.table_name); 
+   END LOOP; 
+END; 
+/ 
+ DBMS_OUTPUT Subprograms The DBMS_OUTPUT package has the following subprograms − S.No Subprogram & Purpose 1 DBMS_OUTPUT.DISABLE; Disables message output. 2 DBMS_OUTPUT.ENABLE(buffer_size IN INTEGER DEFAULT 20000); Enables message output. A NULL value of buffer_size represents unlimited buffer size. 3 DBMS_OUTPUT.GET_LINE (line OUT VARCHAR2, status OUT INTEGER); Retrieves a single line of buffered information. 4 DBMS_OUTPUT.GET_LINES (lines OUT CHARARR, numlines IN OUT INTEGER); Retrieves an array of lines from the buffer. 5 DBMS_OUTPUT.NEW_LINE; Puts an end-of-line marker. 6 DBMS_OUTPUT.PUT(item IN VARCHAR2); Places a partial line in the buffer. 7 DBMS_OUTPUT.PUT_LINE(item IN VARCHAR2); Places a line in the buffer. Example 
+DECLARE 
+   lines dbms_output.chararr; 
+   num_lines number; 
+BEGIN 
+   -- enable the buffer with default size 20000 
+   dbms_output.enable; 
+   
+   dbms_output.put_line('Hello Reader!'); 
+   dbms_output.put_line('Hope you have enjoyed the tutorials!'); 
+   dbms_output.put_line('Have a great time exploring pl/sql!'); 
+  
+   num_lines := 3; 
+  
+   dbms_output.get_lines(lines, num_lines); 
+  
+   FOR i IN 1..num_lines LOOP 
+      dbms_output.put_line(lines(i)); 
+   END LOOP; 
+END; 
+/  
+ When the above code is executed at the SQL prompt, it produces the following result − 
+Hello Reader! 
+Hope you have enjoyed the tutorials! 
+Have a great time exploring pl/sql!  
+
+PL/SQL procedure successfully completed.

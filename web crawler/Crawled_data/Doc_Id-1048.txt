@@ -1,0 +1,77 @@
+XSD - Syntax
+
+https://www.tutorialspoint.com/xsd/xsd_syntax.htm
+
+ XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+An XML XSD is kept in a separate document and then the document can be linked to an XML document to use it. Syntax The basic syntax of a XSD is as follows − 
+<?xml version = "1.0"?>
+
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema">
+   targetNamespace = "http://www.tutorialspoint.com"
+   xmlns = "http://www.tutorialspoint.com" elementFormDefault = "qualified">
+   
+   <xs:element name = 'class'>
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name = 'student' type = 'StudentType' minOccurs = '0' 
+               maxOccurs = 'unbounded' />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+
+   <xs:complexType name = "StudentType">
+      <xs:sequence>
+         <xs:element name = "firstname" type = "xs:string"/>
+         <xs:element name = "lastname" type = "xs:string"/>
+         <xs:element name = "nickname" type = "xs:string"/>
+         <xs:element name = "marks" type = "xs:positiveInteger"/>
+      </xs:sequence>
+      <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+   </xs:complexType>
+   
+</xs:schema>
+ <Schema> Element Schema is the root element of XSD and it is always required. 
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema">
+ The above fragment specifies that elements and datatypes used in the schema are defined in http://www.w3.org/2001/XMLSchema namespace and these elements/data types should be prefixed with xs. It is always required. 
+targetNamespace = "http://www.tutorialspoint.com"
+ The above fragment specifies that elements used in this schema are defined in http://www.tutorialspoint.com namespace. It is optional. 
+xmlns = "http://www.tutorialspoint.com"
+ The above fragment specifies that default namespace is http://www.tutorialspoint.com. 
+xmlns="http://www.tutorialspoint.com"
+ The above fragment indicates that any elements declared in this schema must be namespace qualified before using them in any XML Document.It is optional. Referencing Schema Take a look at the following Referencing Schema − 
+<?xml version = "1.0"?>
+
+<class xmlns = "http://www.tutorialspoint.com"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.tutorialspoint.com student.xsd">  
+   
+   <student rollno = "393">    
+      <firstname>Dinkar</firstname>
+      <lastname>Kad</lastname>
+      <nickname>Dinkar</nickname>
+      <marks>85</marks>
+   </student>
+   
+   <student rollno = "493">	 
+      <firstname>Vaneet</firstname>
+      <lastname>Gupta</lastname>
+      <nickname>Vinni</nickname>
+      <marks>95</marks>
+   </student>
+   
+   <student rollno = "593">    
+      <firstname>Jasvir</firstname>
+      <lastname>Singh</lastname>
+      <nickname>Jazz</nickname>
+      <marks>90</marks>
+   </student>
+</class>
+ 
+xmlns = "http://www.tutorialspoint.com"
+ The above fragment specifies default namespace declaration. This namespace is used by the schema validator check that all the elements are part of this namespace. It is optional. 
+xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation = "http://www.tutorialspoint.com student.xsd">  
+ After defining the XMLSchema-instance xsi, use schemaLocation attribute. This attribute has two values, namespace and location of XML Schema, to be used separated by a space. It is optional.

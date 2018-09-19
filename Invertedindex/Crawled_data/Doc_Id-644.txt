@@ -1,0 +1,66 @@
+SQL - Alias Syntax
+
+https://www.tutorialspoint.com/sql/sql-alias-syntax.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+You can rename a table or a column temporarily by giving another name known as Alias. The use of table aliases is to rename a table in a specific SQL statement. The renaming is a temporary change and the actual table name does not change in the database. The column aliases are used to rename a table's columns for the purpose of a particular SQL query. Syntax The basic syntax of a table alias is as follows. 
+SELECT column1, column2....
+FROM table_name AS alias_name
+WHERE [condition];
+ The basic syntax of a column alias is as follows. 
+SELECT column_name AS alias_name
+FROM table_name
+WHERE [condition];
+ Example Consider the following two tables. Table 1 − CUSTOMERS Table is as follows. 
++----+----------+-----+-----------+----------+
+| ID | NAME     | AGE | ADDRESS   | SALARY   |
++----+----------+-----+-----------+----------+
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 |
+|  2 | Khilan   |  25 | Delhi     |  1500.00 |
+|  3 | kaushik  |  23 | Kota      |  2000.00 |
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 |
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 |
+|  6 | Komal    |  22 | MP        |  4500.00 |
+|  7 | Muffy    |  24 | Indore    | 10000.00 |
++----+----------+-----+-----------+----------+
+ Table 2 − ORDERS Table is as follows. 
++-----+---------------------+-------------+--------+
+|OID  | DATE                | CUSTOMER_ID | AMOUNT |
++-----+---------------------+-------------+--------+
+| 102 | 2009-10-08 00:00:00 |           3 |   3000 |
+| 100 | 2009-10-08 00:00:00 |           3 |   1500 |
+| 101 | 2009-11-20 00:00:00 |           2 |   1560 |
+| 103 | 2008-05-20 00:00:00 |           4 |   2060 |
++-----+---------------------+-------------+--------+
+ Now, the following code block shows the usage of a table alias. 
+SQL> SELECT C.ID, C.NAME, C.AGE, O.AMOUNT 
+   FROM CUSTOMERS AS C, ORDERS AS O
+   WHERE  C.ID = O.CUSTOMER_ID;
+ This would produce the following result. 
++----+----------+-----+--------+
+| ID | NAME     | AGE | AMOUNT |
++----+----------+-----+--------+
+|  3 | kaushik  |  23 |   3000 |
+|  3 | kaushik  |  23 |   1500 |
+|  2 | Khilan   |  25 |   1560 |
+|  4 | Chaitali |  25 |   2060 |
++----+----------+-----+--------+
+ Following is the usage of a column alias. 
+SQL> SELECT  ID AS CUSTOMER_ID, NAME AS CUSTOMER_NAME
+   FROM CUSTOMERS
+   WHERE SALARY IS NOT NULL;
+ This would produce the following result. 
++-------------+---------------+
+| CUSTOMER_ID | CUSTOMER_NAME |
++-------------+---------------+
+|           1 | Ramesh        |
+|           2 | Khilan        |
+|           3 | kaushik       |
+|           4 | Chaitali      |
+|           5 | Hardik        |
+|           6 | Komal         |
+|           7 | Muffy         |
++-------------+---------------+

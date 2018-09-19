@@ -1,0 +1,21 @@
+OrientDB - Console Modes
+
+https://www.tutorialspoint.com/orientdb/orientdb_console_modes.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+The OrientDB Console is a Java Application made to work against OrientDB databases and Server instances. There are several console modes that OrientDB supports. Interactive Mode This is the default mode. Just launch the console by executing the following script bin/console.sh (or bin/console.bat in MS Windows systems). Make sure to have execution permission on it. 
+OrientDB console v.1.6.6 www.orientechnologies.com 
+Type 'help' to display all the commands supported.
+  
+orientdb>
+ Once done, the console is ready to accept commands. Batch Mode To execute commands in batch mode run the following bin/console.sh (or bin/console.bat in MS Windows systems) script passing all the commands separated with semicolon ";". 
+orientdb> console.bat "connect remote:localhost/demo;select * from profile"
+ Or call the console script passing the name of the file in text format containing the list of commands to execute. Commands must be separated with semicolon ";". Example Command.txt contains the list of commands which you want to execute through OrientDB console. The following command accepts the batch of commands from the command.txt file. 
+orientdb> console.bat commands.txt 
+ In batch mode, you can ignore errors to let the script continue the execution by setting the "ignoreErrors" variable to true. 
+orientdb> set ignoreErrors true
+ Enable Echo When you run console commands in pipeline, you will need to display them. Enable "echo" of commands by setting it as property at the beginning. Following is the syntax to enable echo property in OrientDB console. 
+orientdb> set echo true

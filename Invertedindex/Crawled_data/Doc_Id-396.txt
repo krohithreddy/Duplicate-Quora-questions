@@ -1,0 +1,48 @@
+Neo4j - Return Clause
+
+https://www.tutorialspoint.com/neo4j/neo4j_return_clause.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+The RETURN clause is used return nodes, relationships, and properties in Neo4j. In this chapter, we are going to learn how to − Return nodes Return multiple nodes Return relationships Return properties Return all elements Return a variable with column alias Returning Nodes You can return a node using the RETURN clause. Syntax Following is a syntax to return nodes using the RETURN clause. 
+Create (node:label {properties}) 
+RETURN node 
+ Example Before proceeding with the example, create 3 nodes and 2 relationships as shown below. 
+Create (Dhoni:player {name: "MahendraSingh Dhoni", YOB: 1981, POB: "Ranchi"}) 
+CREATE (Ind:Country {name: "India", result: "Winners"}) 
+CREATE (CT2013:Tornament {name: "ICC Champions Trophy 2013"}) 
+CREATE (Ind)-[r1:WINNERS_OF {NRR:0.938 ,pts:6}]->(CT2013) 
+CREATE(Dhoni)-[r2:CAPTAIN_OF]->(Ind) 
+ Following is a sample Cypher Query which creates a node named Dhoni and returns it. 
+Create (Dhoni:player {name: "MahendraSingh Dhoni", YOB: 1981, POB: "Ranchi"}) 
+RETURN Dhoni
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Returning Multiple Nodes You can also return multiple nodes using the return clause. Syntax Following is the syntax to return multiple nodes using the return clause. 
+CREATE (Ind:Country {name: "India", result: "Winners"}) 
+CREATE (CT2013:Tornament {name: "ICC Champions Trophy 2013"}) 
+RETURN Ind, CT2013 
+ Example Following is a sample Cypher Query to return multiple nodes using the return clause. 
+CREATE (Ind:Country {name: "India", result: "Winners"}) 
+CREATE (CT2013:Tornament {name: "ICC Champions Trophy 2013"}) 
+RETURN Ind, CT2013 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Here you can observe that Neo4j returned 2 nodes. Returning Relationships You can also return relationships using the Return clause. Syntax Following is the syntax to return relationships using the RETURN clause. 
+CREATE (node1)-[Relationship:Relationship_type]->(node2) 
+RETURN Relationship 
+ Example Following is a sample Cypher Query which creates two relationships and returns them. 
+CREATE (Ind)-[r1:WINNERS_OF {NRR:0.938 ,pts:6}]->(CT2013) 
+CREATE(Dhoni)-[r2:CAPTAIN_OF]->(Ind) 
+RETURN r1, r2 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Returning Properties You can also return properties using the RETURN clause. Syntax Following is a syntax to return properties using the RETURN clause. 
+Match (node:label {properties . . . . . . . . . . }) 
+Return node.property 
+ Example Following is a sample Cypher Query to return the properties of a node. 
+Match (Dhoni:player {name: "MahendraSingh Dhoni", YOB: 1981, POB: "Ranchi"}) 
+Return Dhoni.name, Dhoni.POB 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Returning All Elements You can return all the elements in the Neo4j database using the RETURN clause. Example Following is an example Cypher Query to return all the elements in the database. 
+Match p = (n {name: "India", result: "Winners"})-[r]-(x)  
+RETURN * 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Returning a Variable With a Column Alias You can return a particular column with alias using RETURN clause in Neo4j. Example Following is a sample Cypher Query which returns the column POB as Place Of Birth. 
+Match (Dhoni:player {name: "MahendraSingh Dhoni", YOB: 1981, POB: "Ranchi"}) 
+Return Dhoni.POB as Place Of Birth
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result.

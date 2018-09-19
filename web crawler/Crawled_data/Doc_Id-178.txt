@@ -1,0 +1,42 @@
+IMS DB - Data Manipulation
+
+https://www.tutorialspoint.com/ims_db/ims_db_data_manipulation.htm
+
+IMS DB, Overview, STRUCTURE, DL/I TERMINOLOGY, DL/I PROCESSING, CONTROL BLOCKS, PROGRAMMING, COBOL BASICS, DL/I FUNCTIONS, PCB MASK, SSA, DATA RETRIEVAL, DATA MANIPULATION, SECONDARY INDEXING, LOGICAL DATABASE, RECOVERY, INTERVIEW QUESTIONS.
+
+August-07-2017-01:26:44
+
+The different data manipulation methods used in IMS DL/I calls are as follows − ISRT Call Get Hold Calls REPL Call DLET Call Let us consider the following IMS database structure to understand the data manipulation function calls − ISRT Call Points to note − ISRT call is known as Insert call which is used to add segment occurrences to a database. ISRT calls are used for loading a new database. We issue an ISRT call when a segment description field is loaded with data. An unqualified or qualified SSA must be specified in the call so that the DL/I knows where to place a segment occurrence. We can use a combination of both unqualified and qualified SSA in the call. A qualified SSA can be specified for all the above levels. Let us consider the following example − 
+CALL 'CBLTDLI' USING DLI-ISRT
+                     PCB-NAME
+                     IO-AREA
+                     LIBRARY-SSA
+                     BOOKS-SSA
+                     UNQUALIFIED-ENGINEERING-SSA
+ The above example shows we are issuing an ISRT call by providing a combination of qualified and unqualified SSAs. When a new segment that we are inserting has a unique key field, then it is added at the proper position. If the key field is not unique, then it is added by the rules defined by a database administrator. When we issue an ISRT call without specifying a key field, then the insert rule tells where to place the segments relative to existing twin segments. Given below are the insert rules − First − If the rule is first, the new segment is added before any existing twins. Last − If the rule is last, the new segment is added after all existing twins. Here − If the rule is here, it is added at the current position relative to existing twins, which may be first, last, or anywhere. Status Codes The following table shows the relevant status codes after an ISRT call − S.No Status Code & Description 1 Spaces Successful call 2 GE Multiple SSAs are used and the DL/I cannot satisfy the call with the specified path. 3 II Try to add a segment occurrence that is already present in the database. 4 LB / LC LD / LE We get these status codes while load processing. In most cases, they indicate that you are not inserting the segments in an exact hierarchical sequence. Get Hold Call Points to note − There are three types of Get Hold call which we specify in a DL/I call: Get Hold Unique (GHU) Get Hold Next (GHN) Get Hold Next within Parent (GHNP) Hold function specifies that we are going to update the segment after retrieval. So before an REPL or DLET call, a successful hold call must be issued telling the DL/I an intent to update the database. REPL Call Points to note − After a successful get hold call, we issue an REPL call to update a segment occurrence. We cannot change the length of a segment using an REPL call. We cannot change the value of a key field using an REPL call. We cannot use a qualified SSA with an REPL call. If we specify a qualified SSA, then the call fails. 
+CALL 'CBLTDLI' USING DLI-GHU
+                     PCB-NAME
+                     IO-AREA
+                     LIBRARY-SSA
+                     BOOKS-SSA
+                     ENGINEERING-SSA
+                     IT-SSA.
+                     
+*Move the values which you want to update in IT segment occurrence*
+
+CALL ‘CBLTDLI’ USING DLI-REPL
+                     PCB-NAME
+                     IO-AREA.
+ The above example updates the IT segment occurrence using an REPL call. First, we issue a GHU call to get the segment occurrence we want to update. Then, we issue an REPL call to update the values of that segment. DLET Call Points to note − DLET call works much in the same way as an REPL call does. After a successful get hold call, we issue a DLET call to delete a segment occurrence. We cannot use a qualified SSA with a DLET call. If we specify a qualified SSA, then the call fails. 
+CALL 'CBLTDLI' USING DLI-GHU
+                     PCB-NAME
+                     IO-AREA
+                     LIBRARY-SSA
+                     BOOKS-SSA
+                     ENGINEERING-SSA
+                     IT-SSA.
+                     
+CALL ‘CBLTDLI’ USING DLI-DLET
+                     PCB-NAME
+                     IO-AREA.
+ The above example deletes the IT segment occurrence using a DLET call. First, we issue a GHU call to get the segment occurrence we want to delete. Then, we issue a DLET call to update the values of that segment. Status Codes The following table shows the relevant status codes after an REPL or a DLET call − S.No Status Code & Description 1 Spaces Successful call 2 AJ Qualified SSA used on REPL or DLET call. 3 DJ Program issues a replace call without an immediately preceding get hold call. 4 DA Program makes a change to the segment’s key field before issuing the REPL or DLET call

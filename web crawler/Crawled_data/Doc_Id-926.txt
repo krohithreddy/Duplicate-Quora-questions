@@ -1,0 +1,136 @@
+XML DOM - Navigation
+
+https://www.tutorialspoint.com/dom/xml_dom_navigation.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+Until now we studied DOM structure, how to load and parse XML DOM object and traverse through the DOM objects. Here we will see how we can navigate between nodes in a DOM object. The XML DOM consist of various properties of the nodes which help us navigate through the nodes, such as − parentNode childNodes firstChild lastChild nextSibling previousSibling Following is a diagram of a node tree showing its relationship with the other nodes. DOM - Parent Node This property specifies the parent node as a node object. Example The following example (navigate_example.htm) parses an XML document (node.xml) into an XML DOM object. Then the DOM object is navigated to the parent node through the child node − 
+<!DOCTYPE html>
+<html>
+   <body>
+      <script>
+         if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+         } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+
+         var y = xmlDoc.getElementsByTagName("Employee")[0];
+         document.write(y.parentNode.nodeName);
+      </script>
+   </body>
+</html>
+ As you can see in the above example, the child node Employee navigates to its parent node. Execution Save this file as navigate_example.html on the server path (this file and node.xml should be on the same path in your server). In the output, we get the parent node of Employee, i.e, Company. First Child This property is of type Node and represents the first child name present in the NodeList. Example The following example (first_node_example.htm) parses an XML document (node.xml) into an XML DOM object, then navigates to the first child node present in the DOM object. 
+<!DOCTYPE html>
+<html>
+   <body>
+      <script>
+         if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+         } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+
+         function get_firstChild(p) {
+            a = p.firstChild;
+
+            while (a.nodeType != 1) {
+               a = a.nextSibling;
+            }
+            return a;
+         }
+         var firstchild = get_firstChild(xmlDoc.getElementsByTagName("Employee")[0]);
+         document.write(firstchild.nodeName);
+      </script>
+   </body>
+</html>
+ Function get_firstChild(p) is used to avoid the empty nodes. It helps to get the firstChild element from the node list. x = get_firstChild(xmlDoc.getElementsByTagName("Employee")[0]) fetches the first child node for the tag name Employee. Execution Save this file as first_node_example.htm on the server path (this file and node.xml should be on the same path in your server). In the output, we get the first child node of Employee i.e. FirstName. Last Child This property is of type Node and represents the last child name present in the NodeList. Example The following example (last_node_example.htm) parses an XML document (node.xml) into an XML DOM object, then navigates to the last child node present in the xml DOM object. 
+<!DOCTYPE html>
+  <body>
+      <script>
+         if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+         } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+
+         function get_lastChild(p) {
+            a = p.lastChild;
+
+            while (a.nodeType! = 1){
+               a = a.previousSibling;
+            }
+            return a;
+         }
+         var lastchild = get_lastChild(xmlDoc.getElementsByTagName("Employee")[0]);
+         document.write(lastchild.nodeName);
+      </script>
+   </body>
+</html>
+ Execution Save this file as last_node_example.htm on the server path (this file and node.xml should be on the same path in your server). In the output, we get the last child node of Employee, i.e, Email. Next Sibling This property is of type Node and represents the next child, i.e, the next sibling of the specified child element present in the NodeList. Example The following example (nextSibling_example.htm) parses an XML document (node.xml) into an XML DOM object which navigates immediately to the next node present in the xml document. 
+<!DOCTYPE html>
+   <body>
+      <script>
+         if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+         }
+         else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+
+         function get_nextSibling(p) {
+            a = p.nextSibling;
+
+            while (a.nodeType != 1) {
+               a = a.nextSibling;
+            }
+            return a;
+         }
+         var nextsibling = get_nextSibling(xmlDoc.getElementsByTagName("FirstName")[0]);
+         document.write(nextsibling.nodeName);
+      </script>
+   </body>
+</html>
+ Execution Save this file as nextSibling_example.htm on the server path (this file and node.xml should be on the same path in your server). In the output, we get the next sibling node of FirstName, i.e, LastName. Previous Sibling This property is of type Node and represents the previous child, i.e, the previous sibling of the specified child element present in the NodeList. Example The following example (previoussibling_example.htm) parses an XML document (node.xml) into an XML DOM object, then navigates the before node of the last child node present in the xml document. 
+<!DOCTYPE html>
+   <body>
+      <script>
+         if (window.XMLHttpRequest)
+         {
+            xmlhttp = new XMLHttpRequest();
+         } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+
+         function get_previousSibling(p) {
+            a = p.previousSibling;
+
+            while (a.nodeType != 1) {
+               a = a.previousSibling;
+            }
+            return a;
+         }
+
+         prevsibling = get_previousSibling(xmlDoc.getElementsByTagName("Email")[0]);
+         document.write(prevsibling.nodeName);
+      </script>
+   </body>
+</html>
+ Execution Save this file as previoussibling_example.htm on the server path (this file and node.xml should be on the same path in your server). In the output, we get the previous sibling node of Email, i.e, ContactNo.

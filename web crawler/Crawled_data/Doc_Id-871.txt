@@ -1,0 +1,62 @@
+DOM - Entity Object Attribute - inputEncoding
+
+https://www.tutorialspoint.com/dom/dom_entity_inputencoding.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The attribute inputEncoding specifies the encoding used by the external parsed entity. Its value is null if it is an entity from the internal subset or if it is not known. Syntax Following is the syntax for the usage of the inputEncoding attribute. 
+entityObj.inputEncoding
+ Example note.xml contents are as below − 
+<?xml version = "1.0" encoding = "UTF-8" standalone = "no" ?>
+<Company>
+   <Employee category = "Technical" id = "firstelement">
+      <FirstName>Tanmay</FirstName>
+      <LastName>Patil</LastName>
+      <ContactNo>1234567890</ContactNo>
+      <Email>tanmaypatil@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Non-Technical">
+      <FirstName>Taniya</FirstName>
+      <LastName>Mishra</LastName>
+      <ContactNo>1234667898</ContactNo>
+      <Email>taniyamishra@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Management">
+      <FirstName>Tanisha</FirstName>
+      <LastName>Sharma</LastName>
+      <ContactNo>1234562350</ContactNo>
+      <Email>tanishasharma@xyz.com</Email>
+   </Employee>
+</Company>
+ Following example demonstrates the usage of the inputEncoding attribute − 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+         document.write("inputEncoding is : ")
+         document.write(xmlDoc.inputEncoding);
+      </script>
+   </body>
+</html>
+ Execution Save this file as entityattribute_inputencoding.htm on the server path (this file and note.xml should be on the same path in your server). We will get the output as shown below − 
+inputEncoding is : UTF-8
+ dom_entity_object.htm

@@ -1,0 +1,82 @@
+DocumentDB - Query Document
+
+https://www.tutorialspoint.com/documentdb/documentdb_query_document.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+In DocumentDB, we actually use SQL to query for documents, so this chapter is all about querying using the special SQL syntax in DocumentDB. Although if you are doing .NET development, there is also a LINQ provider that can be used and which can generate appropriate SQL from a LINQ query. Querying Document using Portal The Azure portal has a Query Explorer that lets you run any SQL query against your DocumentDB database. We will use the Query Explorer to demonstrate the many different capabilities and features of the query language starting with the simplest possible query. Step 1 − In the database blade, click to open the Query Explorer blade. Remember that queries run within the scope of a collection, and so the Query Explorer lets you choose the collection in this dropdown. Step 2 − Select Families collection which is created earlier using the portal. The Query Explorer opens up with this simple query SELECT * FROM c, which simply retrieves all documents from the collection. Step 3 − Execute this query by clicking the ‘Run query’ button. Then you will see that the complete document is retrieved in the Results blade. Querying Document using .Net SDK Following are the steps to run some document queries using .Net SDK. In this example, we want to query for the newly created documents that we just added. Step 1 − Call CreateDocumentQuery, passing in the collection to run the query against by its SelfLink and the query text. 
+private async static Task QueryDocumentsWithPaging(DocumentClient client) {
+   Console.WriteLine(); 
+   Console.WriteLine("**** Query Documents (paged results) ****"); 
+   Console.WriteLine();  
+   Console.WriteLine("Quering for all documents"); 
+	
+   var sql = "SELECT * FROM c";  
+   var query = client.CreateDocumentQuery(collection.SelfLink, sql).AsDocumentQuery();
+	
+   while (query.HasMoreResults) {
+      var documents = await query.ExecuteNextAsync(); 
+		
+      foreach (var document in documents) { 
+         Console.WriteLine(" Id: {0}; Name: {1};", document.id, document.name); 
+      } 
+   }
+	
+   Console.WriteLine(); 
+} 
+ This query is also returning all documents in the entire collection, but we're not calling .ToList on CreateDocumentQuery as before, which would issue as many requests as necessary to pull down all the results in one line of code. Step 2 − Instead, call AsDocumentQuery and this method returns a query object with a HasMoreResults property. Step 3 − If HasMoreResults is true, then call ExecuteNextAsync to get the next chunk and then dump all the contents of that chunk. Step 4 − You can also query using LINQ instead of SQL if you prefer. Here we've defined a LINQ query in q, but it won't execute until we run .ToList on it. 
+private static void QueryDocumentsWithLinq(DocumentClient client) {
+   Console.WriteLine(); 
+   Console.WriteLine("**** Query Documents (LINQ) ****"); 
+   Console.WriteLine();  
+   Console.WriteLine("Quering for US customers (LINQ)");
+	
+   var q = 
+      from d in client.CreateDocumentQuery<Customer>(collection.DocumentsLink) 
+      where d.Address.CountryRegionName == " United States" 
+      select new {
+         Id = d.Id, 
+         Name = d.Name, 
+         City = d.Address.Location.City 
+      };  
+		
+   var documents = q.ToList();  
+   Console.WriteLine("Found {0} UK customers", documents.Count);
+	
+   foreach (var document in documents) {
+      var d = document as dynamic; 
+      Console.WriteLine(" Id: {0}; Name: {1}; City: {2}", d.Id, d.Name, d.City); 
+   } 
+	
+   Console.WriteLine(); 
+}
+ The SDK will convert our LINQ query into SQL syntax for DocumentDB, generating a SELECT and WHERE clause based on our LINQ syntax Step 5 − Now call the above queries from the CreateDocumentClient task. 
+private static async Task CreateDocumentClient() { 
+   // Create a new instance of the DocumentClient 
+	
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+      database = client.CreateDatabaseQuery("SELECT * FROM c WHERE c.id =
+         'myfirstdb'").AsEnumerable().First(); 
+			
+      collection = client.CreateDocumentCollectionQuery(database.CollectionsLink,
+         "SELECT * FROM c WHERE c.id = 'MyCollection'").AsEnumerable().First();  
+			
+      //await CreateDocuments(client); 
+      await QueryDocumentsWithPaging(client); 
+      QueryDocumentsWithLinq(client); 
+   } 
+	
+}
+ When the above code is executed, you will receive the following output. 
+**** Query Documents (paged results) ****  
+Quering for all documents 
+ Id: 7e9ad4fa-c432-4d1a-b120-58fd7113609f; Name: New Customer 1; 
+ Id: 34e9873a-94c8-4720-9146-d63fb7840fad; Name: New Customer 1;  
+ 
+**** Query Documents (LINQ) **** 
+Quering for US customers (LINQ) 
+Found 2 UK customers 
+ Id: 7e9ad4fa-c432-4d1a-b120-58fd7113609f; Name: New Customer 1; City: Brooklyn 
+ Id: 34e9873a-94c8-4720-9146-d63fb7840fad; Name: New Customer 1; City: Brooklyn

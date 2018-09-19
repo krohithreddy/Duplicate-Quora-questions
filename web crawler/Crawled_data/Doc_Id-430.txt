@@ -1,0 +1,18 @@
+OrientDB - Alter Class
+
+https://www.tutorialspoint.com/orientdb/orientdb_alter_class.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Class and Property in OrientDB are used to build a schema with the respective attributes such as class name, super-class, cluster, number of clusters, Abstract, etc. If you want to modify or update any attribute of existing classes in the schema then you have to use Alter Class command. The following statement is the basic syntax of the Alter Class Command. 
+ALTER CLASS <class> <attribute-name> <attribute-value> 
+ Following are the details about the options in the above syntax. <class> − Defines the class name. <attribute-name> − Defines the attribute you want to change. <attribute-value> − Defines the value you want to set for the attribute. The following table defines the list of attributes that support Alter Class command. Attribute Type Description NAME String Changes the class name. SHORTNAME String Defines a short name, (that is, an alias), for the class. Use NULL to remove a short name assignment. SUPERCLASS String Defines a super-class for the class. To add a new class, you can use the syntax +<class>, to remove it use -<class>. OVERSIZE Decimal number Defines the oversize factor. ADDCLUSTER String Adds a cluster to the class. If the cluster doesn't exist, it creates a physical cluster. Adding clusters to a class is also useful in storing records in distributed servers. REMOVECLUSTER String Removes a cluster from a class. It does not delete the cluster, only removes it from the class. STRICTMODE - Enables or disables strict mode. When in strict mode, you work in schema-full mode and cannot add new properties to a record if they are part of the class' schema definition. CLUSTERSELECTION - Defines the selection strategy in choosing which cluster it uses for new records. CUSTOM - Defines custom properties. Property names and values must follow the syntax <propertyname>=<value> without spaces between the name and value. ABSTRACT Boolean Converts class to an abstract class or the opposite. Example Let us try few examples that will update or modify the attributes of the existing class. The following query is used to define a super-class ‘Person’ for an existing class ‘Employee’. 
+orientdb> ALTER CLASS Employee SUPERCLASS Person
+ If the above query is executed successfully, you will get the following output. 
+Class altered successfully
+ The following query is used to add a super-class ‘Person’ for an existing class ‘Employee’. 
+orientdb> ALTER CLASS Employee SUPERCLASS +Person 
+ If the above query is executed successfully, you will get the following output. 
+Class altered successfully

@@ -1,0 +1,31 @@
+MariaDB - PHP Syntax
+
+https://www.tutorialspoint.com/mariadb/mariadb_php_syntax.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+MariaDB partners well with a wide variety of programming languages and frameworks such as PHP, C#, JavaScript, Ruby on Rails, Django, and more. PHP remains the most popular of all available languages due to its simplicity and historical footprint. This guide will focus on PHP partnered with MariaDB. PHP provides a selection of functions for working with the MySQL database. These functions perform tasks like accessing it or performing operations, and they are fully compatible with MariaDB. Simply call these functions as you would call any other PHP function. The PHP functions you will use for MariaDB conform to the following format − 
+mysql_function(value,value,...);
+ The second part of the function specifies its action. Two of the functions used in this guide are as follows − 
+mysqli_connect($connect);
+mysqli_query($connect,"SQL statement");
+ The following example demonstrates the general syntax of a PHP call to a MariaDB function − 
+<html>
+   <head>
+      <title>PHP and MariaDB</title>
+   </head>
+
+   <body>
+      <?php
+         $retval = mysql_function(value, [value,...]);
+      
+         if( !$retval ) {
+            die ( "Error: Error message here" );
+         }
+         // MariaDB or PHP Statements
+      ?>
+   </body>
+</html>
+ In the next section, we will examine essential MariaDB tasks, using PHP functions.

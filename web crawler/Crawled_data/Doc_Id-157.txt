@@ -1,0 +1,42 @@
+HSQLDB - Connect
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_connect.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+In the installation chapter, we discussed how to connect the database manually. In this chapter, we will discuss how to connect the database programmatically (using Java programming). Take a look at the following program, which will start the server and create a connection between the Java application and the database. Example 
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class ConnectDatabase {
+   public static void main(String[] args) {
+      Connection con = null;
+      
+      try {
+         //Registering the HSQLDB JDBC driver
+         Class.forName("org.hsqldb.jdbc.JDBCDriver");
+         //Creating the connection with HSQLDB
+         con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/testdb", "SA", "");
+         if (con!= null){
+            System.out.println("Connection created successfully");
+            
+         }else{
+            System.out.println("Problem with creating connection");
+         }
+      
+      }  catch (Exception e) {
+         e.printStackTrace(System.out);
+      }
+   }
+}
+ Save this code into ConnectDatabase.java file. You will have to start the database using the following command. 
+\>cd C:\hsqldb-2.3.4\hsqldb
+hsqldb>java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0
+file:hsqldb/demodb --dbname.0 testdb
+ You can use the following command to compile and execute the code. 
+\>javac ConnectDatabase.java
+\>java ConnectDatabase
+ After execution of the above command, you will receive the following output − 
+Connection created successfully

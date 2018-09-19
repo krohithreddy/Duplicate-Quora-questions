@@ -1,0 +1,70 @@
+Memcached - Delete Key
+
+https://www.tutorialspoint.com/memcached/memcached_delete_key.htm
+
+Memcached, Tutorial, Beginners, Overview, Environment, Connection,  Set Data, Add Data, Replace Data, Append Data, Prepend Data, Get Data, Delete Data, Stats, Clear Data
+
+August-15-2017-02:34:11
+
+Memcached delete command is used to delete an existing key from the Memcached server. Syntax The basic syntax of Memcached delete command is as shown below − 
+delete key [noreply]
+ Output CAS command may produce one of the following result − DELETED indicates successful deletion. ERROR indicates error while deleting data or wrong syntax. NOT_FOUND indicates that the key does not exist in the Memcached server. Example In this example, we use tutorialspoint as a key and store memcached in it with an expiration time of 900 seconds. After this, it deletes the stored key. 
+set tutorialspoint 0 900 9
+memcached
+STORED
+get tutorialspoint
+VALUE tutorialspoint 0 9
+memcached
+END
+delete tutorialspoint
+DELETED
+get tutorialspoint
+END
+delete tutorialspoint
+NOT_FOUND
+ Delete Data Using Java Application To delete data from a Memcached server, you need to use the Memcached delete method. Example 
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+   
+      try{
+   
+         // Connecting to Memcached server on localhost
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server sucessful.");
+
+         // add data to memcached server
+         Future fo = mcc.set("tutorialspoint", 900, "World's largest online tutorials library");
+
+         // print status of set method
+         System.out.println("set status:" + fo.get());
+
+         // retrieve and check the value from cache
+         System.out.println("tutorialspoint value in cache - " + mcc.get("tutorialspoint"));
+
+         // try to add data with existing key
+         Future fo = mcc.delete("tutorialspoint");
+
+         // print status of delete method
+         System.out.println("delete status:" + fo.get());
+
+         // retrieve and check the value from cache
+         System.out.println("tutorialspoint value in cache - " + mcc.get("codingground"));
+
+         // Shutdowns the memcached client
+         mcc.shutdown();
+         
+      }catch(Exception ex)
+         System.out.println(ex.getMessage());
+   }
+}
+ Output On compiling and executing the program, you get to see the following output − 
+Connection to server successful
+set status:true
+tutorialspoint value in cache - World's largest online tutorials library
+delete status:true
+tutorialspoint value in cache - null

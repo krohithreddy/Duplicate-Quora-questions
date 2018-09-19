@@ -1,0 +1,73 @@
+PostgreSQL - ORDER BY Clause
+
+https://www.tutorialspoint.com/postgresql/postgresql_order_by.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+The PostgreSQL ORDER BY clause is used to sort the data in ascending or descending order, based on one or more columns. Syntax The basic syntax of ORDER BY clause is as follows − 
+SELECT column-list
+FROM table_name
+[WHERE condition]
+[ORDER BY column1, column2, .. columnN] [ASC | DESC];
+ You can use more than one column in the ORDER BY clause. Make sure whatever column you are using to sort, that column should be available in column-list. Example Consider the table COMPANY having records as follows − 
+testdb# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+ The following is an example, which would sort the result in ascending order by SALARY − 
+testdb=# SELECT * FROM COMPANY ORDER BY AGE ASC;
+ This would produce the following result − 
+  id | name  | age | address    | salary
+ ----+-------+-----+------------+--------
+   6 | Kim   |  22 | South-Hall |  45000
+   3 | Teddy |  23 | Norway     |  20000
+   7 | James |  24 | Houston    |  10000
+   8 | Paul  |  24 | Houston    |  20000
+   4 | Mark  |  25 | Rich-Mond  |  65000
+   2 | Allen |  25 | Texas      |  15000
+   5 | David |  27 | Texas      |  85000
+   1 | Paul  |  32 | California |  20000
+   9 | James |  44 | Norway     |   5000
+  10 | James |  45 | Texas      |   5000
+(10 rows)
+ The following is an example, which would sort the result in ascending order by NAME and SALARY − 
+testdb=# SELECT * FROM COMPANY ORDER BY NAME, SALARY ASC;
+ This would produce the following result − 
+ id | name  | age | address      | salary
+----+-------+-----+--------------+--------
+  2 | Allen |  25 | Texas        |  15000
+  5 | David |  27 | Texas        |  85000
+ 10 | James |  45 | Texas        |   5000
+  9 | James |  44 | Norway       |   5000
+  7 | James |  24 | Houston      |  10000
+  6 | Kim   |  22 | South-Hall   |  45000
+  4 | Mark  |  25 | Rich-Mond    |  65000
+  1 | Paul  |  32 | California   |  20000
+  8 | Paul  |  24 | Houston      |  20000
+  3 | Teddy |  23 | Norway       |  20000
+(10 rows)
+ The following is an example, which would sort the result in descending order by NAME − 
+testdb=# SELECT * FROM COMPANY ORDER BY NAME DESC;
+ This would produce the following result − 
+ id | name  | age | address    | salary
+----+-------+-----+------------+--------
+  3 | Teddy |  23 | Norway     |  20000
+  1 | Paul  |  32 | California |  20000
+  8 | Paul  |  24 | Houston    |  20000
+  4 | Mark  |  25 | Rich-Mond  |  65000
+  6 | Kim   |  22 | South-Hall |  45000
+  7 | James |  24 | Houston    |  10000
+  9 | James |  44 | Norway     |   5000
+ 10 | James |  45 | Texas      |   5000
+  5 | David |  27 | Texas      |  85000
+  2 | Allen |  25 | Texas      |  15000
+(10 rows)

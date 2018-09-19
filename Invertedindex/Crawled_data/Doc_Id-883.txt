@@ -1,0 +1,58 @@
+DOM - NamedNodeMap Object Method - removeNamedItemNS
+
+https://www.tutorialspoint.com/dom/dom_namednodemap_removenameditemns.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The method removeNamedItemNS() removes a node specified by local name and namespace URI. Syntax Following is the syntax for the usage of the removeNamedItemNS() method. 
+nodemapObject.removeNamedItem(namespaceURI, localName)
+ S.No. Parameter & Description 1 namespaceURI It is the namespaceURI of the node to remove. It is of type DOMString. 1 localName It is the local name of the node to remove. It is of typeDOMString. This method removes specified namespaceURI and the local name of the node or null if they do not have any value. Example node_ns.xml contents are as below − 
+<?xml version = "1.0"?>
+<Company>
+   <Employee xmlns:e = "http://www.tutorials.com/technical/" category = "technical">
+      <e:FirstName e:language = "English">Tanmay</e:FirstName>
+      <e:LastName>Patil</e:LastName>
+      <e:ContactNo>1234567890</e:ContactNo>
+      <e:Email>tanmaypatil@xyz.com</e:Email>
+   </Employee>
+
+   <Employee xmlns:n = "http://www.tutorials.com/non-technical/" category = "non-technical">
+      <n:FirstName>Taniya</n:FirstName>
+      <n:LastName>Mishra</n:LastName>
+      <n:ContactNo>1234667898</n:ContactNo>
+      <n:Email>taniymishra@xyz.com</n:Email>
+   </Employee>
+</Company>
+ Following example demonstrates the usage of the removeNamedItemNS() method − 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+                xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node_ns.xml");
+
+         xmlDoc = xmlDoc.getElementsByTagName('e:FirstName')[0].attributes;
+         document.write("Removed Item Attribute node is :- ");
+         document.write(xmlDoc.removeNamedItemNS("http://www.tutorials.com/technical/",'language').nodeName);
+
+      </script>
+    </body>
+</html>
+ Execution Save this file as namednodemapmethod_removenameditemns.htm on the server path (this file and node_ns.xml should be on the same path in your server). We will get the output as shown below − 
+Removed Item Attribute node is :- e:language 
+ dom_namednodemap_object.htm

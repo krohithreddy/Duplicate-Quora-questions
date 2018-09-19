@@ -1,0 +1,71 @@
+XML DOM - Get Node
+
+https://www.tutorialspoint.com/dom/xml_dom_get_node.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+In this chapter, we will study about how to get the node value of a XML DOM object. XML documents have a hierarchy of informational units called nodes. Node object has a property nodeValue, which returns the value of the element. In the following sections, we will discuss − Getting node value of an element Getting attribute value of a node The node.xml used in all the following examples is as below − 
+<Company>
+   <Employee category = "Technical">
+      <FirstName>Tanmay</FirstName>
+      <LastName>Patil</LastName>
+      <ContactNo>1234567890</ContactNo>
+      <Email>tanmaypatil@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Non-Technical">
+      <FirstName>Taniya</FirstName>
+      <LastName>Mishra</LastName>
+      <ContactNo>1234667898</ContactNo>
+      <Email>taniyamishra@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Management">
+      <FirstName>Tanisha</FirstName>
+      <LastName>Sharma</LastName>
+      <ContactNo>1234562350</ContactNo>
+      <Email>tanishasharma@xyz.com</Email>
+   </Employee>
+</Company>
+ Get Node Value The method getElementsByTagName() returns a NodeList of all the Elements in document order with a given tag name. Example The following example (getnode_example.htm) parses an XML document (node.xml) into an XML DOM object and extracts the node value of the child node Firstname (index at 0) − 
+<!DOCTYPE html>
+<html>
+   <body>
+      <script>
+         if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+         } else{
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+
+         x = xmlDoc.getElementsByTagName('FirstName')[0]
+         y = x.childNodes[0];
+         document.write(y.nodeValue);
+      </script>
+   </body>
+</html>
+ Execution Save this file as getnode_example.htm on the server path (this file and node.xml should be on the same path in your server). In the output, we get the node value as Tanmay. Get Attribute Value Attributes are part of the XML node elements. A node element can have multiple unique attributes. Attribute gives more information about XML node elements. To be more precise, they define properties of the node elements. An XML attribute is always a name-value pair. This value of the attribute is called the attribute node. The getAttribute() method retrieves an attribute value by element name. Example The following example (get_attribute_example.htm) parses an XML document (node.xml) into an XML DOM object and extracts the attribute value of the category Employee (index at 2) − 
+<!DOCTYPE html>
+<html>
+   <body>
+      <script>
+         if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+         } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+
+         x = xmlDoc.getElementsByTagName('Employee')[2];
+         document.write(x.getAttribute('category'));
+      </script>
+   </body>
+</html>
+ Execution Save this file as get_attribute_example.htm on the server path (this file and node.xml should be on the same path in your server). In the output, we get the attribute value as Management.

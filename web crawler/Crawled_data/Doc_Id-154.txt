@@ -1,0 +1,68 @@
+H2 Database - Select
+
+https://www.tutorialspoint.com/h2_database/h2_database_select.htm
+
+H2 Database, Tutorial, Learning, Introduction, Installation, Data Manipulation Select, Insert, Update, Delete, Backup, Call, Explain, Merge, Show, Data Definition Create, Alter, Drop, Truncate, Commit, Grant, Savepoint, Rollback, JDBC Connection.
+
+August-15-2017-02:34:24
+
+Select command is used to fetch record data from a table or multiple tables. If we design a select query, then it returns data in the form of result table called result sets. Syntax The basic syntax of SELECT statement is as follows − 
+SELECT [ TOP term ] [ DISTINCT | ALL ] selectExpression [,...] 
+FROM tableExpression [,...] [ WHERE expression ] 
+[ GROUP BY expression [,...] ] [ HAVING expression ] 
+[ { UNION [ ALL ] | MINUS | EXCEPT | INTERSECT } select ] [ ORDER BY order [,...] ] 
+[ [ LIMIT expression ] [ OFFSET expression ] [ SAMPLE_SIZE rowCountInt ] ] 
+[ FOR UPDATE ]
+ To fetch all the available fields, use the following syntax. 
+SELECT * FROM table_name;
+ Example Consider the CUSTOMER table having the following records − 
++----+----------+-----+-----------+----------+ 
+| ID | NAME     | AGE | ADDRESS   | SALARY   | 
++----+----------+-----+-----------+----------+ 
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 | 
+|  2 | Khilan   |  25 | Delhi     |  1500.00 | 
+|  3 | kaushik  |  23 | Kota      |  2000.00 | 
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 | 
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 | 
+|  6 | Komal    |  22 | MP        |  4500.00 | 
+|  7 | Muffy    |  24 | Indore    | 10000.00 | 
++----+----------+-----+-----------+----------+ 
+ To get the customer table along with the given data, execute the following queries. 
+CREATE TABLE CUSTOMER (id number, name varchar(20), age number, address varchar(20), 
+salary number);  
+
+INSERT into CUSTOMER values (1, 'Ramesh', 32, 'Ahmedabad', 2000); 
+INSERT into CUSTOMER values (2, 'Khilan', 25, 'Delhi', 1500); 
+INSERT into CUSTOMER values (3, 'kaushik', 23, 'Kota', 2000); 
+INSERT into CUSTOMER values (4, 'Chaitali', 25, 'Mumbai', 6500); 
+INSERT into CUSTOMER values (5, 'Hardik', 27, 'Bhopal', 8500); 
+INSERT into CUSTOMER values (6, 'Komal', 22, 'MP', 4500); 
+INSERT into CUSTOMER values (7, 'Muffy', 24, 'Indore', 10000);
+ The following command is an example, which would fetch ID, Name and Salary fields of the customers available in the CUSTOMER table. 
+SELECT ID, NAME, SALARY FROM CUSTOMERS;
+ The above command produces the following result. 
++----+----------+----------+ 
+| ID | NAME     | SALARY   | 
++----+----------+----------+ 
+|  1 | Ramesh   |  2000.00 | 
+|  2 | Khilan   |  1500.00 | 
+|  3 | kaushik  |  2000.00 | 
+|  4 | Chaitali |  6500.00 | 
+|  5 | Hardik   |  8500.00 | 
+|  6 | Komal    |  4500.00 | 
+|  7 | Muffy    | 10000.00 | 
++----+----------+----------+ 
+ Use the following query to fetch all the fields of CUSTOMERS table. 
+SQL> SELECT * FROM CUSTOMERS;
+ The above query produces the following result − 
++----+----------+-----+-----------+----------+ 
+| ID | NAME     | AGE | ADDRESS   | SALARY   | 
++----+----------+-----+-----------+----------+ 
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 | 
+|  2 | Khilan   |  25 | Delhi     |  1500.00 | 
+|  3 | kaushik  |  23 | Kota      |  2000.00 | 
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 | 
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 | 
+|  6 | Komal    |  22 | MP        |  4500.00 | 
+|  7 | Muffy    |  24 | Indore    | 10000.00 | 
++----+----------+-----+-----------+----------+

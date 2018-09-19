@@ -1,0 +1,31 @@
+DynamoDB - Delete Table
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_delete_table.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+In this chapter, we will discuss regarding how we can delete a table and also the different ways of deleting a table. Table deletion is a simple operation requiring little more than the table name. Utilize the GUI console, Java, or any other option to perform this task. Delete Table using the GUI Console Perform a delete operation by first accessing the console at − https://console.aws.amazon.com/dynamodb. Choose Tables from the navigation pane, and choose the table desired for deletion from the table list as shown in the following screeenshot. Finally, select Delete Table. After choosing Delete Table, a confirmation appears. Your table is then deleted. Delete Table using Java Use the delete method to remove a table. An example is given below to explain the concept better. 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient; 
+import com.amazonaws.services.dynamodbv2.document.DynamoDB; 
+import com.amazonaws.services.dynamodbv2.document.Table;  
+
+public class ProductsDeleteTable {  
+   public static void main(String[] args) throws Exception {  
+      AmazonDynamoDBClient client = new AmazonDynamoDBClient() 
+         .withEndpoint("http://localhost:8000"); 
+      
+      DynamoDB dynamoDB = new DynamoDB(client);  
+      Table table = dynamoDB.getTable("Products");  
+      try { 
+         System.out.println("Performing table delete, wait..."); 
+         table.delete(); 
+         table.waitForDelete(); 
+         System.out.print("Table successfully deleted.");  
+      } catch (Exception e) { 
+         System.err.println("Cannot perform table delete: "); 
+         System.err.println(e.getMessage()); 
+      } 
+   } 
+}

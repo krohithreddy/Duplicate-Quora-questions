@@ -1,0 +1,95 @@
+XSLT <apply-template>
+
+https://www.tutorialspoint.com/xslt/xslt_apply_template.htm
+
+XSLT Overview, Syntax, <template>, <value-of>,<for-each>, <sort>, <if>, <choose>, <key>, <message>, <import>.
+
+August-15-2017-02:34:18
+
+<xsl:apply-template> tag signals the XSLT processor to find the appropriate template to apply, based on the type and context of each selected node. Declaration Following is the syntax declaration of <xsl:apply-template> element. 
+<xsl:apply-template 
+   select = Expression 
+   mode = QName > 
+</xsl:apply-template> 
+ Attributes S.No Name & Description 1. select Used to process nodes selected by an XPath expression, instead of processing all the children. 2. mode Allows an element as specified by its Qualified Names to be processed multiple times, each time producing a different result. Elements Number of occurrences Unlimited Parent elements xsl:attribute, xsl:comment, xsl:copy, xsl:element, xsl:fallback, xsl:foreach, xsl:if, xsl:message, xsl:otherwise, xsl:param, xsl:processinginstruction, xsl:template, xsl:variable, xsl:when, xsl:with-param, output elements Child elements xsl:sort, xsl:with-param Demo Example This example creates a list of <student> element with its attribute rollno and its child <firstname>, <lastname>, <nickname>, and <marks> by iterating over each student. students.xml 
+<?xml version = "1.0"?> 
+<?xml-stylesheet type = "text/xsl" href = "students.xsl"?> 
+<class> 
+   <student rollno = "393"> 
+      <firstname>Dinkar</firstname> 
+      <lastname>Kad</lastname> 
+      <nickname>Dinkar</nickname> 
+      <marks>85</marks> 
+   </student> 
+   <student rollno = "493"> 
+      <firstname>Vaneet</firstname> 
+      <lastname>Gupta</lastname> 
+      <nickname>Vinni</nickname> 
+      <marks>95</marks> 
+   </student> 
+   <student rollno = "593"> 
+      <firstname>Jasvir</firstname> 
+      <lastname>Singh</lastname> 
+      <nickname>Jazz</nickname> 
+      <marks>90</marks> 
+   </student> 
+</class>
+ students.xsl 
+<?xml version = "1.0" encoding = "UTF-8"?> 
+<xsl:stylesheet version = "1.0" 
+   xmlns:xsl = "http://www.w3.org/1999/XSL/Transform">   
+   <xsl:template match = "/"> 
+      <html> 
+         <body> 
+            <h2>Students</h2> 
+            <xsl:apply-templates select = "class/student" /> 
+         </body> 
+      </html> 
+   </xsl:template>  
+
+   <xsl:template match = "class/student"> 
+      <xsl:apply-templates select = "@rollno" /> 
+      <xsl:apply-templates select = "firstname" /> 
+      <xsl:apply-templates select = "lastname" /> 
+      <xsl:apply-templates select = "nickname" /> 
+      <xsl:apply-templates select = "marks" /> 
+      <br /> 
+   </xsl:template>  
+
+   <xsl:template match = "@rollno"> 
+      <span style = "font-size = 22px;"> 
+         <xsl:value-of select = "." /> 
+      </span> 
+      <br /> 
+   </xsl:template>  
+
+   <xsl:template match = "firstname"> 
+      First Name:<span style = "color:blue;"> 
+         <xsl:value-of select = "." /> 
+      </span> 
+      <br /> 
+   </xsl:template>  
+
+   <xsl:template match = "lastname"> 
+      Last Name:<span style = "color:green;"> 
+         <xsl:value-of select = "." /> 
+      </span> 
+      <br /> 
+   </xsl:template>  
+
+   <xsl:template match = "nickname"> 
+      Nick Name:<span style = "color:red;"> 
+         <xsl:value-of select = "." /> 
+      </span> 
+      <br /> 
+   </xsl:template>  
+
+   <xsl:template match = "marks"> 
+      Marks:<span style = "color:gray;"> 
+         <xsl:value-of select = "." /> 
+      </span> 
+      <br /> 
+   </xsl:template>  
+	
+</xsl:stylesheet>
+ Output

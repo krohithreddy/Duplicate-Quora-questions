@@ -1,0 +1,9 @@
+SQL - Useful Resources
+
+https://www.tutorialspoint.com/sql/sql-useful-resources.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+The following resources contain additional information on SQL. Please use them to get more in-depth knowledge on this topic. Useful Links on SQL ANSI SQL − Database Language SQL (Proposed revised text of DIS 9075) July 1992 (Second Informal Review Draft). Structured Query Language (SQL) − DB2 resource for SQL users. Oracle SQL Developer − Oracle SQL Developer is a free and fully supported graphical tool for database development. SQL at Wikipedia − A small article on SQL, worth to go through it. MySQL Official Website − Here you can download the latest MySQL release, get the MySQL news update. The mailing list is also a great resources for anyone who want to build dynamic websites using MySQL. MySQL and PERL − Its a tutorial from Tutorials Point which explains you how to use MySQL along with PERL and DBI module. Here you will learn all the required MySQL operations alongwith examples. Useful Books on SQL To enlist your site on this page, please drop an email to contact@tutorialspoint.com

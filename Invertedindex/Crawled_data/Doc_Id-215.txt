@@ -1,0 +1,76 @@
+MariaDB - Order By Clause
+
+https://www.tutorialspoint.com/mariadb/mariadb_order_by_clause.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+The ORDER BY clause, as mentioned in previous discussions, sorts the results of a statement. It specifies the order of the data operated on, and includes the option to sort in ascending (ASC) or descending (DESC) order. On omission of order specification, the default order is ascending. ORDER BY clauses appear in a wide variety of statements such as DELETE and UPDATE. They always appear at the end of a statement, not in a subquery or before a set function, because they operate on the final resulting table. You also cannot use an integer to identify a column. Review the general syntax of the ORDER BY clause given below − 
+SELECT field, field2,... [or column] FROM table_name, table_name2,...
+ORDER BY field, field2,... ASC[or DESC]
+ Use an ORDER BY clause either at the command prompt or within a PHP script. The Command Prompt At the command prompt, simply use a standard command − 
+root@ host# mysql -u root -p password;
+Enter password:*******
+mysql> use PRODUCTS;
+Database changed
+
+mysql> SELECT * from products_tbl ORDER BY product_manufacturer ASC
++-------------+----------------+----------------------+
+| ID_number   | Nomenclature   | product_manufacturer |
++-------------+----------------+----------------------+
+| 56789       | SuperBlast 400 | LMN Corp             |
++-------------+----------------+----------------------+
+| 67891       | Zoomzoom 5000  | QFT Corp             |
++-------------+----------------+----------------------+
+| 12347       | Orbitron 1000  | XYZ Corp             |
++-------------+----------------+----------------------+
+ PHP Script Using Order By Clause Utilize the mysql_query() function, once again, in statements employing the ORDER BY clause − 
+<?php
+   $dbhost = 'localhost:3036';
+   $dbuser = 'root';
+   $dbpass = 'rootpassword';
+   $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+   
+   if(! $conn ) {
+      die('Could not connect: ' . mysql_error());
+   }
+
+   $sql = 'SELECT product_id, product_name, product_manufacturer, ship_date 
+      FROM products_tbl ORDER BY product_manufacturer DESC';
+
+   mysql_select_db('PRODUCTS');
+   $retval = mysql_query( $sql, $conn );
+
+   if(! $retval ) {
+      die('Could not get data: ' . mysql_error());
+   }
+
+   while($row = mysql_fetch_array($retval, MYSQL_ASSOC)) {
+      echo "Product ID :{$row['product_id']} <br> ".
+         "Name: {$row['product_name']} <br> ".
+         "Manufacturer: {$row['product_manufacturer']} <br> ".
+         "Ship Date : {$row['ship_date']} <br> ".
+         "--------------------------------<br>";
+   }
+
+   echo "Fetched data successfully\n";
+   mysql_close($conn);
+?>
+ On successful data retrieval, you will see the following output − 
+Product ID: 12347
+Nomenclature: Orbitron 1000
+Manufacturer: XYZ Corp
+Ship Date: 01/01/17
+----------------------------------------------
+Product ID: 67891
+Nomenclature: Zoomzoom 5000
+Manufacturer: QFT Corp
+Ship Date: 01/01/17
+----------------------------------------------
+Product ID: 56789
+Nomenclature: SuperBlast 400
+Manufacturer: LMN Corp
+Ship Date: 01/04/17
+----------------------------------------------
+mysql> Fetched data successfully

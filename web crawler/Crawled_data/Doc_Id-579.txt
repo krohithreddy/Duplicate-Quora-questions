@@ -1,0 +1,9 @@
+PostgreSQL - Useful Functions
+
+https://www.tutorialspoint.com/postgresql/postgresql_useful_functions.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+PostgreSQL built-in functions, also called as Aggregate functions, are used for performing processing on string or numeric data. The following is the list of all general-purpose PostgreSQL built-in functions − PostgreSQL COUNT Function − The PostgreSQL COUNT aggregate function is used to count the number of rows in a database table. PostgreSQL MAX Function − The PostgreSQL MAX aggregate function allows us to select the highest (maximum) value for a certain column. PostgreSQL MIN Function − The PostgreSQL MIN aggregate function allows us to select the lowest (minimum) value for a certain column. PostgreSQL AVG Function − The PostgreSQL AVG aggregate function selects the average value for certain table column. PostgreSQL SUM Function − The PostgreSQL SUM aggregate function allows selecting the total for a numeric column. PostgreSQL ARRAY Functions − The PostgreSQL ARRAY aggregate function puts input values, including nulls, concatenated into an array. PostgreSQL Numeric Functions − Complete list of PostgreSQL functions required to manipulate numbers in SQL. PostgreSQL String Functions − Complete list of PostgreSQL functions required to manipulate strings in PostgreSQL.

@@ -1,0 +1,37 @@
+Neo4j CQL - Creating a Relationship
+
+https://www.tutorialspoint.com/neo4j/neo4j_cql_creating_relationship.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+In Noe4j, a relationship is an element using which we connect two nodes of a graph. These relationships have direction, type, and the form patterns of data. This chapter teaches you how to − Create relationships Create a relationship between the existing nodes Create a relationship with label and properties Creating Relationships We can create a relationship using the CREATE clause. We will specify relationship within the square braces “[ ]” depending on the direction of the relationship it is placed between hyphen “ - ” and arrow “ → ” as shown in the following syntax. Syntax Following is the syntax to create a relationship using the CREATE clause. 
+CREATE (node1)-[:RelationshipType]->(node2) 
+ Example First of all, create two nodes Ind and Dhawan in the database, as shown below. 
+CREATE (Dhawan:player{name: "Shikar Dhawan", YOB: 1985, POB: "Delhi"}) 
+CREATE (Ind:Country {name: "India"})
+ Now, create a relationship named BATSMAN_OF between these two nodes as − 
+CREATE (Dhawan)-[r:BATSMAN_OF]->(Ind) 
+ Finally, return both the nodes to see the created relationship. 
+RETURN Dhawan, Ind 
+ Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Creating a Relationship Between the Existing Nodes You can also create a relationship between the existing nodes using the MATCH clause. Syntax Following is the syntax to create a relationship using the MATCH clause. 
+MATCH (a:LabeofNode1), (b:LabeofNode2) 
+   WHERE a.name = "nameofnode1" AND b.name = " nameofnode2" 
+CREATE (a)-[: Relation]->(b) 
+RETURN a,b 
+ Example Following is a sample Cypher Query which creates a relationship using the match clause. 
+MATCH (a:player), (b:Country) WHERE a.name = "Shikar Dhawan" AND b.name = "India" 
+CREATE (a)-[r: BATSMAN_OF]->(b) 
+RETURN a,b 
+ To execute the above query, carry out the following steps. Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Creating a Relationship with Label and Properties You can create a relationship with label and properties using the CREATE clause. Syntax Following is the syntax to create a relationship with label and properties using the CREATE clause. 
+CREATE (node1)-[label:Rel_Type {key1:value1, key2:value2, . . . n}]-> (node2) 
+ Example Following is a sample Cypher Query which creates a relationship with label and properties. 
+MATCH (a:player), (b:Country) WHERE a.name = "Shikar Dhawan" AND b.name = "India" 
+CREATE (a)-[r:BATSMAN_OF {Matches:5, Avg:90.75}]->(b)  
+RETURN a,b 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Creating a Complete Path In Neo4j, a path is formed using continuous relationships. A path can be created using the create clause. Syntax Following is the syntax to create a path in Neo4j using the CREATE clause. 
+CREATE p = (Node1 {properties})-[:Relationship_Type]->
+   (Node2 {properties})[:Relationship_Type]->(Node3 {properties}) 
+RETURN p 
+ Example To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result.

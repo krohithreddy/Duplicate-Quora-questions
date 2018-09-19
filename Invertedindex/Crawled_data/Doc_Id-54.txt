@@ -1,0 +1,56 @@
+DocumentDB - Connect Account
+
+https://www.tutorialspoint.com/documentdb/documentdb_connect_account.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+When you start programming against DocumentDB, the very first step is to connect. So to connect to your DocumentDB account you will need two things; Endpoint Authorization Key Endpoint Endpoint is the URL to your DocumentDB account and it is constructed by combining your DocumentDB account name with .documents.azure.com. Let’s go to the Dashboard. Now, click on the created DocumentDB account. You will see the details as shown in the following image. When you select the ‘Keys’ option, it will display additional information as shown in the following image. You will also see the URL to your DocumentDB account, which you can use as your endpoint. Authorization Key Authorization key contains your credentials and there are two types of keys. The master key allows full access to all resources within the account, while resource tokens permit restricted access to specific resources. Master Keys There's nothing you can't do with a master key. You can blow away your entire database if you want, using the master key. For this reason, you definitely don't want to be sharing the master key or distributing it to client environments. As an added security measure, it's a good idea to change it frequently. There are actually two master keys for each database account, the primary and the secondary as highlighted in the above screenshot. Resource Tokens You can also use resource tokens instead of a master key. Connections based on resource tokens can only access the resources specified by the tokens and no other resources. Resource tokens are based on user permissions, so first you create one or more users, and these are defined at the database level. You create one or more permissions for each user, based on the resources that you want to allow each user to access. Each permission generates a resource token that allows either read-only or full access to a given resource and that can be any user resource within the database. Let’s go to console application created in chapter 3. Step 1 − Add the following references in the Program.cs file. 
+using Microsoft.Azure.Documents; 
+using Microsoft.Azure.Documents.Client; 
+using Microsoft.Azure.Documents.Linq; 
+using Newtonsoft.Json;
+ Step 2 − Now add Endpoint URL and Authorization key. In this example we will be using primary key as Authorization key. Note that in your case both Endpoint URL and authorization key should be different. 
+private const string EndpointUrl = "https://azuredocdbdemo.documents.azure.com:443/"; 
+private const string AuthorizationKey = 
+   "BBhjI0gxdVPdDbS4diTjdloJq7Fp4L5RO/StTt6UtEufDM78qM2CtBZWbyVwFPSJIm8AcfDu2O+AfV T+TYUnBQ==";
+ Step 3 − Create a new instance of the DocumentClient in asynchronous task called CreateDocumentClient and instantiate new DocumentClient. Step 4 − Call your asynchronous task from your Main method. Following is the complete Program.cs file so far. 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text; 
+using System.Threading.Tasks;
+
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
+using Microsoft.Azure.Documents.Linq;
+using Newtonsoft.Json;
+
+namespace DocumentDBDemo { 
+
+   class Program {
+      private const string EndpointUrl = "https://azuredocdbdemo.documents.azure.com:443/";
+		
+      private const string AuthorizationKey = "BBhjI0gxdVPdDbS4diTjdloJq7Fp4L5RO/
+         StTt6UtEufDM78qM2CtBZWbyVwFPSJIm8AcfDu2O+AfV T+TYUnBQ==";
+			
+      static void Main(string[] args) {
+         try {
+            CreateDocumentClient().Wait();
+         } catch (Exception e) {
+            Exception baseException = e.GetBaseException();
+            Console.WriteLine("Error: {0}, Message: {1}", e.Message, baseException.Message);
+         }
+			
+         Console.ReadKey();
+      }
+		
+      private static async Task CreateDocumentClient() {
+         // Create a new instance of the DocumentClient
+         var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey);
+      }
+		
+   }
+}
+ In this chapter, we have learnt how to connect to a DocumentDB account and create an instance of the DocumentClient class.

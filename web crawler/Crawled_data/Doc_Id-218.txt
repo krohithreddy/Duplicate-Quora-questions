@@ -1,0 +1,16 @@
+MariaDB - Regular Expression
+
+https://www.tutorialspoint.com/mariadb/mariadb_regular_expression.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+Beyond the pattern matching available from LIKE clauses, MariaDB offers regular expression-based matching through the REGEXP operator. The operator performs pattern matching for a string expression based on a given pattern. MariaDB 10.0.5 introduced PCRE Regular Expressions, which dramatically increases the scope of matching into areas like recursive patterns, look-ahead assertions, and more. Review the use of standard REGEXP operator syntax given below − 
+SELECT column FROM table_name WHERE column REGEXP '[PATTERN]';
+ REGEXP returns 1 for a pattern match or 0 in the absence of one. An option for the opposite exists in the form of NOT REGEXP. MariaDB also offers synonyms for REGEXP and NOT REGEXP, RLIKE and NOT RLIKE, which were created for compatibility reasons. The pattern compared can be a literal string or something else such as a table column. In strings, it uses C escape syntax, so double any “\” characters. REGEXP is also case-insensitive, with the exception of binary strings. A table of possible patterns, which can be used are given below − S.No Pattern & Description 1 ^ It matches the start of the string. 2 $ It matches the string's end. 3 . It matches a single character. 4 [...] It matches any character in the brackets. 5 [^...] It matches any character not listed in the brackets. 6 p1|p2|p3 It matches any of the patterns. 7 * It matches 0 or more instances of the preceding element. 8 + It matches 1 or more instances of the preceding element. 9 {n} It matches n instances of the preceding element. 10 {m,n} It matches m to n instances of the preceding element. Review the pattern matching examples given below − Products starting with “pr” − 
+SELECT name FROM product_tbl WHERE name REGEXP '^pr';
+ Products ending with “na” − 
+SELECT name FROM product_tbl WHERE name REGEXP 'na$';
+ Products starting with a vowel − 
+SELECT name FROM product_tbl WHERE name REGEXP '^[aeiou]';

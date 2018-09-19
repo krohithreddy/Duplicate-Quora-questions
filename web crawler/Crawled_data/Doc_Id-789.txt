@@ -1,0 +1,77 @@
+SQLite - SELECT Query
+
+https://www.tutorialspoint.com/sqlite/sqlite_select_query.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+SQLite SELECT statement is used to fetch the data from a SQLite database table which returns data in the form of a result table. These result tables are also called result sets. Syntax Following is the basic syntax of SQLite SELECT statement. 
+SELECT column1, column2, columnN FROM table_name;
+ Here, column1, column2 ... are the fields of a table, whose values you want to fetch. If you want to fetch all the fields available in the field, then you can use the following syntax − 
+SELECT * FROM table_name;
+ Example Consider COMPANY table with the following records − 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Following is an example to fetch and display all these records using SELECT statement. Here, the first three commands have been used to set a properly formatted output. 
+sqlite>.header on
+sqlite>.mode column
+sqlite> SELECT * FROM COMPANY;
+ Finally, you will get the following result. 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ If you want to fetch only selected fields of COMPANY table, then use the following query − 
+sqlite> SELECT ID, NAME, SALARY FROM COMPANY;
+ The above query will produce the following result. 
+ID          NAME        SALARY
+----------  ----------  ----------
+1           Paul        20000.0
+2           Allen       15000.0
+3           Teddy       20000.0
+4           Mark        65000.0
+5           David       85000.0
+6           Kim         45000.0
+7           James       10000.0
+ Setting Output Column Width Sometimes, you will face a problem related to the truncated output in case of .mode column which happens because of default width of the column to be displayed. What you can do is, you can set column displayable column width using .width num, num.... command as follows − 
+sqlite>.width 10, 20, 10
+sqlite>SELECT * FROM COMPANY;
+ The above .width command sets the first column width to 10, the second column width to 20 and the third column width to 10. Finally, the above SELECT statement will give the following result. 
+ID          NAME                  AGE         ADDRESS     SALARY
+----------  --------------------  ----------  ----------  ----------
+1           Paul                  32          California  20000.0
+2           Allen                 25          Texas       15000.0
+3           Teddy                 23          Norway      20000.0
+4           Mark                  25          Rich-Mond   65000.0
+5           David                 27          Texas       85000.0
+6           Kim                   22          South-Hall  45000.0
+7           James                 24          Houston     10000.0
+ Schema Information As all the dot commands are available at SQLite prompt, hence while programming with SQLite, you will use the following SELECT statement with sqlite_master table to list down all the tables created in your database. 
+sqlite> SELECT tbl_name FROM sqlite_master WHERE type = 'table';
+ Assuming you have only COMPANY table in your testDB.db, this will produce the following result. 
+tbl_name
+----------
+COMPANY
+ You can list down complete information about COMPANY table as follows − 
+sqlite> SELECT sql FROM sqlite_master WHERE type = 'table' AND tbl_name = 'COMPANY';
+ Assuming you have only COMPANY table in your testDB.db, this will produce the following result. 
+CREATE TABLE COMPANY(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+)

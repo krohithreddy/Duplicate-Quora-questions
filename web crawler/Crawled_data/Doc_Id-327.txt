@@ -1,0 +1,46 @@
+MySQL - SQRT Function
+
+https://www.tutorialspoint.com/mysql/mysql-sqrt-function.htm
+
+Learning, MySQL, Programming, Database, Clauses, Commands, Functions, MySQL Between Clause, Queries, Simple, Steps, Basic, Advanced, Concepts.
+
+August-15-2017-02:34:19
+
+MySQL SQRT function is used to find out the square root of any number. You can use SELECT statement to find out square root of any number as follows − 
+mysql>  select SQRT(16);
++----------+
+| SQRT(16) |
++----------+
+| 4.000000 |
++----------+
+1 row in set (0.00 sec)
+ You are seeing float value here because internally MySQL will manipulate square root in float data type. You can use SQRT function to find out square root of various records as well. To understand SQRT function in more detail, consider an employee_tbl table, which is having following records − 
+mysql> SELECT * FROM employee_tbl;
++------+------+------------+--------------------+
+|  id  | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|   1  | John | 2007-01-24 |        250         |
+|   2  | Ram  | 2007-05-27 |        220         |
+|   3  | Jack | 2007-05-06 |        170         |
+|   3  | Jack | 2007-04-06 |        100         |
+|   4  | Jill | 2007-04-06 |        220         |
+|   5  | Zara | 2007-06-06 |        300         |
+|   5  | Zara | 2007-02-06 |        350         |
++------+------+------------+--------------------+
+7 rows in set (0.00 sec)
+ Now, suppose based on the above table you want to calculate square root of all the dialy_typing_pages, then you can do so by using the following command − 
+mysql> SELECT name, SQRT(daily_typing_pages)
+    -> FROM employee_tbl;
++------+--------------------------+
+| name | SQRT(daily_typing_pages) |
++------+--------------------------+
+| John |         15.811388        |
+| Ram  |         14.832397        |
+| Jack |         13.038405        |
+| Jack |         10.000000        |
+| Jill |         14.832397        |
+| Zara |         17.320508        |
+| Zara |         18.708287        |
++------+--------------------------+
+7 rows in set (0.00 sec)
+ mysql-useful-functions.htm

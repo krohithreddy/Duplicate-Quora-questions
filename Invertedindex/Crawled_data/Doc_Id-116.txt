@@ -1,0 +1,121 @@
+DynamoDB - Creating Items
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_creating_items.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+Creating an item in DynamoDB consists primarily of item and attribute specification, and the option of specifying conditions. Each item exists as a set of attributes, with each attribute named and assigned a value of a certain type. Value types include scalar, document, or set. Items carry a 400KB size limit, with the possibility of any amount of attributes capable of fitting within that limit. Name and value sizes (binary and UTF-8 lengths) determine item size. Using short attribute names aids in minimizing item size. Note − You must specify all primary key attributes, with primary keys only requiring the partition key; and composite keys requiring both the partition and sort key. Also, remember tables possess no predefined schema. You can store dramatically different datasets in one table. Use the GUI console, Java, or another tool to perform this task. How to Create an Item Using the GUI Console? Navigate to the console. In the navigation pane on the left side, select Tables. Choose the table name for use as the destination, and then select the Items tab as shown in the following screenshot. Select Create Item. The Create Item screen provides an interface for entering the required attribute values. Any secondary indices must also be entered. If you require more attributes, select the action menu on the left of the Message. Then select Append, and the desired data type. After entering all essential information, select Save to add the item. How to Use Java in Item Creation? Using Java in item creation operations consists of creating a DynamoDB class instance, Table class instance, Item class instance, and specifying the primary key and attributes of the item you will create. Then add your new item with the putItem method. Example 
+DynamoDB dynamoDB = new DynamoDB (new AmazonDynamoDBClient(
+   new ProfileCredentialsProvider()));
+Table table = dynamoDB.getTable("ProductList");
+   
+// Spawn a related items list 
+List<Number> RELItems = new ArrayList<Number>(); 
+RELItems.add(123); 
+RELItems.add(456); 
+RELItems.add(789);  
+   
+//Spawn a product picture map  
+Map<String, String> photos = new HashMap<String, String>(); 
+photos.put("Anterior", "http://xyz.com/products/101_front.jpg"); 
+photos.put("Posterior", "http://xyz.com/products/101_back.jpg"); 
+photos.put("Lateral", "http://xyz.com/products/101_LFTside.jpg");  
+
+//Spawn a product review map 
+Map<String, List<String>> prodReviews = new HashMap<String, List<String>>();  
+List<String> fiveStarRVW = new ArrayList<String>(); 
+fiveStarRVW.add("Shocking high performance."); 
+fiveStarRVW.add("Unparalleled in its market."); 
+prodReviews.put("5 Star", fiveStarRVW);  
+List<String> oneStarRVW = new ArrayList<String>(); 
+oneStarRVW.add("The worst offering in its market."); 
+prodReviews.put("1 Star", oneStarRVW);  
+
+// Generate the item 
+Item item = new Item()
+   .withPrimaryKey("Id", 101) 
+   .withString("Nomenclature", "PolyBlaster 101") 
+   .withString("Description", "101 description") 
+   .withString("Category", "Hybrid Power Polymer Cutter")  
+   .withString("Make", "Brand – XYZ") 
+   .withNumber("Price", 50000) 
+   .withString("ProductCategory", "Laser Cutter") 
+   .withBoolean("Availability", true) 
+   .withNull("Qty") 
+   .withList("ItemsRelated", RELItems) 
+   .withMap("Images", photos) 
+   .withMap("Reviews", prodReviews);
+
+// Add item to the table  
+PutItemOutcome outcome = table.putItem(item);
+ You can also look at the following larger example. Note − The following sample may assume a previously created data source. Before attempting to execute, acquire supporting libraries and create necessary data sources (tables with required characteristics, or other referenced sources). The following sample also uses Eclipse IDE, an AWS credentials file, and the AWS Toolkit within an Eclipse AWS Java Project. 
+package com.amazonaws.codesamples.document;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.document.DeleteItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.Table;
+
+import com.amazonaws.services.dynamodbv2.document.UpdateItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
+import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.model.ReturnValue;
+
+public class CreateItemOpSample { 
+   static DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient ( 
+      new ProfileCredentialsProvider()));  
+   static String tblName = "ProductList";  
+      
+   public static void main(String[] args) throws IOException {  
+      createItems();  
+      retrieveItem();  
+         
+      // Execute updates 
+      updateMultipleAttributes(); 
+      updateAddNewAttribute(); 
+      updateExistingAttributeConditionally();  
+         
+      // Item deletion 
+      deleteItem();  
+   }
+   private static void createItems() {  
+      Table table = dynamoDB.getTable(tblName); 
+      try {  
+         Item item = new Item() 
+            .withPrimaryKey("ID", 303)
+            .withString("Nomenclature", "Polymer Blaster 4000") 
+            .withStringSet( "Manufacturers", 
+            new HashSet<String>(Arrays.asList("XYZ Inc.", "LMNOP Inc.")))  
+            .withNumber("Price", 50000) 
+            .withBoolean("InProduction", true) 
+            .withString("Category", "Laser Cutter"); 
+         
+         table.putItem(item);  
+         item = new Item() 
+            .withPrimaryKey("ID", 313) 
+            .withString("Nomenclature", "Agitatatron 2000") 
+            .withStringSet( "Manufacturers", 
+            new HashSet<String>(Arrays.asList("XYZ Inc,", "CDE Inc."))) 
+            .withNumber("Price", 40000) 
+            .withBoolean("InProduction", true) 
+            .withString("Category", "Agitator"); 
+         
+         table.putItem(item);  
+      } catch (Exception e) { 
+         System.err.println("Cannot create items."); 
+         System.err.println(e.getMessage()); 
+      } 
+   }   
+}

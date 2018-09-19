@@ -1,0 +1,76 @@
+HSQLDB - Transactions
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_transactions.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+A Transaction is a sequential group of database manipulation operations, which is performed and considered as one single work unit. In other words, when all the operations are successfully executed, only then the entire transaction will be complete. If any operation within the transaction fails, then the entire transaction will fail. Properties of Transactions Basically, transaction supports 4 standard properties. They can be referred to as ACID properties. Atomicity − All the operations in the transactions are executed successfully, otherwise the transaction gets aborted at the point of failure and the previous operations are rolled back to their previous position. Consistency − The database properly changes states upon a successfully committed transaction. Isolation − It enables the transaction to operate independently on and transparent to each other. Durability − The result or effect of a committed transaction persists in case of a system failure. Commit, Rollback, and Savepoint These keywords are mainly used for HSQLDB transactions. Commit− Always the successful transaction should be completed by executing the COMMIT command. Rollback − If a failure occurs in the transaction, then the ROLLBACK command should be executed to return every table referenced in the transaction to its previous state. Savepoint − Creates a point within the group of transactions in which to rollback. Example The following example explains the transactions concept along with commit, rollback, and Savepoint. Let us consider the table Customers with the columns id, name, age, address, and salary. Id Name Age Address Salary 1 Ramesh 32 Ahmedabad 2000.00 2 Karun 25 Delhi 1500.00 3 Kaushik 23 Kota 2000.00 4 Chaitanya 25 Mumbai 6500.00 5 Harish 27 Bhopal 8500.00 6 Kamesh 22 MP 1500.00 7 Murali 24 Indore 10000.00 Use the following commands to create the customer table along the lines of the above data. 
+CREATE TABLE Customer (id INT NOT NULL, name VARCHAR(100) NOT NULL, age INT NOT
+NULL, address VARCHAR(20), Salary INT, PRIMARY KEY (id));
+Insert into Customer values (1, "Ramesh", 32, "Ahmedabad", 2000);
+Insert into Customer values (2, "Karun", 25, "Delhi", 1500);
+Insert into Customer values (3, "Kaushik", 23, "Kota", 2000);
+Insert into Customer values (4, "Chaitanya", 25, "Mumbai", 6500);
+Insert into Customer values (5, "Harish", 27, "Bhopal", 8500);
+Insert into Customer values (6, "Kamesh", 22, "MP", 1500);
+Insert into Customer values (7, "Murali", 24, "Indore", 10000);
+ Example for COMMIT The following query deletes rows from the table having age = 25 and uses the COMMIT command to apply those changes in the database. 
+DELETE FROM CUSTOMERS WHERE AGE = 25;
+COMMIT;
+ After execution of the above query, you will receive the following output. 
+2 rows effected
+ After successful execution of the above command, check the records of the customer table by executing the below given command. 
+Select * from Customer;
+ After execution of the above query, you will receive the following output. 
++----+----------+-----+-----------+----------+
+| ID |   NAME   | AGE |   ADDRESS |  SALARY  |
++----+----------+-----+-----------+----------+
+| 1  |  Ramesh  |  32 | Ahmedabad |   2000   |
+| 3  |  kaushik |  23 |   Kota    |   2000   |
+| 5  |  Harish  |  27 |   Bhopal  |   8500   |
+| 6  |  Kamesh  |  22 |    MP     |   4500   |
+| 7  |  Murali  |  24 |   Indore  |   10000  |
++----+----------+-----+-----------+----------+
+ Example for Rollback Let us consider the same Customer table as input. Id Name Age Address Salary 1 Ramesh 32 Ahmedabad 2000.00 2 Karun 25 Delhi 1500.00 3 Kaushik 23 Kota 2000.00 4 Chaitanya 25 Mumbai 6500.00 5 Harish 27 Bhopal 8500.00 6 Kamesh 22 MP 1500.00 7 Murali 24 Indore 10000.00 Here is the example query that explains about Rollback functionality by deleting records from the table having age = 25 and then ROLLBACK the changes in the database. 
+DELETE FROM CUSTOMERS WHERE AGE = 25;
+ROLLBACK;
+ After successful execution of the above two queries, you can view the record data in the Customer table using the following command. 
+Select * from Customer;
+ After execution of the above command, you will receive the following output. 
++----+----------+-----+-----------+----------+
+| ID |   NAME   | AGE |   ADDRESS |  SALARY  |
++----+----------+-----+-----------+----------+
+|  1 |  Ramesh  |  32 | Ahmedabad |   2000   |
+|  2 |  Karun   |  25 |   Delhi   |   1500   |
+|  3 |  Kaushik |  23 |   Kota    |   2000   |
+|  4 | Chaitanya|  25 |   Mumbai  |   6500   |
+|  5 |  Harish  |  27 |   Bhopal  |   8500   |
+|  6 |  Kamesh  |  22 |     MP    |   4500   |
+|  7 |  Murali  |  24 |    Indore |   10000  |
++----+----------+-----+-----------+----------+
+ The delete query deletes the record data of customers whose age = 25. The Rollback command, rolls back those changes on the Customer table. Example for Savepoint Savepoint is a point in a transaction when you can roll the transaction back to a certain point without rolling back the entire transaction. Let us consider the same Customer table as input. Id Name Age Address Salary 1 Ramesh 32 Ahmedabad 2000.00 2 Karun 25 Delhi 1500.00 3 Kaushik 23 Kota 2000.00 4 Chaitanya 25 Mumbai 6500.00 5 Harish 27 Bhopal 8500.00 6 Kamesh 22 MP 1500.00 7 Murali 24 Indore 10000.00 Let us consider in this example, you plan to delete the three different records from the Customers table. You want to create a Savepoint before each delete, so that you can roll back to any Savepoint at any time to return the appropriate data to its original state. Here is the series of operations. 
+SAVEPOINT SP1;
+DELETE FROM CUSTOMERS WHERE ID = 1;
+SAVEPOINT SP2;
+DELETE FROM CUSTOMERS WHERE ID = 2;
+SAVEPOINT SP3;
+DELETE FROM CUSTOMERS WHERE ID = 3;
+ Now, you have created three Savepoint and deleted three records. In this situation, if you want to roll back the records having Id 2 and 3 then use the following Rollback command. 
+ROLLBACK TO SP2;
+ Notice that only the first deletion took place since you rolled back to SP2. Use the following query to display all the records of the customers. 
+Select * from Customer;
+ After execution of the above query, you will receive the following output. 
++----+----------+-----+-----------+----------+
+| ID |   NAME   | AGE |   ADDRESS |  SALARY  |
++----+----------+-----+-----------+----------+
+|  2 |   Karun  |  25 |  Delhi    |   1500   |
+|  3 |  Kaushik |  23 |  Kota     |   2000   |
+|  4 | Chaitanya|  25 |  Mumbai   |   6500   |
+|  5 |  Harish  |  27 |  Bhopal   |   8500   |
+|  6 |  Kamesh  |  22 |  MP       |   4500   |
+|  7 |  Murali  |  24 |  Indore   |  10000   |
++----+----------+-----+-----------+----------+
+ Release Savepoint We can release the Savepoint using the RELEASE command. Following is the generic syntax. 
+RELEASE SAVEPOINT SAVEPOINT_NAME;

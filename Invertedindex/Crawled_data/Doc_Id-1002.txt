@@ -1,0 +1,9 @@
+XML-RPC - Summary
+
+https://www.tutorialspoint.com/xml-rpc/xml_rpc_summary.htm
+
+XML-RPC, tutorial, basic, advanced, elements, data model, requests, responses, fault, examples, summary.
+
+August-15-2017-02:34:19
+
+In this tutorial, you have learnt what is XML-RPC and why do we need XML-RPC. We have discussed about its data model, as well as the request and response message format to be exchanged between the client and the server. We have given one example to demonstrate how XML-RPC client and server work to exchange information. XML-RPC is a very simple concept with a limited set of capabilities. Those limitations are in many ways the most attractive feature of XML-RPC, as they substantially reduce the difficulty of implementing the protocol and testing its interoperability. While XML-RPC is simple, the creative application of simple tools can create sophisticated and powerful architectures. In cases where a wide variety of different systems need to communicate, XML-RPC may be the most appropriate lowest common denominator. What's Next? The next step is to learn WSDL and SOAP. WSDL WSDL is an XML-based language for describing Web services and how to access them. WSDL describes a web service, along with the message format and protocol details for the Web service. If you want to learn more about WSDL, please go through our WSDL tutorial. SOAP SOAP is a simple XML-based protocol that allows applications to exchange information over HTTP. If you want to learn more about SOAP, please go through our SOAP tutorial.

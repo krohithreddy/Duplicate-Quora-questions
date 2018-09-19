@@ -1,0 +1,17 @@
+Neo4j - Optional Match Clause
+
+https://www.tutorialspoint.com/neo4j/neo4j_optional_match_clause.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+The OPTIONAL MATCH clause is used to search for the pattern described in it, while using nulls for missing parts of the pattern. OPTIONAL MATCH is similar to the match clause, the only difference being it returns null as a result of the missing parts of the pattern. Syntax Following is the syntax of the OPTIONAL MATCH with relationship. 
+MATCH (node:label {properties. . . . . . . . . . . . . .}) 
+OPTIONAL MATCH (node)-->(x) 
+RETURN x
+ Example Following is a sample Cypher Query which tries to retrieve the relations from the node ICCT2013. Since there are no such nodes, it returns null. 
+MATCH (a:Tornament {name: "ICC Champions Trophy 2013"}) 
+OPTIONAL MATCH (a)-->(x) 
+RETURN x 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Here you can observe that since there are no matches for the required pattern, Neo4j returned null.

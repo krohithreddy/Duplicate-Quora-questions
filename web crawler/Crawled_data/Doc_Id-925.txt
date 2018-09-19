@@ -1,0 +1,24 @@
+XML DOM - Model
+
+https://www.tutorialspoint.com/dom/xml_dom_model.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+Now that we know what DOM means, let's see what a DOM structure is. A DOM document is a collection of nodes or pieces of information, organized in a hierarchy. Some types of nodes may have child nodes of various types and others are leaf nodes that cannot have anything under them in the document structure. Following is a list of the node types, with a list of node types that they may have as children − Document − Element (maximum of one), ProcessingInstruction, Comment, DocumentType (maximum of one) DocumentFragment − Element, ProcessingInstruction, Comment, Text, CDATASection, EntityReference EntityReference − Element, ProcessingInstruction, Comment, Text, CDATASection, EntityReference Element − Element, Text, Comment, ProcessingInstruction, CDATASection, EntityReference Attr − Text, EntityReference ProcessingInstruction − No children Comment − No children Text − No children CDATASection − No children Entity − Element, ProcessingInstruction, Comment, Text, CDATASection, EntityReference Notation − No children Example Consider the DOM representation of the following XML document node.xml. 
+<?xml version = "1.0"?>
+<Company>
+   <Employee category = "technical">
+      <FirstName>Tanmay</FirstName>
+      <LastName>Patil</LastName>
+      <ContactNo>1234567890</ContactNo>
+   </Employee>
+   
+   <Employee category = "non-technical">
+      <FirstName>Taniya</FirstName>
+      <LastName>Mishra</LastName>
+      <ContactNo>1234667898</ContactNo>
+   </Employee>
+</Company>
+ The Document Object Model of the above XML document would be as follows − From the above flowchart, we can infer − Node object can have only one parent node object. This occupies the position above all the nodes. Here it is Company. The parent node can have multiple nodes called the child nodes. These child nodes can have additional nodes called the attribute nodes. In the above example, we have two attribute nodes Technical and Non-technical. The attribute node is not actually a child of the element node, but is still associated with it. These child nodes in turn can have multiple child nodes. The text within the nodes is called the text node. The node objects at the same level are called as siblings. The DOM identifies − the objects to represent the interface and manipulate the document. the relationship among the objects and interfaces.

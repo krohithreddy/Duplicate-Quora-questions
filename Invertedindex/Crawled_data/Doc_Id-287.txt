@@ -1,0 +1,45 @@
+MySQL - Clone Tables
+
+https://www.tutorialspoint.com/mysql/mysql-clone-tables.htm
+
+Learning, MySQL, Programming, Database, Clauses, Commands, Functions, Clone Tables, Queries, Simple, Steps, Basic, Advanced, Concepts.
+
+August-24-2017-06:23:26
+
+There may be a situation when you need an exact copy of a table and CREATE TABLE ... SELECT doesn't suit your purposes because the copy must include the same indexes, default values and so forth. You can handle this situation by following the steps given below − Use SHOW CREATE TABLE to get a CREATE TABLE statement that specifies the source table's structure, indexes and all. Modify the statement to change the table name to that of the clone table and execute the statement. This way, you will have the exact clone table. Optionally, if you need the table contents copied as well, issue an INSERT INTO ... SELECT statement, too. Example Try out the following example to create a clone table for tutorials_tbl. Step 1 − Get the complete structure about the table. 
+mysql> SHOW CREATE TABLE tutorials_tbl \G;
+*************************** 1. row ***************************
+      Table: tutorials_tbl
+Create Table: CREATE TABLE `tutorials_tbl` (
+   `tutorial_id` int(11) NOT NULL auto_increment,
+   `tutorial_title` varchar(100) NOT NULL default '',
+   `tutorial_author` varchar(40) NOT NULL default '',
+   `submission_date` date default NULL,
+   PRIMARY KEY  (`tutorial_id`),
+   UNIQUE KEY `AUTHOR_INDEX` (`tutorial_author`)
+) TYPE = MyISAM
+1 row in set (0.00 sec)
+
+ERROR:
+No query specified
+ Step 2 − Rename this table and create another table. 
+mysql> CREATE TABLE clone_tbl (
+   -> tutorial_id int(11) NOT NULL auto_increment,
+   -> tutorial_title varchar(100) NOT NULL default '',
+   -> tutorial_author varchar(40) NOT NULL default '',
+   -> submission_date date default NULL,
+   -> PRIMARY KEY  (tutorial_id),
+   -> UNIQUE KEY AUTHOR_INDEX (tutorial_author)
+-> ) TYPE = MyISAM;
+Query OK, 0 rows affected (1.80 sec)
+ Step 3 − After executing step 2, you will create a clone table in your database. If you want to copy data from old table then you can do it by using INSERT INTO... SELECT statement. 
+mysql> INSERT INTO clone_tbl (tutorial_id,
+   ->                        tutorial_title,
+   ->                        tutorial_author,
+   ->                        submission_date)
+   -> SELECT tutorial_id,tutorial_title,
+   ->        tutorial_author,submission_date
+   -> FROM tutorials_tbl;
+Query OK, 3 rows affected (0.07 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+ Finally, you will have an exact clone table as you wanted to have.

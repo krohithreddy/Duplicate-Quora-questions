@@ -1,0 +1,70 @@
+HSQLDB - Select Query
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_select_query.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+The SELECT command is used to fetch the record data from HSQLDB database. Here, you need to mention the required fields list in the Select statement. Syntax Here is the generic syntax for Select query. 
+SELECT field1, field2,...fieldN table_name1, table_name2...
+[WHERE Clause]
+[OFFSET M ][LIMIT N]
+ You can fetch one or more fields in a single SELECT command. You can specify star (*) in place of fields. In this case, SELECT will return all the fields. You can specify any condition using WHERE clause. You can specify an offset using OFFSET from where SELECT will start returning records. By default, offset is zero. You can limit the number of returns using LIMIT attribute. Example Here is an example that fetches id, title, and author fields of all records from tutorials_tbl table. We can achieve this by using the SELECT statement. Following is the query for the example. 
+SELECT id, title, author FROM tutorials_tbl
+ After execution of the above query, you will receive the following output. 
++------+----------------+-----------------+
+|  id  |      title     |    author       |
++------+----------------+-----------------+
+| 100  |     Learn PHP  |    John Poul    |
+| 101  |     Learn C    |    Yaswanth     |
+| 102  |   Learn MySQL  |     Abdul S     |
+| 103  |   Learn Excell |   Bavya kanna   |
+| 104  |   Learn JDB    |    Ajith kumar  |
+| 105  |   Learn Junit  |   Sathya Murthi |
++------+----------------+-----------------+
+ HSQLDB – JDBC Program Here is the JDBC program that will fetch id, title, and author fields of all records from tutorials_tbl table. Save the following code into the SelectQuery.java file. 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class SelectQuery {
+   
+   public static void main(String[] args) {
+      Connection con = null;
+      Statement stmt = null;
+      ResultSet result = null;
+      
+      try {
+         Class.forName("org.hsqldb.jdbc.JDBCDriver");
+         con = DriverManager.getConnection(
+            "jdbc:hsqldb:hsql://localhost/testdb", "SA", "");
+         stmt = con.createStatement();
+         result = stmt.executeQuery(
+            "SELECT id, title, author FROM tutorials_tbl");
+         
+         while(result.next()){
+            System.out.println(result.getInt("id")+" | "+
+               result.getString("title")+" | "+
+               result.getString("author"));
+         }
+      } catch (Exception e) {
+         e.printStackTrace(System.out);
+      }
+   }
+}
+ You can start the database using the following command. 
+\>cd C:\hsqldb-2.3.4\hsqldb
+hsqldb>java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0
+file:hsqldb/demodb --dbname.0 testdb
+ Compile and execute the above code using the following command. 
+\>javac SelectQuery.java
+\>java SelectQuery
+ After execution of the above command, you will receive the following output − 
+100 | Learn PHP | John Poul
+101 | Learn C | Yaswanth
+102 | Learn MySQL | Abdul S
+103 | Learn Excell | Bavya Kanna
+104 | Learn JDB | Ajith kumar
+105 | Learn Junit | Sathya Murthi

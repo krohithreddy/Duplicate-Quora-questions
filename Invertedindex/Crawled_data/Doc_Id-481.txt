@@ -1,0 +1,19 @@
+OrientDB - Upgrading
+
+https://www.tutorialspoint.com/orientdb/orientdb_upgrading.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+While upgrading, you have to consider the version number and the format. There are three types of formats - MAJOR, MINOR, PATCH. MAJOR version entails incompatible API changes. MINOR version entails functionality in a backward-compatible manner. PTCH version entails backward-compatible bug fixes. To synchronize between minor and major versions, you may need to export and import the databases. Sometimes you many need to migrate the database from LOCAL to PLOCAL and need to migrate the graph to RidBag. Migrate from LOCAL Storage Engine to PLOCAL Starting from version 1.5.x OrientDB comes with a brand new storage engine: PLOCAL (Paginated LOCAL). It's persistent like the LOCAL, but stores information in a different way. Following points show the comparison between PLOCAL and LOCAL − In PLOCAL Records are stored in cluster files, while with LOCAL was split between cluster and data-segments. PLOCAL is more durable than LOCAL because of the append-on-write mode. PLOCAL has minor contention locks on writes, which means more concurrency. PLOCAL doesn't use Memory Mapping techniques (MMap) so the behavior is more "predictable". To migrate your LOCAL storage to the new PLOCAL, you need to export and re-import the database using PLOCAL as storage engine. Following is the procedure. Step 1 − Open a new shell (Linux/Mac) or a Command Prompt (Windows). Step 2 − Export the database using the console. Follow the given command to export database demo into demo.json.gzip file. 
+$ bin/console.sh (or bin/console.bat under Windows) 
+orientdb> CONNECT DATABASE local:/temp/demo admin admin 
+orientdb> EXPORT DATABASE /temp/demo.json.gzip 
+orientdb> DISCONNECT
+ Step 3 − On a local filesystem, create a new database using the "plocal" engine − 
+orientdb> CREATE DATABASE plocal:/temp/newdb admin admin plocal graph 
+ Step 4 − Import the old database to the new one. 
+orientdb> IMPORT DATABASE /temp/demo.json.gzip -preserveClusterIDs=true 
+orientdb> QUIT
+ If you access the database in the same JVM, remember to change the URL from "local:" to "plocal:" Migrate Graph to RidBag As of OrientDB 1.7, the RidBag is a default collection that manages adjacency relations in graphs. While the older database managed by an MVRB-Tree are fully compatible, you can update your database to the more recent format. You can upgrade your graph via console or using the ORidBagMigration class. Connect to database CONNECT plocal:databases/<graphdb-name> Run upgrade graph command

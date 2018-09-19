@@ -1,0 +1,41 @@
+H2 Database - Create
+
+https://www.tutorialspoint.com/h2_database/h2_database_create.htm
+
+H2 Database, Tutorial, Learning, Introduction, Installation, Data Manipulation Select, Insert, Update, Delete, Backup, Call, Explain, Merge, Show, Data Definition Create, Alter, Drop, Truncate, Commit, Grant, Savepoint, Rollback, JDBC Connection.
+
+August-15-2017-02:34:24
+
+CREATE is a generic SQL command used to create Tables, Schemas, Sequences, Views, and Users in H2 Database server. Create Table Create Table is a command used to create a user-defined table in the current database. Syntax Following is the generic syntax for the Create Table command. 
+CREATE [ CACHED | MEMORY ] [ TEMP | [ GLOBAL | LOCAL ] TEMPORARY ] 
+TABLE [ IF NOT EXISTS ] name 
+[ ( { columnDefinition | constraint } [,...] ) ] 
+[ ENGINE tableEngineName [ WITH tableEngineParamName [,...] ] ] 
+[ NOT PERSISTENT ] [ TRANSACTIONAL ] 
+[ AS select ] 
+ By using the generic syntax of the Create Table command, we can create different types of tables such as cached tables, memory tables, and temporary tables. Following is the list to describe different clauses from the given syntax. CACHED − The cached tables are the default type for regular tables. This means the number of rows is not limited by the main memory. MEMORY − The memory tables are the default type for temporary tables. This means the memory tables should not get too large and the index data is kept in the main memory. TEMPORARY − Temporary tables are deleted while closing or opening a database. Basically, temporary tables are of two types − GLOBAL type − Accessible by all connections. LOCAL type − Accessible by the current connection. The default type for temporary tables is global type. Indexes of temporary tables are kept in the main memory, unless the temporary table is created using CREATE CACHED TABLE. ENGINE − The ENGINE option is only required when custom table implementations are used. NOT PERSISTENT − It is a modifier to keep the complete table data in-memory and all rows are lost when the database is closed. TRANSACTIONAL − It is a keyword that commits an open transaction and this command supports only temporary tables. Example In this example, let us create a table named tutorials_tbl using the following given data. Sr.No Column Name Data Type 1 ID Int 2 Title Varchar(50) 3 Author Varchar(20) 4 Submission_date Date The following query is used to create a table tutorials_tbl along with the given column data. 
+CREATE TABLE tutorials_tbl ( 
+   id INT NOT NULL, 
+   title VARCHAR(50) NOT NULL, 
+   author VARCHAR(20) NOT NULL, 
+   submission_date DATE, 
+);
+ The above query produces the following output. 
+(0) rows effected 
+ Create Schema Create Schema is a command used to create a user-dependent schema under a particular authorization (under the currently registered user). Syntax Following is the generic syntax of the Create Schema command. 
+CREATE SCHEMA [ IF NOT EXISTS ] name [ AUTHORIZATION ownerUserName ] 
+ In the above generic syntax, AUTHORIZATION is a keyword used to provide the respective user name. This command is optional which means if we are not providing the user name, then it will consider the current user. The user that executes the command must have admin rights, as well as the owner. This command commits an open transaction in this connection. Example In this example, let us create a schema named test_schema under SA user, using the following command. 
+CREATE SCHEMA test_schema AUTHORIZATION sa; 
+ The above command produces the following output. 
+(0) rows effected 
+ Create Sequence Sequence is concept which is used to generate a number by following a sequence for id or any random column values. Syntax Following is the generic syntax of the create sequence command. 
+CREATE SEQUENCE [ IF NOT EXISTS ] newSequenceName [ START WITH long ] 
+[ INCREMENT BY long ] 
+[ MINVALUE long | NOMINVALUE | NO MINVALUE ] 
+[ MAXVALUE long | NOMAXVALUE | NO MAXVALUE ] 
+[ CYCLE long | NOCYCLE | NO CYCLE ] 
+[ CACHE long | NOCACHE | NO CACHE ] 
+ This generic syntax is used to create a sequence. The datatype of a sequence is BIGINT. In this the sequence, values are never re-used, even when the transaction is roll backed. Example In this example, let us create a sequence named SEQ_ID, using the following query. 
+CREATE SEQUENCE SEQ_ID; 
+ The above query produces the following output. 
+(0) rows effected

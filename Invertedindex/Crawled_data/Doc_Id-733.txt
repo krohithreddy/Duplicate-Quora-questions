@@ -1,0 +1,490 @@
+Manipulating Data Questions
+
+https://www.tutorialspoint.com/sql_certificate/manipulating_data_questions.htm
+
+Oracle, Database 11g, Sun, Certificate, SQL, Fundamentals, Free, Preparation, Mock, Exams, Technical, certification, Technical, Projects.
+
+August-15-2017-02:34:06
+
+1.What does ACID mean with respect to relational database? Accuracy, Consistency, Isolation, Database Accuracy, Concurrency, Isolation, Durability Atomicity, Consistency, Isolation, Durability Atomicity, Concurrency, Isolation, Durability Answer: C. All Oracle transactions comply with the basic properties of a database transaction, known as ACID properties. Atomicity states that all tasks of a transaction are performed or none of them are. There are no partial transactions. Consistency implies the transaction takes the database from one consistent state to another consistent state. Isolation means the effect of a transaction is not visible to other transactions until the transaction is committed. Durability means that changes made by committed transactions are permanent. After a transaction completes, the database ensures through its recovery mechanisms that changes from the transaction are not lost. 2. What does the word DML stands for in Oracle SQL? Durability Management Language Database Management Language Database Manipulation Language None of the above Answer: C. DML stands for Data Manipulation Language. 3. Which of the following are DML commands in Oracle Database? SELECT GROUP BY INTERSECT INSERT Answer: A, D. On strict grounds, SELECT is a DML command as it is one of the mandatory clauses for manipulation of data present in tables. 4.Which of the following DML commands can be considered to be a hybrid of INSERT and UPDATE in a single statement? INTERSECT INSERT SELECT MERGE Answer: D. MERGE can perform INSERT and UPDATE actions in a single statement in Oracle. 5. What all operations can MERGE statement perform in SQL? INSERT DELETE GROUP BY None of the above Answer: A, B. In some conditions MERGE can perform the DELETE operation too, along with INSERT and UPDATE. 6.Which of following commands is a DDL (Data Definition Language) command but is often considered along with DML commands? DELETE INSERT TRUNCATE None of the above Answer: C. TRUNCATE is a DDL command. It removes the records from the table without any condition. It is not the part of any ongoing transaction and an uncommitted transaction in the session is committed after TRUNCATE is executed. 7.Which of the following commands manipulate data basically? MINUS UPDATE TRUNCATE All of the above Answer: B, C. UPDATE is a DML statement to modify a column value in a table. TRUNCATE manipulates the data by removing them unconditionally from a table. 8. Which of the following commands is used to populate table rows with data? DELETE INSERT SELECT UPDATE Answer: B. INSERT command is used to insert rows in a table. 9. What is true about the INSERT statement? (Choose the most appropriate answer) It can insert data in one row of one table at a time It can insert data in many rows of one table at a time It can insert data in many rows of many tables at a time All of the above Answer: C. The INSERT statement is capable of inserting a row or set of rows in a single table at a time. 10.What is true about the insertion of rows in tables? The rows can be inserted randomly Any number of rows can be inserted in a table without any restrictions Generally the rows are inserted in a table based on certain rules known as constraints All of the above Answer: C. Constraints are business rules imposed on the columns so as to ensure the behavior of the data coming in the column. These constraints are validated for the data during the INSERT process. 11. What is true about the INSERT statement in Oracle SQL? (Choose the most appropriate answer) An INSERT statement can override any constraint put on the table An INSERT statement cannot be used on a table if a constraint is already placed on the table An INSERT statement can be used on a table only if a constraint is already placed on the table An INSERT statement can never insert a row that violates a constraint. Answer: D. Oracle raises exception if any of the data contained in the insert statement violates the constraint. Consider the following data set from the EMPLOYEES table along with its structure and answer the questions 12, 13 and 14: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER (6)
+ FIRST_NAME			  VARCHAR2 (20)
+ LAST_NAME		 NOT NULL VARCHAR2 (25)
+ EMAIL			 NOT NULL VARCHAR2 (25)
+ PHONE_NUMBER			  VARCHAR2 (20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2 (10)
+ SALARY 			  NUMBER (8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+EMPLOYEE_ID FIRST_NAME   JOB_ID 
+------------------- ------------------ --------
+5100 	             BRUCE             CLERK
+5101 	             JESSICA           SALESMAN
+5102 	             DEBBY             SALESMAN
+ 12. Examine the structure of the EMPLOYEES table. You issue the following command: INSERT INTO EMPLOYEES (employee_id  , first_name , job_id) VALUES (5100, 'BRUCE', 'CLERK');
+ Assuming that there is a duplicate value check constraint on the EMPLOYEE_ID column, what will be the outcome of the above statement? It will insert another row with 5100 BRUCE CLERK values It will insert another row with 51002 BRUCE CLERK values It will throw a 'Constraint violated' ORA error None of the above Answer: C. As the row with values "5100, BRUCE, CLERK" already exists in the table, the insert statement with same data set is not possible. 13.You issue the following command to the data set shown above: INSERT INTO EMPLOYEES (employee_id  , first_name , job_id) VALUES (51003,'BRUCE','CLERK');
+ What will be the output of this statement? It will insert a new row with 51003 BRUCE CLERK values It will throw an ORA error as there cannot be another BRUCE who is a CLERK It will throw an 'Constraint violated' ORA error None of the above Answer: A. As there is no constraint on the columns FIRST_NAME and job_id, the INSERT will work without any error 14. You issue the following command to the data set shown above: INSERT INTO EMPLOYEES (employee_id  , first_name , job_id ) VALUES (51003,'BRUCE', NULL);
+ What will be the output of this statement? It will insert a new row with 51003 BRUCE CLERK values It will throw an ORA error as there cannot be another BRUCE who is a CLERK It will throw an 'Constraint violated' ORA error It will insert a new row with 51003 BRUCE NULL values Answer: D. As there is no NOT NULL constraint on the columns FIRST_NAME and JOB_ID , the NULL value will get inserted. 15. What among the following can be said regarding inserting of rows in tables? The user cannot interactively insert rows A query can be written with substitution variables for an interactive insertion of rows by the users When a user is prompted for inserting rows, the insert doesn't work and it throws an ORA error None of the above Answer: B. An INSERT statement can make use of substitution variable to prompt the user to key in values during the runtime. It provides an interactive way of inserting data into tables 16.Which of the following can be used to insert rows in tables? SELECT INSERT Sub-queries All of the above Answer: D. INSERT statement can make use of explicit INSERT, INSERT-SELECT or a sub-query method to insert data into tables. 17. Which among the following is a common technique for inserting rows into a table? (Choose the most sensible and appropriate answer) Using SELECT clause Manually typing each value into the INSERT clause Using SET operators None of the above Answer: A. Using the SELECT clause is the most common technique for inserting rows into tables. It reduces the effort of manually keying in values for each column. 18.Which of the following commands is used to change the rows that already exist in a table? INSERT UNION UPDATE SELECT Answer: C. UPDATE is a DML statement which is used to modify the column values in a table. 19.What is true about the UPDATE command? It can update only one row at a time It can update only 100 rows at a time It can update unlimited rows at a time in bulk None of the above Answer: C. An UPDATE can update multiple rows in one or more rows at a time based on the WHERE clause conditions. 20.Which of the following clauses decides how many rows are to be updated? SELECT WHERE FROM All of the above Answer: B. UPDATE statement makes use of WHERE clause to capture the set of rows which needs to be updated. 21.What among the following is true about the UPDATE statement? (Choose the most appropriate answer) An UPDATE can update rows from only one table An UPDATE can update rows from multiple tables A single UPDATE command cannot affect rows in multiple tables None of the above Answer: A, C. An UPDATE statement affects rows of only one table and not multiple tables. Consider the following data set from the EMPLOYEES table and its structure. Answer questions 22 to 24 that follow. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+EMPLOYEE_ID FIRST_NAME   JOB_ID 
+------------------- ------------------ --------
+5100 	             BRUCE             CLERK
+5101 	             JESSICA           SALESMAN
+5102 	             DEBBY             SALESMAN
+ 22. You need to change the JOB_ID for Bruce (Employee Id 7389) to 'ACCOUNTANT'. Which of the following statements will you fire? UPDATE employees
+SET job_id  = 'ACCOUNTANT'
+WHERE employee_id   = 7389; INSERT INTO EMPLOYEES (employee_id  , first_name , job_id ) VALUES (5100,'BRUCE', 'ACCOUNTANT'); UPDATE employees
+SET job_id  = 'ACCOUNTANT'
+WHERE job_id  = 'CLERK'; UPDATE employees
+SET job_id  = 'ACCOUNTANT'; Answer: A. Option B fails because it modifies the job code of all clerks to ACCOUNTANT. Option C is wrong because it update job code to ACCOUNTANT for all the employees in the table. Answer the following questions 23 and 24 based on the below actions - You issue the following query to the EMPLOYEES table with the data set as shown above. UPDATE employees
+Set job_id  = NULL
+Where employee_id   = 51000; The data set will be as shown below: (Assume that there is a duplicate value constraint on the EMPLOYEE_ID column) 
+EMPLOYEE_ID FIRST_NAME   JOB_ID 
+------------------- ------------------ --------
+5100 	             BRUCE             
+5101 	             JESSICA           SALESMAN
+5102 	             DEBBY             SALESMAN
+ 23. Suppose you fire an UPDATE statement to update Bruce's JOB_ID to 'SALESMAN' (with respect to the data set shown above). What will be the outcome of the query? Bruce's job code will still be NULL Bruce's job code will be modified to 'SALESMAN' ORA error No action Answer: B. The UPDATE will add the new value to the NULL value changing the NULL to the new value 24. You issue an UPDATE statement to update the employee id 7389 to 7900. You query the employee by its id '7389' before committing the transaction. What will be the outcome? Update will work successfully while select will show 7389. Update will work successfully while select will show no records. Constraint on EMPLOYEE_ID will not allow it to be updated It will update successfully but all the values for the EMPLOYEE_ID 7389 will become NULL. Answer: B. A query in a session is consistent with the ongoing transactions. If the same query would have been executed in a different session, it would have shown the employee record with id 7389 because the active transaction in the first session is not yet committed. 25. What among the following is a typical use of an UPDATE statement? (Select the most appropriate answer) To retrieve a row and update one of more columns of that row To modify all the rows for some columns To modify all the rows for all the columns of a table None of the above Answer: A. Although, the UPDATE statement can modify all column values in all rows, but typically it is used to select a row and update one or more columns. 26. Which of the following practices appropriately describe for selecting which row set to update using the UPDATE statement? If some rows are to be updated, PRIMARY KEY constraint can be used If all rows are to be updated, WHERE clause can be considered To update a set of rows use WHERE, to update all rows of a table, put a PRIMARY KEY constraint on the table None of the above Answer: C. 27. Which of the following columns in a table are not usually updated? LONG type columns in the table LOB columns in the table A primary key column which also serves as foreign key reference in another table All of the above Answer: C. As a common practice, the primary key columns which serve as foreign key reference in other tables, should not be updated. Though they can be updated by deferring the constraints which is usually not recommended. Consider the following data set and structure of the EMPLOYEES table and answer the questions 28 and 29 that follow: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+EMPLOYEE_ID FIRST_NAME   JOB_ID 
+------------------- ------------------ --------
+5100 	             BRUCE             NULL
+5101 	             JESSICA           SALESMAN
+5102 	             DEBBY             SALESMAN
+ 28. You issue an UPDATE statement as follows: UPDATE employees 
+SET job_id  = NULL;
+ What will be the outcome of the above statement? The first row of the data set will get updated to NULL The 3rd column of the first row will get updated to NULL The 3rd column of all the rows will get updated to NULL And ORA error will be thrown Answer: C. An UPDATE statement without a WHERE clause will update all the rows of the table. 29. You issue an UPDATE statement as follows: UPDATE employees 
+SET employee_id   = NULL;
+WHERE job_id  = 'CLERK';
+ What will be the outcome of the above statement? (Here the column EMPLOYEE_ID is marked as mandatory by putting a constraint) The first column of the data set will get updated to NULL The 3rd column of the first row will get updated to NULL The 3rd column of all the rows will get updated to NULL And ORA error will be thrown Answer: D. The constraints on the column must be obeyed while updating its value. In the given UPDATE statement, error will be thrown because the EMPLOYEE_ID column is a primary key in the EMPLOYEES table which means it cannot be NULL. 30. Which of the following commands can be used to remove existing records from a table? UPDATE INSERT MINUS DELETE Answer: D. DELETE is used to remove the records from the table which can be optionally based upon a condition. Being a DML statement, it is the part of a transaction. 31. What among the following is true about the DELETE statement? The DELETE statement has to be accompanied by the WHERE clause It is not mandatory to write a WHERE clause with the DELETE statement DELETE can remove data from multiple tables at a time None of the above Answer: B. The WHERE clause predicate is optional in DELETE statement. If the WHERE clause is omitted, all the rows of the table will be deleted. 32.What among the following happens when we issue a DELETE statement on a table? (Choose the most appropriate answer) A prompt pops up asking the user whether he/she is sure of deleting the rows requested The rows obeying the condition given in the DELETE statement are removed immediately The requested rows are removed immediately without any prompt. None of the above Answer: C. As a part of the active or a new transaction, the rows in the table will be deleted. 33.Consider the following data set from the EMPLOYEES table and its structure: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+ EMPLOYEE_ID FIRST_NAME   JOB_ID 
+------------------- ------------------ --------
+5100 	             BRUCE             
+5101 	             JESSICA           SALESMAN
+5102 	             DEBBY             SALESMAN
+ You need to delete the data from the JOB_ID column in the row with employee_id 51001. Which of the following queries will be correct? UPDATE employees
+SET job_id  = NULL
+WHERE employee_id   = 51001; DELETE job_id  FROM employees
+WHERE employee_id   = 51001; DELETE FROM employees; None of the above Answer: D. You cannot delete a particular column value for a particular row with the DELETE statement. The entire row gets deleted based on the conditions given. Unwanted values in a column can be updated to NULL. Option 'A' is near but not correct in the context of the question. 34. What is the difference between the UPSERT and MERGE statements? There is no difference UPSERT is the latest term adopted for MERGE statement, which has turned obsolete UPSERT can perform delete operation which MERGE cannot MERGE does INSERT, UPDATE and DELETE, UPSERT does only UPDATE and INSERT Answer: D. UPSERT is an obsolete statement and MERGE took over with new capabilities. 35. What is the difference between the MERGE command and the commands INSERT, UPDATE and DELETE? MERGE statement consumes more time than each operation (INSERT, UPDATE, DELETE) done separately MERGE is obsolete after Oracle 10g MERGE can perform all three operations on a table while INSERT, UPDATE and DELETE perform one operation at a time. None of the above. Answer: C. The MERGE statement can embed all three operations on a table in a single statement while INSERT, UPDATE and DELETE perform one operation at a time. 36. Which of the following objects can be the data source in a MERGE statement? A table only A sub-query only A table or a sub-query Both A or B Answer: C. MERGE works well with a table or a subquery. 37. What among the following is a TRUNCATE statement equivalent to? (Choose the most suitable answer) To a DELETE statement To an UPDATE statement A DELETE statement without a WHERE clause None of the above Answer: C. TRUNCATE deletes all the rows in one command. 38.Which of the following situations indicate that a DML operation has taken place? When new rows are added to a table When two queries are combined When a table is truncated None of the above Answer: A. When existing rows in a table are inserted, modified or removed from a table, it is done through a DML statement. 39.Which of the following best defines a transaction? A transaction consists of DDL statements on the database schema A transaction consists of COMMIT or ROLLBACK in a database session A transaction consists of either a collection of DML statements or a DDL or DCL or TCL statement to form a logical unit of work in a database session A transaction consists of collection of DML and DDL statements in different sessions of the database Answer: C. A database transaction consists of one or more DML statements to constitute one consistent change in data, or a DDL statement or a DCL command (GRANT or REVOKE). It starts with the first DML statement and ends with a DCL or DDL or TCL (COMMIT or ROLLBACK) command. Note that DDL and DCL commands hold auto commit feature. 40. What does a collection of DML statements that form a logical unit work known as? ACID property UNION UNION ALL Transaction Answer: D. 41.What happens when a DML statement in an active transaction encounters an error on execution? The complete transactions is rolled back The DMLs in the transaction are mutually exclusive and hence can continue their execution The other DMLs in the transactions are interrupted and wait until the error is resolved None of the above Answer: A. If any of the DML statement in an active transaction encounters error, the whole transaction ends up in a rollback. 42.What is true about the keyword VALUES in INSERT statements? VALUES can add multiple rows at a time during the INSERT VALUES can add only 100 rows at a time during the INSERT VALUES is mandatory to be used if we use the keyword INSERT VALUES add only one row at a time Answer: D. The VALUES keyword is used only when the column values are explicitly specified in the INSERT statement. Consider the following statement and the table structure. Answer the questions 43 to 45 that follow: SQL> DESC departments
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ DEPARTMENT_ID		 NOT NULL NUMBER(4)
+ DEPARTMENT_NAME	 NOT NULL VARCHAR2(30)
+ MANAGER_ID			  NUMBER(6)
+ LOCATION_ID			  NUMBER(4) 
+INSERT INTO departments (department_id , department_name , manager_id, location_id )
+VALUES (100, 'Human Resources', 121, 1000); 
+ 43. How many rows will be inserted by the above statement? 0 2 3 1 Answer: D. When the keyword VALUES is used, it inserts only one row at a time. 44. In which order the values will get inserted with respect to the above INSERT statement? Location_id , manager_id, department_name , department_id department_id , department_name , manager_id, location_id department_id , manager_id, department_name , location_id department_id , department_name , location_id , manager_id Answer: B. If the columns are mentioned in the INSERT clause, the VALUES keyword should contain values in the same order 45. Suppose the above given statement is modified as below: 
+INSERT INTO departments VALUES (100, 'Human Resources', 121, 1000); 
+ What will be the outcome of this modification? Assume that the DEPARTMENTS table has four columns namely, department_id ,DEPARTMENT_NAME ,MANAGER_ID and LOCATION_ID . It will insert values into all the columns of the departments table assuming that column values are provided in the same sequence as the column in the table It will throw an ORA error because column names are not explicitly mentioned It will throw an ORA error because VALUES clause is wrongly used in the INSERT None of the above Answer: A. Including the column names in the INSERT statement is optional provided the values must comply with the count and sequence of the columns in the table. 46. What will be the outcome of the below INSERT statement? (Consider the table structure) SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+INSERT INTO EMPLOYEES (employee_id , hire_date) VALUES (210,"21-JUN-2013"); 
+ It will insert only the employee_id and the hire date of the employee, leaving all other columns as blanks It will insert only the employee_id It will throw an ORA error None of the above Answer: C. The date literal formatting contains error. It should be enclosed within single quotation marks and not double quotation marks. 47.What will be the outcome of the below INSERT statement? (Consider the given table structure) SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) INSERT INTO EMPLOYEES (employee_id , first_name) VALUES (210,"Bryan"); It will insert only the employee_id and the first name of Bryan, leaving all other columns as blanks It will insert only the first name It will throw an ORA error None of the above Answer: C. The string literal formatting contains error. It should be enclosed within single quotation marks and not double quotation marks. 48. Suppose you need to insert the name O'Callaghan as the last name of the employees table. Which of the following queries will give you the required results? (Consider the given table structure) SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) INSERT INTO EMPLOYEES (employee_id , last_name) VALUES (210,'O'callahan'); INSERT INTO EMPLOYEES (employee_id , last_name) VALUES (210,'O"callahan'); INSERT INTO EMPLOYEES (employee_id , last_name) VALUES (210,'O' 'Callahan'); INSERT INTO EMPLOYEES (employee_id , last_name) VALUES (210,"O'callahan"); Answer: C. 49. What will be the outcome of the below INSERT statement? (Consider the given table structure) SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) INSERT INTO EMPLOYEES (employee_id , first_name) VALUES ("210",'Bryan'); 
+ It will throw a numeric value error It will insert only the employee_id and the first name of Bryan, leaving all other columns as NULL It will insert only the employee_id None of the above Answer: A. Number values should not be enclosed within quotes. 50. What will be the outcome of the below INSERT statement? (Consider the given table structure) SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+INSERT INTO departments VALUES (200,'Accounts', NULL, NULL); 
+ It will throw an ORA error It will execute successfully but with wrong values might get inserted in the columns It will execute successfully None of the above Answer: C. NULLs can be used in the VALUES clause to fill up the column values alternatively. 51. What will be the outcome of the below INSERT statement? (Assume there is a NOT NULL constraint on the department_id column and consider the table structure given) SQL> DESC departments
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ DEPARTMENT_ID		 NOT NULL NUMBER(4)
+ DEPARTMENT_NAME	 NOT NULL VARCHAR2(30)
+ MANAGER_ID			  NUMBER(6)
+ LOCATION_ID			  NUMBER(4) 
+INSERT INTO departments VALUES (NULL, 'Accounts', NULL); 
+ It will throw an ORA error It will execute successfully but with wrong results It will execute successfully but with correct results None of the above Answer: A. NULL values cannot be inserted into non null columns. 52. What will be the outcome of the below INSERT statement? (Assume there is a NOT NULL constraint on the department_id column and consider the given table structure) SQL> DESC departments
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ DEPARTMENT_ID		 NOT NULL NUMBER(4)
+ DEPARTMENT_NAME	 NOT NULL VARCHAR2(30)
+ MANAGER_ID			  NUMBER(6)
+ LOCATION_ID			  NUMBER(4) 
+INSERT INTO departments VALUES (200, 34, NULL); 
+ It will execute successfully but with wrong results It will throw an ORA error It will execute successfully but with correct results None of the above Answer: B. Data type of the value mismatches with the data type of the column in the table. 53. Which of the following commands is used to save the changed data in a table permanently? ROLLBACK COMMIT INSERT UPDATE Answer: B. The TCL command COMMIT is used to end the current active transaction in a session by making all the pending data changes permanent in the tables. 54. Which of the following commands allows undoing the changed data? ROLLBACK COMMIT INSERT UPDATE Answer: A. The TCL command ROLLBACK is used to end the current active transaction in a session by discarding all the pending data changes. 55. Which of the following commands allows enabling markers in an active transaction? ROLLBACK COMMIT SAVEPOINT None of the above Answer: C. SAVEPOINT marks a point in a transaction which divides the transaction into smaller sections. 56. Which of the following commands prevents other users from making changes to a table? ROLLBACK COMMIT LOCK TABLE SAVEPOINT Answer: C. 57. What is true about an INSERT statement which tries to insert values into a virtual column? (Choose the most appropriate answer) It cannot insert values in the Virtual column It can insert values It throws an ORA error All of the above Answer: A. A Virtual column is a column which is always auto generated based on the derivation expression defined in the column specification. Its value cannot be explicitly inserted by the user. 58.Which of the following commands allows the user to insert multiple rows with a single statement? INSERT INSERT ALL UNION ALL None of the above Answer: B. Bulk insert operations can be carried out using INSERT ALL. 59. Which of the following is the syntax for inserting rows through a sub-query? INSERT INTO tablename [{column_name,..}]
+subquery; INSERT INTO tablename  VALUES [{column_name,..}]
+subquery; Both A and B None of the above Answer: A. Consider the following exhibit of the EMPLOYEES table and answer the questions 60 to 63 that follow: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 60. Which of the following queries will execute successfully? UPDATE employees
+SET salary = salary + 1000
+WHERE to_char (hire_date, 'YYYY') > '2006'; UPDATE employees
+SET salary = salary + 1000
+WHERE to_date (hire_date, 'YYYY') > '2006'; UPDATE employees
+SET salary = salary + 1000
+WHERE hire_date > to_date (substr ('01-jan-200',8)); UPDATE employees
+SET salary = salary + 1000
+WHERE hire_date in (to_date ('JUN 01 11', to_date ('JUL 01  11')); Answer: A. 61.Due to structural reorganization in the organization, you are asked to update department IDs for all the employees to NULL before the final decision is made public. Only those records should be updated which have the JOB_ID as NULL. Which of the following queries will work? UPDATE employees
+SET department_id  = NULL
+Where job_id  = NULL; UPDATE employees
+SET department_id  = NULL
+Where job_id  = TO_NUMBER(NULL); UPDATE employees
+SET department_id  = NULL
+Where job_id  IS NULL; UPDATE employees
+SET department_id  = TO_NUMBER (' ', 9999)
+Where job_id  = TO_NUMBER(NULL); Answer: C. Use IS NULL operator to check column value for nullity. 62.You need to add a basic employee data into EMPLOYEES table. The basic data contains the last name as 'Bond' and department ID as 300. Which of the following statements will give the correct results? INSERT INTO employees (employee_id , last_name, department_id ) 
+(100,'Bond',
+(select department_id  from departments where department_id  = 300));  INSERT INTO employees (employee_id , last_name, department_id ) 
+VALUES (100,'Bond',
+(select department_id  from departments where department_id  = 300)); INSERT INTO employees (employee_id , last_name, department_id ) 
+VALUES ('100','Bond',300); None of the above Answer: B, C. Sub queries do work in INSERT statements provided they return a scalar value of data type matching or compatible to the column for which they are used. 63. You fire the following query: 
+DELETE FROM EMPLOYEES; 
+ Assuming that there are no active transactions on the EMPLOYEES table in any sessions, which of the following statements is true? It removes all the rows and structure of the table It removes all the rows which can be rolled back It removes all the rows permanently None of the above Answer: B. Being a DML statement, the data changes due to DELETE operation are made permanent only after COMMIT is issued in the session. 64.Consider the structure of the COUNTRY table as shown: SQL> desc countries
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ COUNTRY_ID		 NOT NULL CHAR(2)
+ COUNTRY_NAME			  VARCHAR2(40)
+ REGION_ID			  NUMBER You issue the following statements in a session. 
+INSERT INTO COUNTRIES (1, 'Whales')
+/
+INSERT INTO COUNTRIES (2, 'England')
+/
+SAVEPOINT A;
+UPDATE COUNTRIES
+SET country_id= 100 where country_id= 1
+/
+SAVEPOINT B; 
+DELETE FROM COUNTRIES where country_id= 2
+/
+COMMIT
+/
+DELETE FROM COUNTRIES where country_id= 100
+/
+ What will happen when a ROLLBACK TO SAVEPOINT command is issued for the user session? The rollback generates an error Only DELETE statements are rolled back No SQL statement is rolled back None of the above Answer: A, C. Since there are two savepoints - A and B, and the ROLLBACK command does specifies the actual savepoint mark, Oracle throws error. 65.If a user issues a DML command and exits the SQL Developer abruptly without a COMMIT or ROLLBACK, what will be the outcome? (Assume the session is not auto commit) Automatic COMMIT Automatic ROLLBACK Might be a COMMIT or a ROLLBACK to end the transaction None of the above Answer: B. When transaction is interrupted by a system failure, the entire transaction is automatically rolled back. 66. Which of the following commands / statements would end a transaction? COMMIT SELECT SAVEPOINT CREATE Answer: A, D. Apart from TCL commands i.e. COMMIT or ROLLBACK, the DDL commands and DCL commands possess auto commit feature. The active transaction will be committed if the DDL statement is executed in the same session. 67.When does a transaction complete? When a ROLLBACK is executed When a COMMIT is executed When TRUNCATE is executed All of the above Answer: D. Transaction completes if a TCL, DCL or a DDL command is executed in the session. 68. Examine the given table structures and consider the following query: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) SQL> DESC departments
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ DEPARTMENT_ID		 NOT NULL NUMBER(4)
+ DEPARTMENT_NAME	 NOT NULL VARCHAR2(30)
+ MANAGER_ID			  NUMBER(6)
+ LOCATION_ID			  NUMBER(4) 
+INSERT INTO EMPLOYEES (department_id ) VALUES
+(select department_id  FROM departments); 
+ What will be the outcome of the above query? The columns in the EMPLOYEES table and the departments table do not match The WHERE clause is mandatory to be used in a sub-query The VALUES keyword cannot be used with the INSERT clause when sub-queries are used None of the above Answer: C. Wrong usage of VALUES keyword. It must be used only when you have column data in hand, which has to be inserted in the table. 69.Examine the given table structure and consider the following query: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) SQL> desc job_history
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ START_DATE		 NOT NULL DATE
+ END_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ DEPARTMENT_ID			  NUMBER(4) 
+UPDATE (select employee_id , job_id  from employees)
+SET hire_date = '01-JAN-13'
+WHERE employee_id  = (select employee_id  FROM job_history); 
+ Which of the following is true regarding the given query? It would not execute as we cannot use two tables in a single update statement It would not execute as UPDATE cannot use a sub-query It would execute with the restrictions on the column specified It would not execute as sub-query is used in the WHERE clause Answer: C. 70.What happens when a transaction is committed? The changes made during the transaction are saved for a particular user session The changes made during the transaction are discarded If the transaction is a DDL, the commit doesn't work None of the above Answer: D. Committing a transaction saves the pending data changes permanently into the database. 71. Which of the following reasons will the best one on the usage of string? Using sub-queries Syntax errors Access permissions Constraint violations Answer: C, B, D. References to non-existing objects / columns, Space issues might be other reasons. 72. What happens when an INSERT statement tries to insert records in an old table? All the columns will get NULL values A new table with the same name would get created automatically and the values would get inserted INSERT cannot work and it throws an ORA error None of the above Answer: C. 73. A user named 'Jonathan Adams' is able to SELECT columns from the EMPLOYEES table but he is unable to insert records into EMPLOYEES. What can be the reason? Jonathan is connected to a database which does not support INSERT statements The INSERT statement cannot be applied on the table EMPLOYEES Jonathan has access to SELECT but no access to INSERT INTO the table EMPLOYEES None of the above Answer: C. Users can enjoy table access based on their responsibilities. One can have only read access on a table while other can enjoy read and write access. 74. Suppose 1 million rows are to be inserted into the AUDIT table. An INSERT transaction runs successfully for the first 1000 rows and an ORA error is thrown 'Constraint violated'. What will happen to the values inserted in the first 1000 rows? They will remain as it is They all will get deleted They all will get rolled back None of the above Answer: C. If any of the DML statement during the transaction encounters error(s), the complete transaction will be rolled back. Examine the table structure and consider the following query and answer the questions 75, 76 and 77 that follow: SQL> DESC departments
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ DEPARTMENT_ID		 NOT NULL NUMBER(4)
+ DEPARTMENT_NAME	 NOT NULL VARCHAR2(30)
+ MANAGER_ID			  NUMBER(6)
+ LOCATION_ID			  NUMBER(4) 
+INSERT INTO departments values (15, NULL);
+ 75. What will be the outcome of this statement? It will insert a row with department_id = 15 and all the other values as NULL It will execute successfully but insert 0 rows in the table It will throw an ORA error as the no. of columns and values do not match None of the above Answer: C. The DEPARTMENTS table contains four columns but the INSERT statement supplies value for two columns only without mentioning the columns too. Hence, the ORA error is thrown. 76. What is true about the above INSERT statement? If the columns are not mentioned in the INSERT statement, the values are inserted positionally in the columns It is mandatory to mention columns after the INSERT statement Both A and B None of the above Answer: A. If the columns are not specified in the INSERT statement, Oracle sequentially and positionally maps each value to the column in the table. 77. With respect to the statement given above, what will happen if the table is altered to add a new column? The statement will still work The statement execution will throw an error as there will be a mismatch in the no. of columns and values There will be no change and the statement will execute as before None of the above Answer: B. Since the columns were not specified earlier, the problem will still exist. Mismatch in the column-value mapping would throw an ORA error. Examine the table structure given below and consider the following queries and answer the questions 78 and 79 that follow: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) Query 1: 
+INSERT INTO employees (employee_id , last_name, hire_date)
+VALUES (100, 'ADAMS','21-DEC-12');
+ Query 2: 
+INSERT INTO employees (employee_id , last_name, hire_date)
+VALUES (100, upper('ADAMS'),to_date('21-DEC-12','DD-MON-YY'));
+ 78. Which of the above two queries is better? Both are better Only Query 1 is better Only Query 2 is better None of the queries is correct Answer: C. Query-2 is better because it inserts date value as a date and not as a string. Though Oracle will perform implicit conversion of string literal specified as a date, but not recommended. 79. Which of the following queries is equivalent of the query 2 given above? INSERT INTO employees (employee_id , last_name, hire_date)
+VALUES (101-1, upper('ADAMS'),to_date('21-DEC-12','DD-MON-YY'));
+ INSERT INTO employees (employee_id , last_name, hire_date)
+VALUES (99+1, upper('ADAMS'),to_date('22-DEC-12','DD-MON-YY') +1 );
+ INSERT INTO employees (employee_id , last_name, hire_date)
+VALUES (100, upper('ADAMS'),to_date('21-DEC-12','DD-MON-YY') - 1);
+ INSERT INTO employees (employee_id , last_name, hire_date)
+VALUES (100, upper('ADAMS'),to_date('28-DEC-12','DD-MON-YY')-7 );
+ Answer: A, C, D. Arithmetic operations /functions can be used to insert values as shown above. 80. You need to copy the data from one table to another table. Which of the following methods can be used? You can use the COPY command You can use the INSERT command You can use the UPDATE command None of the above Answer: B. The direct path operations INSERT-AS-SELECT (IAS) is the most commonly used method to copy data from one table to another. 81.Which of the following statements will copy data from the JOB_HISTORY table to the JOB_HISTORY_ARCHIVE table? (Consider the table structure as given) SQL> desc job_history
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ START_DATE		 NOT NULL DATE
+ END_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ DEPARTMENT_ID			  NUMBER(4) INSERT INTO job_history values (select * from job_history); INSERT INTO JOB_HISTORY_ARCHIVE values (select * from job_history_archive); INSERT INTO JOB_HISTORY_ARCHIVE select * from job_history; None of the above Answer: C. The option 'C' correctly shows the usage of IAS (INSERT-AS-SELECT) method. Examine the given table structure. Consider the following query and answer the questions 82 and 83 that follow: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+INSERT ALL
+WHEN job_id   = 'SA_REP' then
+INTO employees (employee_id , department_id , salary, hire_date)
+VALUES (employee_id , 10, salary, hire_date)
+WHEN job_id  <> 'SA_REP' then
+INTO employees (employee_id , department_id  , salary, hire_date)
+VALUES (employee_id , 20, salary, hire_date)
+SELECT employee_id , department_id , job_id, salary, commission_pct , hire_date
+FROM employees
+WHERE hire_date > sysdate - 30;
+ 82. Interpret the output of the above INSERT statement. Thrown an error It will insert the records for all the employees who were hired a month before the sysdate. It will insert the records for all the employees who are Sales Representatives in department 10 None of the above Answer: B, C. INSERT ALL can make conditional inserts into the target tables. 83. Which employees' data will be inserted in the department 20? Sales Representatives Accountants Both A or B None of the above Answer: B. As per the INSERT ALL statement, the details of employees whose job_id is not 'Sales Representative'. 84. What will be the outcome of the below query? (Consider the table structure as given) SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+INSERT INTO employees (employee_id , salary) VALUES (&employee_id , &salary);
+COMMIT;
+ Syntax error as substitution variables cannot be used in DML statements The user will be prompted for entering the employee ID and the salary but substitution variables cannot insert data in the table The user will be prompted for entering the employee ID and the salary and record will be successfully created in the EMPLOYEES table None of the above Answer: C. Substitution variables work well with the DML statements. 85. Evaluate the following SQL statements that are executed in a user session in the specified order: 
+CREATE SEQUENCE id_seq;
+SELECT id_seq.nextval
+FROM dual;
+ 
+INSERT INTO employees (employee_id ,first_name,job_id )
+VALUES (ord_seq.CURRVAL, 'Steyn','Trainee');
+ 
+UPDATE employees
+SET employee_id = id_seq.NEXTVAL
+WHERE first_name = 'Steyn'
+AND job_id ='Trainee';
+ What would be the outcome of the above statements? The CREATE SEQUENCE command would throw error because the minimum and maximum value for the sequence have not been specified All the statements would execute successfully and the employee_id column would contain the value 2 for the employee STEYN. The CREATE SEQUENCE command would not execute because the starting value of the sequence and the increment value have not been specified. All the statements would execute successfully and the employee_id column would have the value 20 for the employee STEYN because the default CACHE value is 20. Answer: B. 86. What is the restriction on the sub-query used in the UPDATE statement? The sub-query should be a multi row sub-query The sub-query should be a single row sub-query There's no restriction The sub-query can be either a single row or a multi row sub-query Answer: B. The sub-query should not return multiple rows when being used in an UPDATE statement Examine the given table structure and consider the query given below and answer the questions 87 and 88 that follow: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+UPDATE employees
+SET salary = (SELECT salary FROM employees WHERE employee_id =7382);
+ 87. What will be the outcome of the above query? It throws an ORA error on execution Salary of all the employees will be updated with the same salary as the employee 7382 Salary of all the employees will be updated to NULL None of the above Answer: B. Query results can be used to update the column values in a table. 88. Suppose if the employee 7382 doesn't exist in the EMPLOYEES table. What will be the outcome of the query? It throws an ORA error on execution because query results cannot be updated to the columns Salary of all the employees will be updated to NULL ORA exception 'NO_DATA_FOUND' will be raised because employee 7382 doesn't exists None of the above Answer: B. UPDATE statements do not raise any exception except for syntactical errors. Examine the given table structure and consider the query given below and answer the questions 89 and 90 that follow: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+UPDATE employees
+set salary = (select salary from employees where last_name = 'Adams');
+ 89. What will be the outcome of the query? It executes successfully All the rows of the table have the same salary It might throw an ORA error 'TOO_MANY_ROWS' upon execution None of the above Answer: C. The sub-query might return more than one row causing an error. 90. What changes in the above query will make sure there are no errors caused? Use a single row function like MAX, MIN or AVG to reduce multi row results into a scalar result Adding a Primary key constraint on SALARY column No change required None of the above Answer: A. Examine the given table structure and consider the following query and answer the questions 91 and 92 that follow: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+UPDATE employees
+SET salary = (select max (salary) from employees where last_name = 'Adams');
+ 91. What will be the outcome of the query given above? It will update the salaries of all the employees equal to the salary of the employee named Adam It will update the salaries of all the employees equal to the average salary of all with last name as 'Adam' It will update 0 rows It will update only one row Answer: B. Arithmetic functions MAX or a MIN can be used with sub-queries to get scalar values and avoid errors. 92. Assume that the sub-query above is replaced with the following:  SELECT distinct salary from employees where last_name = 'Adam'; What will be the outcome of the main query given above? It will execute successfully giving incorrect results It will execute successfully giving correct results It will throw an ORA error None of the above Answer: C. it gives an error because as there are many with the last name as 'Adam' there will many distinct salaries. Examine the given table structure and consider the following query and answer the questions 93 and 94 that follow: SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+UPDATE employees
+SET salary = 50000;
+WHERE job_id  in (select job_id  from job_history where department_id  = 10);
+ 93. What will the above statement do? (Choose the most appropriate answer) It will update all the salaries for all the employees as 50000 It will update all the salaries for all the employees who are in department 10 It will update the salaries for all the employees who have one of the job IDs similar to those in department 10 None of the above Answer: C. 94. What will happen if the WHERE clause given above is replaced with the following?  WHERE job_id = (select job_id from job_history where department_id  = 10); It will execute successfully with incorrect results It will execute successfully with correct results It will throw an ORA error None of the above Answer: C. The equal sign will raise the error. Examine the given table structure and consider the following statement. Answer the questions 95 to 97 that follow. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) DELETE FROM employees where last_name = 'A%';
+COMMIT;
+ 95. What will be the outcome of the query given above? Executes successfully but no rows are deleted All the employees whose last_name starts with "A" will be deleted ORA error because DELETE statement cannot have WHERE predicate All the rows from the employees table will get deleted Answer: A. DELETE statement can have WHERE clause predicate. Based on conditions, the records will be removed from the table. 96. Consider the following statement: DELETE FROM employees where employee_id  IS NULL and job_id = NULL;
+COMMIT;
+ Assuming there is a NOT NULL constraint on the column employee_id , what will be the outcome of the above query? It will raise ORA error because of invalid WHERE predicates It will execute successfully and no rows will be deleted It will raise ORA error because multiple predicates cannot work in DELETE statements None of the above Answer: B. Multiple predicates can be applied to the DML statements UPDATE and DELETE. 97. Consider the following query: 
+DELETE FROM employees where department_id  = &deptID;
+COMMIT;
+ What will happen when the above statement is executed? It will raise error because DML statements cannot use substitution variables It will prompt for the department ID to be deleted from the user and delete the record with the given department ID It will prompt for the department ID but transaction cannot be committed None of the above Answer: B. Substitution variables can be used with DML statements. 98. All parts of a transaction should complete or none of them. Which property of ACID rule complies with the given statement? Atomicity Consistency Isolation Durability Answer: A. ACID refers to the basic properties of a database transaction: Atomicity, Consistency, Isolation, and Durability. Atomicity implies that entire sequence of actions must be either completed or aborted. Consistency implies that the transaction takes the resources from one consistent state to another. Isolation implies that a transaction's effect is not visible to other transactions until the transaction is committed. Durability implies that the changes made by the committed transaction are permanent and must survive system failure. 99. What does the principle of Durability in the ACID property state? It states that a database can lose completed transactions It states that a transaction cannot get completed It states that once a transaction completes, it must be impossible for the DB to lose it. None of the above Answer: C. 100. An incomplete transaction should be invisible to all the other users. Which of the properties of the ACID state this? Isolation Consistency Atomicity Durability Answer: A. "I" stands for Isolation. 101. What does the principle of consistency states? It states that the results of a query must be consistent with the state of the DB at the time the query started It states that an incomplete transaction should be invisible to all the other users It states that once a transaction completes, it must be impossible for the DB to lose it None of the above Answer: A. the "C" in ACID property stands for Consistency 102. What among the following best describes a Transaction? INSERT to COMMIT/ROLLBACK UPDATE to COMMIT/ROLLBACK DELETE to COMMIT/ROLLBACK INSERT/UPDATE/DELETE to COMMIT/ROLLBACK Answer: D. 103. A user named "Jonathan" inserts data in the table EMPLOYEES. When will the other users be able to see the new data? When Jonathan provides access permission to the users When Jonathan executes a ROLLBACK statement in the session When Jonathan executes a COMMIT statement in the same session When Jonathan opens a new session and issues a COMMIT Answer: C. The active transaction must be committed in the same session. 104. What can be said about the nesting of transactions? Maximum 2 levels of nesting are possible Maximum 255 levels of nesting are possible Nesting of a transaction is impossible Only 1 level of nesting is possible Answer: C. 105. Which of the following reasons will terminate a transaction? A DDL statement Exiting a client System crashes All of the above Answer: D. DDL is auto commit and will end the ongoing active transaction.

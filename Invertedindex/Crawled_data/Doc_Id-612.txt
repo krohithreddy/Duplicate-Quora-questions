@@ -1,0 +1,16 @@
+Redis - Keys
+
+https://www.tutorialspoint.com/redis/redis_keys.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis keys commands are used for managing keys in Redis. Following is the syntax for using redis keys commands. Syntax 
+redis 127.0.0.1:6379> COMMAND KEY_NAME
+ Example 
+redis 127.0.0.1:6379> SET tutorialspoint redis 
+OK 
+redis 127.0.0.1:6379> DEL tutorialspoint 
+(integer) 1
+ In the above example, DEL is the command, while tutorialspoint is the key. If the key is deleted, then the output of the command will be (integer) 1, otherwise it will be (integer) 0. Redis Keys Commands Following table lists some basic commands related to keys. S.No Command & Description 1 DEL key This command deletes the key, if it exists. 2 DUMP key This command returns a serialized version of the value stored at the specified key. 3 EXISTS key This command checks whether the key exists or not. 4 EXPIRE key seconds Sets the expiry of the key after the specified time. 5 EXPIREAT key timestamp Sets the expiry of the key after the specified time. Here time is in Unix timestamp format. 6 PEXPIRE key milliseconds Set the expiry of key in milliseconds. 7 PEXPIREAT key milliseconds-timestamp Sets the expiry of the key in Unix timestamp specified as milliseconds. 8 KEYS pattern Finds all keys matching the specified pattern. 9 MOVE key db Moves a key to another database. 10 PERSIST key Removes the expiration from the key. 11 PTTL key Gets the remaining time in keys expiry in milliseconds. 12 TTL key Gets the remaining time in keys expiry. 13 RANDOMKEY Returns a random key from Redis. 14 RENAME key newkey Changes the key name. 15 RENAMENX key newkey Renames the key, if a new key doesn't exist. 16 TYPE key Returns the data type of the value stored in the key.

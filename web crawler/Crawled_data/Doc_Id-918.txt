@@ -1,0 +1,39 @@
+XML DOM - Accessing
+
+https://www.tutorialspoint.com/dom/xml_dom_accessing.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+In this chapter, we will study about how to access the XML DOM nodes which are considered as the informational units of the XML document. The node structure of the XML DOM allows the developer to navigate around the tree looking for specific information and simultaneously access the information. Accessing Nodes Following are the three ways in which you can access the nodes − By using the getElementsByTagName () method By looping through or traversing through nodes tree By navigating the node tree, using the node relationships getElementsByTagName () This method allows accessing the information of a node by specifying the node name. It also allows accessing the information of the Node List and Node List Length. Syntax The getElementByTagName() method has the following syntax − 
+node.getElementByTagName("tagname");
+ Where, node − is the document node. tagname − holds the name of the node whose value you want to get. Example Following is a simple program which illustrates the usage of method getElementByTagName. 
+<!DOCTYPE html>
+<html>
+   <body>
+      <div>
+         <b>FirstName:</b> <span id = "FirstName"></span><br>
+         <b>LastName:</b> <span id = "LastName"></span><br>
+         <b>Category:</b> <span id = "Employee"></span><br>
+      </div>
+      <script>
+         if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+         } else {// code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+
+         document.getElementById("FirstName").innerHTML = 
+         xmlDoc.getElementsByTagName("FirstName")[0].childNodes[0].nodeValue;
+         document.getElementById("LastName").innerHTML = 
+         xmlDoc.getElementsByTagName("LastName")[0].childNodes[0].nodeValue;
+         document.getElementById("Employee").innerHTML = 
+         xmlDoc.getElementsByTagName("Employee")[0].attributes[0].nodeValue;
+      </script>
+   </body>
+</html>
+ In the above example, we are accessing the information of the nodes FirstName, LastName and Employee. xmlDoc.getElementsByTagName("FirstName")[0].childNodes[0].nodeValue; This line accesses the value for the child node FirstName using the getElementByTagName() method. xmlDoc.getElementsByTagName("Employee")[0].attributes[0].nodeValue; This line accesses the attribute value of the node Employee getElementByTagName() method. Traversing Through Nodes This is covered in the chapter DOM Traversing with examples. Navigating Through Nodes This is covered in the chapter DOM Navigation with examples.

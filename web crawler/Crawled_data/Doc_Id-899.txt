@@ -1,0 +1,57 @@
+DOM - Node Object Method - lookupNamespaceURI
+
+https://www.tutorialspoint.com/dom/dom_node_lookupnamespaceuri.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The method lookupNamespaceURI gets the URI of the namespace associated with the namespace prefix, starting from current node. Syntax Following is the syntax for the usage of the lookupNamespaceURI method. 
+nodeObject.lookupNamespaceURI(DOMString prefix)
+ S.No. Parameter & Description 1 prefix Based on this parameter namespace uri is return if present any. It is of type DOMString. This method returns the associated namespace URI or null if none is found. Example node_ns.xml contents are as below − 
+<?xml version = "1.0"?>
+<Company>
+   <Employee xmlns:e = "http://www.tutorials.com/technical/" category = "technical">
+      <e:FirstName>Tanmay</e:FirstName>
+      <e:LastName>Patil</e:LastName>
+      <e:ContactNo>1234567890</e:ContactNo>
+      <e:Email>tanmaypatil@xyz.com</e:Email>
+   </Employee>
+
+   <Employee xmlns:n = "http://www.tutorials.com/non-technical/" category = "non-technical">
+      <n:FirstName>Taniya</n:FirstName>
+      <n:LastName>Mishra</n:LastName>
+      <n:ContactNo>1234667898</n:ContactNo>
+      <n:Email>taniymishra@xyz.com</n:Email>
+   </Employee>
+</Company>
+ Following example demonstrates the usage of the lookupNamespaceURI method − 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node_ns.xml");
+
+         y = xmlDoc.getElementsByTagName("Employee")[0];
+         document.write("lookupNameSpaceURI is : ")
+         document.write(y.lookupNamespaceURI("e"));
+      </script>
+   </body>
+</html>
+ Execution Save this file as nodemethod_namespaceuri.htm on the server path (this file and node_ns.xml should be on the same path in your server). We will get the output as shown below − 
+lookupNameSpaceURI is : http://www.tutorials.com/technical/
+ dom_node_object.htm

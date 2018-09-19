@@ -1,0 +1,48 @@
+PouchDB - Retrieving Attachment
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_retrieving_attachment.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+You can retrieve an attachment from PouchDB using the getAttachment() method. This method always returns blob or buffer objects. Syntax Following is the syntax of the getAttachment(). To this method, we have to pass the document id and attachment id. This method also accepts an optional callback function. 
+db.getAttachment( docId, attachmentId, [callback] );
+ Example Following is an example of retrieving an attachment of a document stored in PouchDB, using getAttachment() method. Using this code, we are trying to retrieve an attachment att_1.txt from the document 001. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//Retrieving an attachment from a document
+db.getAttachment('001', 'att_1.txt', function(err, blob_buffer) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(blob_buffer);
+   }
+});
+ Save the above code in a file with the name Retrieve_Attachment.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Retrieve_Attachment.js
+ This retrieves the attachment of the document and displays on the console as shown below. 
+<Buffer 00>
+ Retrieving Attachment from a Remote Document You can also retrieve an attachment of a document existing in the database that is stored remotely on the server (CouchDB). To do so, instead of a database name, you need to pass the path to the database in CouchDB, which contains the document that is to be read. Example Suppose there is a database named my_database in the CouchDB server. Then, if you verify the list of databases in CouchDB using the URL http://127.0.0.1:5984/_utils/index.html you will get the following screenshot. If you select the database named my_database, you can view its contents as shown below. Suppose, there is an attachment in this document as shown below. Following is an example of retrieving an attachment of the document 001 that exists in a database named my_database, which is stored in the CouchDB server. 
+//Requiring the package 
+var PouchDB = require('PouchDB');
+
+//Creating the database object 
+var db = new PouchDB('http://localhost:5984/my_database');
+
+//Retrieving an attachment from a document 
+db.getAttachment('001', 'att_1.txt', function(err, blob_buffer) { 
+   if (err) { 
+      return console.log(err); 
+   } else { 
+      console.log(blob_buffer); 
+   } 
+});
+ Save the above code in a file with the name Remote_Retrieve_Attachment.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Remote_Retrieve_Attachment.js
+ This retrieves the document attachment and displays it on the console as shown below. 
+<Buffer 00>

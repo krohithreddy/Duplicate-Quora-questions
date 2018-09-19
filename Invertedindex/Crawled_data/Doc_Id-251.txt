@@ -1,0 +1,24 @@
+MongoDB - Covered Queries
+
+https://www.tutorialspoint.com/mongodb/mongodb_covered_queries.htm
+
+Mongodb, overview, Advantages, Environment, Data Modelling, Create Database, Drop Database, Create Collection, Drop Collection, Data Types, Insert Document, Query Document, Update Document, Delete Document, Projection, Limiting Records, Sorting, Records, Indexing, Aggregration, Replication, Sharding, Create Backup, Deployment, Java, PHP, Relationships, Database References, Covered Queries, Analyzing Queries, Atomic Operations, Advanced Indexing, Indexing Limitations, ObjectId, Map Reduce, Text Search, Regular Expression, Rockmongo, GridFS, Capped Collections, Auto-Increment Sequence.
+
+August-15-2017-02:34:09
+
+In this chapter, we will learn about covered queries. What is a Covered Query? As per the official MongoDB documentation, a covered query is a query in which − All the fields in the query are part of an index. All the fields returned in the query are in the same index. Since all the fields present in the query are part of an index, MongoDB matches the query conditions and returns the result using the same index without actually looking inside the documents. Since indexes are present in RAM, fetching data from indexes is much faster as compared to fetching data by scanning documents. Using Covered Queries To test covered queries, consider the following document in the users collection − 
+{
+   "_id": ObjectId("53402597d852426020000002"),
+   "contact": "987654321",
+   "dob": "01-01-1991",
+   "gender": "M",
+   "name": "Tom Benzamin",
+   "user_name": "tombenzamin"
+}
+ We will first create a compound index for the users collection on the fields gender and user_name using the following query − 
+>db.users.ensureIndex({gender:1,user_name:1})
+ Now, this index will cover the following query − 
+>db.users.find({gender:"M"},{user_name:1,_id:0})
+ That is to say that for the above query, MongoDB would not go looking into database documents. Instead it would fetch the required data from indexed data which is very fast. Since our index does not include _id field, we have explicitly excluded it from result set of our query, as MongoDB by default returns _id field in every query. So the following query would not have been covered inside the index created above − 
+>db.users.find({gender:"M"},{user_name:1})
+ Lastly, remember that an index cannot cover a query if − Any of the indexed fields is an array Any of the indexed fields is a subdocument

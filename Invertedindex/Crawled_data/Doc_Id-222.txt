@@ -1,0 +1,19 @@
+MariaDB - SQL Injection Protection
+
+https://www.tutorialspoint.com/mariadb/mariadb_sql_injection_protection.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+The simple act of accepting user input opens the door to exploits. The problem stems primarily from the logical management of data, but luckily, it is fairly easy to avoid these major flaws. Opportunities for SQL injection typically occur on users entering data like a name, and the code logic failing to analyze this input. The Code, instead, allows an attacker to insert a MariaDB statement, which will run on the database. Always consider data entered by users, suspect and are in need of strong validation prior to any processing. Perform this validation through pattern matching. For example, if the expected input is a username, restrict entered characters to alphanumeric chars and underscores, and to a certain length. Review an example given below − 
+if(check_match("/^\w{8,20}$/", $_GET['user_name'], $matches)) {
+   $result = mysql_query("SELECT * FROM system_users WHERE user_name = $matches[0]");
+} else {
+   echo "Invalid username";
+}
+ Also, utilize the REGEXP operator and LIKE clauses in creating input constraints. Consider all types of necessary explicit control of input such as − Control the escape characters used. Control the specific appropriate data types for input. Limit input to the necessary data type and size. Control the syntax of entered data. Do not allow anything outside of the needed pattern. Control the terms permitted. Blacklist SQL keywords. You may not know the dangers of injection attacks, or may consider them insignificant, but they top the list of security concerns. Furthermore, consider the effect of these two entries − 
+1=1
+-or-
+*
+ Code allowing either of those to be entered along with the right command may result in revealing all user data on the database or deleting all data on the database, and neither injection is particularly clever. In some cases, attackers do not even spend time examining holes; they perform blind attacks with simple input. Also, consider the pattern matching and regular expression tools provided by any programming/scripting language paired with MariaDB, which provide more control, and sometimes better control.

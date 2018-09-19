@@ -1,0 +1,19 @@
+XSD - String
+
+https://www.tutorialspoint.com/xsd/xsd_string.htm
+
+XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+String data types are used to represent characters in the XML documents. <xs:string> data type The <xs:string> data type can take characters, line feeds, carriage returns, and tab characters. The XML processor does not replace line feeds, carriage returns, and tab characters in the content with space and keep them intact. For example, multiple spaces or tabs are preserved during display. <xs:string> Example Element declaration in xsd − 
+<xs:element name = "name" type = "xs:string"/>
+ Element usage in xml − 
+<name>Dinkar</name>
+<name>Dinkar    Kad</name>
+ <xs:token> data type The <xs:token> data type is derived from <string> data type and can take characters, line feeds, carriage returns, and tab characters. XML processor will remove line feeds, tabs, carriage returns, leading and trailing spaces, and multiple spaces. <xs:token> Example Element declaration in xsd − 
+<xs:element name = "name" type = "xs:token"/>
+ Element usage in xml − 
+<name>Dinkar</name>
+<name>Dinkar    Kad</name>
+ String Data Types Following is the list of commonly used data types which are derived from <string> data type. S.No. Name & Description 1 ID Represents the ID attribute in XML and is used in schema attributes. 2 IDREF Represents the IDREF attribute in XML and is used in schema attributes. 3 language Represents a valid language id 4 Name Represents a valid XML name 5 NMTOKEN Represents a NMTOKEN attribute in XML and is used in schema attributes. 6 normalizedString Represents a string that does not contain line feeds, carriage returns, or tabs. 7 string Represents a string that can contain line feeds, carriage returns, or tabs. 8 token Represents a string that does not contain line feeds, carriage returns, tabs, leading or trailing spaces, or multiple spaces Restrictions Following types of restrictions can be used with String data types − enumeration length maxLength minLength pattern whiteSpace

@@ -1,0 +1,70 @@
+PouchDB - Database Info
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_database_info.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+You can get the basic information about the database using the method named info() Syntax Following is the syntax of using the info() method of PouchDB. This method accepts a callback function. 
+db.info([callback])
+ Example Following is an example of retrieving database information using the info() method. Here, we are displaying the information of the database named my_database. In case of error, the error will be displayed on the console. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//Database information
+db.info(function(err, info) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(info);
+   }
+});
+ Save the above code in a file with the name Database_info.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples>node Database_info.js
+ This will display the info of the specified database as follows. 
+{ 
+   doc_count: 0,
+   update_seq: 0,
+   backend_adapter: 'LevelDOWN',
+   db_name: 'my_database',
+   auto_compaction: false,
+   adapter: 'leveldb' 
+}
+ Remote Database Info In the same way, you get the information of a database that is saved remotely on the server (CouchDB). To do so, instead of database name, you need to pass the path to the required database in CouchDB. Example Following is an example of retrieving information of a database that is saved in the CouchDB server. This code gives you information of a database named my_database. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('http://localhost:5984/my_database');
+
+//Database information
+db.info(function(err, info) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(info);
+   }
+});
+ Save the above code in a file with the name Database_ Remote_info.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples>node Database_Remote_info.js
+ This will display the info of the specified database as follows. 
+{ 
+   db_name: 'my_database', 
+   doc_count: 0, 
+   doc_del_count: 0, 
+   update_seq: 0, 
+   purge_seq: 0, 
+   compact_running: false, 
+   disk_size: 79, 
+   data_size: 0, 
+   instance_start_time: '1458209191708486', 
+   disk_format_version: 6, 
+   committed_update_seq: 0, 
+   host: 'http://localhost:5984/my_database/', 
+   auto_compaction: false, 
+   adapter: 'http' 
+}

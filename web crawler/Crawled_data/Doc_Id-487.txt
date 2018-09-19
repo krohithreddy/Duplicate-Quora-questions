@@ -1,0 +1,35 @@
+PL/SQL - CASE Statement
+
+https://www.tutorialspoint.com/plsql/plsql_case_statement.htm
+
+PL/SQL, syntax, Environment Setup, Operators, Transactions, Date and Time, data types, variables, constants, records, conditional statements, iterative statements, cursors, procedures, functions, exception handling, triggers, packages, collections, external procedures, arrays, strings, dbms output.
+
+August-15-2017-02:34:06
+
+Like the IF statement, the CASE statement selects one sequence of statements to execute. However, to select the sequence, the CASE statement uses a selector rather than multiple Boolean expressions. A selector is an expression, the value of which is used to select one of several alternatives. Syntax The syntax for the case statement in PL/SQL is − 
+CASE selector 
+   WHEN 'value1' THEN S1; 
+   WHEN 'value2' THEN S2; 
+   WHEN 'value3' THEN S3; 
+   ... 
+   ELSE Sn;  -- default case 
+END CASE;
+ Flow Diagram Example 
+DECLARE 
+   grade char(1) := 'A'; 
+BEGIN 
+   CASE grade 
+      when 'A' then dbms_output.put_line('Excellent'); 
+      when 'B' then dbms_output.put_line('Very good'); 
+      when 'C' then dbms_output.put_line('Well done'); 
+      when 'D' then dbms_output.put_line('You passed'); 
+      when 'F' then dbms_output.put_line('Better try again'); 
+      else dbms_output.put_line('No such grade'); 
+   END CASE; 
+END; 
+/
+ When the above code is executed at the SQL prompt, it produces the following result − 
+Excellent  
+
+PL/SQL procedure successfully completed. 
+ plsql_conditional_control.htm

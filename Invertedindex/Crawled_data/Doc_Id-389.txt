@@ -1,0 +1,37 @@
+Neo4j - Match Clause
+
+https://www.tutorialspoint.com/neo4j/neo4j_match_clause.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+In this chapter, we will learn about Match Clause and all the functions that can be performed using this clause. Get All Nodes Using Match Using the MATCH clause of Neo4j you can retrieve all nodes in the Neo4j database. Example Before proceeding with the example, create 3 nodes and 2 relationships as shown below. 
+CREATE (Dhoni:player {name: "MahendraSingh Dhoni", YOB: 1981, POB: "Ranchi"}) 
+CREATE (Ind:Country {name: "India", result: "Winners"}) 
+CREATE (CT2013:Tornament {name: "ICC Champions Trophy 2013"}) 
+CREATE (Ind)-[r1:WINNERS_OF {NRR:0.938 ,pts:6}]->(CT2013) 
+
+CREATE(Dhoni)-[r2:CAPTAIN_OF]->(Ind)  
+CREATE (Dhawan:player{name: "shikar Dhawan", YOB: 1995, POB: "Delhi"}) 
+CREATE (Jadeja:player {name: "Ravindra Jadeja", YOB: 1988, POB: "NavagamGhed"})  
+
+CREATE (Dhawan)-[:TOP_SCORER_OF {Runs:363}]->(Ind) 
+CREATE (Jadeja)-[:HIGHEST_WICKET_TAKER_OF {Wickets:12}]->(Ind) 
+ Following is the query which returns all the nodes in Neo4j database. 
+MATCH (n) RETURN n 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Getting All Nodes Under a Specific Label Using match clause, you can get all the nodes under a specific label. Syntax Following is the syntax to get all the nodes under a specific label. 
+MATCH (node:label) 
+RETURN node 
+ Example Following is a sample Cypher Query, which returns all the nodes in the database under the label player. 
+MATCH (n:player) 
+RETURN n 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Match by Relationship You can retrieve nodes based on relationship using the MATCH clause. Syntax Following is the syntax of retrieving nodes based on the relationship using the MATCH clause. 
+MATCH (node:label)<-[: Relationship]-(n) 
+RETURN n 
+ Example Following is a sample Cypher Query to retrieve nodes based on relationship using the MATCH clause. 
+MATCH (Ind:Country {name: "India", result: "Winners"})<-[: TOP_SCORER_OF]-(n) 
+RETURN n.name 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Delete All Nodes You can delete all the nodes using the MATCH clause. Query Following is the query to delete all the nodes in Neo4j. 
+MATCH (n) detach delete n 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result.

@@ -1,0 +1,33 @@
+XSD - Complex Types
+
+https://www.tutorialspoint.com/xsd/xsd_complex_types.htm
+
+XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+Complex Element is an XML element which can contain other elements and/or attributes. We can create a complex element in two ways − Define a complex type and then create an element using the type attribute Define a complex type directly by naming Define a Complex Type and then create an element using type attribute. 
+<xs:complexType name = "StudentType">
+   <xs:sequence>
+      <xs:element name = "firstname" type = "xs:string"/>
+      <xs:element name = "lastname" type = "xs:string"/>
+      <xs:element name = "nickname" type = "xs:string"/>
+      <xs:element name = "marks" type = "xs:positiveInteger"/>
+   </xs:sequence>
+   <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+</xs:complexType>
+
+<xs:element name = 'student' type = 'StudentType' />			 
+ Define a Complex Type directly by naming. 
+<xs:element name = "student">
+   <xs:complexType>   
+      <xs:sequence>
+         <xs:element name = "firstname" type = "xs:string"/>
+         <xs:element name = "lastname" type = "xs:string"/>
+         <xs:element name = "nickname" type = "xs:string"/>
+         <xs:element name = "marks" type = "xs:positiveInteger"/>
+      </xs:sequence>
+   <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+   </xs:complexType>
+<xs:element>
+ Following is the list of Complex Types that XSD supports. S.No. Simple Type & Description 1 Empty Complex Empty complex type element can only have attributes but no contents. 2 Elements Only Elements-Only complex type element can only contain elements 3 Text Only Text-Only complex type element can only contain attribute and text. 4 Mixed Mixed complex type element can contain element, attribute and text. 5 Indicators Indicators controls the ways how elements are to be organized in an XML document. 6 <any> The <any> element is used for elements which are not defined by schema 7 <anyAttribute> The <anyAttribute> attribute is used for attribute which are not defined by schema.

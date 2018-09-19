@@ -1,0 +1,155 @@
+PouchDB - Fetch Batch
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_fetch_batch.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+You can read/retrieve multiple/bulk documents from a database in PouchDB using the allDocs() method. Syntax Following is the syntax of using the db.allDocs() method of PouchDB. This method accepts an optional callback function. 
+db.allDocs()
+ Example Following is an example of retrieving all the documents in a database named my_database that is stored locally, using db.allDocs() method. This method retrieves the array of documents in the form of objects, to get the contents of each document you need to call as docs.rows. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//Retrieving all the documents in PouchDB
+db.allDocs(function(err, docs) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log (docs.rows);
+   }
+});
+ Save the above code in a file with the name Read_All_Document.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Read_All_Document.js
+ This reads all the documents that exists in the database named my_database which is stored locally. The following message is displayed on the console. 
+[ 
+   { 
+      id: '001',
+      key: '001',
+      value: { rev: '1-9dc57f5faa7ea90eeec22eba8bfd05f5' } 
+   },
+   { 
+      id: '002',
+      key: '002',
+      value: { rev: '1-9bf80afcedb9f8b5b35567292affb254' } 
+    },
+   { 
+      id: '003',
+      key: '003',
+      value: { rev: '1-1204f108e41bf8baf867856d5da16c57' } 
+   }
+]
+ In general, as shown in the above result, using allDocs() method you can see only the _id, key and _rev fields of each document. However, to include the whole document in the result, you have to make the optional parameter include_docs true as shown below. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//Retrieving all the documents in PouchDB
+db.allDocs({include_docs: true}, function(err, docs) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log (docs.rows);
+   }
+});
+ Executing the above code gives you a list of complete documents in the specified documents as shown in the following code. 
+[ 
+   { 
+      id: '001',
+      key: '001',
+      value: { rev: '1-9dc57f5faa7ea90eeec22eba8bfd05f5' },
+      doc: { 
+         name: 'Ram',
+         age: 23,
+         Designation: 'Programmer',
+         _id: '001',
+         _rev: '1-9dc57f5faa7ea90eeec22eba8bfd05f5' 
+      } 
+   },
+   { 
+      id: '002',
+      key: '002',
+      value: { rev: '1-9bf80afcedb9f8b5b35567292affb254' },
+      doc: { 
+         name: 'Robert',
+         age: 24,
+         Designation: 'Programmer',
+         _id: '002',
+         _rev: '1-9bf80afcedb9f8b5b35567292affb254' 
+      } 
+   },
+   { 
+      id: '003',
+      key: '003',
+      value: { rev: '1-1204f108e41bf8baf867856d5da16c57' },
+      doc: { 
+         name: 'Rahim',
+         age: 25,
+         Designation: 'Programmer',
+         _id: '003',
+         _rev: '1-1204f108e41bf8baf867856d5da16c57' 
+      } 
+   }
+]
+ Reading a Batch from a Remote Database You can also fetch all the documents from the database that is stored remotely on the server (CouchDB). To do so instead of a database name, you need to pass the path to the database in CouchDB, which contains the document that is to be read. Example Suppose there is a database named my_database in the CouchDB server. Then, if you verify the list of databases in CouchDB using the URL http://127.0.0.1:5984/_utils/index.html you will get the following screenshot. Following is an example of reading all the documents that exist in a database named my_database which is stored in the CouchDB server. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('http://localhost:5984/my_database');
+
+//Retrieving all the documents in PouchDB
+db.allDocs({include_docs: true}, function(err, docs) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(docs.rows);
+   }
+});
+ Save the above code in a file with the name Remote_Read_AllDocument.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Remote_Read_AllDocument.js
+ This reads the contents of the given document that exists in the database named my_database which is stored in CouchDB, and displays on the console as shown below. 
+[ 
+   { 
+      id: '001',
+      key: '001',
+      value: { rev: '3-552920d1ca372986fad7b996ce365f5d' },
+      doc: { 
+         _id: '001',
+         _rev: '3-552920d1ca372986fad7b996ce365f5d',
+         name: 'Raju',
+         age: 23,
+         designation: 'Designer' 
+      } 
+   },
+   { 
+      id: '002',
+      key: '002',
+      value: { rev: '1-9af15cb11054ebe03a7816bf6c5e4128' },
+      doc: { 
+         _id: '002',
+         _rev: '1-9af15cb11054ebe03a7816bf6c5e4128',
+         name: 'Robert',
+         age: 24,
+         Designation: 'Programmer' 
+      } 
+   },
+   { 
+      id: '003',
+      key: '003',
+      value: { rev: '1-3033b5a78e915c52fd37325d42eb3935' },
+      doc: { 
+         _id: '003',
+         _rev: '1-3033b5a78e915c52fd37325d42eb3935',
+         name: 'Rahim',
+         age: 25,
+         Designation: 'Programmer' 
+      } 
+   } 
+]

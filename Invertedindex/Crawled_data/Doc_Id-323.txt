@@ -1,0 +1,54 @@
+MySQL - MAX Function
+
+https://www.tutorialspoint.com/mysql/mysql-max-function.htm
+
+Learning, MySQL, Programming, Database, Clauses, Commands, Functions, MySQL Between Clause, Queries, Simple, Steps, Basic, Advanced, Concepts.
+
+August-15-2017-02:34:19
+
+MySQL MAX function is used to find out the record with maximum value among a record set. To understand MAX function, consider an employee_tbl table, which is having the following records − 
+mysql> SELECT * FROM employee_tbl;
++------+------+------------+--------------------+
+|  id  | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|   1  | John | 2007-01-24 |        250         |
+|   2  | Ram  | 2007-05-27 |        220         |
+|   3  | Jack | 2007-05-06 |        170         |
+|   3  | Jack | 2007-04-06 |        100         |
+|   4  | Jill | 2007-04-06 |        220         |
+|   5  | Zara | 2007-06-06 |        300         |
+|   5  | Zara | 2007-02-06 |        350         |
++------+------+------------+--------------------+
+7 rows in set (0.00 sec)
+ Now, suppose based on the above table you want to fetch maximum value of daily_typing_pages, then you can do so simply using the following command − 
+mysql> SELECT MAX(daily_typing_pages)
+   -> FROM employee_tbl;
++-------------------------+
+| MAX(daily_typing_pages) |
++-------------------------+
+|           350           |
++-------------------------+
+1 row in set (0.00 sec)
+ You can find all the records with maximum value for each name using GROUP BY clause as follows − 
+mysql> SELECT id, name, MAX(daily_typing_pages)
+   -> FROM employee_tbl GROUP BY name;
++------+------+-------------------------+
+|  id  | name | MAX(daily_typing_pages) |
++------+------+-------------------------+
+|   3  | Jack |           170           |
+|   4  | Jill |           220           |
+|   1  | John |           250           |
+|   2  | Ram  |           220           |
+|   5  | Zara |           350           |
++------+------+-------------------------+
+5 rows in set (0.00 sec)
+ You can use MIN Function along with MAX function to find out minimum value as well. Try out the following example − 
+mysql> SELECT MIN(daily_typing_pages) least, MAX(daily_typing_pages) max
+   -> FROM employee_tbl;
++-------+------+
+| least |  max |
++-------+------+
+|  100  |  350 |
++-------+------+
+1 row in set (0.01 sec)
+ mysql-useful-functions.htm

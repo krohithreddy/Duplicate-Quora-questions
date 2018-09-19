@@ -1,0 +1,46 @@
+Apache Presto - JMX Connector
+
+https://www.tutorialspoint.com/apache_presto/apache_presto_jmx_connector.htm
+
+Apache Presto, Tutorial, Learning, Overview, Architecture, Installation, Configuration Settings, Administration Tools, Basic SQL Operations, SQL Functions, MySQL, JMX, HIVE, KAFKA Connector, JDBC Interface, Custom Function Application.
+
+August-15-2017-02:34:16
+
+Java Management Extensions (JMX) gives information about the Java Virtual Machine and software running inside JVM. The JMX connector is used to query JMX information in Presto server. As we have already enabled “jmx.properties” file under “etc/catalog” directory. Now connect Prest CLI to enable JMX plugin. Presto CLI Query 
+$ ./presto --server localhost:8080 --catalog jmx --schema jmx 
+ Result You will receive the following response. 
+presto:jmx> 
+ JMX Schema To list out all the schemas in “jmx”, type the following query. Query 
+presto:jmx> show schemas from jmx; 
+ Result 
+      Schema 
+-------------------- 
+ information_schema  
+ current
+ Show Tables To view the tables in the “current” schema, use the following command. Query 1 
+presto:jmx> show tables from jmx.current; 
+ Result 
+                                    Table                   
+------------------------------------------------------------------------------
+ com.facebook.presto.execution.scheduler:name = nodescheduler
+ com.facebook.presto.execution:name = queryexecution
+ com.facebook.presto.execution:name = querymanager
+ com.facebook.presto.execution:name = remotetaskfactory
+ com.facebook.presto.execution:name = taskexecutor
+ com.facebook.presto.execution:name = taskmanager
+ com.facebook.presto.execution:type = queryqueue,name = global,expansion = global
+ ………………
+ ……………….
+ Query 2 
+presto:jmx> select * from jmx.current.”java.lang:type = compilation"; 
+ Result 
+node               | compilationtimemonitoringsupported |      name   |         objectname         | totalcompilationti
+--------------------------------------+------------------------------------+--------------------------------+----------------------------+-------------------
+ffffffff-ffff-ffff-ffff-ffffffffffff | true | HotSpot 64-Bit Tiered Compilers | java.lang:type=Compilation |       1276
+ Query 3 
+presto:jmx> select * from jmx.current."com.facebook.presto.server:name = taskresource";
+ Result 
+ node                 | readfromoutputbuffertime.alltime.count 
+ | readfromoutputbuffertime.alltime.max | readfromoutputbuffertime.alltime.maxer
+ --------------------------------------+---------------------------------------+--------------------------------------+--------------------------------------- 
+ ffffffff-ffff-ffff-ffff-ffffffffffff |                                   92.0 |                          1.009106149 |

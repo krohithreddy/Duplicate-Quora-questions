@@ -1,0 +1,56 @@
+Apache Presto - Configuration Settings
+
+https://www.tutorialspoint.com/apache_presto/apache_presto_configuration_settings.htm
+
+Apache Presto, Tutorial, Learning, Overview, Architecture, Installation, Configuration Settings, Administration Tools, Basic SQL Operations, SQL Functions, MySQL, JMX, HIVE, KAFKA Connector, JDBC Interface, Custom Function Application.
+
+August-15-2017-02:34:16
+
+This chapter will discuss the configuration settings for Presto. Presto Verifier The Presto Verifier can be used to test Presto against another database (such as MySQL), or to test two Presto clusters against each other. Create Database in MySQL Open MySQL server and create a database using the following command. 
+create database test 
+ Now you have created “test” database in the server. Create the table and load it with the following query. 
+CREATE TABLE verifier_queries( 
+   id INT NOT NULL AUTO_INCREMENT, 
+   suite VARCHAR(256) NOT NULL, 
+   name VARCHAR(256), 
+   test_catalog VARCHAR(256) NOT NULL, 
+   test_schema VARCHAR(256) NOT NULL, 
+   test_prequeries TEXT, 
+   test_query TEXT NOT NULL, 
+   test_postqueries TEXT, 
+   test_username VARCHAR(256) NOT NULL default 'verifier-test', 
+   test_password VARCHAR(256), 
+   control_catalog VARCHAR(256) NOT NULL, 
+   control_schema VARCHAR(256) NOT NULL, 
+   control_prequeries TEXT, 
+   control_query TEXT NOT NULL, 
+   control_postqueries TEXT, 
+   control_username VARCHAR(256) NOT NULL default 'verifier-test', 
+   control_password VARCHAR(256), 
+   session_properties_json TEXT,            
+   PRIMARY KEY (id) 
+);
+ Add Config Settings Create a properties file to configure the verifier − 
+$ vi config.properties  
+
+suite = mysuite 
+query-database = jdbc:mysql://localhost:3306/tutorials?user=root&password=pwd 
+control.gateway = jdbc:presto://localhost:8080 
+test.gateway = jdbc:presto://localhost:8080 
+thread-count = 1 
+ Here, in the query-database field, enter the following details − mysql database name, user name, and password. Download JAR File Download Presto-verifier jar file by visiting the following link, https://repo1.maven.org/maven2/com/facebook/presto/presto-verifier/0.149/ Now the version “presto-verifier-0.149-executable.jar” is downloaded on your machine. Execute JAR Execute the JAR file using the following command, 
+$ mv presto-verifier-0.149-executable.jar verifier  
+$ chmod+x verifier 
+ Run Verifier Run the verifier using the following command, 
+$ ./verifier config.properties 
+ Create Table Let’s create a simple table in “test” database using the following query. 
+create table product(id int not null, name varchar(50))
+ Insert Table After creating a table, insert two records using the following query, 
+insert into product values(1,’Phone') 
+insert into product values(2,’Television’)
+ Run Verifier Query Execute the following sample query in the verifier terminal (./verifier config.propeties) to check the verifier result. Sample Query 
+insert into verifier_queries (suite, test_catalog, test_schema, test_query, 
+control_catalog, control_schema, control_query) values 
+('mysuite', 'mysql', 'default', 'select * from mysql.test.product', 
+'mysql', 'default', 'select * from mysql.test.product');
+ Here, select * from mysql.test.product query refers to mysql catalog, test is database name and product is table name. In this way, you can access mysql connector using Presto server. Here, two same select queries are tested against each other to see the performance. Similarly, you can run other queries to test the performance results. You can also connect two Presto clusters to check the performance results.

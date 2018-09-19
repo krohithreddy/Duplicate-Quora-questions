@@ -1,0 +1,14 @@
+OrientDB - Create Cluster
+
+https://www.tutorialspoint.com/orientdb/orientdb_create_cluster.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Cluster is an important concept in OrientDB which is used to store records, documents, or vertices. In simple words, cluster is a place where a group of records are stored. By default, OrientDB will create one cluster per class. All the records of a class are stored in the same cluster, which has the same name as the class. You can create up to 32,767(2^15-1) clusters in a database. The CREATE class is a command used to create a cluster with a specific name. Once the cluster is created, you can use the cluster to save records by specifying the name during the creation of any data model. If you want to add a new cluster to a class, use Alter Class command and ADDCLUSTER command. The following statement is the basic syntax of Create Cluster command. 
+CREATE CLUSTER <cluster> [ID <cluster-id>] 
+ Where <cluster> defines the name of the cluster you want to create and <cluster-id> defines the numeric ID you want to use for the cluster. The following table provides the list of Cluster selection strategies. Sr.No. Strategy & Description 1 Default Selects the cluster using the class property default ClusterId. 2 Round-robin Selects the next cluster in a circular order. It is restarting once complete. 3 Balanced Selects the smallest cluster. Allows the class to have all underlying clusters balanced on size. When adding a new cluster to an existing class, it fills the new cluster first. Example Let us take an example to create a cluster named sales. 
+orientdb> CREATE CLUSTER sales 
+ If the above query is executed successfully, you will get the following output. 
+Cluster created correctly with id #12

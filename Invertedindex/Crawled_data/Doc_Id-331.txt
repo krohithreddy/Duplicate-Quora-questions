@@ -1,0 +1,9 @@
+MySQL - Useful Resources
+
+https://www.tutorialspoint.com/mysql/mysql-useful-resources.htm
+
+Learning, MySQL, Programming, Database, Clauses, Commands, Functions, MySQL Between Clause, Queries, Simple, Steps, Basic, Advanced, Concepts.
+
+August-15-2017-02:34:19
+
+The following resources contain additional information on MySQL. Please use them to get more in-depth knowledge on this topic. Useful Sites on MySQL MySQL and PERL − Its a tutorial from Tutorials Point which explains you how to use MySQL along with PERL and DBI module. Here you will learn all the required MySQL operations alongwith examples. MySQL Official Website − Here you can download the latest MySQL release, get the MySQL news update. The mailing list is also a great resources for anyone who want to build dynamic websites using MySQL. PHP Official Website: − A complete resource for PHP stuff. Starting from latest PHP updates to latest function manual is available at this site. MySQL at Wikipedia − A small article on MySQL, worth to go through it. MySQL Reference Manual − A complete official reference for MySQL. MySQL-sr-lib − MySQL General Purpose Stored Routines Library. This is a A repository of ready to use routines for everyday needs. This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License. Understanding SQL − If you are new to SQL then go through this tutorial to understand SQL basics. SQL, the Structured Query Language, is a mature, powerful, and versatile relational query language. Useful Books on MySQL To enlist your site on this page, please drop an email to contact@tutorialspoint.com

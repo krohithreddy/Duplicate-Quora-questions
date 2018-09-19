@@ -1,0 +1,55 @@
+DB2 - with XML
+
+https://www.tutorialspoint.com/db2/db2_with_xml.htm
+
+DB2 Bufferpools, introduction to db2, db2 server installation, db2 instance, databases, buffer pools, table spaces, storage groups, schemas, data type, tables, alias, constraints, indexes, triggers, sequences, views, db2 with xml, backup and recovery, database security, roles, ldap etc.
+
+August-15-2017-02:34:24
+
+This chapter describes use of XML with DB2. Introduction PureXML feature allows you to store well-formed XML documents in columns of database tables. Those columns have XML database. Data is kept in its native hierarchical form by storing XML data in XML column. The stored XML data can be accessed and managed by DB2 database server functionality. The storage of XML data in its native hierarchical form enables efficient search, retrieval, and update of XML. To update a value in XML data, you need to use XQuery, SQL or combination of both. Creating a database and table for storing XML data Create a database by issuing the following syntax: Syntax: 
+db2 create database xmldb 
+ By default, databases use UTF-8 (UNICODE) code set. Activate the database and connect to it: Syntax: 
+db2 activate db <db_name>
+db2 connect to <db_name> 
+ Example: 
+db2 activate db xmldb 
+db2 connect to xmldb  
+ Create a well-formed XML file and create a table with data type of the column as ‘XML’. It is mandatory to pass the SQL query containing XML syntax within double quotation marks. Syntax: 
+db2 “create table <schema>.<table>(col <datatype>, 
+col <xml datatype>)” 
+ Example: 
+db2 "create table shope.books(id bigint not null 
+primary key, book XML)"   
+ Insert xml values into table, well-formed XML documents are inserted into XML type column using SQL statement ‘INSERT’. Syntax: 
+db2 “insert into <table_name> values(value1, value2)” 
+ Example: 
+db2 "insert into shope.books values(1000, '<catalog>  
+<book> 
+
+<author> Gambardella Matthew</author> 
+<title>XML Developers Guide</title> 
+<genre>Computer</genre> 
+<price>44.95</price> 
+<publish_date>2000-10-01</publish_date> 
+<description>An in-depth look at creating application 
+with XML</description> 
+</book> 
+
+</catalog>')"   
+ Updating XML data in a table You can update XML data in a table by using the following syntax: Syntax: 
+db2 “update <table_name> set <column>=<value> where 
+<column>=<value>”  
+ Example: 
+db2 "update shope.books set book='<catalog>  
+
+<book> 
+<author> Gambardella, Matthew</author>  
+<title>XML Developers Guide</title>  
+<genre>Computer</genre>  
+<price>44.95</price>  
+<publish_date>2000-10-01</publish_date>  
+<description>An in-depth XML</description>
+  
+</book> 
+ 
+</catalog>' where id=1000"

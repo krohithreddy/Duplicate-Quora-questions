@@ -1,0 +1,33 @@
+DB2 - Bufferpools
+
+https://www.tutorialspoint.com/db2/db2_bufferpools.htm
+
+DB2 Bufferpools, introduction to db2, db2 server installation, db2 instance, databases, buffer pools, table spaces, storage groups, schemas, data type, tables, alias, constraints, indexes, triggers, sequences, views, db2 with xml, backup and recovery, database security, roles, ldap etc.
+
+August-15-2017-02:34:24
+
+This chapter introduces you to Bufferpools in the database. Introduction The bufferpool is portion of a main memory space which is allocated by the database manager. The purpose of bufferpools is to cache table and index data from disk. All databases have their own bufferpools. A default bufferpool is created at the time of creation of new database. It called as “IBMDEFAULTBP”. Depending on the user requirements, it is possible to create a number of bufferpools. In the bufferpool, the database manager places the table row data as a page. This page stays in the bufferpool until the database is shutdown or until the space is written with new data. The pages in the bufferpool, which are updated with data but are not written onto the disk, are called “Dirty” pages. After the updated data pages in the bufferpool are written on the disk, the bufferpool is ready to take another data. Relationship between tablespaces and bufferpools Each table space is associated with a specific buffer pool in a database. One tablespace is associated with one bufferpool. The size of bufferpool and tablespace must be same. Multiple bufferpools allow you to configure the memory used by the database to increase its overall performance. Bufferpool sizes The size of the bufferpool page is set when you use the “CREATE DATABASE” command. If you do not specify the page size, it will take default page size, which is 4KB. Once the bufferpool is created, it is not possible to modify the page size later Listing the available bufferpools in the current database directory Syntax: [The syntax below shows all available bufferpools in database] 
+db2 select * from syscat.bufferpools   
+ Example: [To see available bufferpools in current database] 
+db2 select * from syscat.bufferpools  
+ Output: 
+BPNAME      BUFFERPOOLID DBPGNAME   NPAGES      PAGESIZE    ESTORE 
+NUMBLOCKPAGES BLOCKSIZE   NGNAME
+------------------------------------------------------------ 
+IBMDEFAULTBP                                                                                                                
+ 1 -                                                                                                  
+ -2        4096 N                  0           0 -     
+ 
+ 1 record(s) selected.   
+ Creating the bufferpool To create a new bufferpool for database server, you need two parameters namely, “bufferpool name” and “size of page”. The following query is executed to create a new bufferpool. Syntax: [In the syntax below,‘bp_name’ indicates bufferpool name and ‘size’ indicates size for page you need to declare for bufferpools (4K,8K,16K,32K)] 
+db2 create bufferpool <bp_name> pagesize <size> 
+ Example: [To create a new bufferpool with name “bpnew” and size “8192”(8Kb).] 
+db2 create bufferpool bpnew pagesize 8192  
+ Output 
+DB20000I The SQL command completed successfully.  
+ Dropping the bufferpool Before dropping the bufferpool, it is required to check if any tablespace is assigned to it. Syntax: [To drop the bufferpool] 
+drop bufferpool <bp_name>  
+ Example: [To drop ‘bpnew’ named bufferpool] 
+db2 drop bufferpool bpnew  
+ Output 
+DB20000I The SQL command completed successfully.

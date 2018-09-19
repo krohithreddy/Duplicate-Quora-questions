@@ -1,0 +1,17 @@
+Redis - Scripting Script Exists Command
+
+https://www.tutorialspoint.com/redis/scripting_script_exists.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis SCRIPT EXISTS command returns information about the existence of the scripts in the script cache. This command accepts one or more SHA1 digests and returns a list of ones or zeros to signal if the scripts are already defined or not inside the script cache. This can be useful before a pipelining operation to ensure that scripts are loaded (and if not, to load them using SCRIPT LOAD) so that the pipelining operation can be performed solely using EVALSHA instead of EVAL to save bandwidth. Syntax Following is the basic syntax of Redis SCRIPT EXISTS command. 
+redis 127.0.0.1:6379> SCRIPT EXISTS script [script ...]
+ Return Value Array reply - The command returns an array of integers that corresponds to the specified SHA1 digest arguments. For every corresponding SHA1 digest of a script that actually exists in the script cache, 1 is returned, otherwise 0 is returned. Example 
+redis 127.0.0.1:6379> SCRIPT LOAD "return 1" 
+ERR Unknown or disabled command 'SCRIPT' 
+redis 127.0.0.1:6379> SCRIPT EXISTS 
+ff9d4800c877a703b823dsdsfsffewfwefwefweac0578ff8db 
+ERR Unknown or disabled command 'SCRIPT' 
+ redis_scripting.htm

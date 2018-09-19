@@ -1,0 +1,11 @@
+Redis - Server Client List Command
+
+https://www.tutorialspoint.com/redis/server_client_list.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis CLIENT LIST command returns the information and statistics about the client connections server in a human readable format. Return Value Bulk string reply, a unique string. Syntax Following is the basic syntax of Redis CLIENT LIST command. 
+redis 127.0.0.1:6379> CLIENT LIST
+ Description of Fields id − Unique 64-bit client ID (introduced in Redis 2.8.12) addr − Address/port of the client fd − File descriptor corresponding to the socket age − Total duration of the connection in seconds idle − Idle time of the connection in seconds flags − Client flags (see below) db − Current database ID sub − Number of channel subscriptions psub − Number of pattern matching subscriptions multi − Number of commands in a MULTI/EXEC context qbuf − Query buffer length (0 means no query pending) qbuf-free − Free space of the query buffer (0 means the buffer is full) obl − Output buffer length oll − Output list length (replies are queued in this list when the buffer is full) omem − Output buffer memory usage events − File descriptor events (see below) cmd − Last command played redis_server.htm

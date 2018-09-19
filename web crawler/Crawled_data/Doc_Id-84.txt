@@ -1,0 +1,34 @@
+DocumentDB SQL - Array Function
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_array_functions.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+The array functions perform an operation on an array input value and return in the form of numeric, Boolean or array value. Following are the built-in array functions. S.No. Function & Description 1 ARRAY_LENGTH (arr_expr) Returns the number of elements of the specified array expression. 2 ARRAY_CONCAT (arr_expr, arr_expr [, arr_expr]) Returns an array that is the result of concatenating two or more array values. 3 ARRAY_CONTAINS (arr_expr, expr) Returns a Boolean indicating whether the array contains the specified value. 4 ARRAY_SLICE (arr_expr, num_expr [, num_expr]) Returns part of an array expression. Let’s take a look at another example where some built-in array functions are used. Following is the query with different array functions. 
+SELECT 
+   ARRAY_CONCAT(["A", "B"], ["1", "2"], ["#"]) AS ArrConcat, 
+   ARRAY_CONTAINS(["1A", "1B", "1C"], "1B") AS ArrContains, 
+   ARRAY_LENGTH(["1A", "1B", "1C"]) AS ArrLength, 
+   ARRAY_SLICE(["1A", "1B", "1C", "1D"], 1, 2) AS ArrSlice
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "ArrConcat": [ 
+         "A", 
+         "B", 
+         "1", 
+         "2", 
+         "#" 
+      ],
+	  
+      "ArrContains": true,
+      "ArrLength": 3, 
+      "ArrSlice": [ 
+         "1B", 
+         "1C" 
+      ] 
+   } 
+]
+ documentdb_sql_builtin_function.htm

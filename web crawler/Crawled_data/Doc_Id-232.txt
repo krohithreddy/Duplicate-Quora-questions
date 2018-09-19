@@ -1,0 +1,62 @@
+Memcached - Clear Data
+
+https://www.tutorialspoint.com/memcached/memcached_clear_data.htm
+
+Memcached, Tutorial, Beginners, Overview, Environment, Connection,  Set Data, Add Data, Replace Data, Append Data, Prepend Data, Get Data, Delete Data, Stats, Clear Data
+
+August-15-2017-02:34:11
+
+Memcached flush_all command is used to delete all data (key-value pairs) from the Memcached server. It accepts an optional parameter called time, that sets a time after which the Memcached data is to be cleared. Syntax The basic syntax of Memcached flush_all command is as shown below − 
+flush_all [time] [noreply]
+ The above command always returns OK. Example In the following example, we store some data into the Memcached server and then clear all the data. 
+set tutorialspoint 0 900 9
+memcached
+STORED
+get tutorialspoint
+VALUE tutorialspoint 0 9
+memcached
+END
+flush_all
+OK
+get tutorialspoint
+END
+ Clear Data Using Java Application To clear data from a Memcached server, you need to use the Memcached flush method. Example 
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+   
+      try{
+   
+         // Connecting to Memcached server on localhost
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server sucessful.");
+
+         // add data to memcached server
+         Future fo = mcc.set("tutorialspoint", 900, "Free Education");
+
+         // print status of set method
+         System.out.println("set status:" + fo.get());
+
+         // retrieve and check the value from cache
+         System.out.println("tutorialspoint value in cache - " + mcc.get("tutorialspoint"));
+      
+         // now clear all this data
+         System.out.println("Clear data:" + mcc.flush().isDone());
+         
+         // Shutdowns the memcached client
+         mcc.shutdown();
+         
+      }catch(Exception ex){
+         System.out.println(ex.getMessage());
+      }
+   }
+}
+ Output On compiling and executing the program, you get to see the following output − 
+Connection to server successful.
+set status:true
+tutorialspoint value in cache - Free Education
+Clear data:true

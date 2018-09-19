@@ -1,0 +1,66 @@
+XQuery - If Then Else
+
+https://www.tutorialspoint.com/xquery/xquery_ifthenelse.htm
+
+Overview, Environment Setup, First Application, FLWOR, HTML Format, XPath, Sequences, Sequence functions, count, distinct-values, subsequence, sum, avg, min, max, insert-before, remove, reverse, index-of, last, position, String functions, string-length, concat, string-join, Date functions, current-date, current-time, current-dateTime, Regular Expressions, matches, replaces, tokenize, if then else, custom functions
+
+August-15-2017-02:34:10
+
+XQuery provides a very useful if-then-else construct to check the validity of the input values passed. Given below is the syntax of the if-then-else construct. Syntax 
+if (condition) then
+ ... 
+else
+ ... 
+ Example We will use the following books.xml file and apply to it XQuery expression containing an if-then-else construct to retrieve the titles of those books with a price value that is greater than 30. books.xml 
+<?xml version="1.0" encoding="UTF-8"?>
+<books>
+   <book category="JAVA">
+      <title lang="en">Learn Java in 24 Hours</title>
+      <author>Robert</author>
+      <year>2005</year>
+      <price>30.00</price>
+   </book>
+   
+   <book category="DOTNET">
+      <title lang="en">Learn .Net in 24 hours</title>
+      <author>Peter</author>
+      <year>2011</year>
+      <price>40.50</price>
+   </book>
+   
+   <book category="XML">
+      <title lang="en">Learn XQuery in 24 hours</title>
+      <author>Robert</author>
+      <author>Peter</author>
+      <year>2013</year>
+      <price>50.00</price>
+   </book>
+   
+   <book category="XML">
+      <title lang="en">Learn XPath in 24 hours</title>
+      <author>Jay Ban</author>
+      <year>2010</year>
+      <price>16.50</price>
+   </book>
+</books>
+ The following XQuery expression is to be applied on the above XML document. books.xqy 
+<result>
+{
+   if(not(doc("books.xml"))) then (
+      <error>
+         <message>books.xml does not exist</message>
+      </error>
+   )
+   else ( 
+      for $x in doc("books.xml")/books/book	
+      where $x/price>30
+      return $x/title
+   )
+}
+</result>
+ Output 
+<result>
+   <title lang="en">Learn .Net in 24 hours</title>
+   <title lang="en">Learn XQuery in 24 hours</title>
+</result>
+ Verify the Result To verify the result, replace the contents of books.xqy (given in the Environment Setup chapter) with the above XQuery expression and execute the XQueryTester java program.

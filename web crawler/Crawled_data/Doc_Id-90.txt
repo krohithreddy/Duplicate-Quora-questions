@@ -1,0 +1,163 @@
+DocumentDB SQL - Joins
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_joins.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+In relational databases, the Joins clause is used to combine records from two or more tables in a database, and the need to join across tables is very important while designing normalized schemas. Since DocumentDB deals with the denormalized data model of schema-free documents, the JOIN in DocumentDB SQL is the logical equivalent of a "selfjoin". Let’s consider the three documents as in the previous examples. Following is the AndersenFamily document. 
+{ 
+   "id": "AndersenFamily", 
+   "lastName": "Andersen", 
+	
+   "parents": [ 
+      { "firstName": "Thomas", "relationship":  "father" }, 
+      { "firstName": "Mary Kay", "relationship":  "mother" } 
+   ],
+   
+   "children": [ 
+      { 
+         "firstName": "Henriette Thaulow", 
+         "gender": "female", 
+         "grade": 5, 
+         "pets": [ { "givenName": "Fluffy", "type":  "Rabbit" } ] 
+      } 
+   ], 
+   
+   "location": { "state": "WA", "county": "King", "city": "Seattle" }, 
+   "isRegistered": true 
+}
+ Following is the SmithFamily document. 
+{ 
+   "id": "SmithFamily", 
+	
+   "parents": [ 
+      { "familyName": "Smith", "givenName": "James" }, 
+      { "familyName": "Curtis", "givenName": "Helen" } 
+   ],
+   
+   "children": [ 
+      {
+         "givenName": "Michelle", 
+         "gender": "female", 
+         "grade": 1 
+      },
+		
+      { 
+         "givenName": "John", 
+         "gender": "male", 
+         "grade": 7,
+			
+         "pets": [ 
+            { "givenName": "Tweetie", "type": "Bird" } 
+         ] 
+      } 
+   ],
+   
+   "location": { 
+      "state": "NY", 
+      "county": "Queens", 
+      "city": "Forest Hills" 
+   },
+   
+   "isRegistered": true 
+} 
+ Following is the WakefieldFamily document. 
+{ 
+   "id": "WakefieldFamily", 
+	
+   "parents": [ 
+      { "familyName": "Wakefield", "givenName": "Robin" }, 
+      { "familyName": "Miller", "givenName": "Ben" } 
+   ],
+   
+   "children": [ 
+      { 
+         "familyName": "Merriam", 
+         "givenName": "Jesse", 
+         "gender": "female", 
+         "grade": 6,
+			
+         "pets": [ 
+            { "givenName": "Charlie Brown", "type": "Dog" },
+            { "givenName": "Tiger", "type": "Cat" }, 
+            { "givenName": "Princess", "type": "Cat" } 
+         ] 
+      },
+		
+      { 
+         "familyName": "Miller", 
+         "givenName": "Lisa", 
+         "gender": "female", 
+         "grade": 3,
+			
+         "pets": [ 
+            { "givenName": "Jake", "type": "Snake" } 
+         ] 
+      } 
+   ], 
+   
+   "location": { "state": "NY", "county": "Manhattan", "city": "NY" }, 
+   "isRegistered": false 
+} 
+ Let’s take a look at an example to understand how the JOIN clause works. Following is the query which will join the root to children subdocument. 
+SELECT f.id 
+FROM Families f 
+JOIN c IN f.children
+ When the above query is executed, it will produce the following output. 
+[ 
+   { 
+      "id": "WakefieldFamily" 
+   },
+	
+   { 
+      "id": "WakefieldFamily" 
+   },
+	
+   { 
+      "id": "SmithFamily" 
+   },
+	
+   { 
+      "id": "SmithFamily" 
+   },
+	
+   { 
+      "id": "AndersenFamily" 
+   } 
+]
+ In the above example, the join is between the document root and the children sub-root which makes a cross-product between two JSON objects. Following are certain points to note − In the FROM clause, the JOIN clause is an iterator. The first two documents WakefieldFamily and SmithFamily contain two children, hence the result set also contains the cross-product which produces a separate object for each child. The third document AndersenFamily contains only one children, hence there is only a single object corresponding to this document. Let’s take a look at the same example, however this time we retrieve the child name as well for better understanding of JOIN clause. Following is the query which will join the root to children subdocument. 
+SELECT  
+   f.id AS familyName, 
+   c.givenName AS childGivenName, 
+   c.firstName AS childFirstName 
+FROM Families f  
+JOIN c IN f.children
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "familyName": "WakefieldFamily", 
+      "childGivenName": "Jesse" 
+   },
+	
+   { 
+      "familyName": "WakefieldFamily", 
+      "childGivenName": "Lisa" 
+   },
+	
+   { 
+      "familyName": "SmithFamily", 
+      "childGivenName": "Michelle" 
+   },
+	
+   { 
+      "familyName": "SmithFamily", 
+      "childGivenName": "John" 
+   },
+	
+   { 
+      "familyName": "AndersenFamily", 
+      "childFirstName": "Henriette Thaulow" 
+   } 
+]

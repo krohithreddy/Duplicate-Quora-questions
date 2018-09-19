@@ -1,0 +1,63 @@
+PouchDB - Create Document
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_create_document.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+You can create a document in PouchDB using the db.put() method. Syntax Following is the syntax of using the db.put() method of PouchDB. You can store the document that is to be created in PouchDB, in a variable and pass as a parameter to this method. In addition, this method also accepts a callback (optional) function as a parameter. 
+db.put(document, callback)
+ Example Following is an example of creating a document in PouchDB using the put() method. The document we create should be of JSON format, a set of key-value pairs separated by comma (,) and enclosed within curly braces ({}). 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//Preparing the document
+doc = {
+   _id : '001',
+   name: 'Raju',
+   age : 23,
+   designation : 'Designer'
+   }
+//Inserting Document
+db.put(doc, function(err, response) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log("Document created Successfully");
+   }
+});
+ Save the above code in a file with name Create_Document.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Create_Document.js
+ This creates the given document in PouchDB database named my_database, which is stored locally, displaying the following message. 
+Document created Successfully
+ Inserting a Document in a Remote Database You can also insert a document in the database that is stored remotely on the server (CouchDB). To do so, instead of database name you need to pass the path to the database where you want to create documents in CouchDB. Example Suppose there is a database named my_database in the CouchDB server. Then, if you verify the list of databases in CouchDB using the URL http://127.0.0.1:5984/_utils/index.html you will get the following screenshot. Now, if you click on the database named my_database, you will find an empty database as shown in the following screenshot. Following is an example of inserting a document in a database named my_database that is saved in the CouchDB server. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('http://localhost:5984/my_database');
+
+//Preparing the document
+doc = {
+   _id : '001',
+   name: 'Raju',
+   age : 23,
+   designation : 'Designer'
+   }
+//Inserting Document
+db.put(doc, function(err, response) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log("Document created Successfully");
+   }
+});
+ Save the above code in a file with the name Remote_Create_Document.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Remote_Create_Document.js
+ This creates the given document in PouchDB database named my_database which is stored in CouchDB, displaying the following message. 
+Document created Successfully
+ Verification After executing the above program, if you visit the my_database again, you can observe the document created as shown in the following screenshot.

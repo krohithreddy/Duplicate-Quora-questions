@@ -1,0 +1,26 @@
+DB2 - Views
+
+https://www.tutorialspoint.com/db2/db2_views.htm
+
+DB2 Bufferpools, introduction to db2, db2 server installation, db2 instance, databases, buffer pools, table spaces, storage groups, schemas, data type, tables, alias, constraints, indexes, triggers, sequences, views, db2 with xml, backup and recovery, database security, roles, ldap etc.
+
+August-15-2017-02:34:24
+
+This chapter describes introduction of views, creating, modifying and dropping the views. Introduction A view is an alternative way of representing the data stored in the tables. It is not an actual table and it does not have any permanent storage. View provides a way of looking at the data in one or more tables. It is a named specification of a result table. Creating a view You can create a view using the following syntax: Syntax: 
+db2 create view <view_name> (<col_name>,
+<col_name1...) as select <cols>.. 
+from <table_name> 
+ Example: Creating view for shopper.sales1 table 
+db2 create view view_sales1(id, itemname, qty, price) 
+as select id, itemname, qty, price from 
+shopper.sales1  
+ Modifying a view You can modify a view using the following syntax: Syntax: 
+db2 alter view <view_name> alter <col_name> 
+add scope <table_or_view_name> 
+ Example: [To add new table column to existing view ‘view_sales1’] 
+db2 alter view view_sales1 alter id add 
+scope shopper.sales1  
+ Dropping the view You can drop a view using the following syntax: Syntax: 
+db2 drop view <view_name> 
+ Example: 
+db2 drop view sales1_view

@@ -1,0 +1,76 @@
+MariaDB - Like Clause
+
+https://www.tutorialspoint.com/mariadb/mariadb_like_clause.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+The WHERE clause provides a way to retrieve data when an operation uses an exact match. In situations requiring multiple results with shared characteristics, the LIKE clause accommodates broad pattern matching. A LIKE clause tests for a pattern match, returning a true or false. The patterns used for comparison accept the following wildcard characters: “%”, which matches numbers of characters (0 or more); and “_”, which matches a single character. The “_” wildcard character only matches characters within its set, meaning it will ignore latin characters when using another set. The matches are case-insensitive by default requiring additional settings for case sensitivity. A NOT LIKE clause allows for testing the opposite condition, much like the not operator. If the statement expression or pattern evaluate to NULL, the result is NULL. Review the general LIKE clause syntax given below − 
+SELECT field, field2,... FROM table_name, table_name2,...
+WHERE field LIKE condition
+ Employ a LIKE clause either at the command prompt or within a PHP script. The Command Prompt At the command prompt, simply use a standard command − 
+root@host# mysql -u root -p password;
+Enter password:*******
+mysql> use TUTORIALS;
+Database changed
+mysql> SELECT * from products_tbl
+   WHERE product_manufacturer LIKE 'XYZ%';
++-------------+----------------+----------------------+
+| ID_number   | Nomenclature   | product_manufacturer |
++-------------+----------------+----------------------+
+| 12345       | Orbitron 4000  | XYZ Corp             |
++-------------+----------------+----------------------+
+| 12346       | Orbitron 3000  | XYZ Corp             |
++-------------+----------------+----------------------+
+| 12347       | Orbitron 1000  | XYZ Corp             |
++-------------+----------------+----------------------+
+ PHP Script Using Like Clause Use the mysql_query() function in statements employing the LIKE clause 
+<?php
+   $dbhost = 'localhost:3036';
+   $dbuser = 'root';
+   $dbpass = 'rootpassword';
+   $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+   
+   if(! $conn ) {
+      die('Could not connect: ' . mysql_error());
+   }
+
+   $sql = 'SELECT product_id, product_name, product_manufacturer, ship_date
+      FROM products_tbl WHERE product_manufacturer LIKE "xyz%"';
+   
+   mysql_select_db('PRODUCTS');
+   $retval = mysql_query( $sql, $conn );
+   
+   if(! $retval ) {
+      die('Could not get data: ' . mysql_error());
+   }
+
+   while($row = mysql_fetch_array($retval, MYSQL_ASSOC)) {
+      echo "Product ID:{$row['product_id']} <br> ".
+         "Name: {$row['product_name']} <br> ".
+         "Manufacturer: {$row['product_manufacturer']} <br> ".
+         "Ship Date: {$row['ship_date']} <br> ".
+         "--------------------------------<br>";
+   }
+   
+   echo "Fetched data successfully\n";
+   mysql_close($conn);
+?>
+ On successful data retrieval, you will see the following output − 
+Product ID: 12345
+Nomenclature: Orbitron 4000
+Manufacturer: XYZ Corp
+Ship Date: 01/01/17
+----------------------------------------------
+Product ID: 12346
+Nomenclature: Orbitron 3000
+Manufacturer: XYZ Corp
+Ship Date: 01/02/17
+----------------------------------------------
+Product ID: 12347
+Nomenclature: Orbitron 1000
+Manufacturer: XYZ Corp
+Ship Date: 01/02/17
+----------------------------------------------
+mysql> Fetched data successfully

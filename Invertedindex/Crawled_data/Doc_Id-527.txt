@@ -1,0 +1,69 @@
+PostgreSQL - ALIAS Syntax
+
+https://www.tutorialspoint.com/postgresql/postgresql_alias_syntax.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+You can rename a table or a column temporarily by giving another name, which is known as ALIAS. The use of table aliases means to rename a table in a particular PostgreSQL statement. Renaming is a temporary change and the actual table name does not change in the database. The column aliases are used to rename a table's columns for the purpose of a particular PostgreSQL query. Syntax The basic syntax of table alias is as follows − 
+SELECT column1, column2....
+FROM table_name AS alias_name
+WHERE [condition];
+ The basic syntax of column alias is as follows − 
+SELECT column_name AS alias_name
+FROM table_name
+WHERE [condition];
+ Example Consider the following two tables, (a) COMPANY table is as follows − 
+testdb=# select * from COMPANY;
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+(7 rows)
+ (b) Another table is DEPARTMENT as follows − 
+ id | dept         | emp_id
+----+--------------+--------
+  1 | IT Billing   |      1
+  2 | Engineering  |      2
+  3 | Finance      |      7
+  4 | Engineering  |      3
+  5 | Finance      |      4
+  6 | Engineering  |      5
+  7 | Finance      |      6
+(7 rows)
+ Now, following is the usage of TABLE ALIAS where we use C and D as aliases for COMPANY and DEPARTMENT tables, respectively − 
+testdb=# SELECT C.ID, C.NAME, C.AGE, D.DEPT
+   FROM COMPANY AS C, DEPARTMENT AS D
+   WHERE  C.ID = D.EMP_ID;
+ The above given PostgreSQL statement will produce the following result − 
+ id | name  | age |  dept
+----+-------+-----+------------
+  1 | Paul  |  32 | IT Billing
+  2 | Allen |  25 | Engineering
+  7 | James |  24 | Finance
+  3 | Teddy |  23 | Engineering
+  4 | Mark  |  25 | Finance
+  5 | David |  27 | Engineering
+  6 | Kim   |  22 | Finance
+(7 rows)
+ Let us see an example for the usage of COLUMN ALIAS where COMPANY_ID is an alias of ID column and COMPANY_NAME is an alias of name column − 
+testdb=# SELECT C.ID AS COMPANY_ID, C.NAME AS COMPANY_NAME, C.AGE, D.DEPT
+   FROM COMPANY AS C, DEPARTMENT AS D
+   WHERE  C.ID = D.EMP_ID;
+ The above given PostgreSQL statement will produce the following result − 
+ company_id | company_name | age | dept
+------------+--------------+-----+------------
+      1     | Paul         |  32 | IT Billing
+      2     | Allen        |  25 | Engineering
+      7     | James        |  24 | Finance
+      3     | Teddy        |  23 | Engineering
+      4     | Mark         |  25 | Finance
+      5     | David        |  27 | Engineering
+      6     | Kim          |  22 | Finance
+(7 rows)

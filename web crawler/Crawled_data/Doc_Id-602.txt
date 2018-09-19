@@ -1,0 +1,213 @@
+PouchDB - Update Batch
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_update_batch.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+You can update an array of documents in PouchDB at once using the bulkDocs() method. To do so you need to create an array of documents where, each document contains _id, _rev and the values that are to be updated. Suppose the database named my_database that is stored locally in PouchDB contains 3 documents namely doc1, doc2, doc3 with the following contents. 
+doc1 = {_id: '001', name: 'Ram', age: 23, Designation: 'Programmer'}
+doc2 = {_id: '002', name: 'Robert', age: 24, Designation: 'Programmer'}
+doc3 = {_id: '003', name: 'Rahim', age: 25, Designation: 'Programmer'}
+ Suppose we have to increase the age values in all the 3 documents by 2 years. For this to happen, first you need to get the _rev values. Therefore, fetch the contents of these documents using the following code. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//Retrieving all the documents in PouchDB
+db.allDocs({include_docs: true},function(err, docs) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(docs.rows);
+   }
+});
+ Save the above code as bulk_fetch.js. On executing, the above program gives you the _id and _rev values of the documents in the database as shown below. 
+[ 
+   { 
+      id: '001',
+      key: '001',
+      value: { rev: '1-1604b0c3ff69dc1e261265fd60808404' } 
+   },
+   { 
+      id: '002',
+      key: '002',
+      value: { rev: '1-b5e49db7e984841bf12a13e3ee548125' } 
+   },
+   { 
+      id: '003',
+      key: '003',
+      value: { rev: '1-a7b342786ecc707aa91f3b321a177b51' } 
+   } 
+]
+ Now, you can update the documents using their respective _id and _rev values as shown below. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_databas');
+
+//Preparing the document
+docs = [{_id : '001', _rev: '1-1604b0c3ff69dc1e261265fd60808404', age : 25, },
+      {_id : '002', _rev: '1-b5e49db7e984841bf12a13e3ee548125', age : 26, },
+      {_id : '003', _rev: '1-a7b342786ecc707aa91f3b321a177b51', age : 27 }]
+
+//Updating the documents in bulk
+db.bulkDocs(docs, function(err, response) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log("Documents Updated Successfully");
+   }
+});
+ Save the above code in a file with the name Update_All_Document.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Update_All_Document.js
+ This updates all the documents that exists in the database named my_database which is stored locally, displaying the following message. 
+Documents Updated Successfully
+ Now, if you execute the bulk_fetch.js program by adding {include_docs: true} as a parameter to allDocs() function, before the callback, then, you will can see the values of the documents updated, as shown below. 
+[ 
+   { 
+      id: '001',
+      key: '001',
+      value: { rev: '2-77f3a9974dd578d12f3f2a33aae64c8d' },
+      doc: { 
+         age: 25,
+         _id: '001',
+         _rev: '2-77f3a9974dd578d12f3f2a33aae64c8d' 
+      } 
+   },
+   { 
+      id: '002',
+      key: '002',
+      value: { rev: '2-43966007568ce9567c96422195fcfa0d' },
+      doc: { 
+         age: 26,
+         _id: '002',
+         _rev: '2-43966007568ce9567c96422195fcfa0d' 
+      } 
+   },
+   { 
+      id: '003',
+      key: '003',
+      value: { rev: '2-6c5349652527f4f39583ff14f23cd677' },
+      doc: { 
+         age: 27,
+         _id: '003',
+         _rev: '2-6c5349652527f4f39583ff14f23cd677' 
+      } 
+   } 
+]
+ Updating Batch from a Remote Database You can update all the documents from the database that is stored remotely on the server (CouchDB). To do so, instead of a database name, you need to pass the path to the database in CouchDB, which contains the document that is to be read. Example Suppose there is a database named my_database in the CouchDB server. Then, if you verify the list of databases in CouchDB using the URL http://127.0.0.1:5984/_utils/index.html you will get the following screenshot. And assume if we select the database named my_database, you can observe that it contains 3 documents as shown in the following screenshot. Now, fetch the contents of these documents using the following code. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('http://localhost:5984/my_database');
+
+//Retrieving all the documents in PouchDB
+db.allDocs({include_docs: true}, function(err, docs) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(docs.rows);
+   }
+});
+ Save the above code as remote_bulk_fetch.js. On executing, the above program gives you the contents of all the documents in the database as shown below. 
+[ 
+   { 
+      id: '001', 
+      key: '001', 
+      value: { rev: '3-552920d1ca372986fad7b996ce365f5d' }, 
+      doc: { 
+         _id: '001', 
+         _rev: '3-552920d1ca372986fad7b996ce365f5d', 
+         name: 'Raju', 
+         age: 23, 
+         designation: 'Designer' 
+      } 
+   },
+   { 
+      id: '002', 
+      key: '002', 
+      value: { rev: '1-9af15cb11054ebe03a7816bf6c5e4128' }, 
+      doc: { 
+         _id: '002', 
+         _rev: '1-9af15cb11054ebe03a7816bf6c5e4128', 
+         name: 'Robert', 
+         age: 24, 
+         Designation: 'Programmer' 
+      } 
+   }, 
+   { 
+      id: '003', 
+      key: '003', 
+      value: { rev: '1-3033b5a78e915c52fd37325d42eb3935' }, 
+      doc: { 
+         _id: '003',
+         _rev: '1-3033b5a78e915c52fd37325d42eb3935',
+         name: 'Rahim', 
+         age: 25, 
+         Designation: 'Programmer' 
+      } 
+   } 
+]
+ Following is an example of updating all the documents that exists in a database named my_database which is stored in the CouchDB server. 
+//Requiring the package 
+var PouchDB = require('PouchDB');
+
+//Creating the database object 
+var db = new PouchDB('http://localhost:5984/my_database'); 
+
+//Preparing the document 
+docs = [{_id : '001', _rev: '3-552920d1ca372986fad7b996ce365f5d', age : 24, }, 
+      {_id : '002', _rev: '1-9af15cb11054ebe03a7816bf6c5e4128', age : 26, }, 
+      {_id : '003', _rev: '1-3033b5a78e915c52fd37325d42eb3935', age : 27}]
+
+//Inserting Document 
+db.bulkDocs(docs, function(err, response) { 
+   if (err) { 
+      return console.log(err); 
+   } else { 
+      console.log(+"Documents Updated Successfully"); 
+   } 
+});
+ Save the above code in a file with the name Remote_Update_Document.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Remote_Update_Document.js
+ This updates the contents of all given document that exists in the database named my_database which is stored in CouchDB, and displays the following message. 
+Documents Updated Successfully
+ Now, if you execute the remote_bulk_fetch.js program you will can see the values of the documents updated, as shown below. 
+[ 
+   { 
+      id: '001',
+      key: '001',
+      value: { rev: '4-6bc8d9c7a60fed2ed1667ec0740c1f39' },
+      doc: { 
+         _id: '001',
+         _rev: '4-6bc8d9c7a60fed2ed1667ec0740c1f39',
+         age: 25 
+      } 
+   },
+   { 
+      id: '002',
+      key: '002',
+      value: { rev: '2-1aa24ce77d96bb9d2a0675cdf1e113e0' },
+      doc: { 
+         _id: '002',
+         _rev: '2-1aa24ce77d96bb9d2a0675cdf1e113e0',
+         age: 26 
+      } 
+   },
+   { 
+      id: '003',
+      key: '003',
+      value: { rev: '2-fa113149ba618eda77f73072974a2bc1' },
+      doc: { 
+         _id: '003',
+         _rev: '2-fa113149ba618eda77f73072974a2bc1',
+         age: 27 
+      } 
+   } 
+]

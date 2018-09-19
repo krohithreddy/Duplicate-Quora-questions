@@ -1,0 +1,38 @@
+CouchDB - Attaching Files
+
+https://www.tutorialspoint.com/couchdb/couchdb_attaching_files.htm
+
+CouchDB, Introduction, Installation, Curl and Futon, Http API, Creating a Database, Deleting a Database, Creating a Document, Updating a Document, Deleting a Document, Attaching Files.
+
+August-15-2017-02:34:06
+
+Attaching Files using cURL You can attach files to CouchDB just like email. The file contains metadata like name and includes its MIME type, and the number of bytes the attachment contains. To attach files to a document you have to send PUT request to the server. Following is the syntax to attach files to the document − 
+$ curl -vX PUT http://127.0.0.1:5984/database_name/database_id
+/filename?rev=document rev_id --data-binary @filename -H "Content-Type:
+type of the content"
+ The request has various options that are explained below. --data-binary@ - This option tells cURL to read a file’s contents into the HTTP request body. -H - This option is used to mention the content type of the file we are going to upload. Example Let us attach a file named boy.jpg, to the document with id 001, in the database named my_database by sending PUT request to CouchDB. Before that, you have to fetch the data of the document with id 001 to get its current rev id as shown below. 
+$ curl -X GET http://127.0.0.1:5984/my_database/001
+{
+   "_id": "001",
+   "_rev": "1-967a00dff5e02add41819138abb3284d"
+}
+ Now using the _rev value, send the PUT request to the CouchDB server as shown below. 
+$ curl -vX PUT http://127.0.0.1:5984/my_database/001/boy.jpg?rev=1-
+967a00dff5e02add41819138abb3284d --data-binary @boy.jpg -H "ContentType:
+image/jpg"
+ Verification To verify whether the attachment is uploaded, fetch the document content as shown below− 
+$ curl -X GET http://127.0.0.1:5984/my_database/001
+{
+   "_id": "001",
+   "_rev": "2-4705a219cdcca7c72aac4f623f5c46a8",
+   "_attachments": {
+      "boy.jpg": {
+         "content_type": "image/jpg",
+         "revpos": 2,
+         "digest": "md5-9Swz8jvmga5mfBIsmCxCtQ==",
+         "length": 91408,
+         "stub": true
+      }
+   }
+}
+ Attaching Files using Futon Upload Attachment Using this option, you can upload a new attachment such as a file, image, or document, to the database. To do so, click on the Upload Attachment button. A dialog box will appear where you can choose the file to be uploaded. Select the file and click on the Upload button. The file uploaded will be displayed under _attachments field. Later you can see the file by clicking on it.

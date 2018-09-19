@@ -1,0 +1,29 @@
+OrientDB - Delete Record
+
+https://www.tutorialspoint.com/orientdb/orientdb_delete_record.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Delete Record command is used to delete one or more records completely from the database. The following statement is the basic syntax of the Delete command. 
+DELETE FROM <Class>|cluster:<cluster>|index:<index> 
+   [LOCK <default|record>] 
+   [RETURN <returning>] 
+   [WHERE <Condition>*] 
+   [LIMIT <MaxRecords>] 
+   [TIMEOUT <timeout>]
+ Following are the details about the options in the above syntax. LOCK − Specifies how to lock the records between load and update. We have two options to specify Default and Record. RETURN − Specifies an expression to return instead of the number of records. LIMIT − Defines the maximum number of records to update. TIMEOUT − Defines the time you want to allow the update run before it times out. Note − Don’t use DELETE to remove Vertices or Edges because it effects the integrity of the graph. Example Let us consider the Customer table. Sr.No. Name Age 1 Satish 25 2 Krishna 26 3 Kiran 29 4 Javeed 21 Try the following query to delete the record having id = 4. 
+orientdb {db = demo}> DELETE FROM Customer WHERE id = 4
+ If the above query is executed successfully, you will get the following output. 
+Delete 1 record(s) in 0.008000 sec(s).
+ To check the record of Customer table you can use the following query. 
+Orientdb {db = demo}> SELECT FROM Customer
+ If the above query is executed successfully, you will get the following output. 
+----+-----+--------+----+-------+---- 
+#   |@RID |@CLASS  |id  |name   |age  
+----+-----+--------+----+-------+---- 
+0   |#11:0|Customer|1   |satish |25   
+1   |#11:1|Customer|2   |krishna|26   
+2   |#11:2|Customer|3   |kiran  |29 
+----+-----+--------+----+-------+----

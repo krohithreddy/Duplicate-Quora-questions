@@ -1,0 +1,48 @@
+MySQLi - Real Connect
+
+https://www.tutorialspoint.com/mysqli/mysqli_real_connect.htm
+
+MySQLi, Tutorial, Learning, Introduction, Installation, Administration, PHP Syntax, Connection, Create, Drop, Info, Select Database, Data Types, Create, Drop, Clone Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Sorting Results, Using Joins, NULL Values, Regexps, Transactions, Alter Command, Indexes, Temporary, Using Sequences, Handling Duplicate.
+
+August-15-2017-02:34:19
+
+Syntax 
+bool mysqli_real_connect ( mysqli $link 
+   [, string $host 
+   [, string $username 
+   [, string $passwd 
+   [, string $dbname 
+   [, int $port 
+   [, string $socket 
+   [, int $flags ]]]]]]] )
+ Definition and Usage It opens a connection to a mysql server. Example Try out following example − 
+<?php
+   $servername = "localhost:3306";
+   $username = "root";
+   $password = "";
+   $dbname = "TUTORIALS";
+   $conn = new mysqli($servername, $username, $password, $dbname);
+   
+   if (!$conn->real_connect($servername, $username, $password, $dbname)) {
+      die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+   }
+   echo 'Success... ' . mysqli_get_host_info($conn) . "\n";
+   
+   $stmt = $conn->prepare("INSERT INTO tutorials_auto (id, name) VALUES (?, ?)");
+   $stmt->bind_param("is", $id, $name);
+   $id = "10";
+   $name = "sai";
+   $stmt->execute();
+   echo "New records created successfully";
+   
+   $stmt->close();
+   
+   if ($result = $conn->query("SELECT name FROM tutorials_auto LIMIT 10")) {
+      printf("Select returned %d rows.\n", $result->num_rows);
+      $result->close();
+   }
+   $conn->close();
+?>
+ The sample output of the above code should be like this − 
+Success... localhost:3306 via TCP/IP New records created successfullySelect returned 3 rows.
+ mysqli_useful_functions.htm

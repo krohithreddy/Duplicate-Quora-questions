@@ -1,0 +1,27 @@
+OrientDB - Create Class
+
+https://www.tutorialspoint.com/orientdb/orientdb_create_class.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+OrientDB supports multi-model feature and provides different ways in approaching and understanding the basic concepts of a database. However, we can easily access these models from the perspective of Document database API. Like RDBMS, OrientDB also uses the Record as an element of storage but it uses the Document type. Documents are stored in the form of Key/Value pairs. We are storing fields and properties as key/value pairs which belong to a concepts class. Class is a type of data model and the concept is drawn from the Object-oriented programming paradigm. Based on the traditional document database model, data is stored in the form of collection, while in the relational database model data it is stored in tables. OrientDB follows the Document API along with OPPS paradigm. As a concept, class in OrientDB has the closest relationship with the table in relational databases, but (unlike tables) classes can be schema-less, schema-full or mixed. Classes can inherit from other classes, creating trees of classes. Each class has its own cluster or clusters, (created by default, if none are defined). The following statement is the basic syntax of the Create Class Command. 
+CREATE CLASS <class> 
+[EXTENDS <super-class>] 
+[CLUSTER <cluster-id>*] 
+[CLUSTERS <total-cluster-number>] 
+[ABSTRACT]
+ Following are the details about the options in the above syntax. <class> − Defines the name of the class you want to create. <super-class> − Defines the super-class you want to extend with this class. <total-cluster-number> − Defines the total number of clusters used in this class. Default is 1. ABSTARCT − Defines the class is abstract. This is optional. Example As discussed, class is a concept related to table. Therefore here we will create a table Account. However, while creating class we cannot define fields i.e., properties based on OOPS paradigm. The following command is to create a class named Account. 
+orientdb> CREATE CLASS Account
+ If the above command is executed successfully, you will get the following output. 
+Class created successfully 
+ You can use the following command to create a class Car which extends to class Vehicle. 
+orientdb> CREATE CLASS Car EXTENDS Vehicle 
+ If the above command is executed successfully, you will get the following output. 
+Class created successfully
+ You can use the following command to create a class Person as abstract. 
+orientdb> CREATE CLASS Person ABSTRACT 
+ If the above command is executed successfully, you will get the following output. 
+Class created successfully 
+ Note − Without having properties, the class is useless and unable to build real object. In the further chapters, you can learn how to create properties for a particular class.

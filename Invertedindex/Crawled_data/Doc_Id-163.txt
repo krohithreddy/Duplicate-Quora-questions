@@ -1,0 +1,50 @@
+HSQLDB - Insert Query
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_insert_query.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+You can achieve Insert query statement in HSQLDB by using the INSERT INTO command. You have to provide the user-defined data following the column field order from the table. Syntax Following is the generic syntax to INSERT a query. 
+INSERT INTO table_name (field1, field2,...fieldN)
+VALUES (value1, value2,...valueN );
+ To insert a string type data into a table, you will have to use double or single quotes to provide string value into the insert query statement. Example Let us consider an example that inserts a record into a table named tutorials_tbl with the values id = 100, title = Learn PHP, Author = John Poul, and the submission date is current date. Following is the query for the given example. 
+INSERT INTO tutorials_tbl VALUES (100,'Learn PHP', 'John Poul', NOW());
+ After execution of the above query, you will receive the following output − 
+1 row effected
+ HSQLDB – JDBC Program Here is the JDBC program to insert the record into the table with the given values, id =100, title = Learn PHP, Author = John Poul, and the submission date is current date. Take a look at the given program. Save the code into the InserQuery.java file. 
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.Statement;  
+
+public class InsertQuery {
+   public static void main(String[] args) { 
+      Connection con = null; 
+      Statement stmt = null; 
+      int result = 0; 
+      try { 
+         Class.forName("org.hsqldb.jdbc.JDBCDriver"); 
+         con = DriverManager.getConnection( "jdbc:hsqldb:hsql://localhost/testdb", "SA", ""); 
+         stmt = con.createStatement(); 
+         result = stmt.executeUpdate("INSERT INTO tutorials_tbl 
+            VALUES (100,'Learn PHP', 'John Poul', NOW())"); 
+         con.commit(); 
+      }catch (Exception e) { 
+         e.printStackTrace(System.out); 
+      } 
+      System.out.println(result+" rows effected"); 
+      System.out.println("Rows inserted successfully"); 
+   } 
+} 
+ You can start the database using the following command. 
+\>cd C:\hsqldb-2.3.4\hsqldb 
+hsqldb>java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0 
+file:hsqldb/demodb --dbname.0 testdb 
+ Compile and execute the above program using the following command. 
+\>javac InsertQuery.java 
+\>java InsertQuery 
+ After execution of the above command, you will receive the following output − 
+1 rows effected 
+Rows inserted successfully 
+ Try to insert the following records into the tutorials_tbl table by using the INSERT INTO command. Id Title Author Submission Date 101 Learn C Yaswanth Now() 102 Learn MySQL Abdul S Now() 103 Learn Excell Bavya kanna Now() 104 Learn JDB Ajith kumar Now() 105 Learn Junit Sathya Murthi Now()

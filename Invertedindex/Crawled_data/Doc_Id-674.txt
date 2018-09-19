@@ -1,0 +1,131 @@
+SQL - Logical Operators
+
+https://www.tutorialspoint.com/sql/sql-logical-operators.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+Consider the CUSTOMERS table having the following records − 
+SQL> SELECT * FROM CUSTOMERS;
+ 
++----+----------+-----+-----------+----------+
+| ID | NAME     | AGE | ADDRESS   | SALARY   |
++----+----------+-----+-----------+----------+
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 |
+|  2 | Khilan   |  25 | Delhi     |  1500.00 |
+|  3 | kaushik  |  23 | Kota      |  2000.00 |
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 |
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 |
+|  6 | Komal    |  22 | MP        |  4500.00 |
+|  7 | Muffy    |  24 | Indore    | 10000.00 |
++----+----------+-----+-----------+----------+
+7 rows in set (0.00 sec)
+ Here are some simple examples showing usage of SQL Comparison Operators − Example 1 
+SQL> SELECT * FROM CUSTOMERS WHERE AGE >= 25 AND SALARY >= 6500;
+ Output 
++----+----------+-----+---------+---------+
+| ID | NAME     | AGE | ADDRESS | SALARY  |
++----+----------+-----+---------+---------+
+|  4 | Chaitali |  25 | Mumbai  | 6500.00 |
+|  5 | Hardik   |  27 | Bhopal  | 8500.00 |
++----+----------+-----+---------+---------+
+2 rows in set (0.00 sec)
+ Example 2 
+SQL> SELECT * FROM CUSTOMERS WHERE AGE >= 25 OR SALARY >= 6500;
+ Output 
++----+----------+-----+-----------+----------+
+| ID | NAME     | AGE | ADDRESS   | SALARY   |
++----+----------+-----+-----------+----------+
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 |
+|  2 | Khilan   |  25 | Delhi     |  1500.00 |
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 |
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 |
+|  7 | Muffy    |  24 | Indore    | 10000.00 |
++----+----------+-----+-----------+----------+
+5 rows in set (0.00 sec)
+ Example 3 
+SQL>  SELECT * FROM CUSTOMERS WHERE AGE IS NOT NULL;
+ Output +----+----------+-----+-----------+----------+
+| ID | NAME     | AGE | ADDRESS   | SALARY   |
++----+----------+-----+-----------+----------+
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 |
+|  2 | Khilan   |  25 | Delhi     |  1500.00 |
+|  3 | kaushik  |  23 | Kota      |  2000.00 |
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 |
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 |
+|  6 | Komal    |  22 | MP        |  4500.00 |
+|  7 | Muffy    |  24 | Indore    | 10000.00 |
++----+----------+-----+-----------+----------+
+7 rows in set (0.00 sec)
+ Example 4 
+SQL> SELECT * FROM CUSTOMERS WHERE NAME LIKE 'Ko%';
+ Output 
++----+-------+-----+---------+---------+
+| ID | NAME  | AGE | ADDRESS | SALARY  |
++----+-------+-----+---------+---------+
+|  6 | Komal |  22 | MP      | 4500.00 |
++----+-------+-----+---------+---------+
+1 row in set (0.00 sec)
+ Example 5 
+SQL> SELECT * FROM CUSTOMERS WHERE AGE IN ( 25, 27 );
+ Output 
++----+----------+-----+---------+---------+
+| ID | NAME     | AGE | ADDRESS | SALARY  |
++----+----------+-----+---------+---------+
+|  2 | Khilan   |  25 | Delhi   | 1500.00 |
+|  4 | Chaitali |  25 | Mumbai  | 6500.00 |
+|  5 | Hardik   |  27 | Bhopal  | 8500.00 |
++----+----------+-----+---------+---------+
+3 rows in set (0.00 sec)
+ Example 6 
+SQL> SELECT * FROM CUSTOMERS WHERE AGE BETWEEN 25 AND 27;
+ Output 
++----+----------+-----+---------+---------+
+| ID | NAME     | AGE | ADDRESS | SALARY  |
++----+----------+-----+---------+---------+
+|  2 | Khilan   |  25 | Delhi   | 1500.00 |
+|  4 | Chaitali |  25 | Mumbai  | 6500.00 |
+|  5 | Hardik   |  27 | Bhopal  | 8500.00 |
++----+----------+-----+---------+---------+
+3 rows in set (0.00 sec)
+ Example 7 
+SQL> SELECT AGE FROM CUSTOMERS 
+WHERE EXISTS (SELECT AGE FROM CUSTOMERS WHERE SALARY > 6500);
+ Output 
++-----+
+| AGE |
++-----+
+|  32 |
+|  25 |
+|  23 |
+|  25 |
+|  27 |
+|  22 |
+|  24 |
++-----+
+7 rows in set (0.02 sec)
+ Example 8 
+SQL> SELECT * FROM CUSTOMERS 
+WHERE AGE > ALL (SELECT AGE FROM CUSTOMERS WHERE SALARY > 6500);
+ Output 
++----+--------+-----+-----------+---------+
+| ID | NAME   | AGE | ADDRESS   | SALARY  |
++----+--------+-----+-----------+---------+
+|  1 | Ramesh |  32 | Ahmedabad | 2000.00 |
++----+--------+-----+-----------+---------+
+1 row in set (0.02 sec)
+ Example 9 
+SQL> SELECT * FROM CUSTOMERS 
+WHERE AGE > ANY (SELECT AGE FROM CUSTOMERS WHERE SALARY > 6500);
+ Output 
++----+----------+-----+-----------+---------+
+| ID | NAME     | AGE | ADDRESS   | SALARY  |
++----+----------+-----+-----------+---------+
+|  1 | Ramesh   |  32 | Ahmedabad | 2000.00 |
+|  2 | Khilan   |  25 | Delhi     | 1500.00 |
+|  4 | Chaitali |  25 | Mumbai    | 6500.00 |
+|  5 | Hardik   |  27 | Bhopal    | 8500.00 |
++----+----------+-----+-----------+---------+
+4 rows in set (0.00 sec)
+ sql-operators.htm

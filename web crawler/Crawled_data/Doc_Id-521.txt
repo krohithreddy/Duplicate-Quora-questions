@@ -1,0 +1,55 @@
+PL/SQL - Relational Operators
+
+https://www.tutorialspoint.com/plsql/plsql_relational_operators.htm
+
+PL/SQL, syntax, Environment Setup, Operators, Transactions, Date and Time, data types, variables, constants, records, conditional statements, iterative statements, cursors, procedures, functions, exception handling, triggers, packages, collections, external procedures, arrays, strings, dbms output.
+
+August-15-2017-02:34:06
+
+Relational operators compare two expressions or values and return a Boolean result. Following table shows all the relational operators supported by PL/SQL. Let us assume variable A holds 10 and variable B holds 20, then − Operator Description Example = Checks if the values of two operands are equal or not, if yes then condition becomes true. (A = B) is not true. != <> ~= Checks if the values of two operands are equal or not, if values are not equal then condition becomes true. (A != B) is true. > Checks if the value of left operand is greater than the value of right operand, if yes then condition becomes true. (A > B) is not true. < Checks if the value of left operand is less than the value of right operand, if yes then condition becomes true. (A < B) is true. >= Checks if the value of left operand is greater than or equal to the value of right operand, if yes then condition becomes true. (A >= B) is not true. <= Checks if the value of left operand is less than or equal to the value of right operand, if yes then condition becomes true. (A <= B) is true Example 
+DECLARE 
+   a number (2) := 21; 
+   b number (2) := 10; 
+BEGIN 
+   IF (a = b) then 
+      dbms_output.put_line('Line 1 - a is equal to b'); 
+   ELSE 
+      dbms_output.put_line('Line 1 - a is not equal to b'); 
+   END IF;  
+   IF (a < b) then 
+      dbms_output.put_line('Line 2 - a is less than b'); 
+   ELSE 
+      dbms_output.put_line('Line 2 - a is not less than b'); 
+   END IF; 
+    
+   IF ( a > b ) THEN 
+      dbms_output.put_line('Line 3 - a is greater than b'); 
+   ELSE 
+      dbms_output.put_line('Line 3 - a is not greater than b'); 
+   END IF;  
+   -- Lets change value of a and b 
+   a := 5; 
+   b := 20; 
+   IF ( a <= b ) THEN 
+      dbms_output.put_line('Line 4 - a is either equal or less than b'); 
+   END IF; 
+   IF ( b >= a ) THEN 
+      dbms_output.put_line('Line 5 - b is either equal or greater than a'); 
+   END IF;
+   IF ( a <> b ) THEN 
+      dbms_output.put_line('Line 6 - a is not equal to b'); 
+   ELSE 
+      dbms_output.put_line('Line 6 - a is equal to b'); 
+   END IF;  
+END; 
+/ 
+ When the above code is executed at the SQL prompt, it produces the following result − 
+Line 1 - a is not equal to b 
+Line 2 - a is not less than b 
+Line 3 - a is greater than b 
+Line 4 - a is either equal or less than b 
+Line 5 - b is either equal or greater than a 
+Line 6 - a is not equal to b  
+
+PL/SQL procedure successfully completed 
+ plsql_operators.htm

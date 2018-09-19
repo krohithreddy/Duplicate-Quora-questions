@@ -1,0 +1,74 @@
+DOM - Node Object Method - insertBefore
+
+https://www.tutorialspoint.com/dom/dom_node_insertbefore.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The method insertBefore inserts a new node as a child of this node, directly before an existing child of this node. It returns the node being inserted. Syntax Following is the syntax for the usage of the insertBefore method. 
+nodeObject.insertBefore(Node newChild, Node refChild)
+ S.No. Parameter & Description 1 newChild It is the new node to be added. It is of type Node. 2 refChild It is used as a reference node before which a new node is added. It is of type Node. This method returns node being inserted. Example node.xml contents are as below − 
+<?xml version = "1.0"?>
+<Company>
+   <Employee category = "Technical">
+      <FirstName>Tanmay</FirstName>
+      <LastName>Patil</LastName>
+      <ContactNo>1234567890</ContactNo>
+      <Email>tanmaypatil@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Non-Technical">
+      <FirstName>Taniya</FirstName>
+      <LastName>Mishra</LastName>
+      <ContactNo>1234667898</ContactNo>
+      <Email>taniyamishra@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Management">
+      <FirstName>Tanisha</FirstName>
+      <LastName>Sharma</LastName>
+      <ContactNo>1234562350</ContactNo>
+      <Email>tanishasharma@xyz.com</Email>
+   </Employee>
+</Company>
+ Following example demonstrates the usage of the insertBefore method − 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            }
+            else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+
+         create_e = xmlDoc.createElement("Email");
+
+         f1 = xmlDoc.documentElement;
+         f2 = xmlDoc.getElementsByTagName("Email");
+
+         document.write("No of Email elements before insert operation: " + f2.length);
+         document.write(" <br>");
+         f1.insertBefore(create_e,f2[3]);
+
+         f2 = xmlDoc.getElementsByTagName("Email");
+         document.write("No of Email elements after insert operation: " + f2.length);
+      </script>
+   </body>
+</html>
+ Execution Save this file as nodemethod_insertbefore.htm on the server path (this file and node.xml should be on the same path in your server). We will get the output as shown below − 
+No of Email elements before insert operation: 3
+No of Email elements after insert operation: 4 
+ dom_node_object.htm

@@ -1,0 +1,38 @@
+T-SQL - WHERE Clause
+
+https://www.tutorialspoint.com/t_sql/t_sql_where_clause.htm
+
+T-SQL, Tutorial, Learning, Beginners, Overview, Data Types, Create Tables, Drop Tables, INSERT Statement, SELECT Statement, UPDATE Statement, DELETE Statement, WHERE Clause, LIKE Clause, ORDER BY Clause, GROUP BY Clause, DISTINCT Clause, Joining Tables, Sub-Queries, Stored Procedures, Transactions, Indexes, Functions, String Functions, Date Functions, Numeric Functions.
+
+August-15-2017-02:34:09
+
+The MS SQL Server WHERE clause is used to specify a condition while fetching the data from single table or joining with multiple tables. If the given condition is satisfied, only then it returns a specific value from the table. You will have to use WHERE clause to filter the records and fetch only necessary records. The WHERE clause is not only used in SELECT statement, but it is also used in UPDATE, DELETE statement, etc., which we would examine in subsequent chapters. Syntax Following is the basic syntax of SELECT statement with WHERE clause − 
+SELECT column1, column2, columnN  
+FROM table_name 
+WHERE [condition]
+ You can specify a condition using comparison or logical operators like >, <, =, LIKE, NOT, etc. The following example will make this concept clear. Example Consider the CUSTOMERS table having the following records − 
+ID  NAME       AGE       ADDRESS            SALARY 
+1   Ramesh     32        Ahmedabad          2000.00 
+2   Khilan     25        Delhi              1500.00 
+3   kaushik    23        Kota               2000.00 
+4   Chaitali   25        Mumbai             6500.00 
+5   Hardik     27        Bhopal             8500.00 
+6   Komal      22        MP                 4500.00 
+7   Muffy      24        Indore             10000.00 
+ Following command is an example which would fetch ID, Name and Salary fields from the CUSTOMERS table where salary is greater than 2000. 
+SELECT ID, NAME, SALARY  
+FROM CUSTOMERS 
+WHERE SALARY > 2000;
+ The above command will produce the following output. 
+ID  NAME       SALARY 
+4   Chaitali   6500.00 
+5   Hardik     8500.00 
+6   Komal      4500.00 
+7   Muffy      10000.00
+ Following command is an example, which would fetch ID, Name and Salary fields from the CUSTOMERS table for a customer with the name ‘Hardik’. It is important to note that all the strings should be given inside single quotes ('') whereas numeric values should be given without any quote as in the above example − 
+SELECT ID, NAME, SALARY  
+FROM CUSTOMERS 
+WHERE NAME = 'Hardik';
+ The above command will produce the following output. 
+ID  NAME     SALARY 
+5   Hardik   8500.00

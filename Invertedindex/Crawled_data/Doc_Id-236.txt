@@ -1,0 +1,64 @@
+Memcached - Get CAS Data
+
+https://www.tutorialspoint.com/memcached/memcached_get_cas_data.htm
+
+Memcached, Tutorial, Beginners, Overview, Environment, Connection,  Set Data, Add Data, Replace Data, Append Data, Prepend Data, Get Data, Delete Data, Stats, Clear Data
+
+August-15-2017-02:34:11
+
+Memcached gets command is used to get the value with CAS token. No value is returned if the key does not exist. Syntax The basic syntax of Memcached gets command is as shown below − 
+gets key
+ More than one key can be supplied with space between them as shown here − 
+gets key1 key2 key3
+ Example 
+set tutorialspoint 0 900 9
+memcached
+STORED
+gets tutorialspoint
+VALUE tutorialspoint 0 9 1
+memcached
+END
+ In the output of gets command, we see 1 at the end. This 1 is unique CAS token associated with key tutorialspoint. Get CAS Data Using Java Application Memcached gets method is used to retrieve data items stored with key. Example 
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.CASValue;
+import net.spy.memcached.CASResponse;
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+   
+      try{
+   
+         // Connecting to Memcached server on localhost
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server sucessful.");
+
+         // add data to memcached server
+         Future fo = mcc.set("tutorialspoint", 900, "Free Education");
+
+         // print status of set method
+         System.out.println("set status:" + fo.get());
+            
+         // retrieve value stored for tutorialspoint from cache
+         System.out.println("tutorialspoint value in cache - " + mcc.get("tutorialspoint"));
+
+         // obtain CAS token value using gets method
+         CASValue casValue = mcc.gets("tutorialspoint");
+
+         // display CAS token value
+         System.out.println("CAS value in cache - " + casValue);
+
+         // Shutdowns the memcached client
+         mcc.shutdown();
+         
+      }catch(Exception ex)
+         System.out.println(ex.getMessage());
+   }
+}
+ Output On compiling and executing the program, you get to see the following output − 
+Connection to server successful.
+set status:true
+tutorialspoint value in cache - Free Education
+CAS - {CasValue 34/Free Education}

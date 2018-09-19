@@ -1,0 +1,55 @@
+DOM - Element Object Method - getElementsByTagNameNS
+
+https://www.tutorialspoint.com/dom/dom_element_getElementsByTagNameNS.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The method getElementsByTagNameNS returns a NodeList of all the descendant Elements with a given local name and the namespace URI in document order. Syntax Following is the syntax for the usage of the getElementsByTagNameNS method. 
+elementObj.getElementsByTagNameNS(namespaceURI, localName)
+ S.No. Parameter & Description 1 namespaceURI Is the namespace URI of elements to look for. 2 namespaceURI Is either the local name of elements to look for or the special value "*", which matches all elements. It returns a new NodeList object containing all the matched Elements. Example node_ns.xml contents are as below − 
+<?xml version = "1.0"?>
+<Company>
+   <Employee xmlns:e = "http://www.tutorials.com/technical/" category = "technical">
+      <e:FirstName e:lang = "en">Tanmay</e:FirstName>
+      <e:LastName>Patil</e:LastName>
+      <e:ContactNo>1234567890</e:ContactNo>
+      <e:Email>tanmaypatil@xyz.com</e:Email>
+   </Employee>
+   
+   <Employee xmlns:n = "http://www.tutorials.com/non-technical/" category = "non-technical">
+      <n:FirstName n:lang = "en">Taniya</n:FirstName>
+      <n:LastName>Mishra</n:LastName>
+      <n:ContactNo>1234667898</n:ContactNo>
+      <n:Email>taniyamishra@xyz.com</n:Email>
+   </Employee>
+</Company>
+ Following example demonstrates the usage of the setAttributeNodeNS method − 
+<!DOCTYPE html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node_ns.xml");
+         ns="http://www.tutorials.com/technical/";
+         x = xmlDoc.getElementsByTagNameNS(ns, 'FirstName');
+          document.write(x[0].nodeName); // returns: e:FirstName
+      </script>
+   </body>
+</html>
+ Execution Save this file as elementattribute_getElementsByTagNameNS.htm on the server path (this file and node_ns.xml should be on the same path in your server). We will get the output as shown below − 
+e:FirstName
+ dom_element_object.htm

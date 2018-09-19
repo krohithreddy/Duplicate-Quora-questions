@@ -1,0 +1,18 @@
+Redis - HyperLogLog
+
+https://www.tutorialspoint.com/redis/redis_hyperloglog.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis HyperLogLog is an algorithm that uses randomization in order to provide an approximation of the number of unique elements in a set using just a constant, and small amount of memory. HyperLogLog provides a very good approximation of the cardinality of a set even using a very small amount of memory around 12 kbytes per key with a standard error of 0.81%. There is no limit to the number of items you can count, unless you approach 264 items. Example Following example explains how Redis HyperLogLog works. 
+redis 127.0.0.1:6379> PFADD tutorials "redis"  
+1) (integer) 1  
+redis 127.0.0.1:6379> PFADD tutorials "mongodb"  
+1) (integer) 1  
+redis 127.0.0.1:6379> PFADD tutorials "mysql"  
+1) (integer) 1  
+redis 127.0.0.1:6379> PFCOUNT tutorials  
+(integer) 3 
+ Redis HyperLogLog Commands Following table lists some basic commands related to Redis HyperLogLog. S.No Command & Description 1 PFADD key element [element ...] Adds the specified elements to the specified HyperLogLog. 2 PFCOUNT key [key ...] Returns the approximated cardinality of the set(s) observed by the HyperLogLog at key(s). 3 PFMERGE destkey sourcekey [sourcekey ...] Merges N different HyperLogLogs into a single one.

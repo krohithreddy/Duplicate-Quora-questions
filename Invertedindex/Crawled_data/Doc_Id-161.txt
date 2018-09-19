@@ -1,0 +1,46 @@
+HSQLDB - Drop Table
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_drop_table.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+It is very easy to drop an existing HSQLDB table. However, you need to be very careful while deleting any existing table as any data lost will not be recovered after deleting a table. Syntax Following is a generic SQL syntax to drop a HSQLDB table. 
+DROP TABLE table_name;
+ Example Let us consider an example to drop a table named employee from the HSQLDB server. Following is the query to drop a table named employee. 
+DROP TABLE employee;
+ After execution of the above query, you will receive the following output − 
+(0) rows effected
+ HSQLDB – JDBC Program Following is the JDBC program used to drop the table employee from the HSQLDB server. Save the following code into DropTable.java file. 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class DropTable {
+   public static void main(String[] args) {
+      Connection con = null;
+      Statement stmt = null;
+      int result = 0;
+      
+      try {
+         Class.forName("org.hsqldb.jdbc.JDBCDriver");
+         con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/testdb", "SA", "");
+         stmt = con.createStatement();
+         result = stmt.executeUpdate("DROP TABLE employee");
+      }catch (Exception e) {
+         e.printStackTrace(System.out);
+      }
+      
+      System.out.println("Table dropped successfully");
+   }
+}
+ You can start the database using the following command. 
+\>cd C:\hsqldb-2.3.4\hsqldb
+hsqldb>java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0
+file:hsqldb/demodb --dbname.0 testdb
+ Compile and execute the above program using the following command. 
+\>javac DropTable.java
+\>java DropTable
+ After execution of the above command, you will receive the following output − 
+Table dropped successfully

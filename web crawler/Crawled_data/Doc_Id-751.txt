@@ -1,0 +1,65 @@
+SQLite - ALIAS Syntax
+
+https://www.tutorialspoint.com/sqlite/sqlite_alias_syntax.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+You can rename a table or a column temporarily by giving another name, which is known as ALIAS. The use of table aliases means to rename a table in a particular SQLite statement. Renaming is a temporary change and the actual table name does not change in the database. The column aliases are used to rename a table's columns for the purpose of a particular SQLite query. Syntax Following is the basic syntax of table alias. 
+SELECT column1, column2....
+FROM table_name AS alias_name
+WHERE [condition];
+ Following is the basic syntax of column alias. 
+SELECT column_name AS alias_name
+FROM table_name
+WHERE [condition];
+ Example Consider the following two tables, (a) COMPANY table is as follows − 
+sqlite> select * from COMPANY;
+ID          NAME                  AGE         ADDRESS     SALARY
+----------  --------------------  ----------  ----------  ----------
+1           Paul                  32          California  20000.0
+2           Allen                 25          Texas       15000.0
+3           Teddy                 23          Norway      20000.0
+4           Mark                  25          Rich-Mond   65000.0
+5           David                 27          Texas       85000.0
+6           Kim                   22          South-Hall  45000.0
+7           James                 24          Houston     10000.0
+ (b) Another table is DEPARTMENT as follows − 
+ID          DEPT                  EMP_ID
+----------  --------------------  ----------
+1           IT Billing            1
+2           Engineering           2
+3           Finance               7
+4           Engineering           3
+5           Finance               4
+6           Engineering           5
+7           Finance               6
+ Now, following is the usage of TABLE ALIAS where we use C and D as aliases for COMPANY and DEPARTMENT tables respectively − 
+sqlite> SELECT C.ID, C.NAME, C.AGE, D.DEPT
+        FROM COMPANY AS C, DEPARTMENT AS D
+        WHERE  C.ID = D.EMP_ID;
+ The above SQLite statement will produce the following result − 
+ID          NAME        AGE         DEPT
+----------  ----------  ----------  ----------
+1           Paul        32          IT Billing
+2           Allen       25          Engineering
+3           Teddy       23          Engineering
+4           Mark        25          Finance
+5           David       27          Engineering
+6           Kim         22          Finance
+7           James       24          Finance
+ Consider an example for the usage of COLUMN ALIAS where COMPANY_ID is an alias of ID column and COMPANY_NAME is an alias of name column. 
+sqlite> SELECT C.ID AS COMPANY_ID, C.NAME AS COMPANY_NAME, C.AGE, D.DEPT
+        FROM COMPANY AS C, DEPARTMENT AS D
+        WHERE  C.ID = D.EMP_ID;
+ The above SQLite statement will produce the following result − 
+COMPANY_ID  COMPANY_NAME  AGE         DEPT
+----------  ------------  ----------  ----------
+1           Paul          32          IT Billing
+2           Allen         25          Engineering
+3           Teddy         23          Engineering
+4           Mark          25          Finance
+5           David         27          Engineering
+6           Kim           22          Finance
+7           James         24          Finance

@@ -1,0 +1,40 @@
+XQuery - insert-before Function
+
+https://www.tutorialspoint.com/xquery/xquery_insert_before.htm
+
+Overview, Environment Setup, First Application, FLWOR, HTML Format, XPath, Sequences, Sequence functions, count, distinct-values, subsequence, sum, avg, min, max, insert-before, remove, reverse, index-of, last, position, String functions, string-length, concat, string-join, Date functions, current-date, current-time, current-dateTime, Regular Expressions, matches, replaces, tokenize, if then else, custom functions
+
+August-15-2017-02:34:10
+
+The insert-before function is used to insert an item in a given sequence at any position. This function returns the modified sequence but the original sequence is not altered. Syntax 
+insert-before($seq as item()*, $position as xs:integer, $inserts as item()*)
+ Input Parameters $seq − provided sequence. Sequence can contain 0 or more items. $position − index of item where it is to be inserted. Index starts from 1. $inserts − zero or more items to be inserted. Example XQuery Expression 
+let $items := (1,2,3,4,5,9)
+let $additional-items := (6,7,8)
+let $new-items := insert-before($items,6,$additional-items)
+return
+   <result>   
+      
+      <items>
+      {
+         for $item in $new-items
+         return >item>{$item}>/item>
+      }
+      </items>
+      
+   </result>
+ Output 
+<result>
+   <items>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+      <item>6</item>
+      <item>7</item>
+      <item>8</item>
+      <item>9</item>
+   </items>
+</result>
+ Verify the Result In order to test the above-mentioned functionality, replace the contents of books.xqy (mentioned in Environment Setup chapter) with the above XQuery expression and execute the XQueryTester java program to verify the result. xquery_sequence_functions.htm

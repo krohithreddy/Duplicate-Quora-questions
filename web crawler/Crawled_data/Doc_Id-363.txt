@@ -1,0 +1,51 @@
+MySQLi - Poll
+
+https://www.tutorialspoint.com/mysqli/mysqli_poll.htm
+
+MySQLi, Tutorial, Learning, Introduction, Installation, Administration, PHP Syntax, Connection, Create, Drop, Info, Select Database, Data Types, Create, Drop, Clone Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Sorting Results, Using Joins, NULL Values, Regexps, Transactions, Alter Command, Indexes, Temporary, Using Sequences, Handling Duplicate.
+
+August-15-2017-02:34:19
+
+Syntax 
+int mysqli_poll (array &$read , array &$error , array &$reject , int $sec [, int $usec ])
+ Definition and Usage It used to poll connections. Example Try out following example − 
+<?php
+   $servername = "localhost:3306";
+   $username = "root";
+   $password = "";
+   $dbname = "TUTORIALS";
+   $conn = new mysqli($servername, $username, $password, $dbname);
+
+   if ($conn->connect_error) {
+      die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+      exit();
+   } 
+   if (!mysqli_query($conn, "SET a = 1")) {
+      printf("Errorcode: %d\n", mysqli_error($conn));
+   }
+   echo 'Success... ' . mysqli_get_host_info($conn) . "\n";
+
+   $conn->query("SELECT 'tutorials_auto'", MYSQLI_ASYNC);
+   $arry_con = array($conn);
+   $processed = 0;
+   do {
+      $links = $errors = $reject = array();
+      foreach ($arry_con as $link) {
+         $links[] = $errors[] = $reject[] = $link;
+      }
+      if (!mysqli_poll($links, $errors, $reject, 1)) {
+         continue;
+      }
+      foreach ($links as $link) {
+         if ($result = $link->reap_async_query()) {
+            print_r($result->fetch_row());
+            if (is_object($result)) mysqli_free_result($result);
+         } else die(sprintf("MySQLi Error: %s", mysqli_error($link)));
+         $processed++;
+      }
+   } while ($processed < count($arry_con));
+   $conn->close();
+?>
+ The sample output of the above code should be like this − 
+Errorcode: 0 Success... localhost:3306 via TCP/IP Array ( [0] => tutorials_auto )
+ mysqli_useful_functions.htm

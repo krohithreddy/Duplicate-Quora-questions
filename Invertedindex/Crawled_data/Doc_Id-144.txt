@@ -1,0 +1,40 @@
+H2 Database - Delete
+
+https://www.tutorialspoint.com/h2_database/h2_database_delete.htm
+
+H2 Database, Tutorial, Learning, Introduction, Installation, Data Manipulation Select, Insert, Update, Delete, Backup, Call, Explain, Merge, Show, Data Definition Create, Alter, Drop, Truncate, Commit, Grant, Savepoint, Rollback, JDBC Connection.
+
+August-15-2017-02:34:24
+
+The SQL DELETE query is used to delete the existing records from a table. We can use WHERE clause with DELETE query to delete selected records, otherwise all the records will be deleted. Syntax Following is the generic query syntax of the delete command. 
+DELETE [ TOP term ] FROM tableName [ WHERE expression ] [ LIMIT term ]
+ The above syntax deletes the rows from a table. If TOP or LIMIT is specified, at most the specified number of rows are deleted (no limit if null or smaller than zero). Example Consider the CUSTOMER table having the following records. 
++----+----------+-----+-----------+----------+ 
+| ID | NAME     | AGE | ADDRESS   | SALARY   | 
++----+----------+-----+-----------+----------+ 
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 | 
+|  2 | Khilan   |  25 | Delhi     |  1500.00 | 
+|  3 | kaushik  |  23 | Kota      |  2000.00 | 
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 | 
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 | 
+|  6 | Komal    |  22 | MP        |  4500.00 | 
+|  7 | Muffy    |  24 | Indore    | 10000.00 | 
++----+----------+-----+-----------+----------+
+ The following command will delete the details of the customer, whose ID is 6. 
+DELETE FROM CUSTOMERS WHERE ID = 6;
+ After execution of the above command, check the Customer table by executing the following command. 
+SELECT * FROM CUSTOMERS; 
+ The above command produces the following output − 
++----+----------+-----+-----------+----------+ 
+| ID | NAME     | AGE | ADDRESS   | SALARY   | 
++----+----------+-----+-----------+----------+ 
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 | 
+|  2 | Khilan   |  25 | Delhi     |  1500.00 | 
+|  3 | kaushik  |  23 | Kota      |  2000.00 | 
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 | 
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 | 
+|  7 | Muffy    |  24 | Indore    | 10000.00 | 
++----+----------+-----+-----------+----------+ 
+ If we want to DELETE all the records from CUSTOMERS table, we do not use WHERE clause. The DELETE query would be as follows. 
+DELETE FROM CUSTOMER; 
+ After executing the above command, no records will be available in the Customer table.

@@ -1,0 +1,38 @@
+T-SQL - Stored Procedures
+
+https://www.tutorialspoint.com/t_sql/t_sql_stored_procedures.htm
+
+T-SQL, Tutorial, Learning, Beginners, Overview, Data Types, Create Tables, Drop Tables, INSERT Statement, SELECT Statement, UPDATE Statement, DELETE Statement, WHERE Clause, LIKE Clause, ORDER BY Clause, GROUP BY Clause, DISTINCT Clause, Joining Tables, Sub-Queries, Stored Procedures, Transactions, Indexes, Functions, String Functions, Date Functions, Numeric Functions.
+
+August-15-2017-02:34:09
+
+The MS SQL Server Stored procedure is used to save time to write code again and again by storing the same in database and also get the required output by passing parameters. Syntax Following is the basic syntax of Stored procedure creation. 
+Create procedure <procedure_Name> 
+As 
+Begin 
+<SQL Statement> 
+End 
+Go
+ Example Consider the CUSTOMERS table having the following records. 
+ID  NAME       AGE       ADDRESS            SALARY 
+1   Ramesh     32        Ahmedabad          2000.00 
+2   Khilan     25        Delhi              1500.00 
+3   kaushik    23        Kota               2000.00 
+4   Chaitali   25        Mumbai             6500.00 
+5   Hardik     27        Bhopal             8500.00 
+6   Komal      22        MP                 4500.00 
+7   Muffy      24        Indore             10000.00 
+ Following command is an example which would fetch all records from the CUSTOMERS table in Testdb database. 
+CREATE PROCEDURE SelectCustomerstabledata 
+AS 
+SELECT * FROM Testdb.Customers 
+GO
+ The above command will produce the following output. 
+ID  NAME       AGE       ADDRESS           SALARY 
+1   Ramesh     32        Ahmedabad         2000.00 
+2   Khilan     25        Delhi             1500.00 
+3   kaushik    23        Kota              2000.00 
+4   Chaitali   25        Mumbai            6500.00 
+5   Hardik     27        Bhopal            8500.00 
+6   Komal      22        MP                4500.00 
+7   Muffy      24        Indore            10000.00

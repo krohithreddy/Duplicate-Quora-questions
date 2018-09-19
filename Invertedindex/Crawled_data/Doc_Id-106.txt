@@ -1,0 +1,67 @@
+DynamoDB - Access Control
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_access_control.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+DynamoDB uses credentials you provide to authenticate requests. These credentials are required and must include permissions for AWS resource access. These permissions span virtually every aspect of DynamoDB down to the minor features of an operation or functionality. Types of Permissions In this section, we will discuss regarding the various permissions and resource access in DynamoDB. Authenticating Users On signup, you provided a password and email, which serve as root credentials. DynamoDB associates this data with your AWS account, and uses it to give complete access to all resources. AWS recommends you use your root credentials only for the creation of an administration account. This allows you to create IAM accounts/users with less privileges. IAM users are other accounts spawned with the IAM service. Their access permissions/privileges include access to secure pages and certain custom permissions like table modification. The access keys provide another option for additional accounts and access. Use them to grant access, and also to avoid manual granting of access in certain situations. Federated users provide yet another option by allowing access through an identity provider. Administration AWS resources remain under ownership of an account. Permissions policies govern the permissions granted to spawn or access resources. Administrators associate permissions policies with IAM identities, meaning roles, groups, users, and services. They also attach permissions to resources. Permissions specify users, resources, and actions. Note administrators are merely accounts with administrator privileges. Operation and Resources Tables remain the main resources in DynamoDB. Subresources serve as additional resources, e.g., streams and indices. These resources use unique names, some of which are mentioned in the following table − Type ARN (Amazon Resource Name) Stream arn:aws:dynamodb:region:account-id:table/table-name/stream/stream-label Index arn:aws:dynamodb:region:account-id:table/table-name/index/index-name Table arn:aws:dynamodb:region:account-id:table/table-name Ownership A resource owner is defined as an AWS account which spawned the resource, or principal entity account responsible for request authentication in resource creation. Consider how this functions within the DynamoDB environment − In using root credentials to create a table, your account remains resource owner. In creating an IAM user and granting the user permission to create a table, your account remains the resource owner. In creating an IAM user and granting the user, and anyone capable of assuming the role, permission to create a table, your account remains the resource owner. Manage Resource Access Management of access mainly requires attention to a permissions policy describing users and resource access. You associate policies with IAM identities or resources. However, DynamoDB only supports IAM/identity policies. Identity-based (IAM) policies allow you to grant privileges in the following ways − Attach permissions to users or groups. Attach permissions to roles for cross-account permissions. Other AWS allow resource-based policies. These policies permit access to things like an S3 bucket. Policy Elements Policies define actions, effects, resources, and principals; and grant permission to perform these operations. Note − The API operations may require permissions for multiple actions. Take a closer look at the following policy elements − Resource − An ARN identifies this. Action − Keywords identify these resource operations, and whether to allow or deny. Effect − It specifies the effect for a user request for an action, meaning allow or deny with denial as the default. Principal − This identifies the user attached to the policy. Conditions In granting permissions, you can specify conditions for when policies become active such as on a particular date. Express conditions with condition keys, which include AWS systemwide keys and DynamoDB keys. These keys are discussed in detail later in the tutorial. Console Permissions A user requires certain basic permissions to use the console. They also require permissions for the console in other standard services − CloudWatch Data Pipeline Identity and Access Management Notification Service Lambda If the IAM policy proves too limited, the user cannot use the console effectively. Also, you do not need to worry about user permissions for those only calling the CLI or API. Common Use Iam Policies AWS covers common operations in permissions with standalone IAM managed policies. They provide key permissions allowing you to avoid deep investigations into what you must grant. Some of them are as follows − AmazonDynamoDBReadOnlyAccess − It gives read-only access via the console. AmazonDynamoDBFullAccess − It gives full access via the console. AmazonDynamoDBFullAccesswithDataPipeline − It gives full access via the console and permits export/import with Data Pipeline. You can also ofcourse make custom policies. Granting Privileges: Using The Shell You can grant permissions with the Javascript shell. The following program shows a typical permissions policy − 
+{ 
+   "Version": "2016-05-22", 
+   "Statement": [ 
+      { 
+         "Sid": "DescribeQueryScanToolsTable", 
+         "Effect": "Deny", 
+         
+         "Action": [ 
+            "dynamodb:DescribeTable", 
+            "dynamodb:Query", 
+            "dynamodb:Scan" 
+         ], 
+         "Resource": "arn:aws:dynamodb:us-west-2:account-id:table/Tools" 
+      } 
+   ] 
+}
+ You can review the three examples which are as follows − Block the user from executing any table action. 
+{ 
+   "Version": "2016-05-23", 
+   "Statement": [ 
+      { 
+         "Sid": "AllAPIActionsOnTools", 
+         "Effect": "Deny", 
+         "Action": "dynamodb:*", 
+         "Resource": "arn:aws:dynamodb:us-west-2:155556789012:table/Tools" 
+      } 
+   ] 
+}
+ Block access to a table and its indices. 
+{ 
+   "Version": "2016-05-23", 
+   "Statement": [ 
+      { 
+         "Sid": "AccessAllIndexesOnTools", 
+         "Effect": "Deny", 
+         "Action": [
+            "dynamodb:*" 
+         ], 
+         "Resource": [ 
+            "arn:aws:dynamodb:us-west-2:155556789012:table/Tools", 
+            "arn:aws:dynamodb:us-west-2:155556789012:table/Tools/index/*" 
+         ] 
+      } 
+   ] 
+}
+ Block a user from making a reserved capacity offering purchase. 
+{ 
+   "Version": "2016-05-23", 
+   "Statement": [ 
+      { 
+         "Sid": "BlockReservedCapacityPurchases", 
+         "Effect": "Deny", 
+         "Action": "dynamodb:PurchaseReservedCapacityOfferings", 
+         "Resource": "arn:aws:dynamodb:us-west-2:155556789012:*" 
+      } 
+   ] 
+}
+ Granting Privileges: Using the GUI Console You can also use the GUI console to create IAM policies. To begin with, choose Tables from the navigation pane. In the table list, choose the target table and follow these steps. Step 1 − Select the Access control tab. Step 2 − Select the identity provider, actions, and policy attributes. Select Create policy after entering all settings. Step 3 − Choose Attach policy instructions, and complete each required step to associate the policy with the appropriate IAM role.

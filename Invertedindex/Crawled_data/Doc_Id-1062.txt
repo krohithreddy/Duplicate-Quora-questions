@@ -1,0 +1,70 @@
+XSLT <value-of>
+
+https://www.tutorialspoint.com/xslt/xslt_valueof.htm
+
+XSLT Overview, Syntax, <template>, <value-of>,<for-each>, <sort>, <if>, <choose>, <key>, <message>, <import>.
+
+August-15-2017-02:34:18
+
+<xsl:value-of> tag puts the value of the selected node as per XPath expression, as text. Declaration Following is the syntax declaration of <xsl:value-of> element. 
+<xsl:value-of
+   select = Expression
+   disable-output-escaping = "yes" | "no" >
+</xsl:value-of>
+ Attributes S.No Name & Description 1. Select XPath Expression to be evaluated in current context. 2. disable-outputescaping Default-"no". If "yes", output text will not escape xml characters from text. Elements Number of Occurrences Unlimited Parent elements xsl:attribute, xsl:comment, xsl:copy, xsl:element, xsl:fallback, xsl:for-each, xsl:if, xsl:message, xsl:otherwise, xsl:param, xsl:processing instruction, xsl:template, xsl:variable, xsl:when, xsl:with-param, output elements Child elements None Demo Example This example creates a table of <student> element with its attribute rollno and its child <firstname>, <lastname>, <nickname>, and <marks>. students.xml 
+<?xml version = "1.0"?> 
+<?xml-stylesheet type = "text/xsl" href = "students.xsl"?> 
+<class> 
+   <student rollno = "393"> 
+      <firstname>Dinkar</firstname> 
+      <lastname>Kad</lastname> 
+      <nickname>Dinkar</nickname> 
+      <marks>85</marks> 
+   </student> 
+   <student rollno = "493"> 
+      <firstname>Vaneet</firstname> 
+      <lastname>Gupta</lastname> 
+      <nickname>Vinni</nickname> 
+      <marks>95</marks> 
+   </student> 
+   <student rollno = "593"> 
+      <firstname>Jasvir</firstname> 
+      <lastname>Singh</lastname> 
+      <nickname>Jazz</nickname> 
+      <marks>90</marks> 
+   </student> 
+</class>
+ students.xsl 
+<?xml version = "1.0" encoding = "UTF-8"?> 
+   <xsl:stylesheet version = "1.0" 
+      xmlns:xsl = "http://www.w3.org/1999/XSL/Transform">
+		
+   <xsl:template match = "/"> 
+      <html> 
+         <body> 
+            <h2>Students</h2> 
+            <table border = "1"> 
+               <tr bgcolor = "#9acd32"> 
+                  <th>Roll No</th> 
+                  <th>First Name</th> 
+                  <th>Last Name</th> 
+                  <th>Nick Name</th> 
+                  <th>Marks</th> 
+               </tr> 
+					
+               <xsl:for-each select = "class/student"> 
+                  <tr> 
+                     <td><xsl:value-of select = "@rollno"/></td> 
+                     <td><xsl:value-of select = "firstname"/></td> 
+                     <td><xsl:value-of select = "lastname"/></td> 
+                     <td><xsl:value-of select = "nickname"/></td> 
+                     <td><xsl:value-of select = "marks"/></td> 
+                  </tr> 
+               </xsl:for-each> 
+					
+            </table> 
+         </body> 
+      </html> 
+   </xsl:template>  
+</xsl:stylesheet>
+ Verify the output

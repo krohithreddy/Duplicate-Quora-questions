@@ -1,0 +1,16 @@
+Redis - Client Connection
+
+https://www.tutorialspoint.com/redis/redis_client_connection.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis accepts clients’ connections on the configured listening TCP port and on the Unix socket, if enabled. When a new client connection is accepted, the following operations are performed − The client socket is put in non-blocking state since Redis uses multiplexing and non-blocking I/O. The TCP_NODELAY option is set in order to ensure that we don't have delays in our connection. A readable file event is created so that Redis is able to collect the client queries as soon as new data is available to be read on the socket. Maximum Number of Clients In Redis config (redis.conf), there is a property called maxclients, which describes the maximum number of clients that can connect to Redis. Following is the basic syntax of command. 
+config get maxclients  
+
+1) "maxclients" 
+2) "10000" 
+ By default, this property is set to 10000 (depending upon the maximum number of file descriptors limit of OS), although you can change this property. Example In the following example, we have set the maximum number of clients to 100000, while starting the server. 
+redis-server --maxclients 100000 
+ Client Commands S.No Command Description 1 CLIENT LIST Returns the list of clients connected to Redis server 2 CLIENT SETNAME Assigns a name to the current connection 3 CLIENT GETNAME Returns the name of the current connection as set by CLIENT SETNAME 4 CLIENT PAUSE This is a connections control command able to suspend all the Redis clients for the specified amount of time (in milliseconds) 5 CLIENT KILL This command closes a given client connection.

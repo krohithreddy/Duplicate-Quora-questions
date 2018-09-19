@@ -1,0 +1,17 @@
+OrientDB - Create Database
+
+https://www.tutorialspoint.com/orientdb/orientdb_create_database.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+The SQL Reference of the OrientDB database provides several commands to create, alter, and drop databases. The following statement is a basic syntax of Create Database command. 
+CREATE DATABASE <database-url> [<user> <password> <storage-type> [<db-type>]]
+ Following are the details about the options in the above syntax. <database-url> − Defines the URL of the database. URL contains two parts, one is <mode> and the second one is <path>. <mode> − Defines the mode, i.e. local mode or remote mode. <path> − Defines the path to the database. <user> − Defines the user you want to connect to the database. <password> − Defines the password for connecting to the database. <storage-type> − Defines the storage types. You can choose between PLOCAL and MEMORY. Example You can use the following command to create a local database named demo. 
+Orientdb> CREATE DATABASE PLOCAL:/opt/orientdb/databses/demo
+ If the database is successfully created, you will get the following output. 
+Database created successfully. 
+Current database is: plocal: /opt/orientdb/databases/demo
+
+orientdb {db = demo}>

@@ -1,0 +1,65 @@
+MySQL - UNION Keyword
+
+https://www.tutorialspoint.com/mysql/mysql-union-keyword.htm
+
+Learning, MySQL, Programming, Database, Clauses, Commands, Functions, MySQL Between Clause, Queries, Simple, Steps, Basic, Advanced, Concepts.
+
+August-15-2017-02:34:19
+
+You can use UNION if you want to select rows one after the other from several tables or several sets of rows from a single table all as a single result set. UNION is available as of MySQL 4.0. This section illustrates how to use it. Suppose you have two tables that list prospective and actual customers, a third that lists vendors from whom you purchase supplies, and you want to create a single mailing list by merging names and addresses from all three tables. UNION provides a way to do this. Assume the three tables have the following contents − 
+mysql> SELECT * FROM prospect;
++---------+-------+------------------------+
+|  fname  | lname |          addr          |
++---------+-------+------------------------+
+| Peter   | Jones | 482 Rush St., Apt. 402 |
+| Bernice | Smith |     916 Maple Dr.      |
++---------+-------+------------------------+
+mysql> SELECT * FROM customer;
++-----------+------------+---------------------+
+| last_name | first_name |       address       |
++-----------+------------+---------------------+
+| Peterson  |   Grace    | 16055 Seminole Ave. |
+|   Smith   |  Bernice   |    916 Maple Dr.    |
+|   Brown   |   Walter   |    8602 1st St.     |
++-----------+------------+---------------------+
+mysql> SELECT * FROM vendor;
++-------------------+---------------------+
+|      company      |        street       |
++-------------------+---------------------+
+| ReddyParts, Inc.  | 38 Industrial Blvd. |
+| Parts-to-go, Ltd. | 213B Commerce Park. |
++-------------------+---------------------+
+ It does not matter if all the three tables have different column names. The following query illustrates how to select names and addresses from the three tables all at once − 
+mysql> SELECT fname, lname, addr FROM prospect
+-> UNION
+-> SELECT first_name, last_name, address FROM customer
+-> UNION
+-> SELECT company, '', street FROM vendor;
++-------------------+----------+------------------------+
+|       fname       |   lname  |          addr          |
++-------------------+----------+------------------------+
+|       Peter       |   Jones  | 482 Rush St., Apt. 402 |
+|      Bernice      |   Smith  |     916 Maple Dr.      |
+|       Grace       | Peterson |   16055 Seminole Ave.  |
+|      Walter       |   Brown  |     8602 1st St.       |
+| ReddyParts, Inc.  |          |   38 Industrial Blvd.  |
+| Parts-to-go, Ltd. |          |   213B Commerce Park.  |
++-------------------+----------+------------------------+
+ If you want to select all records, including duplicates, follow the first UNION keyword with ALL − 
+mysql> SELECT fname, lname, addr FROM prospect
+-> UNION ALL
+-> SELECT first_name, last_name, address FROM customer
+-> UNION
+-> SELECT company, '', street FROM vendor;
++-------------------+----------+------------------------+
+|       fname       |   lname  |          addr          |
++-------------------+----------+------------------------+
+|       Peter       |   Jones  | 482 Rush St., Apt. 402 |
+|      Bernice      |   Smith  |     916 Maple Dr.      |
+|       Grace       | Peterson |   16055 Seminole Ave.  |
+|      Bernice      |   Smith  |     916 Maple Dr.      |
+|      Walter       |   Brown  |     8602 1st St.       |
+| ReddyParts, Inc.  |          |   38 Industrial Blvd.  |
+| Parts-to-go, Ltd. |          |   213B Commerce Park.  |
++-------------------+----------+------------------------+
+ mysql-useful-functions.htm

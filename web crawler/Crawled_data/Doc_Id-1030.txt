@@ -1,0 +1,9 @@
+XQuery - Sequence Functions
+
+https://www.tutorialspoint.com/xquery/xquery_sequence_functions.htm
+
+Overview, Environment Setup, First Application, FLWOR, HTML Format, XPath, Sequences, Sequence functions, count, distinct-values, subsequence, sum, avg, min, max, insert-before, remove, reverse, index-of, last, position, String functions, string-length, concat, string-join, Date functions, current-date, current-time, current-dateTime, Regular Expressions, matches, replaces, tokenize, if then else, custom functions
+
+August-15-2017-02:34:10
+
+The following table lists the commonly used sequence functions provided by XQuery. Sr.No Name & Description 1 count($seq as item()*) Counts the items in a sequence. 2 sum($seq as item()*) Returns the sum of the items in a sequence. 3 avg($seq as item()*) Returns the average of the items in a sequence. 4 min($seq as item()*) Returns the minimum valued item in a sequence. 5 max($seq as item()*) Returns the maximum valued item in a sequence. 6 distinct-values($seq as item()*) Returns select distinct items from a sequence. 7 subsequence($seq as item()*, $startingLoc as xs:double, $length as xs:double) Returns a subset of provided sequence. 8 insert-before($seq as item()*, $position as xs:integer, $inserts as item()*) Inserts an item in a sequence. 9 remove($seq as item()*, $position as xs:integer) Removes an item from a sequence. 10 reverse($seq as item()*) Returns the reversed sequence. 11 index-of($seq as anyAtomicType()*, $target as anyAtomicType()) Returns indexes as integers to indicate availability of an item within a sequence. 12 last() Returns the last element of a sequence when used in predicate expression. 13 position() Used in FLOWR expressions to get the position of an item in a sequence.

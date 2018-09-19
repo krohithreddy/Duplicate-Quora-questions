@@ -1,0 +1,39 @@
+MongoDB Online Quiz
+
+https://www.tutorialspoint.com/mongodb/mongodb_online_quiz.htm
+
+Mongodb, overview, Advantages, Environment, Data Modelling, Create Database, Drop Database, Create Collection, Drop Collection, Data Types, Insert Document, Query Document, Update Document, Delete Document, Projection, Limiting Records, Sorting, Records, Indexing, Aggregration, Replication, Sharding, Create Backup, Deployment, Java, PHP, Relationships, Database References, Covered Queries, Analyzing Queries, Atomic Operations, Advanced Indexing, Indexing Limitations, ObjectId, Map Reduce, Text Search, Regular Expression, Rockmongo, GridFS, Capped Collections, Auto-Increment Sequence.
+
+August-15-2017-02:34:09
+
+Following quiz provides Multiple Choice Questions (MCQs) related to MongoDB Framework. You will have to read all the given answers and click over the correct answer. If you are not sure about the answer then you can check the answer using Show Answer button. You can use Next Quiz button to check new set of questions in the quiz. Q 1 - Which of the following is a valid MongoDB JSON document: A 
+{}
+ B 
+{
+	"user_id"=1,
+	"user_name"="Joe Sanders",
+	"occupation"=["engineer","writer"]
+}
+ C 
+{
+	"user_id":1;
+	"user_name":"Joe Sanders";
+	"occupation":["engineer","writer"]
+} 
+ D 
+{
+	"user_id":1,
+	"user_name":"Joe Sanders",
+	"occupation":[
+		"occupation1":"engineer",
+		"occupation2":"writer"
+	]
+}
+ Answer : A Explanation A blank document is valid in MongoDB. However, rest of the three documents have some or the other problem. Option b has �=�, Option c has �;� and Option d has an incorrect array format. It should be a sub-document instead. Show Answer Q 2 - Which of the following is true about sharding? A - Sharding is enabled at the database level B - Creating a sharded key automatically creates an index on the collection using that key C - We cannot change a shard key directly/automatically once it is set up D - A sharded environment does not support sorting functionality since the documents lie on various mongod instances Answer : C Explanation There is no direct way of changing the sharded key unless you dump the entire data, drop the sharded key and then re-import everything. Other all options are false. Sharding is enabled at collection level, it does not create any index by default and finally sharding environment supports regular sorting. Show Answer Q 3 - Which of the following commands can cause the database to be locked? A - Issuing a query B - Inserting data C - Map-reduce D - All of the above Answer : D Explanation All the above commands wither result in a read lock or a write lock or both. Show Answer Q 4 - Consider that the posts collection contains an array called ratings which contains ratings given to the post by various users in the following format: 
+{
+         _id: 1,
+         post_text: �This is my first post�,
+         ratings: [5, 4, 2, 5],
+         //other elements of document 			
+}
+ Which of the following query will return all the documents where the array ratings contains at least one element between 3 and 6? A - db.inventory.find( { ratings: { $elemMatch: { $gt: 3, $lt: 6 } } } ) B - db.inventory.find( { ratings: { ratings: { $gt: 5, $lt: 9 } } } ) C - db.inventory.find( { ratings: { ratings.$: { $gt: 5, $lt: 9 } } } ) D - db.inventory.find( { ratings: { $elemMatch: { $gte: 3, $lte: 6 } } } ) Answer : A Explanation $elemMatch operator is used to specify multiple criteria on the elements of an array such that at least one array element satisfies all the specified criteria. Show Answer Q 5 - If the value of totalKeysExamined is 30000 and the value of totalDocsExamined is 0, which of the following option is correct? A - The query used an index to fetch the results B - The query returned 30000 documents after scanning the documents C - The query returned 0 documents D - None of the above Answer : A Explanation When an index covers a query, the explain result has an IXSCAN stage that is not a descendant of a FETCH stage, and in the executionStats, the totalDocsExamined is 0. Show Answer Q 6 - Which of the following collections are used by MongoDB to store GridFS data? A - fs.files and fs.chunks B - fs.grid and fs.chunks C - fs.parts and fs.files D - fs.chunks and fs.parts Answer : A Explanation GridFS stores files in two collections: chunks stores the binary chunks and files stores the file�s metadata. Show Answer Q 7 - What is the minimum sensible number of voting nodes to a replica set? A - 2 B - 3 C - 4 D - 5 Answer : B Explanation The minimum number of sensible number of voting nodes is 3. Show Answer Q 8 - Which of the following commands create an unique index on author field of the posts collection? A - db.posts.createIndex({"author":1 }, {"unique": true}); B - db.posts.createIndex({"author": unique }); C - db.posts.createIndex({"author": {�$unique�:1} }); D - db.posts.createIndexUnique({"author":1 }); Answer : A Explanation MongoDB cannot create a unique index on the specified index field(s) if the collection already contains data that would violate the unique constraint for the index. The syntax for the same is db.collection.createIndex( { a: 1 }, { unique: true } ) Show Answer Q 9 - In a sharded replica set environment, w defines the level and kind of write concern. Which of the following values of w specifies to return success only after a majority of voting members have acknowledged? A - n B - majority C - m D - major Answer : B Explanation For replica sets, if you specify the special majority value to w option, write operations will only return successfully after a majority of the voting members of the replica set have acknowledged the write operation. Show Answer Q 10 - Suppose that you have the following three documents in your system: { _id: 1, product_code: "123456", description: "mongo db tutorial" } { _id: 2, product_code: "345567", description: �this is mongo tutorial" } { _id: 3, product_code: �123431", description: "my mongo� } If you create a text index on the description field and then apply a text search on term �mongo�, which all documents will be fetched. A - 1 and 2 B - 2 and 3 C - 1 and 3 D - All of the above Answer : D Explanation MongoDB provides text indexes to support text search of string content in documents of a collection. text indexes can include any field whose value is a string or an array of string elements. Show Answer mongodb_questions_answers.htm

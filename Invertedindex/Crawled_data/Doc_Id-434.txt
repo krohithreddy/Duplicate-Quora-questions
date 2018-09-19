@@ -1,0 +1,18 @@
+OrientDB - Backup Database
+
+https://www.tutorialspoint.com/orientdb/orientdb_backup_database.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Like RDBMS, OrientDB also supports the backup and restore operations. While executing the backup operation, it will take all files of the current database into a compressed zip format using the ZIP algorithm. This feature (Backup) can be availed automatically by enabling the Automatic-Backup server plugin. Taking backup of a database or exporting a database is the same, however, based on the procedure we have to know when to use backup and when to use export. While taking backup, it will create a consistent copy of a database, all further write operations are locked and waiting to finish the backup process. In this operation, it will create a read-only backup file. If you need the concurrent read and write operation while taking a backup you have to choose exporting a database instead of taking backup of a database. Export doesn’t lock the database and allows concurrent writes during the export process. The following statement is the basic syntax of database backup. 
+./backup.sh <dburl> <user> <password> <destination> [<type>]
+ Following are the details about the options in the above syntax. <dburl> − The database URL where the database is located either in the local or in the remote location. <user> − Specifies the username to run the backup. <password> − Provides the password for the particular user. <destination> − Destination file location stating where to store the backup zip file. <type> − Optional backup type. It has either of the two options. Default − locks the database during the backup. LVM − uses LVM copy-on-write snapshot in background. Example Take a backup of the database demo which is located in the local file system /opt/orientdb/databases/demo into a file named sample-demo.zip and located into the current directory. You can use the following command to take a backup of the database demo. 
+$ backup.sh plocal: opt/orientdb/database/demo admin admin ./backup-demo.zip 
+ Using Console The same you can do using the OrientDB console. Before taking the backup of a particular database, you have to first connect to the database. You can use the following command to connect to the database named demo. 
+orientdb> CONNECT PLOCAL:/opt/orientdb/databases/demo admin admin 
+ After connecting you can use the following command to take backup of the database into a file named ‘backup-demo.zip’ in the current directory. 
+orientdb {db=demo}> BACKUP DATABASE ./backup-demo.zip 
+ If this command is executed successfully, you will get some success notifications along with following message. 
+Backup executed in 0.30 seconds

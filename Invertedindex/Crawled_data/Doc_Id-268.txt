@@ -1,0 +1,22 @@
+MongoDB - ObjectId
+
+https://www.tutorialspoint.com/mongodb/mongodb_objectid.htm
+
+Mongodb, overview, Advantages, Environment, Data Modelling, Create Database, Drop Database, Create Collection, Drop Collection, Data Types, Insert Document, Query Document, Update Document, Delete Document, Projection, Limiting Records, Sorting, Records, Indexing, Aggregration, Replication, Sharding, Create Backup, Deployment, Java, PHP, Relationships, Database References, Covered Queries, Analyzing Queries, Atomic Operations, Advanced Indexing, Indexing Limitations, ObjectId, Map Reduce, Text Search, Regular Expression, Rockmongo, GridFS, Capped Collections, Auto-Increment Sequence.
+
+August-15-2017-02:34:09
+
+We have been using MongoDB Object Id in all the previous chapters. In this chapter, we will understand the structure of ObjectId. An ObjectId is a 12-byte BSON type having the following structure − The first 4 bytes representing the seconds since the unix epoch The next 3 bytes are the machine identifier The next 2 bytes consists of process id The last 3 bytes are a random counter value MongoDB uses ObjectIds as the default value of _id field of each document, which is generated while the creation of any document. The complex combination of ObjectId makes all the _id fields unique. Creating New ObjectId To generate a new ObjectId use the following code − 
+>newObjectId = ObjectId()
+ The above statement returned the following uniquely generated id − 
+ObjectId("5349b4ddd2781d08c09890f3")
+ Instead of MongoDB generating the ObjectId, you can also provide a 12-byte id − 
+>myObjectId = ObjectId("5349b4ddd2781d08c09890f4")
+ Creating Timestamp of a Document Since the _id ObjectId by default stores the 4-byte timestamp, in most cases you do not need to store the creation time of any document. You can fetch the creation time of a document using getTimestamp method − 
+>ObjectId("5349b4ddd2781d08c09890f4").getTimestamp()
+ This will return the creation time of this document in ISO date format − 
+ISODate("2014-04-12T21:49:17Z")
+ Converting ObjectId to String In some cases, you may need the value of ObjectId in a string format. To convert the ObjectId in string, use the following code − 
+>newObjectId.str
+ The above code will return the string format of the Guid − 
+5349b4ddd2781d08c09890f3

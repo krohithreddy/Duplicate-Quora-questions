@@ -1,0 +1,79 @@
+DocumentDB - Create Database
+
+https://www.tutorialspoint.com/documentdb/documentdb_create_database.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+In this chapter, we will learn how to create a database. To use Microsoft Azure DocumentDB, you must have a DocumentDB account, a database, a collection, and documents. We already have a DocumentDB account, now to create database we have two options − Microsoft Azure Portal or .Net SDK Create a Database for DocumentDB using the Microsoft Azure Portal To create a database using portal, following are the steps. Step 1 − Login to Azure portal and you will see the dashboard. Step 2 − Now click on the created DocumentDB account and you will see the details as shown in the following screenshot. Step 3 − Select the Add Database option and provide the ID for your database. Step 4 − Click OK. You can see that the database is added. At the moment, it has no collection, but we can add collections later which are the containers that will store our JSON documents. Notice that it has both an ID and a Resource ID. Create a Database for DocumentDB Using .Net SDK To create a database using .Net SDK, following are the steps. Step 1 − Open the Console Application in Visual Studio from the last chapter. Step 2 − Create the new database by creating a new database object. To create a new database, we only need to assign the Id property, which we are setting to “mynewdb” in a CreateDatabase task. 
+private async static Task CreateDatabase(DocumentClient client) {
+   Console.WriteLine(); 
+   Console.WriteLine("******** Create Database *******");
+	
+   var databaseDefinition = new Database { Id = "mynewdb" }; 
+   var result = await client.CreateDatabaseAsync(databaseDefinition); 
+   var database = result.Resource;
+	
+   Console.WriteLine(" Database Id: {0}; Rid: {1}", database.Id, database.ResourceId); 
+   Console.WriteLine("******** Database Created *******"); 
+} 
+ Step 3 − Now pass this databaseDefinition on to CreateDatabaseAsync, and get back a result with a Resource property. All the create object methods return a Resource property that describes the item that was created, which is a database in this case. We get the new database object from the Resource property and it is displayed on the Console along with the Resource ID that DocumentDB assigned to it. Step 4 − Now call CreateDatabase task from the CreateDocumentClient task after DocumentClient is instantiated. 
+using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) { 
+   await CreateDatabase(client); 
+} 
+ Following is the complete Program.cs file so far. 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
+using Microsoft.Azure.Documents.Linq;
+using Newtonsoft.Json;
+
+namespace DocumentDBDemo {
+
+   class Program {
+      private const string EndpointUrl = "https://azuredocdbdemo.documents.azure.com:443/";
+		
+      private const string AuthorizationKey = "BBhjI0gxdVPdDbS4diTjdloJq7Fp4L5RO/
+         StTt6UtEufDM78qM2CtBZWbyVwFPSJIm8AcfDu2O+AfV T+TYUnBQ==";
+			
+      static void Main(string[] args) {
+         try {
+            CreateDocumentClient().Wait();
+         } catch (Exception e) {
+            Exception baseException = e.GetBaseException();
+            Console.WriteLine("Error: {0}, Message: {1}", e.Message, baseException.Message);
+         }
+         Console.ReadKey();
+      }
+		
+      private static async Task CreateDocumentClient() {
+         // Create a new instance of the DocumentClient
+         using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+            await CreateDatabase(client);
+         } 
+      }
+		
+      private async static Task CreateDatabase(DocumentClient client) {
+         Console.WriteLine();
+         Console.WriteLine("******** Create Database *******");
+			
+         var databaseDefinition = new Database { Id = "mynewdb" };
+         var result = await client.CreateDatabaseAsync(databaseDefinition);
+         var database = result.Resource;
+			
+         Console.WriteLine(" Database Id: {0}; Rid: {1}", database.Id, database.ResourceId);
+         Console.WriteLine("******** Database Created *******");
+      }
+		
+   } 
+}
+ When the above code is compiled and executed, you will receive the following output which contains the Database and Resources IDs. 
+******** Create Database ******* 
+ Database Id: mynewdb; Rid: ltpJAA== 
+******** Database Created *******

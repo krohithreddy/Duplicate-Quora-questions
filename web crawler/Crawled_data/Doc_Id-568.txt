@@ -1,0 +1,38 @@
+PostgreSQL - SELECT Database
+
+https://www.tutorialspoint.com/postgresql/postgresql_select_database.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+This chapter explains various methods of accessing the database. Assume that we have already created a database in our previous chapter. You can select the database using either of the following methods − Database SQL Prompt OS Command Prompt Database SQL Prompt Assume you have already launched your PostgreSQL client and you have landed at the following SQL prompt − 
+postgres=#
+ You can check the available database list using \l, i.e., backslash el command as follows − 
+postgres-# \l
+                             List of databases
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+-----------+----------+----------+---------+-------+-----------------------
+ postgres  | postgres | UTF8     | C       | C     | 
+ template0 | postgres | UTF8     | C       | C     | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ template1 | postgres | UTF8     | C       | C     | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ testdb    | postgres | UTF8     | C       | C     | 
+(4 rows)
+
+postgres-# 
+ Now, type the following command to connect/select a desired database; here, we will connect to the testdb database. 
+postgres=# \c testdb;
+psql (9.2.4)
+Type "help" for help.
+You are now connected to database "testdb" as user "postgres".
+testdb=# 
+ OS Command Prompt You can select your database from the command prompt itself at the time when you login to your database. Following is a simple example − 
+psql -h localhost -p 5432 -U postgress testdb
+Password for user postgress: ****
+psql (9.2.4)
+Type "help" for help.
+You are now connected to database "testdb" as user "postgres".
+testdb=# 
+ You are now logged into PostgreSQL testdb and ready to execute your commands inside testdb. To exit from the database, you can use the command \q.

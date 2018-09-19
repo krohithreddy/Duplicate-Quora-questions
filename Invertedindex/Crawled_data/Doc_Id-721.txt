@@ -1,0 +1,34 @@
+SQL Online Quiz
+
+https://www.tutorialspoint.com/sql/sql_online_quiz.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+Following quiz provides Multiple Choice Questions (MCQs) related to SQL. You will have to read all the given answers and click over the correct answer. If you are not sure about the answer then you can check the answer using Show Answer button. You can use Next Quiz button to check new set of questions in the quiz. Q 1 - Consider the following schema − 
+STUDENTS(student_code, first_name, last_name, email, 
+         phone_no, date_of_birth, honours_subject, percentage_of_marks);
+ Which of the following query would display the full name of a student, with a column heading "Name" A - select first_name, last_name as “Name” from students; B - select Name from students; C - select first_name || last_name as “Name” from students; D - select first_name, last_name from students; Answer : C Show Answer Q 2 - What is returned by MOD(1000,30)? A - 33 B - 30 C - 3 D - 10 Answer : D Show Answer Q 3 - Which of the following is true about SQL joins? A - The join condition is not separated from other search conditions in a query. B - The ON clause makes code difficult to understand. C - The join condition for natural join is basically an equijoin of all columns with same name. D - None of the above. Answer : C Show Answer Q 4 - Which of the following is not a group function? A - SUM B - NVL C - COUNT D - MIN Answer : B Show Answer Q 5 - Consider the following schema − 
+STUDENTS(student_code, first_name, last_name, email, 
+         phone_no, date_of_birth, honours_subject, percentage_of_marks);
+ Which of the following query will correctly display name of all the students who got more marks than the student ‘0215/15’? A - 
+select first_name, last_name from students 
+
+where percent_of_marks > 
+	(select percentage_of_marks from students
+		where student_code = ‘0215/15’);
+ B - 
+select first_name, last_name from students 
+having percent_of_marks > 
+	(select percentage_of_marks from students
+		where student_code = ‘0215/15’);
+ C - 
+select first_name, last_name from students 
+using percent_of_marks > 
+	(select select percentage_of_marks from students
+		where student_code = ‘0215/15’);
+
+ D - None of the above. Answer : A Show Answer Q 6 - Which of the following comparison operators could be used in a multiple row query? A - IN operator B - ANY operator C - ALL operator D - All of the above Answer : D Show Answer Q 7 - Consider the following schema − 
+LOCATIONS(subject_code, department_name, location_id, city);
+ Which code snippet will alter the table LOCATIONS and delete the column named CITY? A - MODIFY TABLE locations DROP (city varchar2(30)); B - ALTER TABLE locations DROP COLUMN city; C - ALTER TABLE locations DROP (city); D - None of the above. Answer : B Show Answer Q 8 - Which of the following is not true about constraints? A - A NOT NULL constraint specifies that the column cannot have a null value. B - A UNIQUE constraint specifies that a column or a combination of column must have unique values for all rows. C - A PRIMARY KEY is same as UNIQUE. D - A FOREIGN KEY enforces a foreign key relationship between a column and a referenced table. Answer : C Show Answer Q 9 - Which of the following statement is used to modify a sequence? A - ALTER SEQUENCE B - SELECT SEQUENCE C - DROP SEQUENCE D - None of the above. Answer : A Show Answer Q 10 - A database administrator can A - Create users. B - Create privileges. C - Grant privileges. D - All of the above. Answer : D Show Answer sql_questions_answers.htm

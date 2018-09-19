@@ -1,0 +1,20 @@
+CouchDB - Creating a Database
+
+https://www.tutorialspoint.com/couchdb/couchdb_creating_a_database.htm
+
+CouchDB, Introduction, Installation, Curl and Futon, Http API, Creating a Database, Deleting a Database, Creating a Document, Updating a Document, Deleting a Document, Attaching Files.
+
+August-15-2017-02:34:06
+
+Database is the outermost data structure in CouchDB where your documents are stored. You can create these databases using cURL utility provided by CouchDB, as well as Futon the web interface of CouchDB. Creating a Database using cURL Utility You can create a database in CouchDB by sending an HTTP request to the server using PUT method through cURL utility. Following is the syntax to create a database − 
+$ curl -X PUT http://127.0.0.1:5984/database_name
+ Using −X we can specify HTTP custom request method to be used. In this case, we are using PUT method. When we use the PUT operation/method, the content of the url specifies the object name we are creating using HTTP request. Here we have to send the name of the database using put request in the url to create a database. Example Using the above given syntax if you want to create a database with name my_database, you can create it as mentioned below. As a response the server will return you a JSON document with content "ok" : true indicating the operation was successful. 
+curl -X PUT http://127.0.0.1:5984/my_database
+{
+   "ok":true
+}
+ Verification Verify whether the database is created, by listing out all the databases as shown below. Here you can observe the name of a newly created database, " my_database " in the list. 
+$ curl -X GET http://127.0.0.1:5984/_all_dbs
+
+[ "_replicator " , " _users " , " my_database " ]
+ Creating a Database using Futon To create a database open the http://127.0.0.1:5984/_utils/. You will get an Overview/index page of CouchDB as shown below. In this page, you can see the list of databases in CouchDB, an option button Create Database on the left hand side. Now click on the create database link. You can see a popup window Create New Databases asking for the database name for the new database. Choose any name following the mentioned criteria. Here we are creating another database with name tutorials_point. Click on the create button as shown in the following screenshot.

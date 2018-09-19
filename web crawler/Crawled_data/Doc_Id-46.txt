@@ -1,0 +1,48 @@
+DB2 - Storagegroups
+
+https://www.tutorialspoint.com/db2/db2_storagegroups.htm
+
+DB2 Bufferpools, introduction to db2, db2 server installation, db2 instance, databases, buffer pools, table spaces, storage groups, schemas, data type, tables, alias, constraints, indexes, triggers, sequences, views, db2 with xml, backup and recovery, database security, roles, ldap etc.
+
+August-15-2017-02:34:24
+
+This chapter describes the Database Storagegroups. Introduction A set of Storage paths to store database table or objects, is a storage group. You can assign the tablespaces to the storage group. When you create a database, all the tablespaces take default storagegorup. The default storage group for a database is ‘IBMSTOGROUP’. When you create a new database, the default storage group is active, if you pass the “AUTOMATIC STOGROUP NO” parameter at the end of “CREATE DATABASE” command. The database does not have any default storage groups. Listing storagegroups You can list all the storagegroups in the database. Syntax: [To see the list of available storagegroups in current database] 
+db2 select * from syscat.stogroups
+ Example: [To see the list of available storagegorups in current database] 
+db2 select * from syscat.stogroups
+ Creating a storagegroup Here is a syntax to create a storagegroup in the database: Syntax: [To create a new stogroup. The ‘stogropu_name’ indicates name of new storage group and ‘path’ indicates the location where data (tables) are stored] 
+db2 create stogroup  on ‘path’
+ Example: [To create a new stogroup ‘stg1’ on the path ‘data1’ folder] 
+db2 create stogroup stg1 on ‘/data1’
+ Output: 
+DB20000I The SQL command completed succesfully 
+ Creating tablespace with stogroup Here is how you can create a tablespace with storegroup: Syntax: [To create a new tablespace using existed storage group] 
+db2 create tablespace <tablespace_name>  using stogroup <stogroup_name> 
+ Example: [To create a new tablespace named ‘ts1’ using existed storage group ‘stg1’] 
+db2 create tablespace ts1 using stogroup stg1 
+ Output: 
+DB20000I The SQL command completed succesfully 
+ Altering a storagegroup You can alter the location of a storegroup by using following syntax: Syntax: [To shift a storage group from old location to new location] 
+db2 alter stogroup  add ‘location’, ‘location’ 
+ Example: [To modify location path from old location to new location for storage group named ‘sg1’] 
+db2 alter stogroup sg1 add ‘/path/data3’, ‘/path/data4’ 
+ Dropping folder path of storagegroup Before dropping folder path of storagegroup, you can add new location for the storagegroup by using alter command. Syntax: [To drop old path from storage group location] 
+db2 alter stogroup  drop ‘/path’ 
+ Example: [To drop storage group location from ‘stg1’] 
+db2 alter stogroup stg1 drop ‘/path/data1’  
+ Rebalancing a tablespace Rebalancing the tablespace is required when we create a new folder for storagegroup or tablespaces while the transactions are conducted on the database and the tablespace becomes full. Rebalancing updates database configuration files with new storagegroup. Syntax: [To rebalance the tablespace from old storage group path to new storage group] 
+db2 alter tablspace <ts_name> rebalance   
+ Example: [To rebalance] 
+db2 alter tablespace ts1 rebalance   
+ Renaming a storagegroup Syntax: [To modify the name of existing storage name] 
+db2 rename stogroup <old_stg_name> to <new_stg_name>   
+ Example: [To modify the name of storage group from ‘sg1’ to new name ‘sgroup1’] 
+db2 rename stogroup sg1 to sgroup1   
+ Dropping a storage group Step 1: Before dropping any storagegroup, you can assign some different storagegroup for tablespaces. Syntax: [To assign another storagegroup for table space.] 
+db2 alter tablspace <ts_name> using stogroup <another sto_group_name>    
+ Example: [To change from one old stogroup to new stogroup named ‘sg2’ for tablespace ‘ts1’] 
+db2 alter tablespace ts1 using stogroup sg2   
+ Step 2: Syntax: [To drop the existing stogroup] 
+db2 drop stogorup <stogroup_name>   
+ Example: [To drop stogroup ‘stg1’ from database] 
+db2 drop stogroup stg1

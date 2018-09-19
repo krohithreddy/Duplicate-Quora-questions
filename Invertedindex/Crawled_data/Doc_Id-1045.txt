@@ -1,0 +1,31 @@
+XSD - Element
+
+https://www.tutorialspoint.com/xsd/xsd_element.htm
+
+ XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+Simple Element is an XML element which can only have text. It can not contain any attribute. Syntax 
+<xs:element name = "element-name" type = "element-type"/>
+ element-name Name of the XML Element. For example, 
+<xs:element name = "firstname" type = "xs:string"/> 
+ defines following element 
+<firstname></firstname>
+ element-type Type of the XML Element. For example, 
+<xs:element name = "firstname" type = "xs:string"/> 
+ defines type of element as String, firstname should have value of type string. 
+<firstname>Dinkar</firstname>
+ Example Consider the following XML Elements 
+<name>Dinkar</name>
+<marks>90</marks>
+<birthdate>1985-05-23</birthdate>
+ XSD declarations for above XML elements will be as follows − 
+<xs:element name = "name" type = "xs:string"/>
+<xs:element name = "marks" type = "xs:integer"/>
+<xs:element name = "birthdate" type = "xs:date"/>
+ Default Value A Simple Element can have a default value assigned. Default values are used in case an element does not have any text. 
+<xs:element name = "grade" type = "xs:string" default = "NA" /> 
+ Fixed Value Simple Element can have fix value assigend. In case, fixed value is assigned element can not have any text. 
+<xs:element name = "class" type = "xs:string" fixed = "1" /> 
+ xsd_simple_types.htm

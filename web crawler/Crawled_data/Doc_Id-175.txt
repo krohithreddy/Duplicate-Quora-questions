@@ -1,0 +1,60 @@
+HSQLDB - Where Clause
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_where_clause.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+Generally, we use SELECT command to fetch data from HSQLDB table. We can use WHERE conditional clause to filter the resultant data. Using WHERE we can specify the selection criteria to select the required records from a table. Syntax Following is the syntax of SELECT command WHERE clause to fetch data from HSQLDB table. 
+SELECT field1, field2,...fieldN table_name1, table_name2...
+[WHERE condition1 [AND [OR]] condition2.....
+ You can use one or more tables separated by comma to include various conditions using a WHERE clause, but WHERE clause is an optional part of SELECT command. You can specify any condition using WHERE clause. You can specify more than one conditions using AND or OR operators. A WHERE clause can also be used along with DELETE or UPDATE SQL command to specify a condition. We can filter the record data by using conditions. We are using different operators in conditional WHERE clause. Here is the list of operators, which can be used with WHERE clause. Operator Description Example = Checks if the values of two operands are equal or not, if yes then the condition becomes true. (A = B) is not true != Checks if the values of two operands are equal or not, if values are not equal then the condition becomes true. (A != B) is true > Checks if the value of the left operand is greater than the value of the right operand, if yes then the condition becomes true. (A > B) is not true < Checks if the value of the left operand is less than the value of the right operand, if yes then the condition becomes true. (A < B) is true >= Checks if the value of the left operand is greater than or equal to the value of the right operand, if yes then the condition becomes true. (A >= B) is not true <= Checks if the value of the left operand is less than or equal to the value of the right operand, if yes then the condition becomes true. (A <= B) is true Example Here is an example that retrieves the details such as id, title, and the author of the book titled "Learn C". It is possible by using WHERE clause in the SELECT command. Following is the query for the same. 
+SELECT id, title, author FROM tutorials_tbl WHERE title = 'Learn C';
+ After execution of the above query, you will receive the following output. 
++------+----------------+-----------------+
+| id   |      title     |    author       |
++------+----------------+-----------------+
+| 101  |      Learn C   |   Yaswanth      |
++------+----------------+-----------------+
+ HSQLDB – JDBC Program Here is the JDBC program that retrieves the record data from the table tutorials_tblhaving the title Learn C. Save the following code into WhereClause.java. 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class WhereClause {
+   
+   public static void main(String[] args) {
+      Connection con = null;
+      Statement stmt = null;
+      ResultSet result = null;
+      try {
+         Class.forName("org.hsqldb.jdbc.JDBCDriver");
+         con = DriverManager.getConnection(
+            "jdbc:hsqldb:hsql://localhost/testdb", "SA", "");
+         stmt = con.createStatement();
+         result = stmt.executeQuery(
+            "SELECT id, title, author FROM tutorials_tbl
+            WHERE title = 'Learn C'");
+         
+         while(result.next()){
+            System.out.println(result.getInt("id")+" |
+               "+result.getString("title")+" |
+               "+result.getString("author"));
+         }
+      } catch (Exception e) {
+         e.printStackTrace(System.out);
+      }
+   }
+
+}
+ You can start the database using the following command. 
+\>cd C:\hsqldb-2.3.4\hsqldb
+hsqldb>java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0
+file:hsqldb/demodb --dbname.0 testdb
+ Compile and execute the above code using the following command. 
+\>javac WhereClause.java
+\>java WhereClause
+ After execution of the above command, you will receive the following output. 
+101 | Learn C | Yaswanth

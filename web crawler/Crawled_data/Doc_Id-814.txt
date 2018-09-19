@@ -1,0 +1,47 @@
+T-SQL - LIKE Clause
+
+https://www.tutorialspoint.com/t_sql/t_sql_like_clause.htm
+
+T-SQL, Tutorial, Learning, Beginners, Overview, Data Types, Create Tables, Drop Tables, INSERT Statement, SELECT Statement, UPDATE Statement, DELETE Statement, WHERE Clause, LIKE Clause, ORDER BY Clause, GROUP BY Clause, DISTINCT Clause, Joining Tables, Sub-Queries, Stored Procedures, Transactions, Indexes, Functions, String Functions, Date Functions, Numeric Functions.
+
+August-15-2017-02:34:09
+
+The MS SQL Server LIKE clause is used to compare a value to similar values using wildcard operators. There are two wildcards used in conjunction with the LIKE operator − The percent sign (%) The underscore (_) The percent sign represents zero, one, or multiple characters. The underscore represents a single number or character. The symbols can be used in combinations. Syntax Following is the basic syntax of % and _. 
+SELECT *\column-list FROM table_name 
+WHERE column LIKE 'XXXX%' 
+ 
+or   
+
+SELECT *\column-list FROM table_name 
+WHERE column LIKE '%XXXX%'  
+
+or  
+
+SELECT *\column-list FROM table_name 
+WHERE column LIKE 'XXXX_'  
+
+or  
+
+SELECT *\column-list FROM table_name 
+WHERE column LIKE '_XXXX'  
+
+or  
+
+SELECT  *\column-list FROM table_name 
+WHERE column LIKE '_XXXX_' 
+ You can combine N number of conditions using AND or OR operators. XXXX could be any numeric or string value. Example Following are a number of examples showing WHERE part having different LIKE clause with '%' and '_' operators. Sr.No Statement & Description 1 WHERE SALARY LIKE '200%' Finds any values that start with 200 2 WHERE SALARY LIKE '%200%' Finds any values that have 200 in any position 3 WHERE SALARY LIKE '_00%' Finds any values that have 00 in the second and third positions 4 WHERE SALARY LIKE '2_%_%' Finds any values that start with 2 and are at least 3 characters in length 5 WHERE SALARY LIKE '%2' Finds any values that end with 2 6 WHERE SALARY LIKE '_2%3' Finds any values that have a 2 in the second position and end with a 3 7 WHERE SALARY LIKE '2___3' Finds any values in a five-digit number that start with 2 and end with 3 Consider the CUSTOMERS table having the following records. 
+ID  NAME       AGE       ADDRESS            SALARY 
+1   Ramesh     32        Ahmedabad          2000.00 
+2   Khilan     25        Delhi              1500.00 
+3   kaushik    23        Kota               2000.00 
+4   Chaitali   25        Mumbai             6500.00 
+5   Hardik     27        Bhopal             8500.00 
+6   Komal      22        MP                 4500.00 
+7   Muffy      24        Indore             10000.00 
+ Following command is an example, which will display all the records from CUSTOMERS table where SALARY starts with 200. 
+SELECT * FROM CUSTOMERS 
+WHERE SALARY LIKE '200%'; 
+ The above command will produce the following output. 
+ID   NAME     AGE     ADDRESS       SALARY 
+1    Ramesh   32      Ahmedabad     2000.00 
+3    kaushik  23      Kota          2000.00

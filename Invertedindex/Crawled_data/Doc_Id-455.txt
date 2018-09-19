@@ -1,0 +1,76 @@
+OrientDB - Functions
+
+https://www.tutorialspoint.com/orientdb/orientdb_functions.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+This chapter explains the complete reference of different types of functions in OrientDB. The following table defines the list of functions, which are categorized by their functionality. Graph Functions The functions which are used to manipulate the graph data. Sr.No. Function Name & Description 1 Out(): Gets the adjacent outgoing vertices starting from the current record as Vertex. Syntax − out([<label-1>][,<label-n>]*) 2 In(): Gets the adjacent incoming vertices starting from the current record as Vertex. Syntax − in([<label-1>][,<label-n>]*) 3 Both(): Gets the adjacent outgoing and incoming vertices starting from the current record as Vertex. Syntax − both([<label1>][,<label-n>]*) 4 outE(): Gets the adjacent outgoing edges starting from the current record as Vertex. Syntax − outE([<label1>][,<label-n>]*) 5 inE(): Gets the adjacent incoming edges starting from the current record as Vertex. Syntax − inE([<label1>][,<label-n>]*) 6 bothE(): Gets the adjacent outgoing and incoming edges starting from the current record as Vertex. Syntax − bothE([<label1>][,<label-n>]*) 7 outV(): Gets the outgoing vertices starting from the current record as Edge. Syntax − outV() 8 inV(): Get the incoming vertices from the current record as Edge. Syntax − inV() 9 traversedElement(): Returns the traversed element(s) in Traverse commands. Syntax − traversedElement(<index> [,<items>]) 10 traversedVertex(): Return the traversed vertex(es) in Traverse commands. Syntax − traversedVertex(<index> [,<items>]) 11 traversedEdge(): Returns the traversed edge(s) in Traverse commands. Syntax − traversedEdge(<index> [,<items>]) 12 shortestPath(): Returns the shortest path between two vertices. Direction can be OUT (default), IN or BOTH. Synatx − shortestPath( <sourceVertex>, <destinationVertex> [, <direction> [, <edgeClassName>]]) 13 dijkstra(): Returns the cheapest path between two vertices using the Dijkstra algorithm. Syntax − dijkstra(<sourceVertex>, <destinationVertex>, <weightEdgeFieldName> [, <direction>]) Try some graph functions along with the following queries. Execute the following query to get all the outgoing vertices from all the vehicle vertices. 
+orientdb {db = demo}>SELECT out() from Vehicle
+ If the above query is executed successfully, you will get the following output. 
+---+----------+--------- 
+ # | @class   | out 
+---+----------+--------- 
+ 0 | Vehicle  | #11:2 
+ 1 | Vehicle  | #13:1 
+ 2 | Vehicle  | #13:4 
+---+----------+--------- 
+ Execute the following query to get both incoming and outgoing vertices from the vertex #11:3. 
+orientdb {db = demo}>SELECT both() FROM #11:3 
+ If the above query is executed successfully, you will get the following output. 
+---+----------+--------+------- 
+ # | @class   | out    | in  
+---+----------+--------+------- 
+ 0 | Vehicle  | #13:2  | #10:2   
+ ---+----------+-------+-------
+ Math Functions The following table defines the list of Math functions which are used to execute mathematical expressions. Sr.No. Function Name & Description 1 eval(): Evaluates the expression between quotes (or double quotes). Syntax − eval('<expression>') 2 min(): Returns the minimum value. If invoked with more than one parameter, then it returns minimum argument value between all the arguments. Syntax − min(<field> [, <field-n>]* ) 3 max(): Returns the maximum value. If invoked with more than one parameter, then returns the maximum value between all the arguments. Syntax − max(<field> [, <field-n>]* ) 4 sum() Returns the sum of all the values returned. Syntax − sum(<field>) 5 abs(): Returns the absolute value. It works with Integer, Long, Short, Double, Float, BigInteger, BigDecimal, null. Syntax − abs(<field>) 6 avg(): Returns the average value. Syntax − avg(<field>) 7 count(): Counts the record that matches the query condition. If * is not used as a field, then the record will be counted only if the content is not null. Syntax − count(<field>) 8 mode(): Returns the value that occurs with the greatest frequency. Nulls are ignored in the calculation. Syntax − mode(<field>) 9 median(): Returns the middle value or an interpolated value that represents the middle value after the values are sorted. Nulls are ignored in the calculation. Syntax − median(<field>) 10 percentile(): Returns the nth percentile. Null is ignored in the calculation. Syntax − percentile(<field> [, <quantile-n>]*) 11 variance() Returns the middle variance: The average of squared difference from the mean. Syntax − variance(<field>) 12 stddev() Returns the standard deviation: The measure of how spread out values are. Nulls are ignored in the calculation. Syntax − stddev(<field>) Try some math functions using the following queries. Execute the following query to get the sum of salaries of all employees. 
+orientdb {db = demo}>SELECT SUM(salary) FROM Employee 
+ If the above query is executed successfully, you will get the following output. 
+---+----------+--------- 
+ # | @CLASS   | sum 
+---+----------+--------- 
+ 0 | null     | 150000 
+---+----------+---------
+ Execute the following query to get the average salary of all employees. 
+orientdb {db = demo}>SELECT avg(salary) FROM Employee
+ If the above query is executed successfully, you will get the following output. 
+---+----------+--------- 
+ # | @CLASS   | avg 
+---+----------+--------- 
+ 0 | null     | 25 
+---+----------+--------- 
+ Collections Functions The following table defines the list of functions that manipulate the collections data. Sr.No. Function Name & Description 1 set(): Adds a value to a set. If the value is a collection, then it is merged with the set, otherwise <value> is added. Syntax − set(<field>) 2 map(): Adds a value to a map the first time the map is created. If <value> is a map, then it is merged with the map, otherwise the pair <key> and <value> is added to map as new entry. Syntax − map(<key>, <value>) 3 ist(): Adds a value to list the first time the list is created. If <value> is a collection, then it is merged with the list, otherwise <value> is added to list. Syntax − list(<field>) 4 difference(): Works as aggregate or inline. If only one argument is passed then aggregates, otherwise executes, and returns the DIFFERENCE between the collections received as parameters. Syntax − difference(<field> [,<field-n>]*) 5 first(): Retrieves only the first item of multi-value fields (arrays, collections and maps). For non-multi-value types just returns the value. Syntax − first(<field>) 6 intersect(): Works as aggregate or inline. If only one argument is passed then aggregates, otherwise executes, and returns, the INTERACTION of the collections received as parameters. Syntax − intersect(<field> [,<field-n>]*) 7 distinct(): Retrieves only unique data entries depending on the field you have specified as argument. The main difference compared to standard SQL DISTINCT is that with OrientDB, a function with parenthesis and only one field can be specified. Syntax − distinct(<field>) 8 expand(): This function has two meanings− When used on a collection field, it unwinds the collection in the field and uses it as result. When used on a link (RID) field, it expands the document pointed by that link. Syntax − expand(<field>) 9 unionall(): Works as aggregate or inline. If only one argument is passed then aggregates, otherwise executes and returns a UNION of all the collections received as parameters. Also works with no collection values. Syntax − unionall(<field> [,<field-n>]*) 10 flatten(): Extracts the collection in the field and uses it as result. It is deprecated, use expand() instead. Syntax − flatten(<field>) 11 last(): Retrieves only the last item of multi-value fields (arrays, collections and maps). For non-multi-value types just returns the value. Syntax − last(<field>) 12 symmetricDifference(): Works as aggregate or inline. If only one argument is passed then aggregates, otherwise executes, and returns, the SYMMETRIC DIFFERENCE between the collections received as parameters. Syntax − symmetricDifference(<field> [,<field-n>]*) Try some collection functions using the following queries. Execute the following query to get a set of teachers, teaching class 9th. 
+orientdb {db = demo}>SELECT ID, set(teacher.id) AS teacherID from classess where class_id = 9 
+ If the above query is executed successfully, you will get the following output. 
+---+----------+--------+-------------------------- 
+ # | @CLASS   | id     | TeacherID 
+---+----------+--------+-------------------------- 
+ 0 | null     | 9     |   1201, 1202, 1205, 1208 
+---+----------+-------+---------------------------
+ Misc Functions The following table defines the list of functions to carry out miscellaneous operations. Sr.No. Function Name & Description 1 date(): Returns a date formatting a string. <date-as-string> is the date in string format, and <format> is the date format following these rules. Syntax − date( <date-as-string> [<format>] [,<timezone>] ) 2 sysdate(): Returns the current date and time. Syntax − sysdate( [<format>] [,<timezone>] ) 3 format(): Formats a value using the String.format() conventions. Syntax − format( <format> [,<arg1> ](,<arg-n>]*.md) 4 distance(): Returns the distance between two points in the globe using the Haversine algorithm. Coordinates must be degrees. Syntax − distance( <x-field>, <y-field>, <x-value>, <y-value> ) 5 ifnull(): Returns the passed field/value (or optional parameter return_value_if_not_null). If field/value is not null, it returns return_value_if_null. Syntax − ifnull(<field|value>, <return_value_if_null> [,<return_value_if_not_null>](,<field&.md#124;value>]*) 6 coalesce(): Returns the first field/value not null parameter. If no field/value is not null, returns null. Syntax − coalesce(<field|value> [, <field-n|value-n>]*) 7 uuid(): Generates a UUID as a 128-bits value using the Leach-Salz variant. Syntax − uuid() 8 if(): Evaluates a condition (first parameters) and returns the second parameter if the condition is true, the third one otherwise. Syntax − if(<expression>, <result-if-true>, <result-if-false>) Try some Misc functions using the following queries. Execute the following query to learn how to execute if expression. 
+orientdb {db = demo}> SELECT if(eval("name = 'satish'"), "My name is satish", 
+"My name is not satish") FROM Employee
+ If the above query is executed successfully, you will get the following output. 
+----+--------+----------------------- 
+#   |@CLASS  | IF 
+----+--------+----------------------- 
+0   |null    |My name is satish  
+1   |null    |My name is not satish 
+2   |null    |My name is not satish  
+3   |null    |My name is not satish  
+4   |null    |My name is not satish  
+----+--------+------------------------ 
+ Execute the following query to get system date. 
+orientdb {db = demo}> SELECT SYSDATE() FROM Employee
+ If the above query is executed successfully, you will get the following output. 
+----+--------+----------------------- 
+#   |@CLASS  | SYSDATE 
+----+--------+----------------------- 
+0   |null    |2016-02-10 12:05:06 
+1   |null    |2016-02-10 12:05:06 
+2   |null    |2016-02-10 12:05:06 
+3   |null    |2016-02-10 12:05:06 
+4   |null    |2016-02-10 12:05:06 
+----+--------+------------------------ 
+ By using this function thoroughly you can easily manipulate the OrientDB data.

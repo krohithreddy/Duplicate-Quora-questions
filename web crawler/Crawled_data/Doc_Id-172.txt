@@ -1,0 +1,70 @@
+HSQLDB - Sorting Results
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_sorting_results.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+The SQL SELECT command fetches data from the HSQLDB table whenever there is a requirement that follows a particular order while retrieving and displaying records. In that case, we can use the ORDER BY clause. Syntax Here is the syntax of the SELECT command along with ORDER BY clause to sort data from HSQLDB. 
+SELECT field1, field2,...fieldN table_name1, table_name2...
+ORDER BY field1, [field2...] [ASC [DESC]]
+ You can sort the returned result on any field provided that field is being listed out. You can sort the result on more than one field. You can use the keyword ASC or DESC to get the result in an ascending or descending order. By default, it's in an ascending order. You can use the WHERE...LIKE clause in a usual way to put a condition. Example Let us consider an example that fetches and sorts the records of tutorials_tbl table by ordering the author name in an ascending order. Following is the query for the same. 
+SELECT id, title, author from tutorials_tbl ORDER BY author ASC;
+ After execution of the above query, you will receive the following output. 
++------+----------------+-----------------+
+| id   |     title      |     author      |
++------+----------------+-----------------+
+| 102  |  Learn MySQL   |     Abdul S     | 
+| 104  |  Learn JDB     |    Ajith kumar  |
+| 103  |  Learn Excell  |    Bavya kanna  |
+| 100  |  Learn PHP     |    John Poul    |
+| 105  |  Learn Junit   |   Sathya Murthi |
+| 101  |  Learn C       |    Yaswanth     |
++------+----------------+-----------------+
+ HSQLDB – JDBC Program Here is the JDBC program that fetches and sorts the records of tutorials_tbl table by ordering the author name in an ascending order. Save the following program into OrderBy.java. 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class OrderBy {
+   
+   public static void main(String[] args) {
+      Connection con = null;
+      Statement stmt = null;
+      ResultSet result = null;
+      
+      try {
+         Class.forName("org.hsqldb.jdbc.JDBCDriver");
+         con = DriverManager.getConnection(
+            "jdbc:hsqldb:hsql://localhost/testdb", "SA", "");
+         stmt = con.createStatement();
+         result = stmt.executeQuery(
+            "SELECT id, title, author from tutorials_tbl
+            ORDER BY author ASC");
+         
+         while(result.next()){
+            System.out.println(result.getInt("id")+" |
+            "+result.getString("title")+" |
+            "+result.getString("author"));
+         }
+      } catch (Exception e) {
+         e.printStackTrace(System.out);
+      }
+   }
+}
+ You can start the database using the following command. 
+\>cd C:\hsqldb-2.3.4\hsqldb
+hsqldb>java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0
+file:hsqldb/demodb --dbname.0 testdb
+ Compile and execute the above program using the following command. 
+\>javac OrderBy.java
+\>java OrderBy
+ After execution of the above command, you will receive the following output. 
+102 | Learn MySQL           | Abdul S
+104 | Learn JDB             | Ajith kumar
+103 | Learn Excell          | Bavya Kanna
+100 | Learn PHP             | John Poul
+105 | Learn Junit           | Sathya Murthi
+101 | C and Data Structures | Yaswanth

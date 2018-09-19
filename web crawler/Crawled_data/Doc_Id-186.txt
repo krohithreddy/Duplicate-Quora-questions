@@ -1,0 +1,25 @@
+IMS DB - Programming
+
+https://www.tutorialspoint.com/ims_db/ims_db_programming.htm
+
+IMS DB, Overview, STRUCTURE, DL/I TERMINOLOGY, DL/I PROCESSING, CONTROL BLOCKS, PROGRAMMING, COBOL BASICS, DL/I FUNCTIONS, PCB MASK, SSA, DATA RETRIEVAL, DATA MANIPULATION, SECONDARY INDEXING, LOGICAL DATABASE, RECOVERY, INTERVIEW QUESTIONS.
+
+August-07-2017-01:26:44
+
+An application program which includes DL/I calls cannot execute directly. Instead, a JCL is required to trigger the IMS DL/I batch module. The batch initialization module in IMS is DFSRRC00. The application program and the DL/I module execute together. The following diagram shows the structure of an application program which includes DL/I calls to access a database. The application program interfaces with IMS DL/I modules via the following program elements − An ENTRY statement specifies that the PCBs are utilized by the program. A PCB-mask co-relates with the information preserved in the pre-constructed PCB which receives return information from the IMS. An Input-Output Area is used for passing data segments to and from the IMS database. Calls to DL/I specify the processing functions such as fetch, insert, delete, replace, etc. Check Status Codes is used to check the SQL return code of the processing option specified to inform whether the operation was successful or not. A Terminate statement is used to end the processing of the application program which includes the DL/I. Segments Layout As of now, we learnt that the IMS consists of segments which are used in high-level programming languages to access data. Consider the following IMS database structure of a Library which we have seen earlier and here we see the layout of its segments in COBOL − 
+01 LIBRARY-SEGMENT.
+   05 BOOK-ID        PIC X(5).
+   05 ISSUE-DATE     PIC X(10).
+   05 RETURN-DATE    PIC X(10).
+   05 STUDENT-ID     PIC A(25).
+	
+01 BOOK-SEGMENT.
+   05 BOOK-ID        PIC X(5).
+   05 BOOK-NAME      PIC A(30).
+   05 AUTHOR         PIC A(25).
+	
+01 STUDENT-SEGMENT.
+   05 STUDENT-ID     PIC X(5).
+   05 STUDENT-NAME   PIC A(25).
+   05 DIVISION       PIC X(10).
+ Application Program Overview The structure of an IMS application program is different from that of a Non-IMS application program. An IMS program cannot be executed directly; rather it is always called as a subroutine. An IMS application program consists of Program Specification Blocks to provide a view of the IMS database. The application program and the PSBs linked to that program are loaded when we execute an application program which includes IMS DL/I modules. Then the CALL requests triggered by the application programs are executed by the IMS module. IMS Services The following IMS services are used by the application program − Accessing database records Issuing IMS commands Issuing IMS service calls Checkpoint calls Sync calls Sending or receiving messages from online user terminals

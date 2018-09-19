@@ -1,0 +1,22 @@
+AIML - Introduction
+
+https://www.tutorialspoint.com/aiml/aiml_introduction.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+AIML stands for Artificial Intelligence Markup Language. AIML was developed by the Alicebot free software community and Dr. Richard S. Wallace during 1995-2000. AIML is used to create or customize Alicebot which is a chat-box application based on A.L.I.C.E. (Artificial Linguistic Internet Computer Entity) free software. AIML Tags Following are the important tags which are commonly used in AIML documents. S.No. AIML Tag / Description 1 <aiml> Defines the beginning and end of a AIML document. 2 <category> Defines the unit of knowledge in Alicebot's knowledge base. 3 <pattern> Defines the pattern to match what a user may input to an Alicebot. 4 <template> Defines the response of an Alicebot to user's input. We'll discuss each of these tags in AIML Basic tags chapter. Following are some of the other widely used aiml tags. We'll be discussing each tag in details in coming chapters. S.No. AIML Tag / Description 1 <star> Used to match wild card * character(s) in the <pattern> Tag. 2 <srai> Multipurpose tag, used to call/match the other categories. 3 <random> Used <random> to get random responses. 4 <li> Used to represent multiple responses. 5 <set> Used to set value in an AIML variable. 6 <get> Used to get value stored in an AIML variable. 7 <that> Used in AIML to respond based on the context. 8 <topic> Used in AIML to store a context so that later conversation can be done based on that context. 9 <think> Used in AIML to store a variable without notifying the user. 10 <condition> Similar to switch statements in programming language. It helps ALICE to respond to matching input. AIML Vocabulary AIML vocabulary uses words, space and two special characters * and _ as wild cards. AIML interpreter gives preference to pattern having _ than pattern having *. AIML tags are XML compliant and patterns are case-insensitive. Example 
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern> HELLO ALICE </pattern>
+      
+      <template>
+         Hello User!
+      </template>
+      
+   </category>
+</aiml>
+ Following are the important points to be considered − <aiml> tag signifies start of the AIML document. <category> tag defines the knowledge unit. <pattern> tag defines the pattern user is going to type. <template> tag defines the response to the user if user types Hello Alice. Result 
+User: Hello Alice
+Bot: Hello User

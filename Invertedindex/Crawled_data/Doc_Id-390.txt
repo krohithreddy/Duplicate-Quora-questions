@@ -1,0 +1,41 @@
+Neo4j - Merge Command
+
+https://www.tutorialspoint.com/neo4j/neo4j_merge_command.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+MERGE command is a combination of CREATE command and MATCH command. Neo4j CQL MERGE command searches for a given pattern in the graph. If it exists, then it returns the results. If it does NOT exist in the graph, then it creates a new node/relationship and returns the results. In this chapter you are going to learn how to − Merge a node with label Merge a node with properties OnCreate and OnMatch Merge a relationship Syntax Following is the syntax for the MERGE command. 
+MERGE (node: label {properties . . . . . . . }) 
+ Before proceeding to the examples in this section, create two nodes in the database with labels Dhawan and Ind. Create a relationship of type “BATSMAN_OF” from Dhawan to Ind as shown below. 
+CREATE (Dhawan:player{name: "Shikar Dhawan", YOB: 1985, POB: "Delhi"}) 
+CREATE (Ind:Country {name: "India"}) 
+CREATE (Dhawan)-[r:BATSMAN_OF]->(Ind) 
+ Merging a Node with a Label You can merge a node in the database based on the label using the MERGE clause. If you try to merge a node based on the label, then Neo4j verifies whether there exists any node with the given label. If not, the current node will be created. Syntax Following is the syntax to merge a node based on a label. 
+MERGE (node:label) RETURN node 
+ Example 1 Following is a sample Cypher Query which merges a node into Neo4j (based on label). When you execute this query, Neo4j verifies whether there is any node with the label player. If not, it creates a node named “Jadeja” and returns it. If, there exists any node with the given label, Neo4j returns them all. 
+MERGE (Jadeja:player) RETURN Jadeja 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Since you have already created a node named “Dhawan” with the label “player” in the database, Neo4j returns it as shown in the following screenshot. Example 2 Now, try to merge a node named “CT2013” with a label named Tournament. Since there are no nodes with this label, Neo4j creates a node with the given name and returns it. 
+MERGE (CT2013:Tournament{name: "ICC Champions Trophy 2013"}) 
+RETURN CT2013, labels(CT2013)
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and Start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. As discussed, since there is no node with the given label (Tournament). Neo4j creates and returns the specified node as shown in the following screenshot. Merging a Node with Properties You can also merge a node with a set of properties. If you do so, Neo4j searches for an equal match for the specified node, including the properties. If it doesn’t find any, it creates one. Syntax Following is the syntax to merge a node using properties. 
+MERGE (node:label {key1:value, key2:value, key3:value . . . . . . . . }) 
+ Example Following is a sample Cypher Query to merge a node using properties. This query tries to merge the node named “jadeja” using properties and label. Since there is no such node with the exact label and properties, Neo4j creates one. 
+MERGE (Jadeja:player {name: "Ravindra Jadeja", YOB: 1988, POB: "NavagamGhed"}) 
+RETURN Jadeja 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and Start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. As discussed, since there are no nodes with the specified label and properties, it creates one, as shown in the following screenshot. OnCreate and OnMatch Whenever, we execute a merge query, a node is either matched or created. Using on create and on match, you can set properties for indicating whether the node is created or matched. Syntax Following is the syntax of OnCreate and OnMatch clauses. 
+MERGE (node:label {properties . . . . . . . . . . .}) 
+ON CREATE SET property.isCreated ="true" 
+ON MATCH SET property.isFound ="true"
+ Example Following is a sample Cypher Query which demonstrates the usage of OnCreate and OnMatch clauses in Neo4j. If the specified node already exists in the database, then the node will be matched and the property with key-value pair isFound = "true" will be created in the node. If the specified node doesn’t exist in the database, then the node will be created, and within it a property with a key-value pair isCreated ="true" will be created. 
+MERGE (Jadeja:player {name: "Ravindra Jadeja", YOB: 1988, POB: "NavagamGhed"}) 
+ON CREATE SET Jadeja.isCreated = "true" 
+ON MATCH SET Jadeja.isFound = "true" 
+RETURN Jadeja 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. As discussed, since there is no node with the specified details, Neo4j created it along with the property isFound as shown in the following screenshot. Merge a Relationship Just like nodes, you can also merge the relationships using the MERGE clause. Example Following is a sample Cypher Query which merges a relationship using the MATCH clause in Neo4j. This query tries to merge a relationship named WINNERS_OF between the nodes “ind” (label: Country & name: India) and ICC13 (label: Tournament & name: ICC Champions Trophy 2013). Since such relation doesn’t exist, Neo4j creates one. 
+MATCH (a:Country), (b:Tournament) 
+   WHERE a.name = "India" AND b.name = "ICC Champions Trophy 2013" 
+   MERGE (a)-[r:WINNERS_OF]->(b) 
+RETURN a, b 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Since the specified relation doesn’t exist in the database, Neo4j creates one as shown in the following screenshot. In the same way, you can merge multiple relationships and undirected relationships too.

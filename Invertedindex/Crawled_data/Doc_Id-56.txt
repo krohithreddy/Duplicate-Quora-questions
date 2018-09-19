@@ -1,0 +1,150 @@
+DocumentDB - Create Collection
+
+https://www.tutorialspoint.com/documentdb/documentdb_create_collection.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+In this chapter, we will learn how to create a collection. It is similar to creating a database. You can create a collection either from the portal or from the code using .Net SDK. Step 1 − Go to main dashboard on Azure portal. Step 2 − Select myfirstdb from the databases list. Step 3 − Click on the ‘Add Collection’ option and specify the ID for collection. Select the Pricing Tier for different option. Step 4 − Let’s select S1 Standard and click Select → OK button. As you can see that MyCollection is added to the myfirstdb. You can also create collection from the code by using .Net SDK. Let’s have a look at the following steps to add collections from the code. Step 1 − Open the Console application in Visual Studio. Step 2 − To create a collection, first retrieve the myfirstdb database by its ID in the CreateDocumentClient task. 
+private static async Task CreateDocumentClient() {
+
+   // Create a new instance of the DocumentClient
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+      database = client.CreateDatabaseQuery("SELECT * FROM c WHERE c.id =
+         'myfirstdb'").AsEnumerable().First();
+			
+      await CreateCollection(client, "MyCollection1");
+      await CreateCollection(client, "MyCollection2", "S2"); 
+   }
+}
+ Following is the implementation for CreateCollection task. 
+private async static Task CreateCollection(DocumentClient client, string collectionId,
+   string offerType = "S1") {
+	
+   Console.WriteLine();
+   Console.WriteLine("**** Create Collection {0} in {1} ****", collectionId, database.Id);
+	
+   var collectionDefinition = new DocumentCollection { Id = collectionId };
+   var options = new RequestOptions { OfferType = offerType };
+   var result = await client.CreateDocumentCollectionAsync(database.SelfLink,
+      collectionDefinition, options);
+   var collection = result.Resource;
+	
+   Console.WriteLine("Created new collection");
+   ViewCollection(collection);
+}
+ We create a new DocumentCollection object that defines the new collection with the desired Id for the CreateDocumentCollectionAsync method which also accepts an options parameter that we're using here to set the performance tier of the new collection, which we're calling offerType. This defaults to S1 and since we didn't pass in an offerType, for MyCollection1, so this will be an S1 collection and for MyCollection2 we have passed S2 which make this one an S2 as shown above. Following is the implementation of the ViewCollection method. 
+private static void ViewCollection(DocumentCollection collection) {
+   Console.WriteLine("Collection ID: {0} ", collection.Id); 
+   Console.WriteLine("Resource ID: {0} ", collection.ResourceId); 
+   Console.WriteLine("Self Link: {0} ", collection.SelfLink); 
+   Console.WriteLine("Documents Link: {0} ", collection.DocumentsLink); 
+   Console.WriteLine("UDFs Link: {0} ", collection.UserDefinedFunctionsLink); 
+   Console.WriteLine(" StoredProcs Link: {0} ", collection.StoredProceduresLink); 
+   Console.WriteLine("Triggers Link: {0} ", collection.TriggersLink); 
+   Console.WriteLine("Timestamp: {0} ", collection.Timestamp);
+}
+ Following is the complete implementation of program.cs file for collections. 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
+using Microsoft.Azure.Documents.Linq;
+
+using Newtonsoft.Json;
+
+namespace DocumentDBDemo {
+
+   class Program {
+	
+      private const string EndpointUrl = "https://azuredocdbdemo.documents.azure.com:443/";
+		
+      private const string AuthorizationKey = "BBhjI0gxdVPdDbS4diTjdloJq7Fp4L5RO/
+         StTt6UtEufDM78qM2CtBZWbyVwFPSJIm8AcfDu2O+AfV T+TYUnBQ==";
+			
+      private static Database database;
+		
+      static void Main(string[] args) {
+         try {
+            CreateDocumentClient().Wait();
+         } catch (Exception e) {
+            Exception baseException = e.GetBaseException();
+            Console.WriteLine("Error: {0}, Message: {1}", e.Message, baseException.Message);
+         }
+         Console.ReadKey();
+      }
+		
+      private static async Task CreateDocumentClient() {
+         // Create a new instance of the DocumentClient
+         using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+            database = client.CreateDatabaseQuery("SELECT * FROM c WHERE c.id =
+               'myfirstdb'").AsEnumerable().First();
+            await CreateCollection(client, "MyCollection1");
+            await CreateCollection(client, "MyCollection2", "S2");
+				
+            //await CreateDatabase(client);
+            //GetDatabases(client);
+            //await DeleteDatabase(client);
+            //GetDatabases(client);
+         }
+      }
+		
+      private async static Task CreateCollection(DocumentClient client,
+         string collectionId, string offerType = "S1") {
+			
+         Console.WriteLine();
+         Console.WriteLine("**** Create Collection {0} in {1} ****", collectionId,
+            database.Id);
+
+         var collectionDefinition = new DocumentCollection { Id = collectionId };
+         var options = new RequestOptions { OfferType = offerType };
+         var result = await 
+			
+			client.CreateDocumentCollectionAsync(database.SelfLink,
+            collectionDefinition, options);
+         var collection = result.Resource;
+
+         Console.WriteLine("Created new collection");
+         ViewCollection(collection);
+      }
+		
+      private static void ViewCollection(DocumentCollection collection) {
+         Console.WriteLine("Collection ID: {0} ", collection.Id);
+         Console.WriteLine("Resource ID: {0} ", collection.ResourceId);
+         Console.WriteLine("Self Link: {0} ", collection.SelfLink);
+         Console.WriteLine("Documents Link: {0} ", collection.DocumentsLink);
+         Console.WriteLine("UDFs Link: {0} ", collection.UserDefinedFunctionsLink);
+         Console.WriteLine("StoredProcs Link: {0} ", collection.StoredProceduresLink);
+         Console.WriteLine("Triggers Link: {0} ", collection.TriggersLink);
+         Console.WriteLine("Timestamp: {0} ", collection.Timestamp);
+      }
+		
+   }
+}
+ When the above code is compiled and executed, you will receive the following output which contains all the information related to collection. 
+**** Create Collection MyCollection1 in myfirstdb **** 
+Created new collection
+   Collection ID: MyCollection1
+      Resource ID: Ic8LAPPvnAA=
+         Self Link: dbs/Ic8LAA==/colls/Ic8LAPPvnAA=/
+   Documents Link: dbs/Ic8LAA==/colls/Ic8LAPPvnAA=/docs/
+         UDFs Link: dbs/Ic8LAA==/colls/Ic8LAPPvnAA=/udfs/
+   StoredProcs Link: dbs/Ic8LAA==/colls/Ic8LAPPvnAA=/sprocs/
+      Triggers Link: dbs/Ic8LAA==/colls/Ic8LAPPvnAA=/triggers/
+         Timestamp: 12/10/2015 4:55:36 PM
+		  
+**** Create Collection MyCollection2 in myfirstdb ****
+Created new collection
+   Collection ID: MyCollection2
+      Resource ID: Ic8LAKGHDwE=
+         Self Link: dbs/Ic8LAA==/colls/Ic8LAKGHDwE=/
+   Documents Link: dbs/Ic8LAA==/colls/Ic8LAKGHDwE=/docs/
+         UDFs Link: dbs/Ic8LAA==/colls/Ic8LAKGHDwE=/udfs/
+   StoredProcs Link: dbs/Ic8LAA==/colls/Ic8LAKGHDwE=/sprocs/
+      Triggers Link: dbs/Ic8LAA==/colls/Ic8LAKGHDwE=/triggers/
+         Timestamp: 12/10/2015 4:55:38 PM

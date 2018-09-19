@@ -1,0 +1,21 @@
+OrientDB - Create Edge
+
+https://www.tutorialspoint.com/orientdb/orientdb_create_edge.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+In OrientDB, the concept Edge works like a relation between vertices with the help of some properties. Edges and vertices are the main components of a graph database. It applies polymorphism on Edges. The base class for an Edge is E. While implementing edges, if source or destination vertices are missing or don’t exist, then the transaction will be rollback. The following statement is the basic syntax of Create Edge Command. 
+CREATE EDGE <class> [CLUSTER <cluster>] FROM <rid>|(<query>)|[<rid>]* TO <rid>|(<query>)|[<rid>]* 
+     [SET <field> = <expression>[,]*]|CONTENT {<JSON>} 
+     [RETRY <retry> [WAIT <pauseBetweenRetriesInMs]] [BATCH <batch-size>]
+ Following are the details about the options in the above syntax. <class> − Defines the class name for the edge. <cluster> − Defines the cluster in which you want to store the edge. JSON − Provides JSON content to set as the record. RETRY − Defines the number of retries to attempt in the event of conflict. WAIT − Defines the time to delay between retries in milliseconds. BATCH − Defines whether it breaks the command down into smaller blocks and the size of the batches. Example Execute the following query to create an edge E between two vertices #9:0 and #14:0. 
+orientdb> CREATE EDGE FROM #11:4 TO #13:2
+ If the above query is executed successfully, you will get the following output. 
+Created edge '[e[#10:0][#9:0->#14:0]]' in 0.012000 sec(s)
+ Execute the following query to create a new edge type and an edge of new type. 
+orientdb> CREATE CLASS E1 EXTENDS E 
+orientdb> CREATE EDGE E1 FROM #10:3 TO #11:4
+ If the above query is executed successfully, you will get the following output. 
+Created edge '[e[#10:1][#10:3->#11:4]]' in 0.011000 sec(s)

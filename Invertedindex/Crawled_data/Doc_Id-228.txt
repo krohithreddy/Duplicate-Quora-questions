@@ -1,0 +1,85 @@
+MariaDB - Where Clause
+
+https://www.tutorialspoint.com/mariadb/mariadb_where_clause.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+WHERE clauses filter various statements such as SELECT, UPDATE, DELETE, and INSERT. They present criteria used to specify action. They typically appear after a table name in a statement, and their condition follows. The WHERE clause essentially functions like an if statement. Review the general syntax of WHERE clause given below − 
+[COMMAND] field,field2,... FROM table_name,table_name2,... WHERE [CONDITION]
+ Note the following qualities of the WHERE clause − It is optional. It allows any condition to be specified. It allows for the specification of multiple conditions through using an AND or OR operator. Case sensitivity only applies to statements using LIKE comparisons. The WHERE clause permits the use of the following operators − Operator = != > < >= <= WHERE clauses can be utilized at the command prompt or within a PHP script. The Command Prompt At the command prompt, simply use a standard command − 
+root@host# mysql -u root -p password;
+Enter password:*******
+mysql> use PRODUCTS;
+Database changed
+mysql> SELECT * from products_tbl WHERE product_manufacturer = 'XYZ Corp';
++-------------+----------------+----------------------+
+| ID_number   | Nomenclature   | product_manufacturer |
++-------------+----------------+----------------------+
+| 12345       | Orbitron 4000  | XYZ Corp             |
++-------------+----------------+----------------------+
+| 12346       | Orbitron 3000  | XYZ Corp             |
++-------------+----------------+----------------------+
+| 12347       | Orbitron 1000  | XYZ Corp             |
++-------------+----------------+----------------------+
+ Review an example using the AND condition − 
+SELECT *
+FROM products_tbl
+WHERE product_name = 'Bun Janshu 3000';
+AND product_id <= 344;
+ This example combines both AND and OR conditions 
+SELECT *
+FROM products_tbl
+WHERE (product_name = 'Bun Janshu 3000' AND product_id < 344)
+OR (product_name = 'Bun Janshu 3000');
+ PHP Scripts Using Where Clause Employ the mysql_query() function in operations using a WHERE clause − 
+<?php
+   $dbhost = 'localhost:3036';
+   $dbuser = 'root';
+   $dbpass = 'rootpassword';
+   $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+   
+   if(! $conn ) {
+      die('Could not connect: ' . mysql_error());
+   }
+
+   $sql = 'SELECT product_id, product_name, product_manufacturer, ship_date
+      FROM products_tbl
+      WHERE product_manufacturer = "XYZ Corp"';
+   
+   mysql_select_db('PRODUCTS');
+   $retval = mysql_query( $sql, $conn );
+   
+   if(! $retval ) {
+      die('Could not get data: ' . mysql_error());
+   }
+
+   while($row = mysql_fetch_array($retval, MYSQL_ASSOC)) {
+      echo "Product ID :{$row['product_id']} <br> ".
+         "Name: {$row['product_name']} <br> ".
+         "Manufacturer: {$row['product_manufacturer']} <br> ".
+         "Ship Date: {$row['ship_date']} <br> ".
+         "--------------------------------<br>";
+   }
+
+   echo "Fetched data successfully\n";
+   mysql_close($conn);
+?>
+ On successful data retrieval, you will see the following output − 
+Product ID: 12345
+Nomenclature: Orbitron 4000
+Manufacturer: XYZ Corp
+Ship Date: 01/01/17
+----------------------------------------------
+Product ID: 12346
+Nomenclature: Orbitron 3000
+Manufacturer: XYZ Corp
+Ship Date: 01/02/17
+----------------------------------------------
+Product ID: 12347
+Nomenclature: Orbitron 1000
+Manufacturer: XYZ Corp
+Ship Date: 01/02/17
+----------------------------------------------
+mysql> Fetched data successfully

@@ -1,0 +1,115 @@
+XML DOM - Loading
+
+https://www.tutorialspoint.com/dom/xml_dom_loading.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+In this chapter, we will study about XML Loading and Parsing. In order to describe the interfaces provided by the API, the W3C uses an abstract language called the Interface Definition Language (IDL). The advantage of using IDL is that the developer learns how to use the DOM with his or her favorite language and can switch easily to a different language. The disadvantage is that, since it is abstract, the IDL cannot be used directly by Web developers. Due to the differences between programming languages, they need to have mapping — or binding — between the abstract interfaces and their concrete languages. DOM has been mapped to programming languages such as Javascript, JScript, Java, C, C++, PLSQL, Python, and Perl. In the following sections and chapters, we will be using Javascript as our programming language to load XML file. Parser A parser is a software application that is designed to analyze a document, in our case XML document and do something specific with the information. Some of the DOM based parsers are listed in the following table − S.No Parser & Description 1 JAXP Sun Microsystem’s Java API for XML Parsing (JAXP) 2 XML4J IBM’s XML Parser for Java (XML4J) 3 msxml Microsoft’s XML parser (msxml) version 2.0 is built-into Internet Explorer 5.5 4 4DOM 4DOM is a parser for the Python programming language 5 XML::DOM XML::DOM is a Perl module to manipulate XML documents using Perl 6 Xerces Apache’s Xerces Java Parser In a tree-based API like DOM, the parser traverses the XML file and creates the corresponding DOM objects. Then you can traverse the DOM structure back and forth. Loading and Parsing XML While loading an XML document, the XML content can come in two forms − Directly as XML file As XML string Content as XML file Following example demonstrates how to load XML (node.xml) data using Ajax and Javascript when the XML content is received as an XML file. Here, the Ajax function gets the content of an xml file and stores it in XML DOM. Once the DOM object is created, it is then parsed. 
+<!DOCTYPE html>
+<html>
+   <body>
+      <div>
+         <b>FirstName:</b> <span id = "FirstName"></span><br>
+         <b>LastName:</b> <span id = "LastName"></span><br>
+         <b>ContactNo:</b> <span id = "ContactNo"></span><br>
+         <b>Email:</b> <span id = "Email"></span>
+      </div>
+      <script>
+         //if browser supports XMLHttpRequest
+            
+            if (window.XMLHttpRequest) { // Create an instance of XMLHttpRequest object. 
+               code for IE7+, Firefox, Chrome, Opera, Safari xmlhttp  =  new XMLHttpRequest();
+            } else { // code for IE6, IE5 
+               xmlhttp  =  new ActiveXObject("Microsoft.XMLHTTP");
+            }
+   
+         // sets and sends the request for calling "node.xml"
+            xmlhttp.open("GET","/dom/node.xml",false);
+            xmlhttp.send();
+
+         // sets and returns the content as XML DOM
+            xmlDoc = xmlhttp.responseXML;
+
+         //parsing the DOM object
+            document.getElementById("FirstName").innerHTML = 
+               xmlDoc.getElementsByTagName("FirstName")[0].childNodes[0].nodeValue;
+            document.getElementById("LastName").innerHTML = 
+               xmlDoc.getElementsByTagName("LastName")[0].childNodes[0].nodeValue;
+            document.getElementById("ContactNo").innerHTML = 
+               xmlDoc.getElementsByTagName("ContactNo")[0].childNodes[0].nodeValue;
+            document.getElementById("Email").innerHTML = 
+               xmlDoc.getElementsByTagName("Email")[0].childNodes[0].nodeValue;
+      </script>
+   </body>
+</html>
+ node.xml 
+<Company> 
+   <Employee category = "Technical" id = "firstelement"> 
+      <FirstName>Tanmay</FirstName> 
+      <LastName>Patil</LastName> 
+      <ContactNo>1234567890</ContactNo> 
+      <Email>tanmaypatil@xyz.com</Email> 
+   </Employee>  
+   
+   <Employee category = "Non-Technical"> 
+      <FirstName>Taniya</FirstName> 
+      <LastName>Mishra</LastName> 
+      <ContactNo>1234667898</ContactNo> 
+      <Email>taniyamishra@xyz.com</Email> 
+   </Employee>  
+   
+   <Employee category = "Management"> 
+      <FirstName>Tanisha</FirstName> 
+      <LastName>Sharma</LastName> 
+      <ContactNo>1234562350</ContactNo> 
+      <Email>tanishasharma@xyz.com</Email> 
+   </Employee> 
+</Company> 
+ Most of the details of the code are in the script code. Internet Explorer uses the ActiveXObject("Microsoft.XMLHTTP") to create an instance of XMLHttpRequest object, other browsers use the XMLHttpRequest() method. the responseXML transforms the XML content directly in XML DOM. Once the XML content is transformed into JavaScript XML DOM, you can access any XML element by using the JS DOM methods and properties. We have used the DOM properties such as childNodes, nodeValue and DOM methods such as getElementsById(ID), getElementsByTagName(tags_name). Execution Save this file as loadingexample.html and open it in your browser. You will receive the following output − Content as XML string Following example demonstrates how to load XML data using Ajax and Javascript when XML content is received as XML file. Here, the Ajax function, gets the content of an xml file and stores it in XML DOM. Once the DOM object is created it is then parsed. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         
+         // loads the xml string in a dom object
+         function loadXMLString(t) { // for non IE browsers
+            if (window.DOMParser) {
+               // create an instance for xml dom object parser = new DOMParser();
+               xmlDoc = parser.parseFromString(t,"text/xml");
+            }
+            // code for IE
+            else { // create an instance for xml dom object
+               xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+               xmlDoc.async = false;
+               xmlDoc.loadXML(t);
+            }
+            return xmlDoc;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         
+         // a variable with the string
+            var text = "<Employee>";
+            text = text+"<FirstName>Tanmay</FirstName>";
+            text = text+"<LastName>Patil</LastName>";
+            text = text+"<ContactNo>1234567890</ContactNo>";
+            text = text+"<Email>tanmaypatil@xyz.com</Email>";
+            text = text+"</Employee>";
+
+         // calls the loadXMLString() with "text" function and store the xml dom in a variable
+            var xmlDoc = loadXMLString(text);
+	
+         //parsing the DOM object
+            y = xmlDoc.documentElement.childNodes;
+            for (i = 0;i<y.length;i++) {
+               document.write(y[i].childNodes[0].nodeValue);
+               document.write("<br>");
+            }
+      </script>
+   </body>
+</html>
+ Most of the details of the code are in the script code. Internet Explorer uses the ActiveXObject("Microsoft.XMLDOM") to load XML data into a DOM object, other browsers use the DOMParser() function and parseFromString(text, 'text/xml') method. The variable text shall contain a string with XML content. Once the XML content is transformed into JavaScript XML DOM, you can access any XML element by using JS DOM methods and properties. We have used DOM properties such as childNodes, nodeValue. Execution Save this file as loadingexample.html and open it in your browser. You will see the following output − Now that we saw how the XML content transforms into JavaScript XML DOM, you can now access any XML element by using the XML DOM methods.

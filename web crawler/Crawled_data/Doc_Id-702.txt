@@ -1,0 +1,45 @@
+SQL - AVG Function
+
+https://www.tutorialspoint.com/sql/sql-avg-function.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+SQL AVG function is used to find out the average of a field in various records. To understand AVG function, consider an employee_tbl table, which is having the following records − 
+SQL> SELECT * FROM employee_tbl;
++------+------+------------+--------------------+
+| id   | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|    1 | John | 2007-01-24 |                250 |
+|    2 | Ram  | 2007-05-27 |                220 |
+|    3 | Jack | 2007-05-06 |                170 |
+|    3 | Jack | 2007-04-06 |                100 |
+|    4 | Jill | 2007-04-06 |                220 |
+|    5 | Zara | 2007-06-06 |                300 |
+|    5 | Zara | 2007-02-06 |                350 |
++------+------+------------+--------------------+
+7 rows in set (0.00 sec)
+ Now suppose based on the above table you want to calculate average of all the dialy_typing_pages, then you can do so by using the following command − 
+SQL> SELECT AVG(daily_typing_pages)
+    -> FROM employee_tbl;
++-------------------------+
+| AVG(daily_typing_pages) |
++-------------------------+
+|                230.0000 |
++-------------------------+
+1 row in set (0.03 sec)
+ You can take average of various records set using GROUP BY clause. Following example will take average all the records related to a single person and you will have average typed pages by every person. 
+SQL> SELECT name, AVG(daily_typing_pages)
+   -> FROM employee_tbl GROUP BY name;
++------+-------------------------+
+| name | AVG(daily_typing_pages) |
++------+-------------------------+
+| Jack |                135.0000 |
+| Jill |                220.0000 |
+| John |                250.0000 |
+| Ram  |                220.0000 |
+| Zara |                325.0000 |
++------+-------------------------+
+5 rows in set (0.20 sec)
+ sql-useful-functions.htm

@@ -1,0 +1,22 @@
+H2 Database - Insert
+
+https://www.tutorialspoint.com/h2_database/h2_database_insert.htm
+
+H2 Database, Tutorial, Learning, Introduction, Installation, Data Manipulation Select, Insert, Update, Delete, Backup, Call, Explain, Merge, Show, Data Definition Create, Alter, Drop, Truncate, Commit, Grant, Savepoint, Rollback, JDBC Connection.
+
+August-15-2017-02:34:24
+
+The SQL INSERT statement is used to add new rows of data to a table in the database. Syntax Following is the basic syntax of INSERT INTO statement. 
+INSERT INTO tableName 
+{ [ ( columnName [,...] ) ] 
+{ VALUES 
+{ ( { DEFAULT | expression } [,...] ) } [,...] | [ DIRECT ] [ SORTED ] select } } | 
+{ SET { columnName = { DEFAULT | expression } } [,...] }
+ Using this INSERT statement, we can insert a new record or new rows into a table. When using DIRECT clause, the results are directly affected to the target table without any intermediate step. However, while adding values for all the columns of the table, make sure the order of the values is in the same order as the columns in the table. Example Let us take an example and try to insert the following given records into the Customer table. ID Name Age Address Salary 1 Ramesh 32 Ahmedabad 2000 2 Khilan 25 Delhi 1500 3 Kaushik 23 Kota 2000 4 Chaitail 25 Mumbai 6500 5 Hardik 27 Bhopal 8500 6 Komal 22 MP 4500 7 Muffy 24 Indore 10000 We can get all the given records into the customer table by executing the following commands. 
+INSERT INTO CUSTOMER VALUES (1, 'Ramesh', 32, 'Ahmedabad', 2000); 
+INSERT INTO CUSTOMER VALUES (2, 'Khilan', 25, 'Delhi', 1500); 
+INSERT INTO CUSTOMER VALUES (3, 'kaushik', 23, 'Kota', 2000); 
+INSERT INTO CUSTOMER VALUES (4, 'Chaitali', 25, 'Mumbai', 6500); 
+INSERT INTO CUSTOMER VALUES (5, 'Hardik', 27, 'Bhopal', 8500); 
+INSERT INTO CUSTOMER VALUES (6, 'Komal', 22, 'MP', 4500); 
+INSERT INTO CUSTOMER VALUES (7, 'Muffy', 24, 'Indore', 10000);

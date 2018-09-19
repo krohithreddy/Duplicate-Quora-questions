@@ -1,0 +1,80 @@
+Redis - PHP
+
+https://www.tutorialspoint.com/redis/redis_php.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Before you start using Redis in your PHP programs, you need to make sure that you have Redis PHP driver and PHP set up on the machine. You can check PHP tutorial for PHP installation on your machine. Installation Now, let us check how to set up Redis PHP driver. You need to download the phpredis from github repository https://github.com/nicolasff/phpredis. Once you’ve downloaded it, extract the files to phpredis directory. On Ubuntu, install the following extension. 
+cd phpredis 
+sudo phpize 
+sudo ./configure 
+sudo make 
+sudo make install 
+ Now, copy and paste the content of “modules” folder to the PHP extension directory and add the following lines in php.ini. 
+extension = redis.so
+ Now, your Redis PHP installation is complete Connect to Redis Server 
+<?php 
+   //Connecting to Redis server on localhost 
+   $redis = new Redis(); 
+   $redis->connect('127.0.0.1', 6379); 
+   echo "Connection to server sucessfully"; 
+   //check whether server is running or not 
+   echo "Server is running: ".$redis->ping(); 
+?>
+ When the program is executed, it will produce the following result. 
+Connection to server sucessfully 
+Server is running: PONG 
+ Redis PHP String Example 
+<?php 
+   //Connecting to Redis server on localhost 
+   $redis = new Redis(); 
+   $redis->connect('127.0.0.1', 6379); 
+   echo "Connection to server sucessfully"; 
+   //set the data in redis string 
+   $redis->set("tutorial-name", "Redis tutorial"); 
+   // Get the stored data and print it 
+   echo "Stored string in redis:: " .$redis→get("tutorial-name"); 
+?>
+ When the above program is executed, it will produce the following result. 
+Connection to server sucessfully 
+Stored string in redis:: Redis tutorial 
+ Redis php List Example 
+<?php 
+   //Connecting to Redis server on localhost 
+   $redis = new Redis(); 
+   $redis->connect('127.0.0.1', 6379); 
+   echo "Connection to server sucessfully"; 
+   //store data in redis list 
+   $redis->lpush("tutorial-list", "Redis"); 
+   $redis->lpush("tutorial-list", "Mongodb"); 
+   $redis->lpush("tutorial-list", "Mysql");  
+   
+   // Get the stored data and print it 
+   $arList = $redis->lrange("tutorial-list", 0 ,5); 
+   echo "Stored string in redis:: "; 
+   print_r($arList); 
+?>
+ When the above program is executed, it will produce the following result. 
+Connection to server sucessfully 
+Stored string in redis:: 
+Redis 
+Mongodb 
+Mysql 
+ Redis PHP Keys Example 
+<?php 
+   //Connecting to Redis server on localhost 
+   $redis = new Redis(); 
+   $redis->connect('127.0.0.1', 6379); 
+   echo "Connection to server sucessfully"; 
+   // Get the stored keys and print it 
+   $arList = $redis->keys("*"); 
+   echo "Stored keys in redis:: " 
+   print_r($arList); 
+?>
+ When the program is executed, it will produce the following result. 
+Connection to server sucessfully 
+Stored string in redis:: 
+tutorial-name 
+tutorial-list

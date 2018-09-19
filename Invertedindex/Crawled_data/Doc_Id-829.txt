@@ -1,0 +1,68 @@
+AIML - First Application
+
+https://www.tutorialspoint.com/aiml/aiml_first_application.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+Let us start creating first bot which will simply greet a user with Hello User! when a user types Hello Alice. Create the Project Structure As in AIML Environment Setup, we've extracted content of program-ab in C > ab with the following directory structure. S.No. Directory & Description 1 c:/ab/bots Stores AIML bots 2 c:/ab/lib Stores Java libraries 3 c:/ab/out Java class file directory 4 c:/ab/run.bat batch file for running Program AB Now, create a directory test inside C > ab > bots and create the following directories in it. S.No. Directory & Description 1 c:/ab/bots/test/aiml Stores AIML files 2 c:/ab/bots/test/aimlif Stores AIMLIF files 3 c:/ab/bots/test/config Stores configuration files 4 c:/ab/bots/test/sets Stores AIML Sets 5 c:/ab/bots/test/maps Stores AIML Maps Create Source Files Create test.aiml inside C > ab > bots > test > aiml and test.aiml.csv inside C > ab > bots > test > aimlif directories. test.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version="1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern> HELLO ALICE </pattern>
+      
+      <template>
+         Hello User
+      </template>
+      
+   </category>
+</aiml>
+ test.aiml.csv 
+0,HELLO ALICE,*,*,Hello User,test.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You'll see the following output − 
+Working Directory = C:\ab
+
+Program AB 0.0.4.2 beta -- AI Foundation Reference AIML 2.0 implementation
+bot = test
+action = chat
+trace = false
+trace mode = false
+Name = test Path = C:\ab/bots/test
+
+C:\ab
+C:\ab/bots
+C:\ab/bots/test
+C:\ab/bots/test/aiml
+C:\ab/bots/test/aimlif
+C:\ab/bots/test/config
+C:\ab/bots/test/logs
+C:\ab/bots/test/sets
+C:\ab/bots/test/maps
+
+Preprocessor: 0 norms 0 persons 0 person2
+Get Properties: C:\ab/bots/test/config/properties.txt
+addAIMLSets: C:\ab/bots/test/sets does not exist.
+addCategories: C:\ab/bots/test/aiml does not exist.
+AIML modified Tue Apr 07 22:24:29 IST 2015 AIMLIF modified Tue Apr 07 22:26:53 I
+ST 2015
+No deleted.aiml.csv file found
+No deleted.aiml.csv file found
+Loading AIML files from C:\ab/bots/test/aimlif
+
+Reading Learnf file
+Loaded 1 categories in 0.009 sec
+--> Bot test 1 completed 0 deleted 0 unfinished
+(1[6])--HELLO-->(1[5])--ALICE-->(1[4])--<THAT>-->(1[3])--*-->(1[2])--<TOPIC>-->(
+1[1])--*-->(0[null,null]) Hello User...
+7 nodes 6 singletons 1 leaves 0 shortcuts 0 n-ary 6 branches 0.85714287 average
+branching
+Human:
+ Type Hello Alice and see the result and then type anything else to see the changed result. 
+Human: hello alice
+Robot: Hello User
+Human: bye
+Robot: I have no answer for that.
+Human:

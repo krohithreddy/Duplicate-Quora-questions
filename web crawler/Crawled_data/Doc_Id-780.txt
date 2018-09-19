@@ -1,0 +1,60 @@
+SQLite - Comparison Operators
+
+https://www.tutorialspoint.com/sqlite/sqlite_comparison_operators.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+Example Consider COMPANY table with the following records. 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ The following example will show the usage of various SQLite Comparison Operators. Here, we have used WHERE clause, which will be explained in a separate chapter but for now you can understand that WHERE clause is used to put a conditional statement alongwith SELECT statement. Following SELECT statement lists down all the records having SALARY greater than 50,000.00. 
+sqlite> SELECT * FROM COMPANY WHERE SALARY > 50000;
+
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+ Following SELECT statement lists down all the records having SALARY equal to 20,000.00. 
+sqlite>  SELECT * FROM COMPANY WHERE SALARY = 20000;
+
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+3           Teddy       23          Norway      20000.0
+ Following SELECT statement lists down all the records having SALARY not equal to 20,000.00. 
+sqlite>  SELECT * FROM COMPANY WHERE SALARY != 20000;
+
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+2           Allen       25          Texas       15000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Following SELECT statement lists down all the records having SALARY not equal to 20,000.00. 
+sqlite> SELECT * FROM COMPANY WHERE SALARY <> 20000;
+
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+2           Allen       25          Texas       15000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Following SELECT statement lists down all the records having SALARY greater than or equal to 65,000.00. 
+sqlite> SELECT * FROM COMPANY WHERE SALARY >= 65000;
+
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+ sqlite_operators.htm

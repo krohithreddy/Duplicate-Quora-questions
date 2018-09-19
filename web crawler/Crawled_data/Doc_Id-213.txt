@@ -1,0 +1,27 @@
+MariaDB - Managing Duplicates
+
+https://www.tutorialspoint.com/mariadb/mariadb_managing_duplicates.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+MariaDB, as discussed in earlier lessons, allows duplicate records and tables in some situations. Some of these duplicates are not in fact duplicates due to distinct data or object types, or as a result of unique lifespan or storage of the operation object. These duplicates also typically pose no problems. In some situations, duplicates do cause problems, and they often appear due to implicit actions or the lenient policy of a MariaDB command. There are ways to control this issue, find duplicates, delete duplicates, and prevent duplicate creation. Strategies and Tools There are four key ways to manage duplicates − Fish for them with JOIN, and delete them with a temporary table. Use INSERT...ON DUPLICATE KEY UPDATE to update on discovery of a duplicate. Use DISTINCT to prune the results of a SELECT statement and remove duplicates. Use INSERT IGNORE to stop insertion of duplicates. Using Join with a Temporary Table Simply perform a semi-join like an inner join, and then remove the duplicates found with a temporary table. Using INSERT When INSERT...ON DUPLICATE KEY UPDATE discovers a duplicate unique or primary key, it performs an update. On discovery of multiple unique keys, it updates only the first. Hence, do not use it on tables with multiple unique indices. Review the following example, which reveals what happens in a table containing indexed values on insertion into a populated field − 
+INSERT INTO add_dupl VALUES (1,'Apple');
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+ Note − If it finds no key, an INSERT...ON DUPLICATE KEY UPDATE statement executes like a normal insert statement. Using DISTINCT DISTINCT clauses remove duplicates from results. The general syntax for a DISTINCT clause is as follows − 
+SELECT DISTINCT fields
+FROM table
+[WHERE conditions];
+ Note − The results of a statement with a DISTINCT clause − When using one expression, it returns unique values for it. When using multiple expressions, it returns unique combinations. It does not ignore NULL values; thus, results also contain NULLs as unique values. Review the following statement using a DISTINCT clause for a single expression − 
+SELECT DISTINCT product_id
+FROM products
+WHERE product_name = 'DustBlaster 5000';
+ Review the following example using multiple expressions − 
+SELECT DISTINCT product_name, product_id
+FROM products
+WHERE product_id < 30
+ Using INSERT IGNORE An INSERT IGNORE statement instructs MariaDB to cancel insertion on discovery of a duplicate record. Review an example of its use given below − 
+mysql> INSERT IGNORE INTO customer_tbl (LN, FN)
+   VALUES( 'Lex', 'Luther');
+ Also, note the logic behind duplicates. Some tables require duplicates based on the nature of that table data. Accommodate that need in your strategy for managing duplicate records.

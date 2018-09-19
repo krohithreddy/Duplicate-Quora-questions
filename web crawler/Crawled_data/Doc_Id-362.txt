@@ -1,0 +1,46 @@
+MySQLi - Get Connection Stats
+
+https://www.tutorialspoint.com/mysqli/mysqli_get_connection_stats.htm
+
+MySQLi, Tutorial, Learning, Introduction, Installation, Administration, PHP Syntax, Connection, Create, Drop, Info, Select Database, Data Types, Create, Drop, Clone Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Sorting Results, Using Joins, NULL Values, Regexps, Transactions, Alter Command, Indexes, Temporary, Using Sequences, Handling Duplicate.
+
+August-15-2017-02:34:19
+
+Syntax 
+array mysqli_get_connection_stats ( mysqli $link )
+ Definition and Usage It returns statistics about the client connection. Example Try out following example − 
+<?php
+   $servername = "localhost:3306";
+   $username = "root";
+   $password = "";
+   $dbname = "TUTORIALS";
+   $conn = new mysqli($servername, $username, $password, $dbname);
+
+   if ($conn->connect_error) {
+      die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+      exit();
+   } 
+   if (!mysqli_query($conn, "SET a = 1")) {
+      printf("Errorcode: %d\n", mysqli_error($conn));
+   }
+   echo 'Success... ' . mysqli_get_host_info($conn) . "\n";
+   print_r(mysqli_get_connection_stats($conn));
+?>
+ The sample output of the above code should be like this - 
+Errorcode: 0 Success... localhost:3306 via TCP/IP Array ( [bytes_sent] => 116 
+[bytes_received] => 144 [packets_sent] => 4 [packets_received] => 3 
+[protocol_overhead_in] => 12 [protocol_overhead_out] => 16 
+[bytes_received_ok_packet] => 0 [bytes_received_eof_packet] => 0 
+[bytes_received_rset_header_packet] => 0 [bytes_received_rset_field_meta_packet] => 0 
+[bytes_received_rset_row_packet] => 40 [bytes_received_prepare_response_packet] => 0 
+[bytes_received_change_user_packet] => 0 [packets_sent_command] => 1 
+[packets_received_ok] => 0 [packets_received_eof] => 0 
+[packets_received_rset_header] => 0 [packets_received_rset_field_meta] => 0 
+[packets_received_rset_row] => 1 [packets_received_prepare_response] => 0 
+[packets_received_change_user] => 0 [result_set_queries] => 0 
+[non_result_set_queries] => 0 [no_index_used] => 0 [bad_index_used] => 0 
+[slow_queries] => 0 [buffered_sets] => 0 [unbuffered_sets] => 0 
+[ps_buffered_sets] => 0 [ps_unbuffered_sets] => 0 [flushed_normal_sets] => 0 
+[flushed_ps_sets] => 0 [ps_prepared_never_executed] => 0 
+[ps_prepared_once_executed] => 0 
+ mysqli_useful_functions.htm

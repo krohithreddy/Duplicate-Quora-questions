@@ -1,0 +1,14 @@
+OrientDB - Optimize Database
+
+https://www.tutorialspoint.com/orientdb/orientdb_optimize_database.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+As per technical terminology Optimization means "Achieve the better possible performance in the quickest amount of time." With reference to database, optimization involves maximizing the speed and efficiency with which data is retrieved. OrientDB supports lightweight edges, which means a direct relation between the data entities. In simple terms, it is a field-to-field relation. OrientDB provides different ways to optimize the database. It supports the conversion of regular edges to lightweight edges. The following statement is the basic syntax of the Optimize database command. 
+OPTMIZE DATABASE [-lwedges] [-noverbose] 
+ Where lwedges converts regular edges into lightweight edges and noverbose disables the output. Example In this example, we will use the same database named ‘demo’ that we created in the previous chapter. You can use the following optimize database command. 
+OPTIMIZE DATABASE -lwedges
+ If it is successfully executed, you will get some successful notifications along with the completion message. 
+Database Optimization completed in 35ms

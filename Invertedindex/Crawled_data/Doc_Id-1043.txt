@@ -1,0 +1,275 @@
+XSD - Quick Guide
+
+https://www.tutorialspoint.com/xsd/xsd_quick_guide.htm
+
+ XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscelleneous.
+
+August-15-2017-02:34:11
+
+XSD - Overview XML Schema Definition, commonly known as XSD, is a way to describe precisely the XML language. XSD checks the validity of structure and vocabulary of an XML document against the grammatical rules of the appropriate XML language. An XML document can be defined as − Well-formed − If the XML document adheres to all the general XML rules such as tags must be properly nested, opening and closing tags must be balanced, and empty tags must end with '/>', then it is called as well-formed. OR Valid − An XML document said to be valid when it is not only well-formed, but it also conforms to available XSD that specifies which tags it uses, what attributes those tags can contain, and which tags can occur inside other tags, among other properties. The following diagram shows how XSD is used to structure XML documents − Here is a simple XSD code. Take a look at it. 
+<?xml version = "1.0"?>
+
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema">
+   targetNamespace = "http://www.tutorialspoint.com" 
+   xmlns = "http://www.tutorialspoint.com"
+   elementFormDefault = "qualified">
+
+   <xs:element name = 'class'>
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name = 'student' type = 'StudentType' minOccurs = '0' 
+               maxOccurs = 'unbounded' />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+
+   <xs:complexType name = "StudentType">
+      <xs:sequence>
+         <xs:element name = "firstname" type = "xs:string"/>
+         <xs:element name = "lastname" type = "xs:string"/>
+         <xs:element name = "nickname" type = "xs:string"/>
+         <xs:element name = "marks" type = "xs:positiveInteger"/>
+      </xs:sequence>
+      <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+   </xs:complexType>
+   
+</xs:schema>
+ Features Here is a list of some of the popular features of XSD − XSDs can be extensible for future additions. XSD is richer and more powerful than DTD. XSD is written in XML. XSD supports data types. XSD supports namespaces. XSD is W3C recommendation. XSD Syntax An XML XSD is kept in a separate document and then the document can be linked to an XML document to use it. Syntax The basic syntax of a XSD is as follows − 
+<?xml version = "1.0"?>
+
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema">
+   targetNamespace = "http://www.tutorialspoint.com"
+   xmlns = "http://www.tutorialspoint.com" elementFormDefault = "qualified">
+   
+   <xs:element name = 'class'>
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element name = 'student' type = 'StudentType' minOccurs = '0' 
+               maxOccurs = 'unbounded' />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+
+   <xs:complexType name = "StudentType">
+      <xs:sequence>
+         <xs:element name = "firstname" type = "xs:string"/>
+         <xs:element name = "lastname" type = "xs:string"/>
+         <xs:element name = "nickname" type = "xs:string"/>
+         <xs:element name = "marks" type = "xs:positiveInteger"/>
+      </xs:sequence>
+      <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+   </xs:complexType>
+   
+</xs:schema>
+ <Schema> Element Schema is the root element of XSD and it is always required. 
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema">
+ The above fragment specifies that elements and datatypes used in the schema are defined in http://www.w3.org/2001/XMLSchema namespace and these elements/data types should be prefixed with xs. It is always required. 
+targetNamespace = "http://www.tutorialspoint.com"
+ The above fragment specifies that elements used in this schema are defined in http://www.tutorialspoint.com namespace. It is optional. 
+xmlns = "http://www.tutorialspoint.com"
+ The above fragment specifies that default namespace is http://www.tutorialspoint.com. 
+xmlns="http://www.tutorialspoint.com"
+ The above fragment indicates that any elements declared in this schema must be namespace qualified before using them in any XML Document.It is optional. Referencing Schema Take a look at the following Referencing Schema − 
+<?xml version = "1.0"?>
+
+<class xmlns = "http://www.tutorialspoint.com"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = "http://www.tutorialspoint.com student.xsd">  
+   
+   <student rollno = "393">    
+      <firstname>Dinkar</firstname>
+      <lastname>Kad</lastname>
+      <nickname>Dinkar</nickname>
+      <marks>85</marks>
+   </student>
+   
+   <student rollno = "493">	 
+      <firstname>Vaneet</firstname>
+      <lastname>Gupta</lastname>
+      <nickname>Vinni</nickname>
+      <marks>95</marks>
+   </student>
+   
+   <student rollno = "593">    
+      <firstname>Jasvir</firstname>
+      <lastname>Singh</lastname>
+      <nickname>Jazz</nickname>
+      <marks>90</marks>
+   </student>
+</class>
+ 
+xmlns = "http://www.tutorialspoint.com"
+ The above fragment specifies default namespace declaration. This namespace is used by the schema validator check that all the elements are part of this namespace. It is optional. 
+xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation = "http://www.tutorialspoint.com student.xsd">  
+ After defining the XMLSchema-instance xsi, use schemaLocation attribute. This attribute has two values, namespace and location of XML Schema, to be used separated by a space. It is optional. XSD - Validation We'll use Java based XSD validator to validate students.xml against the students.xsd. students.xml 
+<?xml version = "1.0"?>
+
+<class>  
+   <student rollno = "393">
+      <firstname>Dinkar</firstname>    
+      <lastname>Kad</lastname>
+      <nickname>Dinkar</nickname>
+      <marks>85</marks>	 
+   </student>
+   
+   <student rollno = "493">	 
+      <firstname>Vaneet</firstname>
+      <lastname>Gupta</lastname>
+      <nickname>Vinni</nickname>
+      <marks>95</marks>
+   </student>
+   
+   <student rollno = "593">    
+      <firstname>Jasvir</firstname>
+      <lastname>Singh</lastname>
+      <nickname>Jazz</nickname>
+      <marks>90</marks>
+   </student>
+</class>
+ students.xsd 
+<?xml version = "1.0"?>
+
+<xs:schema xmlns:xs = "http://www.w3.org/2001/XMLSchema">
+   <xs:element name = 'class'>
+      <xs:complexType>
+         <xs:sequence>
+             <xs:element name = 'student' type = 'StudentType' minOccurs = '0' 
+                maxOccurs = 'unbounded' />
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+
+   <xs:complexType name = "StudentType">
+      <xs:sequence>
+         <xs:element name = "firstname" type = "xs:string"/>
+         <xs:element name = "lastname" type = "xs:string"/>
+         <xs:element name = "nickname" type = "xs:string"/>
+         <xs:element name = "marks" type = "xs:positiveInteger"/>
+      </xs:sequence>
+      <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+   </xs:complexType>			 
+</xs:schema>
+ XSDValidator.java 
+import java.io.File;
+import java.io.IOException;
+
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
+import org.xml.sax.SAXException;
+
+public class XSDValidator {
+   public static void main(String[] args) {
+      if(args.length !=2){
+         System.out.println("Usage : XSDValidator <file-name.xsd> <file-name.xml>" );
+      } else {
+         boolean isValid = validateXMLSchema(args[0],args[1]);
+         
+         if(isValid){
+            System.out.println(args[1] + " is valid against " + args[0]);
+         } else {
+            System.out.println(args[1] + " is not valid against " + args[0]);
+         }
+      }
+   }
+   
+   public static boolean validateXMLSchema(String xsdPath, String xmlPath){
+      try {
+         SchemaFactory factory =
+            SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = factory.newSchema(new File(xsdPath));
+            Validator validator = schema.newValidator();
+            validator.validate(new StreamSource(new File(xmlPath)));
+      } catch (IOException e){
+         System.out.println("Exception: "+e.getMessage());
+         return false;
+      } catch(SAXException e1){
+         System.out.println("SAX Exception: "+e1.getMessage());
+         return false;
+      }
+		
+      return true;
+   }
+}
+ Steps to validate XML against XSD Copy the XSDValidator.java file to any location, say E: > java Copy the students.xml to same location E: > java Copy the students.xsd to same location E: > java Compile XSDValidator.java using console. Make sure you have JDK 1.5 onwards installed on your machine and classpaths are configured. For details on how to use JAVA, see JAVA Tutorial 
+E:\java\javac XSDValidator.java
+ Execute XSDValidator with students.xsd and students.xml passed as argument. 
+E:\java\java XSDValidator students.xsd students.xml
+ Verify the output You'll see the following result − 
+students.xml is valid against students.xsd
+ XSD - Simple Types In this chapter, we'll see Simple Types that XSD defines. S.No. Simple Type & Description 1 Element Simple Element can contain only text. It can not contain any other element. 2 Attribute Attribute is itself a type and is used in Complex Element. 3 Restriction Restriction defines the acceptable values of an XML element. XSD - Complex Types Complex Element is an XML element which can contain other elements and/or attributes. We can create a complex element in two ways − Define a complex type and then create an element using the type attribute Define a complex type directly by naming Define a Complex Type and then create an element using type attribute. 
+<xs:complexType name = "StudentType">
+   <xs:sequence>
+      <xs:element name = "firstname" type = "xs:string"/>
+      <xs:element name = "lastname" type = "xs:string"/>
+      <xs:element name = "nickname" type = "xs:string"/>
+      <xs:element name = "marks" type = "xs:positiveInteger"/>
+   </xs:sequence>
+   <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+</xs:complexType>
+
+<xs:element name = 'student' type = 'StudentType' />			 
+ Define a Complex Type directly by naming. 
+<xs:element name = "student">
+   <xs:complexType>   
+      <xs:sequence>
+         <xs:element name = "firstname" type = "xs:string"/>
+         <xs:element name = "lastname" type = "xs:string"/>
+         <xs:element name = "nickname" type = "xs:string"/>
+         <xs:element name = "marks" type = "xs:positiveInteger"/>
+      </xs:sequence>
+   <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+   </xs:complexType>
+<xs:element>
+ Following is the list of Complex Types that XSD supports. S.No. Simple Type & Description 1 Empty Complex Empty complex type element can only have attributes but no contents. 2 Elements Only Elements-Only complex type element can only contain elements 3 Text Only Text-Only complex type element can only contain attribute and text. 4 Mixed Mixed complex type element can contain element, attribute and text. 5 Indicators Indicators controls the ways how elements are to be organized in an XML document. 6 <any> The <any> element is used for elements which are not defined by schema 7 <anyAttribute> The <anyAttribute> attribute is used for attribute which are not defined by schema. XSD - String String data types are used to represent characters in the XML documents. <xs:string> data type The <xs:string> data type can take characters, line feeds, carriage returns, and tab characters. The XML processor does not replace line feeds, carriage returns, and tab characters in the content with space and keep them intact. For example, multiple spaces or tabs are preserved during display. <xs:string> Example Element declaration in xsd − 
+<xs:element name = "name" type = "xs:string"/>
+ Element usage in xml − 
+<name>Dinkar</name>
+<name>Dinkar    Kad</name>
+ <xs:token> data type The <xs:token> data type is derived from <string> data type and can take characters, line feeds, carriage returns, and tab characters. XML processor will remove line feeds, tabs, carriage returns, leading and trailing spaces, and multiple spaces. <xs:token> Example Element declaration in xsd − 
+<xs:element name = "name" type = "xs:token"/>
+ Element usage in xml − 
+<name>Dinkar</name>
+<name>Dinkar    Kad</name>
+ String Data Types Following is the list of commonly used data types which are derived from <string> data type. S.No. Name & Description 1 ID Represents the ID attribute in XML and is used in schema attributes. 2 IDREF Represents the IDREF attribute in XML and is used in schema attributes. 3 language Represents a valid language id 4 Name Represents a valid XML name 5 NMTOKEN Represents a NMTOKEN attribute in XML and is used in schema attributes. 6 normalizedString Represents a string that does not contain line feeds, carriage returns, or tabs. 7 string Represents a string that can contain line feeds, carriage returns, or tabs. 8 token Represents a string that does not contain line feeds, carriage returns, tabs, leading or trailing spaces, or multiple spaces Restrictions Following types of restrictions can be used with String data types − enumeration length maxLength minLength pattern whiteSpace XSD - Date Time Date and Time data types are used to represent date and time in the XML documents. <xs:date> data type The <xs:date> data type is used to represent date in YYYY-MM-DD format. YYYY − represents year MM − represents month DD − represents day <xs:date> Example Element declaration in XSD − 
+<xs:element name = "birthdate" type = "xs:date"/>
+ Element usage in XML − 
+<birthdate>1980-03-23</birthdate>
+ <xs:time> data type The <xs:time> data type is used to represent time in hh:mm:ss format. hh − represents hours mm − represents minutes ss − represents seconds <xs:time> Example Element declaration in XSD − 
+<xs:element name = "startTime" type = "xs:time"/>
+ Element usage in XML − 
+<startTime>10:20:15</startTime>
+ <xs:datetime> data type The <xs:datetime> data type is used to represent date and time in YYYY-MM-DDThh:mm:ss format. YYYY − represents year MM − represents month DD − represents day T − represents start of time section hh − represents hours mm − represents minutes ss − represents seconds <xs:datetime> Example Element declaration in XSD − 
+<xs:element name = "startTime" type = "xs:datetime"/>
+ Element usage in XML − 
+<startTime>1980-03-23T10:20:15</startTime>
+ <xs:duration> data type The <xs:duration> data type is used to represent time interval in PnYnMnDTnHnMnS format. Each component is optional except P. P − represents start of date section nY − represents year nM − represents month nD − represents day T − represents start of time section nH − represents hours nM − represents minutes nS − represents seconds <xs:duration> Example Element declaration in XSD − 
+<xs:element name = "period" type = "xs:duration"/>
+ Element usage in xml to represent period of 6 years, 3 months, 10 days and 15 hours. 
+<period>P6Y3M10DT15H</period>
+ Date Data Types Following is the list of commonly used date data types. S.No. Name & Description 1. date Represents a date value 2. dateTime Represents a date and time value 3. duration Represents a time interval 4. gDay Represents a part of a date as the day (DD) 5. gMonth Represents a part of a date as the month (MM) 6. gMonthDay Represents a part of a date as the month and day (MM-DD) 7. gYear Represents a part of a date as the year (YYYY) 8. gYearMonth Represents a part of a date as the year and month (YYYY-MM) 9. time Represents a time value Restrictions Following types of restrictions can be used with Date data types − enumeration maxExclusive maxInclusive minExclusive minInclusive pattern whiteSpace XSD - Numeric Data Types Numeric data types are used to represent numbers in XML documents. <xs:decimal> data type The <xs:decimal> data type is used to represent numeric values. It supports decimal numbers up to 18 digits. <xs:decimal> Example Element declaration in XSD − 
+<xs:element name = "score" type = "xs:decimal"/>
+ Element usage in XML − 
+<score>9.12</score>
+ <xs:integer> data type The <xs:integer> data type is used to represent integer values. <xs:integer> Example Element declaration in XSD − 
+<xs:element name = "score" type = "xs:integer"/>
+ Element usage in XML − 
+<score>9</score>
+ Numeric Data Types Following is the list of commonly used numeric data types. S.No. Name & Description 1. byte A signed 8 bit integer 2. decimal A decimal value 3. int A signed 32 bit integer 4. integer An integer value 5. long A signed 64 bit integer 6. negativeInteger An integer having only negative values (..,-2,-1) 7. nonNegativeInteger An integer having only non-negative values (0,1,2,..) 8. nonPositiveInteger An integer having only non-positive values (..,-2,-1,0) 9. positiveInteger An integer having only positive values (1,2,..) 10. short A signed 16 bit integer 11. unsignedLong An unsigned 64 bit integer 12. unsignedInt An unsigned 32 bit integer 13. unsignedShort An unsigned 16 bit integer 14. unsignedByte An unsigned 8 bit integer Restrictions Following types of restrictions can be used with Date data types − enumeration fractionDigits maxExclusive maxInclusive minExclusive minInclusive pattern totalDigits whiteSpace XSD - Miscellaneous Data Types XSD has a few other important data types, such as Boolean, binary, and anyURI. <xs:boolean> data type The <xs:boolean> data type is used to represent true, false, 1 (for true) or 0 (for false) value. <xs:boolean> Example Element declaration in XSD − 
+<xs:element name = "pass" type = "xs:boolean"/>
+ Element usage in XML − 
+<pass>false</pass>
+ Binary data types The Binary data types are used to represent binary values. Two binary types are common in use. base64Binary − represents base64 encoded binary data hexBinary − represents hexadecimal encoded binary data <xs:hexbinary> Example Element declaration in XSD − 
+<xs:element name = "blob" type = "xs:hexBinary"/>
+ Element usage in XML − 
+<blob>9FEEF</blob>
+ <xs:anyURI> data type The <xs:anyURI> data type is used to represent URI. <xs:anyURI> Example Element declaration in XSD − 
+<xs:attribute name = "resource" type = "xs:anyURI"/>
+ Element usage in XML − 
+<image resource = "http://www.tutorialspoint.com/images/smiley.jpg" />
+ Numeric Data Types Following is the list of commonly used numeric data types. S.No. Name & Description 1. byte A signed 8 bit integer 2. decimal A decimal value 3. int A signed 32 bit integer 4. integer An integer value 5. long A signed 64 bit integer 6. negativeInteger An integer having only negative values (..,-2,-1) 7. nonNegativeInteger An integer having only non-negative values (0,1,2,..) 8. nonPositiveInteger An integer having only non-positive values (..,-2,-1,0) 9. positiveInteger An integer having only positive values (1,2,..) 10. short A signed 16 bit integer 11. unsignedLong An unsigned 64 bit integer 12. unsignedInt An unsigned 32 bit integer 13. unsignedShort An unsigned 16 bit integer 14. unsignedByte An unsigned 8 bit integer Restrictions Following types of restrictions can be used with Miscellaneous data types except on boolean data type − enumeration length maxLength minLength pattern whiteSpace

@@ -1,0 +1,9 @@
+DocumentDB - Data Migration
+
+https://www.tutorialspoint.com/documentdb/documentdb_data_migration.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+With the DocumentDB Data Migration tool, you can easily migrate data to DocumentDB. The DocumentDB Data Migration Tool is a free and open source utility you can download from the Microsoft Download Center https://www.microsoft.com/ The Migration Tool supports many data sources, some of them are listed below − SQL Server JSON files Flat files of Comma-separated Values (CSV) MongoDB Azure Table Storage Amazon DynamoDB HBase, and even other DocumentDB databases After downloading the DocumentDB Data Migration tool, extract the zip file. You can see two executables in this folder as shown in the following screenshot. First, there is dt.exe, which is the console version with a command line interface, and then there is dtui.exe, which is the desktop version with a graphical user interface. Let's launch the GUI version. You can see the Welcome page. Click ‘Next’ for the Source Information page. Here's where you configure your data source, and you can see the many supported choices from the dropdown menu. When you make a selection, the rest of the Source Information page changes accordingly. It is very easy to import data to DocumentDB using the DocumentDB Data Migration Tool. We recommend you exercise the above examples and use the other data files as well.

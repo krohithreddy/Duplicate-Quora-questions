@@ -1,0 +1,28 @@
+MariaDB - Backup Methods
+
+https://www.tutorialspoint.com/mariadb/mariadb_backup_methods.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+Data serves as the foundation of business and operations, and with various possible threats (e.g., attackers, system failures, bad upgrades, and maintenance errors) out there, backups remain critical. These backups take many forms, and many options exist for creating them with an even wider set of options within those processes. The important things to remember are the database type, the critical information, and the structure involved. This information determines your best option. OPTIONS The main options for backups include logical backups and physical backups. Logical backups hold SQL statements for restoring data. Physical backups contain copies of data. Logical backups offer the flexibility of restoring data on another machine with a different configuration in contrast to physical backups, which are often limited to the same machine and database type. Logical backups occur at database and table level, and physical occur at directory and file level. Physical backups are smaller in size than logical, and also take less time to perform and restore. Physical backups also include log and configuration files, but logical backups do not. Backup Tools The main tool used for MariaDB backups is mysqldump. It offers logical backups and flexibility. It also proves an excellent option for small databases. Mysqldump dumps data into SQL, CSV, XML, and many other formats. Its output does not retain stored procedures, views, and events without explicit instruction. There are three options for mysqldump backups − Raw data − Dump a table as a raw data file through the --tab option, which also specifies the destination of the file − 
+$ mysqldump -u root -p --no-create-info \
+   --tab=/tmp PRODUCTS products_tbl
+ Data/Definitions export − This option allows a single or multiple tables to be exported to a file, and supports backing up all existing databases on the host machine. Examine an example of exporting contents or definitions to a file 
+$ mysqldump -u root -p PRODUCTS products_tbl > export_file.txt
+ Transfer − You can also output databases and tables to another host 
+$ mysqldump -u root -p database_name \
+   | mysql -h other-host.com database_name
+ Using THE SELECT...INTO OUTFILE Statement Another option for exporting data employs the SELECT...INTO OUTFILE statement. This simple option outputs the table into a simple formatted text file − 
+mysql> SELECT * FROM products_tbl
+   -> INTO OUTFILE '/tmp/products.txt';
+ Its attributes allow formatting the file to your preferred specifications. Note the following qualities of this statement − The file name must specify your desired location for the output. You need MariaDB file privileges to execute the statement. The output file name must be unique. You need login credentials on the host. In a UNIX environment, the output file is world readable, but its server ownership affects your ability to delete it. Ensure you have privileges. Using CONNECT in Backups The CONNECT handler allows exporting of data. This proves useful primarily in situations when the SELECT...INTO OUTFILE operation does not support the file format. Review the following example − 
+create table products
+engine = CONNECT table_type = XML file_name = 'products.htm' header = yes
+option_list = 'name=TABLE,coltype = HTML,attribute = border=1;cellpadding = 5'
+
+select plugin_name handler, plugin_version version, plugin_author
+author, plugin_description description, plugin_maturity maturity
+from information_schema.plugins where plugin_type = 'STORAGE ENGINE';
+ Other Tools Other options for backups are as follows − XtraBackup − This option targets XtraDB/InnoDB databases and works with any storage engine. Learn more about this tool from Percona's official site. Snapshots − Some filesystems allow snapshots. The process consists of flushing the tables with read lock, mounting the snapshot, unlocking the tables, copying the snapshot, and then unmounting the snapshot. LVM − This popular method employs a Perl script. It gets a read lock on every table and flushes caches to disk. Then it gets a snapshot and unlocks the tables. Consult the official mylvmbackup website for more information. TokuBackup − This solution provided by Percona provides hot backups taking into account the problems and limitations of InnoDB backup options. It produces a transactional sound copy of files while applications continue to manipulate them.Consult the Percona website for more information.. INNODB Considerations InnoDB uses a buffer pool for performance enhancement. In a backup, configure InnoDB to avoid copying an entire table into the buffer pool because logical backups typically perform full table scans.

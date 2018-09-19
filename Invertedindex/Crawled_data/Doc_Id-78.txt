@@ -1,0 +1,71 @@
+DocumentDB - Update Document
+
+https://www.tutorialspoint.com/documentdb/documentdb_update_document.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+In this chapter, we will learn how to update the documents. Using Azure portal, you can easily update document by opening the document in Document explorer and updating it in editor like a text file. Click ‘Save’ button. Now when you need to change a document using .Net SDK you can just replace it. You don't need to delete and recreate it, which besides being tedious, would also change the resource id, which you wouldn't want to do when you're just modifying a document. Here are the following steps to update the document using .Net SDK. Let’s take a look at the following ReplaceDocuments task where we will query for documents where the isNew property is true, but we will get none because there aren't any. So, let's modify the documents we added earlier, those whose names start with New Customer. Step 1 − Add the isNew property to these documents and set its value to true. 
+private async static Task ReplaceDocuments(DocumentClient client) {
+
+   Console.WriteLine(); 
+   Console.WriteLine(">>> Replace Documents <<<"); 
+   Console.WriteLine();  
+   Console.WriteLine("Quering for documents with 'isNew' flag");
+	
+   var sql = "SELECT * FROM c WHERE c.isNew = true"; 
+   var documents = client.CreateDocumentQuery(collection.SelfLink, sql).ToList();
+	
+   Console.WriteLine("Documents with 'isNew' flag: {0} ", documents.Count); 
+   Console.WriteLine();  
+   Console.WriteLine("Quering for documents to be updated"); 
+	
+   sql = "SELECT * FROM c WHERE STARTSWITH(c.name, 'New Customer') = true"; 
+   documents = client.CreateDocumentQuery(collection.SelfLink, sql).ToList(); 
+   Console.WriteLine("Found {0} documents to be updated", documents.Count); 
+	
+   foreach (var document in documents) {
+      document.isNew = true; 
+      var result = await client.ReplaceDocumentAsync(document._self, document); 
+      var updatedDocument = result.Resource; 
+      Console.WriteLine("Updated document 'isNew' flag: {0}", updatedDocument.isNew); 
+   }
+	
+   Console.WriteLine();  
+   Console.WriteLine("Quering for documents with 'isNew' flag");
+	
+   sql = "SELECT * FROM c WHERE c.isNew = true"; 
+   documents = client.CreateDocumentQuery(collection.SelfLink, sql).ToList(); 
+   Console.WriteLine("Documents with 'isNew' flag: {0}: ", documents.Count); 
+   Console.WriteLine(); 
+}
+ Step 2 − Get the documents to be updated using the same STARTSWITH query and that gives us the documents, which we are getting back here as dynamic objects. Step 3 − Attach the isNew property and set it to true for each document. Step 4 − Call ReplaceDocumentAsync, passing in the document's SelfLink, along with the updated document. Now just to prove that this worked, query for documents where isNew equaled true. Let’s call the above queries from the CreateDocumentClient task. 
+private static async Task CreateDocumentClient() {
+   // Create a new instance of the DocumentClient
+	
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+      database = client.CreateDatabaseQuery("SELECT * FROM c WHERE c.id =
+         'myfirstdb'").AsEnumerable().First(); 
+			
+      collection = client.CreateDocumentCollectionQuery(database.CollectionsLink,
+         "SELECT * FROM c WHERE c.id = 'MyCollection'").AsEnumerable().First();
+			
+      //await CreateDocuments(client);  
+      //QueryDocumentsWithSql(client); 
+      //await QueryDocumentsWithPaging(client); 
+      //QueryDocumentsWithLinq(client); 
+      await ReplaceDocuments(client); 
+   }
+	
+}
+ When the above code is compiled and executed, you will receive the following output. 
+**** Replace Documents ****  
+Quering for documents with 'isNew' flag 
+Documents with 'isNew' flag: 0 
+Quering for documents to be updated 
+Found 2 documents to be updated 
+Updated document ‘isNew’ flag: True 
+Updated document ‘isNew’ flag: True 
+Quering for documents with 'isNew' flag 
+Documents with 'isNew' flag: 2

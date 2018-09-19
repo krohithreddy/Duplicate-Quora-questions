@@ -1,0 +1,33 @@
+OrientDB - Indexes
+
+https://www.tutorialspoint.com/orientdb/orientdb_indexes.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Index is a pointer which points to a location of data in the database. Indexing is a concept used to quickly locate the data without having to search every record in a database. OrientDB supports four index algorithms and several types within each. The four types of index are − SB-Tree Index It provides a good mix of features available from other index types. Better to use this for general utility. It is durable, transactional and supports range queries. It is default index type. The different type plugins that support this algorithm are − UNIQUE − These indexes do not allow duplicate keys. For composite indexes, this refers to the uniqueness of the composite keys. NOTUNIQUE − These indexes allow duplicate keys. FULLTEXT − These indexes are based on any single word of text. You can use them in queries through the CONTAINSTEXT operator. DICTIONARY − These indexes are similar to those that use UNIQUE, but in the case of duplicate keys, they replace the existing record with the new record. Hash Index It performs faster and is very light in disk usage. It is durable, transactional, but does not support range queries. It works like HASHMAP, which makes it faster on punctual lookups and it consumes less resources than other index types. The different type plugins that support this algorithm are − UNIQUE_HASH_INDEX − These indexes do not allow duplicate keys. For composite indexes, this refers to the uniqueness of the composite keys. NOTUNIQUE_HASH_INDEX − These indexes allow duplicate keys. FULLTEXT_HASH_INDEX − These indexes are based on any single word of text. You can use them in queries through the CONTAINSTEXT operator. DICTIONARY_HASH_INDEX − These indexes are similar to those that use UNIQUE_HASH_INDEX, but in cases of duplicate keys, they replace the existing record with the new record. Lucene Full Text Index It provides good full-text indexes, but cannot be used to index other types. It is durable, transactional, and supports range queries. Lucene Spatial Index It provides good spatial indexes, but cannot be used to index other types. It is durable, transactional, and supports range queries. Creating Indexes Create index is a command to create an index on a particular schema. The following statement is the basic syntax to create an index. 
+CREATE INDEX <name> [ON <class-name> (prop-names)] <type> [<key-type>] 
+[METADATA {<metadata>}]
+ Following are the details about the options in the above syntax. <name> − Defines the logical name for the index. You can also use the <class.property> notation to create an automatic index bound to a schema property. <class> uses the class of the schema and <property> uses the property created in the class. <class-name> − Provides the name of the class that you are creating the automatic index to index. This class must exist in the database. <prop-names> − Provides the list of properties, which you want the automatic index to index. These properties must already exist in schema. <type> − Provides the algorithm and type of index that you want to create. <key-type> − Provides the optional key type with automatic indexes. <metadata> − Provides the JSON representation. Example Try the following query to create automatic index bound to the property ‘ID’ of the user sales_user. 
+orientdb> CREATE INDEX indexforID ON sales_user (id) UNIQUE
+ If the above query is executed successfully, you will get the following output. 
+Creating index... 
+Index created successfully with 4 entries in 0.021000 sec(s)
+ Querying Indexes You can use select query to get the records in the index. Try the following query to retrieve the keys of index named ‘indexforId’. 
+SELECT FROM INDEX:indexforId 
+ If the above query is executed successfully, you will get the following output. 
+----+------+----+----- 
+#   |@CLASS|key |rid   
+----+------+----+----- 
+0   |null  |1   |#11:7 
+1   |null  |2   |#11:6 
+2   |null  |3   |#11:5 
+3   |null  |4   |#11:8 
+----+------+----+-----
+ Drop Indexes If you want to drop a particular index, you can use this command. This operation does not remove linked records. The following statement is the basic syntax to drop an index. 
+DROP INDEX <name>
+ Where <name> provides the name of the index you want to drop. Try the following query to drop an index named ‘ID’ of user sales_user. 
+DROP INDEX sales_users.Id 
+ If the above query is executed successfully, you will get the following output. 
+Index dropped successfully

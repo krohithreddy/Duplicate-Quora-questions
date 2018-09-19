@@ -1,0 +1,47 @@
+Apache Presto - HIVE Connector
+
+https://www.tutorialspoint.com/apache_presto/apache_presto_hive_connector.htm
+
+Apache Presto, Tutorial, Learning, Overview, Architecture, Installation, Configuration Settings, Administration Tools, Basic SQL Operations, SQL Functions, MySQL, JMX, HIVE, KAFKA Connector, JDBC Interface, Custom Function Application.
+
+August-15-2017-02:34:16
+
+The Hive connector allows querying data stored in a Hive data warehouse. Prerequisites Hadoop Hive Hopefully you have installed Hadoop and Hive on your machine. Start all the services one by one in the new terminal. Then, start hive metastore using the following command, 
+hive --service metastore
+ Presto uses Hive metastore service to get the hive table’s details. Configuration Settings Create a file “hive.properties” under “etc/catalog” directory. Use the following command. 
+$ cd etc 
+$ cd catalog 
+$ vi hive.properties  
+
+connector.name = hive-cdh4 
+hive.metastore.uri = thrift://localhost:9083
+ After making all the changes, save the file and quit the terminal. Create Database Create a database in Hive using the following query − Query 
+hive> CREATE SCHEMA tutorials; 
+ After the database is created, you can verify it using the “show databases” command. Create Table Create Table is a statement used to create a table in Hive. For example, use the following query. 
+hive> create table author(auth_id int, auth_name varchar(50), 
+topic varchar(100) STORED AS SEQUENCEFILE;
+ Insert Table Following query is used to insert records in hive’s table. 
+hive> insert into table author values (1,’ Doug Cutting’,Hadoop),
+(2,’ James Gosling’,java),(3,’ Dennis Ritchie’,C);
+ Start Presto CLI You can start Presto CLI to connect Hive storage plugin using the following command. 
+$ ./presto --server localhost:8080 --catalog hive —schema tutorials; 
+ You will receive the following response. 
+presto:tutorials >
+ List Schemas To list out all the schemas in Hive connector, type the following command. Query 
+presto:tutorials > show schemas from hive;
+ Result 
+default  
+
+tutorials 
+ List Tables To list out all the tables in “tutorials” schema, use the following query. Query 
+presto:tutorials > show tables from hive.tutorials; 
+ Result 
+author
+ Fetch Table Following query is used to fetch all the records from hive’s table. Query 
+presto:tutorials > select * from hive.tutorials.author; 
+ Result 
+auth_id  |   auth_name    | topic 
+---------+----------------+-------- 
+       1 | Doug Cutting   | Hadoop 
+       2 | James Gosling  | java 
+       3 | Dennis Ritchie | C

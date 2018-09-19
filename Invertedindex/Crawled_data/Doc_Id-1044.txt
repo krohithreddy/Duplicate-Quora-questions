@@ -1,0 +1,29 @@
+XSD - Attribute
+
+https://www.tutorialspoint.com/xsd/xsd_attribute.htm
+
+ XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscelleneous.
+
+August-15-2017-02:34:11
+
+Attribute represents the attribute of an XML element. XSD defines it as a simple type. Syntax 
+<xs:attribute name = "attribute-name" type = "attribute-type"/>
+ attribute-name Name of the Attribute. For example, 
+<xs:attribute name = "rollno" type = "xs:integer"/> 
+ defines following rollno attribute which can be used in an XML element. For example 
+<student rollno = "393" />
+ attribute-type Type of the Attribute. For example, 
+<xs:attribute name = "rollno" type = "xs:integer"/> 
+ defines type of attribute as integer, rollno should have value of type int. 
+<student rollno = "393" />
+ Example Consider the following XML Element 
+<student rollno = "393" />
+ XSD declarations for rollno attribute will be as follows − 
+<xs:attribute name = "rollno" type = "xs:integer"/>
+ Default Value Attribute can have a default value assigned to it. Default value is used in case the attribute has no value. 
+<xs:attribute name = "grade" type = "xs:string" default = "NA" /> 
+ Fixed Value Attribute can have a fix value assigned. In case a fixed value is assigned, then the element can not have any value. 
+<xs:attribute name = "class" type = "xs:string" fixed = "1" /> 
+ Restriction Attributes are by default optional. But to make an attribute mandatory, "use" attribute can be used. 
+<xs:attribute name = "rollno" type = "xs:integer" use = "required"/>
+ xsd_simple_types.htm

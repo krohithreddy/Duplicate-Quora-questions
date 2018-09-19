@@ -1,0 +1,83 @@
+IMS DB - DL/I Functions
+
+https://www.tutorialspoint.com/ims_db/ims_db_dli_functions.htm
+
+IMS DB, Overview, STRUCTURE, DL/I TERMINOLOGY, DL/I PROCESSING, CONTROL BLOCKS, PROGRAMMING, COBOL BASICS, DL/I FUNCTIONS, PCB MASK, SSA, DATA RETRIEVAL, DATA MANIPULATION, SECONDARY INDEXING, LOGICAL DATABASE, RECOVERY, INTERVIEW QUESTIONS.
+
+August-07-2017-01:26:44
+
+DL/I function is the first parameter that is used in a DL/I call. This function tells which operation is going to be performed on the IMS database by the IMS DL/I call. The syntax of DL/I function is as follows − 
+01 DLI-FUNCTIONS.
+   05 DLI-GU        PIC X(4)    VALUE 'GU  '.
+   05 DLI-GHU       PIC X(4)    VALUE 'GHU '.
+   05 DLI-GN        PIC X(4)    VALUE 'GN  '.
+   05 DLI-GHN       PIC X(4)    VALUE 'GHN '.
+   05 DLI-GNP       PIC X(4)    VALUE 'GNP '.
+   05 DLI-GHNP      PIC X(4)    VALUE 'GHNP'.
+   05 DLI-ISRT      PIC X(4)    VALUE 'ISRT'.
+   05 DLI-DLET      PIC X(4)    VALUE 'DLET'.
+   05 DLI-REPL      PIC X(4)    VALUE 'REPL'.
+   05 DLI-CHKP      PIC X(4)    VALUE 'CHKP'.
+   05 DLI-XRST      PIC X(4)    VALUE 'XRST'.
+   05 DLI-PCB       PIC X(4)    VALUE 'PCB '.
+ This syntax represents the following key points − For this parameter, we can provide any four-character name as a storage field to store the function code. DL/I function parameter is coded in the working storage section of the COBOL program. For specifying the DL/I function, the programmer needs to code one of the 05 level data names such as DLI-GU in a DL/I call, since COBOL does not allow to code literals on a CALL statement. DL/I functions are divided into three categories: Get, Update, and Other functions. Let us discuss each of them in detail. Get Functions Get functions are similar to the read operation supported by any programming language. Get function is used to fetch segments from an IMS DL/I database. The following Get functions are used in IMS DB − Get Unique Get Next Get Next within Parent Get Hold Unique Get Hold Next Get Hold Next within Parent Let us consider the following IMS database structure to understand the DL/I function calls − Get Unique 'GU' code is used for the Get Unique function. It works similar to the random read statement in COBOL. It is used to fetch a particular segment occurrence based on the field values. The field values can be provided using segment search arguments. The syntax of a GU call is as follows − 
+CALL 'CBLTDLI' USING DLI-GU
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ If you execute the above call statement by providing appropriate values for all parameters in the COBOL program, you can retrieve the segment in the segment I/O area from the database. In the above example, if you provide the field values of Library, Magazines, and Health, then you get the desired occurrence of the Health segment. Get Next 'GN' code is used for the Get Next function. It works similar to the read next statement in COBOL. It is used to fetch segment occurrences in a sequence. The predefined pattern for accessing data segment occurrences is down the hierarchy, then left to right. The syntax of a GN call is as follows − 
+CALL 'CBLTDLI' USING DLI-GN
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ If you execute the above call statement by providing appropriate values for all parameters in the COBOL program, you can retrieve the segment occurrence in the segment I/O area from the database in a sequential order. In the above example, it starts with accessing the Library segment, then Books segment, and so on. We perform the GN call again and again, until we reach the segment occurrence we want. Get Next within Parent 'GNP' code is used for Get Next within Parent. This function is used to retrieve segment occurrences in sequence subordinate to an established parent segment. The syntax of a GNP call is as follows − 
+CALL 'CBLTDLI' USING DLI-GNP
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ Get Hold Unique 'GHU' code is used for Get Hold Unique. Hold function specifies that we are going to update the segment after retrieval. The Get Hold Unique function corresponds to the Get Unique call. Given below is the syntax of a GHU call − 
+CALL 'CBLTDLI' USING DLI-GHU
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ Get Hold Next 'GHN' code is used for Get Hold Next. Hold function specifies that we are going to update the segment after retrieval. The Get Hold Next function corresponds to the Get Next call. Given below is the syntax of a GHN call − 
+CALL 'CBLTDLI' USING DLI-GHN
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ Get Hold Next within Parent 'GHNP' code is used for Get Hold Next within Parent. Hold function specifies that we are going to update the segment after retrieval. The Get Hold Next within Parent function corresponds to the Get Next within Parent call. Given below is the syntax of a GHNP call − 
+CALL 'CBLTDLI' USING DLI-GHNP
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ Update Functions Update functions are similar to re-write or insert operations in any other programming language. Update functions are used to update segments in an IMS DL/I database. Before using the update function, there must be a successful call with Hold clause for the segment occurrence. The following Update functions are used in IMS DB − Insert Delete Replace Insert 'ISRT' code is used for the Insert function. The ISRT function is used to add a new segment to the database. It is used to change an existing database or load a new database. Given below is the syntax of an ISRT call − 
+CALL 'CBLTDLI' USING DLI-ISRT
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ Delete 'DLET' code is used for the Delete function. It is used to remove a segment from an IMS DL/I database. Given below is the syntax of a DLET call − 
+CALL 'CBLTDLI' USING DLI-DLET
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ Replace 'REPL' code is used for Get Hold Next within Parent. The Replace function is used to replace a segment in the IMS DL/I database. Given below is the syntax of an REPL call − 
+CALL 'CBLTDLI' USING DLI-REPL
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ Other Functions The following other functions are used in IMS DL/I calls − Checkpoint Restart PCB Checkpoint 'CHKP' code is used for the Checkpoint function. It is used in the recovery features of IMS. Given below is the syntax of a CHKP call − 
+CALL 'CBLTDLI' USING DLI-CHKP
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ Restart 'XRST' code is used for the Restart function. It is used in the restart features of IMS. Given below is the syntax of an XRST call − 
+CALL 'CBLTDLI' USING DLI-XRST
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ PCB PCB function is used in CICS programs in the IMS DL/I database. Given below is the syntax of a PCB call − 
+CALL 'CBLTDLI' USING DLI-PCB
+                     PCB Mask
+                     Segment I/O Area
+                     [Segment Search Arguments]
+ You can find more details about these functions in the recovery chapter.

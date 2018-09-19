@@ -1,0 +1,23 @@
+Redis - Set Srandmember Command
+
+https://www.tutorialspoint.com/redis/sets_srandmember.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis SRANDMEMBER command is used to get a random member from set stored at specified key. If called with the additional count argument, return an array of count distinct elements if count is positive. If called with a negative count the behavior changes and the command is allowed to return the same element multiple times. In this case the numer of returned elements is the absolute value of the specified count. Return Value String reply, without the additional count argument. The command returns a Bulk Reply with the randomly selected element, or nil when the key does not exist. Array reply, when the additional count argument is passed the command returns an array of elements, or an empty array when the key does not exist. Syntax Following is the basic syntax of Redis SRANDMEMBER command. 
+redis 127.0.0.1:6379> SRANDMEMBER KEY [count] 
+ Example 
+redis 127.0.0.1:6379> SADD myset1 "hello" 
+(integer) 1 
+redis 127.0.0.1:6379> SADD myset1 "world" 
+(integer) 1 
+redis 127.0.0.1:6379> SADD myset1 "bar" 
+(integer) 1 
+redis 127.0.0.1:6379> SRANDMEMBER myset1 
+"bar" 
+redis 127.0.0.1:6379> SRANDMEMBER myset1 2 
+1) "Hello" 
+2) "world"
+ redis_sets.htm

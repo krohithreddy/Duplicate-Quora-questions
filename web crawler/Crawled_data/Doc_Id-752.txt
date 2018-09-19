@@ -1,0 +1,37 @@
+SQLite - ALTER TABLE Command
+
+https://www.tutorialspoint.com/sqlite/sqlite_alter_command.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+SQLite ALTER TABLE command modifies an existing table without performing a full dump and reload of the data. You can rename a table using ALTER TABLE statement and additional columns can be added in an existing table using ALTER TABLE statement. There is no other operation supported by ALTER TABLE command in SQLite except renaming a table and adding a column in an existing table. Syntax Following is the basic syntax of ALTER TABLE to RENAME an existing table. 
+ALTER TABLE database_name.table_name RENAME TO new_table_name;
+ Following is the basic syntax of ALTER TABLE to add a new column in an existing table. 
+ALTER TABLE database_name.table_name ADD COLUMN column_def...;
+ Example Consider the COMPANY table with the following records − 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Now, let's try to rename this table using ALTER TABLE statement as follows − 
+sqlite> ALTER TABLE COMPANY RENAME TO OLD_COMPANY;
+ The above SQLite statement will rename COMPANY table to OLD_COMPANY. Now, let's try to add a new column in OLD_COMPANY table as follows − 
+sqlite> ALTER TABLE OLD_COMPANY ADD COLUMN SEX char(1);
+ COMPANY table is now changed and following will be the output from SELECT statement. 
+ID          NAME        AGE         ADDRESS     SALARY      SEX
+----------  ----------  ----------  ----------  ----------  ---
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ It should be noted that newly added column is filled with NULL values.

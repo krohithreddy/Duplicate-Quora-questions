@@ -1,0 +1,32 @@
+WSDL - <types> Element
+
+https://www.tutorialspoint.com/wsdl/wsdl_types.htm
+
+WSDL, tutorial, basic, advanced, elements, examples, definition, types, message, port, binding, service.
+
+August-15-2017-02:34:07
+
+A web service needs to define its inputs and outputs and how they are mapped into and out of the services. WSDL <types> element takes care of defining the data types that are used by the web service. Types are XML documents, or document parts. The types element describes all the data types used between the client and the server. WSDL is not tied exclusively to a specific typing system. WSDL uses the W3C XML Schema specification as its default choice to define data types. If the service uses only XML Schema built-in simple types, such as strings and integers, then types element is not required. WSDL allows the types to be defined in separate elements so that the types are reusable with multiple web services. Here is a piece of code taken from W3C specification. This code depicts how a types element can be used within a WSDL. 
+<types>
+   <schema targetNamespace="http://example.com/stockquote.xsd"
+      xmlns="http://www.w3.org/2000/10/XMLSchema">
+		
+      <element name="TradePriceRequest">
+         <complexType>
+            <all>
+               <element name="tickerSymbol" type="string"/>
+            </all>
+         </complexType>
+      </element>
+		
+      <element name="TradePrice">
+         <complexType>
+            <all>
+               <element name="price" type="float"/>
+            </all>
+         </complexType>
+      </element>
+		
+   </schema>
+</types>
+ Data types address the problem of identifing the data types and the formats you intend to use with your web services. Type information is shared between the sender and the receiver. The recipients of messages therefore need access to the information you used to encode your data and must understand how to decode the data.

@@ -1,0 +1,186 @@
+DocumentDB SQL - Iteration
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_iteration.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+In DocumentDB SQL, Microsoft has added a new construct which can be used with IN keyword to provide support for iterating over JSON arrays. The support for iteration is provided in the FROM clause. We will consider similar three documents from the previous examples again. Following is the AndersenFamily document. 
+{ 
+   "id": "AndersenFamily", 
+   "lastName": "Andersen", 
+	
+   "parents": [ 
+      { "firstName": "Thomas", "relationship":  "father" }, 
+      { "firstName": "Mary Kay", "relationship":  "mother" } 
+   ],
+   
+   "children": [ 
+      { 
+         "firstName": "Henriette Thaulow", 
+         "gender": "female", 
+         "grade": 5, 
+         "pets": [ { "givenName": "Fluffy", "type":  "Rabbit" } ] 
+      } 
+   ],
+   
+   "location": { "state": "WA", "county": "King", "city": "Seattle" }, 
+   "isRegistered": true 
+}
+ Following is the SmithFamily document. 
+{ 
+   "id": "SmithFamily", 
+	
+   "parents": [ 
+      { "familyName": "Smith", "givenName": "James" }, 
+      { "familyName": "Curtis", "givenName": "Helen" } 
+   ],
+   
+   "children": [ 
+      {
+         "givenName": "Michelle", 
+         "gender": "female", 
+         "grade": 1 
+      },
+		
+      { 
+         "givenName": "John", 
+         "gender": "male", 
+         "grade": 7,
+			
+         "pets": [ 
+            { "givenName": "Tweetie", "type": "Bird" } 
+         ] 
+      } 
+   ],
+   
+   "location": { 
+      "state": "NY", 
+      "county": "Queens", 
+      "city": "Forest Hills" 
+   },
+   
+   "isRegistered": true 
+}
+ Following is the WakefieldFamily document. 
+{ 
+   "id": "WakefieldFamily",
+	
+   "parents": [ 
+      { "familyName": "Wakefield", "givenName": "Robin" }, 
+      { "familyName": "Miller", "givenName": "Ben" } 
+   ],
+   
+   "children": [ 
+      { 
+         "familyName": "Merriam", 
+         "givenName": "Jesse", 
+         "gender": "female", 
+         "grade": 6,
+			
+         "pets": [ 
+            { "givenName": "Charlie Brown", "type": "Dog" }, 
+            { "givenName": "Tiger", "type": "Cat" },
+            { "givenName": "Princess", "type": "Cat" } 
+         ] 
+      },
+		
+      { 
+         "familyName": "Miller", 
+         "givenName": "Lisa", 
+         "gender": "female", 
+         "grade": 3,
+			
+         "pets": [ 
+            { "givenName": "Jake", "type": "Snake" } 
+         ] 
+      } 
+   ],
+   
+   "location": { "state": "NY", "county": "Manhattan", "city": "NY" }, 
+   "isRegistered": false 
+}
+ Let’s take a look at a simple example without IN keyword in FROM clause. Following is the query which will return all the parents from the Families collection. 
+SELECT *  
+FROM Families.parents
+ When the above query is executed, it produces the following output. 
+[ 
+   [ 
+      { 
+         "familyName": "Wakefield", 
+         "givenName": "Robin" 
+      },
+		
+      { 
+         "familyName": "Miller", 
+         "givenName": "Ben" 
+      } 
+   ], 
+	
+   [ 
+      { 
+         "familyName": "Smith", 
+         "givenName": "James" 
+      },
+		
+      { 
+         "familyName": "Curtis", 
+         "givenName": "Helen" 
+      } 
+   ], 
+	
+   [ 
+      { 
+         "firstName": "Thomas", 
+         "relationship": "father" 
+      },
+		
+      {
+         "firstName": "Mary Kay", 
+         "relationship": "mother" 
+      } 
+   ] 
+] 
+ As can be seen in the above output, the parents of each family is displayed in a separate JSON array. Let’s take a look at the same example, however this time we will use the IN keyword in FROM clause. Following is the query which contains the IN keyword. 
+SELECT *  
+FROM c IN Families.parents
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "familyName": "Wakefield", 
+      "givenName": "Robin" 
+   }, 
+	
+   { 
+      "familyName": "Miller", 
+      "givenName": "Ben" 
+   },
+	
+   { 
+      "familyName": "Smith", 
+      "givenName": "James" 
+   },
+	
+   { 
+      "familyName": "Curtis", 
+      "givenName": "Helen" 
+   },
+	
+   { 
+      "firstName": "Thomas", 
+      "relationship": "father" 
+   },
+	
+   { 
+      "firstName": "Mary Kay", 
+      "relationship": "mother" 
+   }
+	
+   { 
+      "id": "WakefieldFamily", 
+      "givenName": "Jesse", 
+      "grade": 6 
+   } 
+] 
+ In the above example, it can be seen that with iteration, the query that performs iteration over parents in the collection has different output array. Hence, all the parents from each family are added into a single array.

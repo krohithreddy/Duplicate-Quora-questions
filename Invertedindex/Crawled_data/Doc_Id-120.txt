@@ -1,0 +1,111 @@
+DynamoDB - Delete Items
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_delete_items.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+Deleting an item in the DynamoDB only requires providing the table name and the item key. It is also strongly recommended to use of a conditional expression which will be necessary to avoid deleting the wrong items. As usual, you can either use the GUI console, Java, or any other needed tool to perform this task. Delete Items Using the GUI Console Navigate to the console. In the navigation pane on the left side, select Tables. Then select the table name, and the Items tab. Choose the items desired for deletion, and select Actions | Delete. A Delete Item(s) dialog box then appears as shown in the following screeshot. Choose “Delete” to confirm. How to Delete Items Using Java? Using Java in item deletion operations merely involves creating a DynamoDB client instance, and calling the deleteItem method through using the item's key. You can see the following example, where it has been explained in detail. 
+DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient( 
+   new ProfileCredentialsProvider()));
+   
+Table table = dynamoDB.getTable("ProductList");
+DeleteItemOutcome outcome = table.deleteItem("IDnum", 151);
+ You can also specify the parameters to protect against incorrect deletion. Simply use a ConditionExpression. For example − 
+Map<String,Object> expressionAttributeValues = new HashMap<String,Object>(); 
+expressionAttributeValues.put(":val", false);
+  
+DeleteItemOutcome outcome = table.deleteItem("IDnum",151, 
+   "Ship = :val",  
+   null,                   // doesn't use ExpressionAttributeNames  
+   expressionAttributeValues);
+ The following is a larger example for better understanding. Note − The following sample may assume a previously created data source. Before attempting to execute, acquire supporting libraries and create necessary data sources (tables with required characteristics, or other referenced sources). This sample also uses Eclipse IDE, an AWS credentials file, and the AWS Toolkit within an Eclipse AWS Java Project. 
+package com.amazonaws.codesamples.document;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.document.DeleteItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.Table;
+
+import com.amazonaws.services.dynamodbv2.document.UpdateItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
+import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.model.ReturnValue;
+
+public class DeleteItemOpSample {  
+   static DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient( 
+      new ProfileCredentialsProvider()));  
+   
+   static String tblName = "ProductList";  
+   public static void main(String[] args) throws IOException { 
+      createItems(); 
+      retrieveItem();  
+      
+      // Execute updates 
+      updateMultipleAttributes(); 
+      updateAddNewAttribute(); 
+      updateExistingAttributeConditionally();  
+      
+      // Item deletion 
+      deleteItem();  
+   }  
+   private static void createItems() {  
+      Table table = dynamoDB.getTable(tblName); 
+      try {  
+         Item item = new Item()  
+            .withPrimaryKey("ID", 303) 
+            .withString("Nomenclature", "Polymer Blaster 4000")
+            .withStringSet( "Manufacturers",
+            new HashSet<String>(Arrays.asList("XYZ Inc.", "LMNOP Inc."))) 
+            .withNumber("Price", 50000) 
+            .withBoolean("InProduction", true) 
+            .withString("Category", "Laser Cutter"); 
+            table.putItem(item);  
+         
+         item = new Item() 
+            .withPrimaryKey("ID", 313) 
+            .withString("Nomenclature", "Agitatatron 2000") 
+            .withStringSet( "Manufacturers", 
+            new HashSet<String>(Arrays.asList("XYZ Inc,", "CDE Inc."))) 
+            .withNumber("Price", 40000) 
+            .withBoolean("InProduction", true) 
+            .withString("Category", "Agitator"); 
+            table.putItem(item);  
+      } catch (Exception e) { 
+         System.err.println("Cannot create items."); 
+         System.err.println(e.getMessage());  
+      } 
+   }  
+   private static void deleteItem() {  
+      Table table = dynamoDB.getTable(tableName);  
+      try {  
+         DeleteItemSpec deleteItemSpec = new DeleteItemSpec() 
+            .withPrimaryKey("ID", 303)  
+            .withConditionExpression("#ip = :val") 
+            .withNameMap(new NameMap() 
+            .with("#ip", "InProduction"))
+            .withValueMap(new ValueMap() 
+            .withBoolean(":val", false)) 
+            .withReturnValues(ReturnValue.ALL_OLD);  
+         DeleteItemOutcome outcome = table.deleteItem(deleteItemSpec);  
+         
+         // Confirm 
+         System.out.println("Displaying deleted item..."); 
+         System.out.println(outcome.getItem().toJSONPretty());  
+      } catch (Exception e) { 
+         System.err.println("Cannot delete item in " + tableName); 
+         System.err.println(e.getMessage()); 
+      } 
+   } 
+}

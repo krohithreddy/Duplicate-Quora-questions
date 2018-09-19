@@ -1,0 +1,15 @@
+MongoDB - Create Backup
+
+https://www.tutorialspoint.com/mongodb/mongodb_create_backup.htm
+
+Mongodb, overview, Advantages, Environment, Data Modelling, Create Database, Drop Database, Create Collection, Drop Collection, Data Types, Insert Document, Query Document, Update Document, Delete Document, Projection, Limiting Records, Sorting, Records, Indexing, Aggregration, Replication, Sharding, Create Backup, Deployment, Java, PHP, Relationships, Database References, Covered Queries, Analyzing Queries, Atomic Operations, Advanced Indexing, Indexing Limitations, ObjectId, Map Reduce, Text Search, Regular Expression, Rockmongo, GridFS, Capped Collections, Auto-Increment Sequence.
+
+August-15-2017-02:34:09
+
+In this chapter, we will see how to create a backup in MongoDB. Dump MongoDB Data To create backup of database in MongoDB, you should use mongodump command. This command will dump the entire data of your server into the dump directory. There are many options available by which you can limit the amount of data or create backup of your remote server. Syntax The basic syntax of mongodump command is as follows − 
+>mongodump
+ Example Start your mongod server. Assuming that your mongod server is running on the localhost and port 27017, open a command prompt and go to the bin directory of your mongodb instance and type the command mongodump Consider the mycol collection has the following data. 
+>mongodump
+ The command will connect to the server running at 127.0.0.1 and port 27017 and back all data of the server to directory /bin/dump/. Following is the output of the command − Following is a list of available options that can be used with the mongodump command. Syntax Description Example mongodump --host HOST_NAME --port PORT_NUMBER This commmand will backup all databases of specified mongod instance. mongodump --host tutorialspoint.com --port 27017 mongodump --dbpath DB_PATH --out BACKUP_DIRECTORY This command will backup only specified database at specified path. mongodump --dbpath /data/db/ --out /data/backup/ mongodump --collection COLLECTION --db DB_NAME This command will backup only specified collection of specified database. mongodump --collection mycol --db test Restore data To restore backup data MongoDB's mongorestore command is used. This command restores all of the data from the backup directory. Syntax The basic syntax of mongorestore command is − 
+>mongorestore
+ Following is the output of the command −

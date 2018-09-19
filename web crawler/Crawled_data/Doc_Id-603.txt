@@ -1,0 +1,99 @@
+PouchDB - Update Document
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_update_document.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+Whenever, we create a document in PouchDB, a new field _rev is generated, and it is known as revision marker. The _rev‘s value is a unique random number, each time we make changes to the document the value of _rev is changed. You can update an existing document in PouchDB using the (_rev). To do so, first of all retrieve the _rev value of the document we want to update. Now, place the contents that are to be updated along with the retrieved _rev value in a new document, and finally insert this document in PouchDB using the put() method. Example Assume we have a document in PouchDB with id 001 which has details of a person. In order to update this document, we should have its rev number. Therefore, to retrieve the contents of the document the following code is used. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//Reading the contents of a Document
+db.get('001', function(err, doc) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(doc);
+   }
+});
+ On executing the above code, you will receive the following output. 
+{
+   _id: '001',
+   _rev: '3-552920d1ca372986fad7b996ce365f5d',
+   name: 'Raju',
+   age: 23,
+   designation: 'Designer' 
+}
+ Now, using the _rev you can update the value of the key “age” to 26, as shown in the following code. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//Preparing the document for update
+doc = {
+   age: 26,
+   _rev: '3-552920d1ca372986fad7b996ce365f5d',
+   }
+
+//Inserting Document
+db.put(doc);
+
+//Reading the contents of a Document
+db.get('001', function(err, doc) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(doc);
+   }
+});
+ Save the above code in a file with the name Update_Document.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\Pouch_Examples>node Update_Document.js
+ This updates the contents of the given document that exists in the database named my_database which is stored locally. The following message is displayed on the console. 
+{ 
+   name: 'Raju',
+   age: 26,
+   designation: 'Designer',
+   _id: '001',
+   _rev: '2-61b523ccdc4e41a8435bdffbb057a7a5' 
+}
+ Updating a Document in a Remote Database You can also update an existing document in a database that is stored remotely on the server (CouchDB). To do so, instead of a database name you need to pass the path to the database in CouchDB, which contains the document that is to be updated. Example Suppose there is a database named my_database in the CouchDB server. Then, if you verify the list of databases in CouchDB using the URL http://127.0.0.1:5984/_utils/index.html you will get the following screenshot. By clicking on the database named my_database, you can see the following screenshot. Here, you can observe that this database contains a document with id 001. Following is an example of updating the age of the document having id as “001” that exists in a database named my_database which is stored in the CouchDB server. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('http://localhost:5984/my_database');
+
+//Preparing the document for update
+doc = {
+   age: 26,
+   _rev: '3-552920d1ca372986fad7b996ce365f5d',
+   }
+
+//Inserting Document
+db.put(doc);
+
+//Reading the contents of a Document
+db.get('001', function(err, doc) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(doc);
+   }
+});   
+ Save the above code in a file with the name Remote_Update_Document.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Remote_Update_Document.js
+ This updates the contents of the given document that exists in the database named my_database which is stored in CouchDB. The following message is displayed on the console. 
+{
+   _id: '001',
+   _rev: '2-b9640bffbce582c94308905eed8bb545',
+   name: 'Raju',
+   age: 26,
+   designation: 'Designer' 
+}

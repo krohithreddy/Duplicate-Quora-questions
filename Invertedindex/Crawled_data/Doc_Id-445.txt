@@ -1,0 +1,14 @@
+OrientDB - Create Property
+
+https://www.tutorialspoint.com/orientdb/orientdb_create_property.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Property in OrientDB works like a field of class and column in the database table. Create Property is a command used to create a property for a particular class. The class name that you used in the command must exist. The following statement is the basic syntax of Create Property command. 
+CREATE PROPERTY <class-name>.<property-name> <property-type> [<linked-type>][ <linked-class>]
+ Following are the details about the options in the above syntax. <class-name> − Defines the class you want to create the property in. <property-name> − Defines the logical name of the property. <property-type> − Defines the type of property you want to create. <linked-type> − Defines the container type, used in container property type. <linked-class> − Defines the container class, used in container property type. The following table provides the data type for property so that OrientDB knows the type of data to store. BOOLEAN INTEGER SHORT LONG FLOAT DATE STRING EMBEDDED LINK BYTE BINARY DOUBLE In addition to these there are several other property types that work as containers. EMBEDDEDLIST EMBEDDEDSET EMBEDDEDMAP LINKLIST LINKSET LINKMAP Example Try the following example to create a property name on the class Employee, of the String type. 
+orientdb> CREATE PROPERTY Employee.name STRING
+ If the above query is executed successfully, you will get the following output. 
+Property created successfully with id = 1

@@ -1,0 +1,25 @@
+XSD - Date Time
+
+https://www.tutorialspoint.com/xsd/xsd_datetime.htm
+
+XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+Date and Time data types are used to represent date and time in the XML documents. <xs:date> data type The <xs:date> data type is used to represent date in YYYY-MM-DD format. YYYY − represents year MM − represents month DD − represents day <xs:date> Example Element declaration in XSD − 
+<xs:element name = "birthdate" type = "xs:date"/>
+ Element usage in XML − 
+<birthdate>1980-03-23</birthdate>
+ <xs:time> data type The <xs:time> data type is used to represent time in hh:mm:ss format. hh − represents hours mm − represents minutes ss − represents seconds <xs:time> Example Element declaration in XSD − 
+<xs:element name = "startTime" type = "xs:time"/>
+ Element usage in XML − 
+<startTime>10:20:15</startTime>
+ <xs:datetime> data type The <xs:datetime> data type is used to represent date and time in YYYY-MM-DDThh:mm:ss format. YYYY − represents year MM − represents month DD − represents day T − represents start of time section hh − represents hours mm − represents minutes ss − represents seconds <xs:datetime> Example Element declaration in XSD − 
+<xs:element name = "startTime" type = "xs:datetime"/>
+ Element usage in XML − 
+<startTime>1980-03-23T10:20:15</startTime>
+ <xs:duration> data type The <xs:duration> data type is used to represent time interval in PnYnMnDTnHnMnS format. Each component is optional except P. P − represents start of date section nY − represents year nM − represents month nD − represents day T − represents start of time section nH − represents hours nM − represents minutes nS − represents seconds <xs:duration> Example Element declaration in XSD − 
+<xs:element name = "period" type = "xs:duration"/>
+ Element usage in xml to represent period of 6 years, 3 months, 10 days and 15 hours. 
+<period>P6Y3M10DT15H</period>
+ Date Data Types Following is the list of commonly used date data types. S.No. Name & Description 1. date Represents a date value 2. dateTime Represents a date and time value 3. duration Represents a time interval 4. gDay Represents a part of a date as the day (DD) 5. gMonth Represents a part of a date as the month (MM) 6. gMonthDay Represents a part of a date as the month and day (MM-DD) 7. gYear Represents a part of a date as the year (YYYY) 8. gYearMonth Represents a part of a date as the year and month (YYYY-MM) 9. time Represents a time value Restrictions Following types of restrictions can be used with Date data types − enumeration maxExclusive maxInclusive minExclusive minInclusive pattern whiteSpace

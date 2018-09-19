@@ -1,0 +1,197 @@
+OrientDB - Installation
+
+https://www.tutorialspoint.com/orientdb/orientdb_installation.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+OrientDB installation file is available in two editions − Community Edition − OrientDB community edition is released by Apache under 0.2 license as an open source Enterprise Edition − OrientDB enterprise edition is released as a proprietary software, which is built on community edition. It serves as an extension of the community edition. This chapter explains the installation procedure of OrientDB community edition because it is open source. Prerequisites Both community and Enterprise editions can run on any Operating system that implements the Java Virtual Machine (JVM). OrientDB requires Java with 1.7 or later version. Use the following steps to download and install OrientDB into your system. Step 1 − Download OrientDB Binary Setup File OrientDB comes with built-in setup file to install the database on your system. It provides different pre-compiled binary packages (tarred or zipped packages) for different operating systems. You can download OrientDB files from Download OrientDB link. The following screenshot shows the download page of OrientDB. You can download the zipped or tarred file by clicking the suitable operating system icon. On downloading, you will get the binary package in your Downloads folder. Step 2 − Extract and Install OrientDB Following is the procedure to extract and install OrientDB for different operating systems. In Linux After download you will get orientdb-community-2.1.9.tar.gz file in your Downloads folder. You can use the following command to extract the tarred file. 
+$ tar –zxvf orientdb-community-2.1.9.tar.gz 
+ You can use the following command to move all the OrientDB library files from orientdbcommunity-2.1.9 to /opt/orientdb/ directory. Here we are using super user command (sudo) therefore you have to provide super user password to execute the following command. 
+$ sudo mv orientdb-community-2.1.9 /opt/orientdb
+ You can use the following commands to register the orientdb command and the Orient server. 
+$ export ORIENTDB_HoME = /opt/orientdb 
+$ export PATH = $PATH:$ORIENTDB_HOME/bin
+ In Windows After download you will get orientdb-community-2.1.9.zip file in your Downloads folder. Extract the zip file using the zip extractor. Move the extracted folder into the C:\ directory. Create two environmental variables ORIENTDB_HOME and PATH variables with following given values. 
+ORIENT_HOME = C:\orientdb-community-2.1.9 
+PATH = C:\orientdb-community-2.1.9\bin
+ Step 3 − Configuring OrientDB Server as a Service By following the above steps you can use the Desktop version of OrientDB. You can start OrientDB database server as a service by using the following steps. The procedure is different, depending on your operating system. In Linux OrientDB provides a script file named orientdb.sh to run the database as a daemon. You can find it in the bin/directory of your OrientDB installation directory that is $ORIENTDB_HOME/bin/orientdb.sh. Before running the script file, you have to edit orientdb.sh file for defining two variables. One is ORIENTDB_DIR which defines the path to the installation directory (/opt/orientdb) and the second is ORIENTDB_USER which defines the username you want run OrientDB for as follows. 
+ORIENTDB_DIR = "/opt/orientdb" 
+ORIENTDB_USER = "<username you want to run OrientDB>" 
+ Use the following command to copy orientdb.sh file into /etc/init.d/ directory for initializing and running the script. Here we are using super user command (sudo) therefore you have to provide super user password to execute the following command. 
+$ sudo cp $ORIENTDB_HOME/bin/orientdb.sh /etc/init.d/orientdb
+ Use the following command to copy the console.sh file from OrientDB installation directory that is $ORIENTDB_HOME/bin to the system bin directory that is /usr/bin for accessing the Orient DB’s console. 
+$ sudo cp $ ORIENTDB_HOME/bin/console.sh /usr/bin/orientdb
+ Use the following command to start the ORIENTDB database server as service. Here you have to provide the respective user’s password which you mention in the orientdb.sh file to start the server. 
+$ service orientdb start
+ Use the following command to know on which PID the OrientDB server daemon is running. 
+$ service orientdb status
+ Use the following command to stop the OrientDB server daemon. Here you have to provide the respective user’s password, which you mention in the orientdb.sh file to stop the server. 
+$ service orientdb stop
+ In Windows OrientDB is a server application therefore it has to perform several tasks before starting shutting down the Java virtual machine process. If you want to shutdown OrientDB server manually then you have to execute shutdown.bat file. But the server instances do not stop correctly, when the system shuts down suddenly without executing the above script. The programs which are controlled by the operating system with a set of specified signals are called services in Windows. We have to use Apache Common Daemon which allow Windows users to wrap Java applications as Windows service. Following is the procedure to download and register Apache common daemon. Click the following link for Apache Common Daemons for windows. Click on common-daemon-1.0.15-bin-windows to download. Unzip the common-daemon-1.0.15-bin-windows directory. After extracting you will find prunsrv.exe and prunmgr.exe files inside the directory. In those − prunsrv.exe file is a service application for running applications as services. prunmgr.exe file is an application used for monitoring and configuring windows services. Go to OrientDB installation folder → create a new directory and name it service. Copy the prunsrv.exe and prunmgr .exe paste it into to the service directory. In order to configure OrientDB as Windows service, you have to execute a short script that uses the prusrv.exe as a Windows service. Before defining the Windows Services, you have to rename prunsrv and prunmgr according to the name of the service. For e.g. OrientDBGraph and OrientDBGraphw respectively. Here OrientDBGraph is the name of the service. Copy the following script into the file named installService.bat and place it into %ORIENTDB_HOME%\service\ directory. 
+:: OrientDB Windows Service Installation 
+@echo off 
+rem Remove surrounding quotes from the first parameter 
+set str=%~1 
+rem Check JVM DLL location parameter 
+if "%str%" == "" goto missingJVM 
+set JVM_DLL=%str% 
+rem Remove surrounding quotes from the second parameter 
+set str=%~2 
+rem Check OrientDB Home location parameter 
+if "%str%" == "" goto missingOrientDBHome 
+set ORIENTDB_HOME=%str%  
+
+
+set CONFIG_FILE=%ORIENTDB_HOME%/config/orientdb-server-config.xml 
+set LOG_FILE = %ORIENTDB_HOME%/config/orientdb-server-log.properties 
+set LOG_CONSOLE_LEVEL = info 
+set LOG_FILE_LEVEL = fine 
+set WWW_PATH = %ORIENTDB_HOME%/www 
+set ORIENTDB_ENCODING = UTF8 
+set ORIENTDB_SETTINGS = -Dprofiler.enabled = true 
+-Dcache.level1.enabled = false Dcache.level2.strategy = 1 
+set JAVA_OPTS_SCRIPT = -XX:+HeapDumpOnOutOfMemoryError
+
+  
+rem Install service 
+OrientDBGraphX.X.X.exe //IS --DisplayName="OrientDB GraphEd X.X.X" ^ 
+--Description = "OrientDB Graph Edition, aka GraphEd, contains OrientDB server
+integrated with the latest release of the TinkerPop Open Source technology 
+stack supporting property graph data model." ^ 
+
+--StartClass = com.orientechnologies.orient.server.OServerMain 
+-StopClass = com.orientechnologies.orient.server.OServerShutdownMain ^
+ 
+--Classpath = "%ORIENTDB_HOME%\lib\*" --JvmOptions 
+"Dfile.Encoding = %ORIENTDB_ENCODING%; Djava.util.logging.config.file = "%LOG_FILE%";
+Dorientdb.config.file = "%CONFIG_FILE%"; -Dorientdb.www.path = "%WWW_PATH%";
+Dlog.console.level = %LOG_CONSOLE_LEVEL%; -Dlog.file.level = %LOG_FILE_LEVEL%;
+Dorientdb.build.number = "@BUILD@"; -DORIENTDB_HOME = %ORIENTDB_HOME%" ^ 
+
+--StartMode = jvm --StartPath = "%ORIENTDB_HOME%\bin" --StopMode = jvm 
+-StopPath = "%ORIENTDB_HOME%\bin" --Jvm = "%JVM_DLL%" 
+-LogPath = "%ORIENTDB_HOME%\log" --Startup = auto  
+
+EXIT /B  
+
+:missingJVM 
+echo Insert the JVM DLL location 
+goto printUsage 
+ 
+:missingOrientDBHome 
+echo Insert the OrientDB Home
+goto printUsage 
+ 
+:printUsage 
+echo usage: 
+echo     installService JVM_DLL_location OrientDB_Home 
+EXIT /B 
+ The script requires two parameters − The location of jvm.dll, for e.g. C:\ProgramFiles\java\jdk1.8.0_66\jre\bin\server\jvm.dll The location of OrientDB installation for e.g. C:\orientdb-community-2.1.9 The service is installed when you execute the OrientDBGraph.exe file (Original prunsrv) and double-click on it. Use the following command to install services into Windows. 
+> Cd %ORIENTDB_HOME%\service 
+> installService.bat "C:\Program Files\Java\jdk1.8.0_66\jre\bin\server
+   \jvm.dll" C:\orientdb-community-2.1.9 
+ Open the Task Manager services, you will find the following screenshot with the registered service name is in it. Step 4 − Verifying OrientDB Installation This step verifies the OrientDB database server installation using the following steps. Run the server. Run the console. Run the studio. This is unique according to the operating system. In Linux Follow the given procedure for verifying OrientDB installation in Linux. Running the server − You can use the following command to start the server. 
+$ cd $ORIENTDB_HOME/bin 
+$ ./server.sh 
+ Or you can use the following command to start the OrientDB server as UNIX daemon. 
+$ service orientdb start 
+ If it is installed successfully, you will receive the following output. 
+          .                                           
+          .`        `                                  
+          ,      `:.                                   
+         `,`    ,:`                                    
+         .,.   :,,                                     
+         .,,  ,,,                                      
+    .    .,.:::::  ````                                 :::::::::     :::::::::    
+    ,`   .::,,,,::.,,,,,,`;;                      .:    ::::::::::    :::    :::   
+    `,.  ::,,,,,,,:.,,.`  `                       .:    :::      :::  :::     :::  
+     ,,:,:,,,,,,,,::.   `        `         ``     .:    :::      :::  :::     :::  
+      ,,:.,,,,,,,,,: `::, ,,   ::,::`   : :,::`  ::::   :::      :::  :::    :::   
+       ,:,,,,,,,,,,::,:   ,,  :.    :   ::    :   .:    :::      :::  :::::::      
+        :,,,,,,,,,,:,::   ,,  :      :  :     :   .:    :::      :::  :::::::::    
+  `     :,,,,,,,,,,:,::,  ,, .::::::::  :     :   .:    :::      :::  :::     :::  
+  `,...,,:,,,,,,,,,: .:,. ,, ,,         :     :   .:    :::      :::  :::     ::: 
+    .,,,,::,,,,,,,:  `: , ,,  :     `   :     :   .:    :::      :::  :::     :::  
+      ...,::,,,,::.. `:  .,,  :,    :   :     :   .:    :::::::::::   :::     :::  
+           ,::::,,,. `:   ,,   :::::    :     :   .:    :::::::::     ::::::::::   
+           ,,:` `,,.                                   
+          ,,,    .,`                                   
+         ,,.     `,                                          GRAPH DATABASE   
+       ``        `.                                                           
+                 ``                                          orientdb.com 
+                 `    
+				 
+2016-01-20 19:17:21:547 INFO  OrientDB auto-config DISKCACHE = 1, 
+   649MB (heap = 494MB os = 4, 192MB disk = 199, 595MB) [orientechnologies] 
+2016-01-20 19:17:21:816 INFO  Loading configuration from:
+   /opt/orientdb/config/orientdb-server-config.xml... [OServerConfigurationLoaderXml] 
+2016-01-20 19:17:22:213 INFO  OrientDB Server v2.1.9-SNAPSHOT 
+   (build 2.1.x@r; 2016-01-07 10:51:24+0000) is starting up... [OServer] 
+2016-01-20 19:17:22:220 INFO  Databases directory: /opt/orientdb/databases [OServer] 
+2016-01-20 19:17:22:361 INFO  Port 0.0.0.0:2424 busy, 
+   trying the next available... [OServerNetworkListener] 
+2016-01-20 19:17:22:362 INFO  Listening binary connections on 0.0.0.0:2425 
+   (protocol v.32, socket = default) [OServerNetworkListener] 
+... 
+2016-01-20 19:17:22:614 INFO  Installing Script interpreter. WARN:
+   authenticated clients can execute any kind of code into the server 
+   by using the following allowed languages: 
+   [sql] [OServerSideScriptInterpreter] 
+2016-01-20 19:17:22:615 INFO  OrientDB Server v2.1.9-SNAPSHOT 
+   (build 2.1.x@r; 2016-01-07 10:51:24+0000) is active. [OServer] 
+ Running the console − You can use the following command to run the OrientDB under console. 
+$ orientdb
+ If it is installed successfully, you will receive the following output. 
+OrientDB console v.2.1.9-SNAPSHOT (build 2.1.x@r; 2016-01-07 10:51:24+0000) www.orientdb.com 
+Type 'help' to display all the supported commands. 
+Installing extensions for GREMLIN language v.2.6.0 
+ 
+orientdb>
+ Running the Studio − After starting the server you can use the following URL (http://localhost:2480/) on your browser. You will get the following screenshot. In Windows Follow the given procedure for verifying OrientDB installation in Windows. Running the server − You can use the following command to start the server. 
+> cd %ORIENTDB_HOME%\bin 
+> ./server.bat
+ If it is installed successfully, you will receive the following output. 
+          .                                           
+          .`        `                                  
+          ,      `:.                                   
+         `,`    ,:`                                    
+         .,.   :,,    
+		 .,,  ,,,                                      
+    .    .,.:::::  ````                                 :::::::::     :::::::::    
+    ,`   .::,,,,::.,,,,,,`;;                      .:    ::::::::::    :::    :::   
+    `,.  ::,,,,,,,:.,,.`  `                       .:    :::      :::  :::     :::  
+     ,,:,:,,,,,,,,::.   `        `         ``     .:    :::      :::  :::     :::  
+      ,,:.,,,,,,,,,: `::, ,,   ::,::`   : :,::`  ::::   :::      :::  :::    :::   
+       ,:,,,,,,,,,,::,:   ,,  :.    :   ::    :   .:    :::      :::  :::::::      
+        :,,,,,,,,,,:,::   ,,  :      :  :     :   .:    :::      :::  :::::::::    
+  `     :,,,,,,,,,,:,::,  ,, .::::::::  :     :   .:    :::      :::  :::     :::  
+  `,...,,:,,,,,,,,,: .:,. ,, ,,         :     :   .:    :::      :::  :::     :::  
+    .,,,,::,,,,,,,:  `: , ,,  :     `   :     :   .:    :::      :::  :::     :::  
+      ...,::,,,,::.. `:  .,,  :,    :   :     :   .:    :::::::::::   :::     :::  
+           ,::::,,,. `:   ,,   :::::    :     :   .:    :::::::::     ::::::::::   
+           ,,:` `,,.                                   
+          ,,,    .,`                                   
+         ,,.     `,                                          GRAPH DATABASE   
+       ``        `.                                                           
+                 ``                                          orientdb.com 
+                 `            
+				 
+2016-01-20 19:17:21:547 INFO  OrientDB auto-config DISKCACHE = 1,649MB 
+   (heap = 494MB os = 4, 192MB disk = 199, 595MB) [orientechnologies] 
+2016-01-20 19:17:21:816 INFO  Loading configuration from: 
+   /opt/orientdb/config/orientdb-server-config.xml... 
+   [OServerConfigurationLoaderXml] 
+... 
+2016-01-20 19:17:22:615 INFO  OrientDB Server v2.1.9-SNAPSHOT 
+   (build 2.1.x@r; 2016-01-07 10:51:24+0000) is active. [OServer] 
+ Running the console − You can use the following command to run OrientDB under console. 
+> %ORIENTDB_HOME%\bin\console.bat 
+ If it is installed successfully, you will receive the following output. 
+OrientDB console v.2.1.9-SNAPSHOT (build 2.1.x@r; 2016-01-07 10:51:24+0000) www.orientdb.com 
+Type 'help' to display all the supported commands. 
+Installing extensions for GREMLIN language v.2.6.0 
+ 
+orientdb\>
+ Running the Studio − After starting the server you can use the following URL (http://localhost:2480/) on your browser. You will get the following screenshot.

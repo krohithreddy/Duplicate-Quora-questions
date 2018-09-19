@@ -1,0 +1,9 @@
+WSDL - Introduction
+
+https://www.tutorialspoint.com/wsdl/wsdl_introduction.htm
+
+WSDL, tutorial, basic, advanced, elements, examples, definition, types, message, port, binding, service.
+
+August-15-2017-02:34:07
+
+WSDL stands for Web Services Description Language. It is the standard format for describing a web service. WSDL was developed jointly by Microsoft and IBM. Features of WSDL WSDL is an XML-based protocol for information exchange in decentralized and distributed environments. WSDL definitions describe how to access a web service and what operations it will perform. WSDL is a language for describing how to interface with XML-based services. WSDL is an integral part of Universal Description, Discovery, and Integration (UDDI), an XML-based worldwide business registry. WSDL is the language that UDDI uses. WSDL is pronounced as 'wiz-dull' and spelled out as 'W-S-D-L'. WSDL Usage WSDL is often used in combination with SOAP and XML Schema to provide web services over the Internet. A client program connecting to a web service can read the WSDL to determine what functions are available on the server. Any special datatypes used are embedded in the WSDL file in the form of XML Schema. The client can then use SOAP to actually call one of the functions listed in the WSDL. History of WSDL WSDL 1.1 was submitted as a W3C Note by Ariba, IBM, and Microsoft for describing services for the W3C XML Activity on XML Protocols in March 2001. WSDL 1.1 has not been endorsed by the World Wide Web Consortium (W3C), however it has just released a draft for version 2.0 that will be a recommendation (an official standard), and thus endorsed by the W3C.

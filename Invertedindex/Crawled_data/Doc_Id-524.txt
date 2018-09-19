@@ -1,0 +1,60 @@
+PL/SQL - Transactions
+
+https://www.tutorialspoint.com/plsql/plsql_transactions.htm
+
+PL/SQL, syntax, Environment Setup, Operators, Transactions, Date and Time, data types, variables, constants, records, conditional statements, iterative statements, cursors, procedures, functions, exception handling, triggers, packages, collections, external procedures, arrays, strings, dbms output.
+
+August-15-2017-02:34:06
+
+In this chapter, we will discuss the transactions in PL/SQL. A database transaction is an atomic unit of work that may consist of one or more related SQL statements. It is called atomic because the database modifications brought about by the SQL statements that constitute a transaction can collectively be either committed, i.e., made permanent to the database or rolled back (undone) from the database. A successfully executed SQL statement and a committed transaction are not same. Even if an SQL statement is executed successfully, unless the transaction containing the statement is committed, it can be rolled back and all changes made by the statement(s) can be undone. Starting and Ending a Transaction A transaction has a beginning and an end. A transaction starts when one of the following events take place − The first SQL statement is performed after connecting to the database. At each new SQL statement issued after a transaction is completed. A transaction ends when one of the following events take place − A COMMIT or a ROLLBACK statement is issued. A DDL statement, such as CREATE TABLE statement, is issued; because in that case a COMMIT is automatically performed. A DCL statement, such as a GRANT statement, is issued; because in that case a COMMIT is automatically performed. User disconnects from the database. User exits from SQL*PLUS by issuing the EXIT command, a COMMIT is automatically performed. SQL*Plus terminates abnormally, a ROLLBACK is automatically performed. A DML statement fails; in that case a ROLLBACK is automatically performed for undoing that DML statement. Committing a Transaction A transaction is made permanent by issuing the SQL command COMMIT. The general syntax for the COMMIT command is − 
+COMMIT;
+ For example, 
+INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY) 
+VALUES (1, 'Ramesh', 32, 'Ahmedabad', 2000.00 ); 
+
+INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY) 
+VALUES (2, 'Khilan', 25, 'Delhi', 1500.00 ); 
+
+INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY) 
+VALUES (3, 'kaushik', 23, 'Kota', 2000.00 ); 
+
+INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY) 
+VALUES (4, 'Chaitali', 25, 'Mumbai', 6500.00 ); 
+
+INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY) 
+VALUES (5, 'Hardik', 27, 'Bhopal', 8500.00 ); 
+
+INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY) 
+VALUES (6, 'Komal', 22, 'MP', 4500.00 ); 
+
+COMMIT;
+ Rolling Back Transactions Changes made to the database without COMMIT could be undone using the ROLLBACK command. The general syntax for the ROLLBACK command is − 
+ROLLBACK [TO SAVEPOINT < savepoint_name>]; 
+ When a transaction is aborted due to some unprecedented situation, like system failure, the entire transaction since a commit is automatically rolled back. If you are not using savepoint, then simply use the following statement to rollback all the changes − 
+ROLLBACK;
+ Savepoints Savepoints are sort of markers that help in splitting a long transaction into smaller units by setting some checkpoints. By setting savepoints within a long transaction, you can roll back to a checkpoint if required. This is done by issuing the SAVEPOINT command. The general syntax for the SAVEPOINT command is − 
+SAVEPOINT < savepoint_name >;
+ For example 
+INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY) 
+VALUES (7, 'Rajnish', 27, 'HP', 9500.00 ); 
+
+INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY) 
+VALUES (8, 'Riddhi', 21, 'WB', 4500.00 ); 
+SAVEPOINT sav1;
+  
+UPDATE CUSTOMERS 
+SET SALARY = SALARY + 1000; 
+ROLLBACK TO sav1;
+  
+UPDATE CUSTOMERS 
+SET SALARY = SALARY + 1000 
+WHERE ID = 7; 
+UPDATE CUSTOMERS 
+SET SALARY = SALARY + 1000 
+WHERE ID = 8; 
+
+COMMIT;
+ ROLLBACK TO sav1 − This statement rolls back all the changes up to the point, where you had marked savepoint sav1. After that, the new changes that you make will start. Automatic Transaction Control To execute a COMMIT automatically whenever an INSERT, UPDATE or DELETE command is executed, you can set the AUTOCOMMIT environment variable as − 
+SET AUTOCOMMIT ON; 
+ You can turn-off the auto commit mode using the following command − 
+SET AUTOCOMMIT OFF;

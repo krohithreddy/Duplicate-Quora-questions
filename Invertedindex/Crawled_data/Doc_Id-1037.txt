@@ -1,0 +1,103 @@
+XSD - Complex Indicators
+
+https://www.tutorialspoint.com/xsd/xsd_complex_indicators.htm
+
+XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+Indicators control the way how elements are to be organized in an XML document. There are seven types of indicators, falling into three broad categories. Order Indicators All − Child elements can occur in any order. Choice − Only one of the child element can occur. Sequence − Child element can occur only in specified order. Occurence Indicators maxOccurs − Child element can occur only maxOccurs number of times. minOccurs − Child element must occur minOccurs number of times. Group Indicators Group − Defines related set of elements. attributeGroup − Defines related set of attributes. Order Indicators Using <all> a student element can have firstname, lastname, nickname, and marks child element in any order in the XML document. 
+<xs:complexType name = "StudentType" mixed = "true">
+   <xs:all>
+      <xs:element name = "firstname" type = "xs:string"/>
+      <xs:element name = "lastname" type = "xs:string"/>
+      <xs:element name = "nickname" type = "xs:string"/>
+      <xs:element name = "marks" type = "xs:positiveInteger"/>
+   </xs:all>
+   <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+</xs:complexType>
+
+<xs:element name = 'student' type = 'StudentType' />
+ Using <choice> a student element can have only one of firstname, lastname, nickname and marks child element in the XML document. 
+<xs:complexType name = "StudentType" mixed = "true">
+   <xs:choice>
+      <xs:element name = "firstname" type = "xs:string"/>
+      <xs:element name = "lastname" type = "xs:string"/>
+      <xs:element name = "nickname" type = "xs:string"/>
+      <xs:element name = "marks" type = "xs:positiveInteger"/>
+   </xs:choice>
+   <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+</xs:complexType>
+
+<xs:element name = 'student' type = 'StudentType' />
+ Using <sequence>, a student element can have firstname, lastname, nickname and marks child element in the specified order only in the XML document. 
+<xs:complexType name = "StudentType" mixed = "true">
+   <xs:sequence>
+      <xs:element name = "firstname" type = "xs:string"/>
+      <xs:element name = "lastname" type = "xs:string"/>
+      <xs:element name = "nickname" type = "xs:string"/>
+      <xs:element name = "marks" type = "xs:positiveInteger"/>
+   </xs:sequence>
+   <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+</xs:complexType>
+
+<xs:element name = 'student' type = 'StudentType' />
+ Occurence Indicators Using <maxOccurs>, a student element can have maximum two nicknames in the XML document. 
+<xs:complexType name = "StudentType" mixed = "true">
+   <xs:all>
+      <xs:element name = "firstname" type = "xs:string"/>
+      <xs:element name = "lastname" type = "xs:string"/>
+      <xs:element name = "nickname" type = "xs:string" maxOccurs="2"/>
+      <xs:element name = "marks" type = "xs:positiveInteger"/>
+   </xs:all>
+   <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+</xs:complexType>
+
+<xs:element name = 'student' type = 'StudentType' />
+ Using <minOccurs>, a student element should have two nicknames in the XML document. 
+<xs:complexType name = "StudentType" mixed = "true">
+   <xs:all>
+      <xs:element name = "firstname" type = "xs:string"/>
+      <xs:element name = "lastname" type = "xs:string"/>
+      <xs:element name = "nickname" type = "xs:string" minOccurs="2"/>
+      <xs:element name = "marks" type = "xs:positiveInteger"/>
+   </xs:all>
+   <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+</xs:complexType>
+
+<xs:element name = 'student' type = 'StudentType' />
+ Group Indicators <group> is used to group a related set of elements. Here we've created a group of part of name and then used this group to define a student element. 
+<xs:group name = "infogroup">
+   <xs:sequence>
+      <xs:element name = "firstname" type = "xs:string"/>
+      <xs:element name = "lastname" type = "xs:string"/>
+      <xs:element name = "birthdate" type = "xs:date"/>
+   </xs:sequence>
+</xs:group>
+
+<xs:element name = "student" type = "studentType"/>
+
+<xs:complexType name = "studentType">
+   <xs:sequence>
+      <xs:group ref = "infogroup"/>
+      <xs:element name = "marks" type = "xs:integer"/>
+   </xs:sequence>
+</xs:complexType>
+ <attributeGroup> is used to group a related set of attribute. Here we've created a group of part of name and then used this group to define attributes for student element. 
+<xs:attributeGroup name = "infogroup">
+   <xs:sequence>
+      <xs:attribute name = "firstname" type = "xs:string"/>
+      <xs:attribute name = "lastname" type = "xs:string"/>
+      <xs:attribute name = "birthdate" type = "xs:date"/>
+   </xs:sequence>
+</xs:attributeGroup>
+
+<xs:element name = "student" type = "studentType"/>
+
+<xs:complexType name = "studentType">
+   <xs:sequence>
+      <xs:attributeGroup ref = "infogroup"/>
+      <xs:element name = "marks" type = "xs:integer"/>
+   </xs:sequence>
+</xs:complexType>
+ xsd_complex_types.htm

@@ -1,0 +1,15 @@
+Neo4j - Drop Unique
+
+https://www.tutorialspoint.com/neo4j/neo4j_drop_unique.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+We have already discussed creating UNIQUE constraint operations with examples in the previous chapter. In this chapter, we will discuss dropping UNIQUE constraint operation with examples. Neo4j CQL provides "DROP CONSTRAINT" command to delete existing Unique constraint from a node or relationship property. Syntax Following is the syntax for dropping a UNIQUE constraint in Neo4j. 
+DROP CONSTRAINT ON (node:label) 
+ASSERT node.id IS UNIQUE 
+ Example Following is a sample Cypher Query to remove the UNIQUE constraint on the property id. 
+DROP CONSTRAINT ON (n:player) 
+ASSERT n.id IS UNIQUE 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result.

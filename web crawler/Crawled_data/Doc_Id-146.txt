@@ -1,0 +1,22 @@
+H2 Database - Grant
+
+https://www.tutorialspoint.com/h2_database/h2_database_grant.htm
+
+H2 Database, Tutorial, Learning, Introduction, Installation, Data Manipulation Select, Insert, Update, Delete, Backup, Call, Explain, Merge, Show, Data Definition Create, Alter, Drop, Truncate, Commit, Grant, Savepoint, Rollback, JDBC Connection.
+
+August-15-2017-02:34:24
+
+Grant is a command coming from the SQL grammar used to grant the rights to a table, to a user, or to a role. Admin rights are required to execute this command. This command commits an open transaction in this connection. In this chapter, we will discuss the different scenarios of Grant command. Grant Right Grant Right is a command to provide admin rights to a table, to a user, or to a role. Syntax Following is the generic syntax of the Grant command. 
+GRANT { SELECT | INSERT | UPDATE | DELETE | ALL } [,...] ON 
+{ { SCHEMA schemaName } | { tableName [,...] } } 
+TO { PUBLIC | userName | roleName }
+ Example In this example, we will grant the test table as read-only using the following command. 
+GRANT SELECT ON TEST TO READONLY
+ The above command produces the following output. 
+Grant successfully
+ Grant Alter Any Schema Grant Alter Any Schema is a command to grant schema altering rights to a respective user. Syntax Following is the generic syntax of the Grant Alter Any Schema command. 
+GRANT ALTER ANY SCHEMA TO userName 
+ Example In this example, we will grant altering privileges of a schema to a user named test_user. Make sure that test_user exists. Following is the query to grant altering privileges. 
+GRANT ALTER ANY SCHEMA TO test_user;
+ The above query produces the following output. 
+Granted successfully to test_user

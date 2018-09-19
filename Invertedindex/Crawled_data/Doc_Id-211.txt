@@ -1,0 +1,78 @@
+MariaDB - Join
+
+https://www.tutorialspoint.com/mariadb/mariadb_join.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+In previous discussions and examples, we examined retrieving from a single table, or retrieving multiple values from multiple sources. Most real-world data operations are much more complex, requiring aggregation, comparison, and retrieval from multiple tables. JOINs allow merging of two or more tables into a single object. They are employed through SELECT, UPDATE, and DELETE statements. Review the general syntax of a statement employing a JOIN as shown below − 
+SELECT column
+FROM table_name1
+INNER JOIN table_name2
+ON table_name1.column = table_name2.column;
+ Note the old syntax for JOINS used implicit joins and no keywords. It is possible to use a WHERE clause to achieve a join, but keywords work best for readability, maintenance, and best practices. JOINs come in many forms such as a left join, right join, or inner join. Various join types offer different types of aggregation based on shared values or characteristics. Employ a JOIN either at the command prompt or with a PHP script. The Command Prompt At the command prompt, simply use a standard statement − 
+root@host# mysql -u root -p password;
+Enter password:*******
+mysql> use PRODUCTS;
+Database changed
+
+mysql> SELECT products.ID_number, products.Nomenclature, inventory.inventory_ct
+   FROM products
+   INNER JOIN inventory
+   ON products.ID_numbeer = inventory.ID_number;
++-------------+----------------+-----------------+
+| ID_number   | Nomenclature   | Inventory Count |
++-------------+----------------+-----------------+
+| 12345       | Orbitron 4000  | 150             |
++-------------+----------------+-----------------+
+| 12346       | Orbitron 3000  | 200             |
++-------------+----------------+-----------------+
+| 12347       | Orbitron 1000  | 0               |
++-------------+----------------+-----------------+
+ PHP Script Using JOIN Use the mysql_query() function to perform a join operation − 
+<?php
+   $dbhost = 'localhost:3036';
+   $dbuser = 'root';
+   $dbpass = 'rootpassword';
+   $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+
+   if(! $conn ) {
+      die('Could not connect: ' . mysql_error());
+   }
+
+   $sql = 'SELECT a.product_id, a.product_manufacturer, b.product_count   
+      FROM products_tbl a, pcount_tbl b 
+      WHERE a.product_manufacturer = b.product_manufacturer';
+
+   mysql_select_db('PRODUCTS');
+   $retval = mysql_query( $sql, $conn );
+
+   if(! $retval ) {
+      die('Could not get data: ' . mysql_error());
+   }
+
+   while($row = mysql_fetch_array($retval, MYSQL_ASSOC)) {
+      echo "Manufacturer:{$row['product_manufacturer']} <br> ".
+         "Count: {$row['product_count']} <br> ".
+         "Product ID: {$row['product_id']} <br> ".
+         "--------------------------------<br>";
+   }
+
+   echo "Fetched data successfully\n";
+   mysql_close($conn);
+?>
+ On successful data retrieval, you will see the following output − 
+ID Number: 12345
+Nomenclature: Orbitron 4000
+Inventory Count: 150
+--------------------------------------
+ID Number: 12346
+Nomenclature: Orbitron 3000
+Inventory Count: 200
+--------------------------------------
+ID Number: 12347
+Nomenclature: Orbitron 1000
+Inventory Count: 0
+--------------------------------------
+mysql> Fetched data successfully

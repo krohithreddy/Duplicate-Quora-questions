@@ -1,0 +1,83 @@
+Memcached - Increment Decrement Data
+
+https://www.tutorialspoint.com/memcached/memcached_incr_decr.htm
+
+Memcached, Tutorial, Beginners, Overview, Environment, Connection,  Set Data, Add Data, Replace Data, Append Data, Prepend Data, Get Data, Delete Data, Stats, Clear Data
+
+August-15-2017-02:34:11
+
+Memcached incr and decr commands are used to increment or decrement the numeric value of an existing key. If the key is not found, then it returns NOT_FOUND. If the key is not numeric, then it returns CLIENT_ERROR cannot increment or decrement non-numeric value. Otherwise, ERROR is returned. Syntax - incr The basic syntax of Memcached incr command is as shown below − 
+incr key increment_value
+ Output incr command may produce one of the following result − NOT_FOUND indicates that the key does not exist. CLIENT_ERROR indicates that value is not numeraical. ERROR indicates any other error such as syntax error. Example In this example, we use visitors as key and set 10 initially into it, there after we increment the visitors by 5. 
+set visitors 0 900 2
+10
+STORED
+get visitors
+VALUE visitors 0 2
+10
+END
+incr visitors 5
+15
+get visitors
+VALUE visitors 0 2
+15
+END
+ Syntax - decr The basic syntax of Memcached decr command is as shown below − 
+decr key decrement_value
+ Output incr command may produce one of the following result − NOT_FOUND indicates that the key does not exist. CLIENT_ERROR indicates that value is not numeraical. ERROR indicates any other error such as syntax error. Example 
+set visitors 0 900 2
+10
+STORED
+get visitors
+VALUE visitors 0 2
+10
+END
+decr visitors 5
+5
+get visitors
+VALUE visitors 0 1
+5
+END
+ Incr/Decr Using Java Application To increment or decrement data in a Memcached server, you need to use Memcached incr or decr methods respectively. Example 
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+   
+      try{
+   
+         // Connecting to Memcached server on localhost
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server sucessful.");
+
+         // add numerical data to memcached server
+         Future fo = mcc.set("number", 900, "1000");
+
+         // print status of set method
+         System.out.println("set status:" + fo.get());
+
+         // retrieve and check the value from cache
+         System.out.println("value in cache - " + mcc.get("number"));
+
+         // increment and check the value from cache
+         System.out.println("value in cache after increment - " + mcc.incr("number", 111));
+
+         // decrement and check the value from cache
+         System.out.println("value in cache after decrement - " + mcc.decr("number", 112));
+
+         // Shutdowns the memcached client
+         mcc.shutdown();
+         
+      }catch(Exception ex)
+         System.out.println(ex.getMessage());
+   }
+}
+ Output On compiling and executing the program, you get to see the following output − 
+Connection to server successful.
+set status:true
+value in cache - 1000
+value in cache after increment - 1111
+value in cache after decrement - 999

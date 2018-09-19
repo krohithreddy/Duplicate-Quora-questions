@@ -1,0 +1,147 @@
+DocumentDB - Delete Collection
+
+https://www.tutorialspoint.com/documentdb/documentdb_delete_collection.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+To drop collection or collections you can do the same from the portal as well as from the code by using .Net SDK. Step 1 − Go to your DocumentDB account on Azure portal. For the purpose of demo, I have added two more collections as seen in the following screenshot. Step 2 − To drop any collection, you need to click on that collection. Let’s select TempCollection1. You will see the following page, select the ‘Delete Collection’ option. Step 3 − It will display the confirmation message. Now click ‘Yes’ button. You will see that the TempCollection1 is no more available on your dashboard. You can also delete collections from your code using .Net SDK. To do that, following are the following steps. Step 1 − Let's delete the collection by specifying the ID of the collection we want to delete. It's the usual pattern of querying by Id to obtain the selfLinks needed to delete a resource. 
+private async static Task DeleteCollection(DocumentClient client, string collectionId) {
+   Console.WriteLine();
+   Console.WriteLine("**** Delete Collection {0} in {1} ****", collectionId, database.Id);
+	
+   var query = new SqlQuerySpec {
+      QueryText = "SELECT * FROM c WHERE c.id = @id",
+         Parameters = new SqlParameterCollection {
+         new SqlParameter {
+            Name = "@id", Value = collectionId
+         }
+      }
+   };
+	
+   DocumentCollection collection = client.CreateDocumentCollectionQuery(database.SelfLink,
+      query).AsEnumerable().First();
+		
+   await client.DeleteDocumentCollectionAsync(collection.SelfLink);
+   Console.WriteLine("Deleted collection {0} from database {1}", collectionId,
+      database.Id);
+}
+ Here we see the preferred way of constructing a parameterized query. We're not hardcoding the collectionId so this method can be used to delete any collection. We are querying for a specific collection by Id where the Id parameter is defined in this SqlParameterCollection assigned to the parameter's property of this SqlQuerySpec. Then the SDK does the work of constructing the final query string for DocumentDB with the collectionId embedded inside of it. Step 2 − Run the query and then use its SelfLink to delete the collection from the CreateDocumentClient task. 
+private static async Task CreateDocumentClient() {
+   // Create a new instance of the DocumentClient 
+	
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+      database = client.CreateDatabaseQuery("SELECT * FROM c WHERE c.id =
+         'myfirstdb'").AsEnumerable().First(); 
+      await DeleteCollection(client, "TempCollection"); 
+   } 
+}
+ Following is the complete implementation of Program.cs file. 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
+using Microsoft.Azure.Documents.Linq;
+
+using Newtonsoft.Json;
+
+namespace DocumentDBDemo {
+
+   class Program {
+	
+      private const string EndpointUrl = "https://azuredocdbdemo.documents.azure.com:443/";
+		
+      private const string AuthorizationKey = "BBhjI0gxdVPdDbS4diTjdloJq7Fp4L5RO/
+         StTt6UtEufDM78qM2CtBZWbyVwFPSJIm8AcfDu2O+AfV T+TYUnBQ==";
+			
+      private static Database database;
+
+      static void Main(string[] args) {
+         try {
+            CreateDocumentClient().Wait();
+         } catch (Exception e) {
+            Exception baseException = e.GetBaseException();
+            Console.WriteLine("Error: {0}, Message: {1}", e.Message, baseException.Message);
+         }
+         Console.ReadKey();
+      }
+
+      private static async Task CreateDocumentClient() {
+         // Create a new instance of the DocumentClient
+         using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+            database = client.CreateDatabaseQuery("SELECT * FROM c WHERE c.id =
+               'myfirstdb'").AsEnumerable().First();
+            await DeleteCollection(client, "TempCollection");
+				
+            //await CreateCollection(client, "MyCollection1");
+            //await CreateCollection(client, "MyCollection2", "S2");
+            ////await CreateDatabase(client);
+            //GetDatabases(client);
+            //await DeleteDatabase(client);
+            //GetDatabases(client);
+         }
+      }
+		
+      private async static Task CreateCollection(DocumentClient client,
+         string collectionId, string offerType = "S1") {
+			
+         Console.WriteLine();
+         Console.WriteLine("**** Create Collection {0} in {1} ****", collectionId,
+            database.Id);
+         
+         var collectionDefinition = new DocumentCollection { Id = collectionId };
+         var options = new RequestOptions { OfferType = offerType };
+         var result = await client.CreateDocumentCollectionAsync(database.SelfLink,
+            collectionDefinition, options);
+				
+         var collection = result.Resource; 
+         
+         Console.WriteLine("Created new collection"); 
+         ViewCollection(collection); 
+      }
+
+      private static void ViewCollection(DocumentCollection collection) {
+         Console.WriteLine("Collection ID: {0} ", collection.Id); 
+         Console.WriteLine("Resource ID: {0} ", collection.ResourceId); 
+         Console.WriteLine("Self Link: {0} ", collection.SelfLink); 
+         Console.WriteLine("Documents Link: {0} ", collection.DocumentsLink); 
+         Console.WriteLine("UDFs Link: {0} ", collection.UserDefinedFunctionsLink); 
+         Console.WriteLine("StoredProcs Link: {0} ", collection.StoredProceduresLink); 
+         Console.WriteLine("Triggers Link: {0} ", collection.TriggersLink); 
+         Console.WriteLine("Timestamp: {0} ", collection.Timestamp); 
+      }
+		
+      private async static Task DeleteCollection(DocumentClient client,
+         string collectionId) {
+			
+         Console.WriteLine();
+         Console.WriteLine("**** Delete Collection {0} in {1} ****", collectionId,
+            database.Id);
+				
+         var query = new SqlQuerySpec {
+            QueryText = "SELECT * FROM c WHERE c.id = @id", Parameters = new
+               SqlParameterCollection {
+               new SqlParameter {
+                  Name = "@id", Value = collectionId
+               }
+            }
+         };
+			
+         DocumentCollection collection = client.CreateDocumentCollectionQuery
+            (database.SelfLink, query).AsEnumerable().First();
+				
+         await client.DeleteDocumentCollectionAsync(collection.SelfLink);
+         Console.WriteLine("Deleted collection {0} from database {1}", collectionId,
+            database.Id); 
+      }
+		
+   } 
+}
+ When the above code is compiled and executed, you will receive the following output. 
+**** Delete Collection TempCollection in myfirstdb **** 
+Deleted collection TempCollection from database myfirstdb

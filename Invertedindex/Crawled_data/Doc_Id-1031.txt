@@ -1,0 +1,91 @@
+XQuery - Sequences
+
+https://www.tutorialspoint.com/xquery/xquery_sequences.htm
+
+Overview, Environment Setup, First Application, FLWOR, HTML Format, XPath, Sequences, Sequence functions, count, distinct-values, subsequence, sum, avg, min, max, insert-before, remove, reverse, index-of, last, position, String functions, string-length, concat, string-join, Date functions, current-date, current-time, current-dateTime, Regular Expressions, matches, replaces, tokenize, if then else, custom functions
+
+August-15-2017-02:34:10
+
+Sequences represent an ordered collection of items where items can be of similar or of different types. Creating a Sequence Sequences are created using parenthesis with strings inside quotes or double quotes and numbers as such. XML elements can also be used as the items of a sequence. XQuery Expression 
+let $items := ('orange', <apple/>, <fruit type="juicy"/>, <vehicle type="car">sentro</vehicle>, 1,2,3,'a','b',"abc")
+let $count := count($items)
+return
+<result>
+   <count>{$count}</count>
+   
+   <items>
+      {
+	     for $item in $items
+         return <item>{$item}</item>
+      }
+   </items>
+   
+</result>
+ Output 
+<result>
+   <count>10</count>
+   <items>
+      <item>orange</item>
+      <item>
+         <apple/>
+      </item>
+      <item>
+         <fruit type="juicy"/>
+      </item>
+      <item>
+         <vehicle type="car">Sentro</vehicle>
+      </item>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>a</item>
+      <item>b</item>
+      <item>abc</item>
+   </items>
+</result>
+ Viewing the Items of a Sequence Items of a sequence can be iterated one by one, using index or by value. The above example iterated the items of a sequence one by one. Let's see the other two ways in action. XQuery Expression (Index) 
+let $items := (1,2,3,4,5,6)
+let $count := count($items)
+return
+   <result>
+      <count>{$count}</count>
+      
+      <items>
+      {
+         for $item in $items[2]
+         return <item>{$item}</item>
+      }
+      </items>
+      
+   </result>
+ Output 
+<result>
+   <count>6</count>
+   <items>
+      <item>2</item>
+   </items>
+</result>
+ XQuery Expression (Value) 
+let $items := (1,2,3,4,5,6)
+let $count := count($items)
+return
+   <result>
+      <count>{$count}</count>
+      
+      <items>
+      {
+         for $item in $items[. = (1,2,3)]
+         return <item>{$item}</item>
+      }
+      </items>
+      
+   </result>
+ Output 
+<result>
+   <count>6</count>
+   <items>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+   </items>
+</result>

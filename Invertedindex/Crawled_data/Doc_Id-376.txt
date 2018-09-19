@@ -1,0 +1,17 @@
+Neo4j - Building Blocks
+
+https://www.tutorialspoint.com/neo4j/neo4j_building_blocks.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+Neo4j Graph Database has the following building blocks − Nodes Properties Relationships Labels Data Browser Node Node is a fundamental unit of a Graph. It contains properties with key-value pairs as shown in the following image. Here, Node Name = "Employee" and it contains a set of properties as key-value pairs. Properties Property is a key-value pair to describe Graph Nodes and Relationships. 
+Key = Value 
+ Where Key is a String and Value may be represented using any Neo4j Data types. Relationships Relationships are another major building block of a Graph Database. It connects two nodes as depicted in the following figure. Here, Emp and Dept are two different nodes. "WORKS_FOR" is a relationship between Emp and Dept nodes. As it denotes, the arrow mark from Emp to Dept, this relationship describes − 
+Emp WORKS_FOR Dept 
+ Each relationship contains one start node and one end node. Here, "Emp" is a start node, and "Dept" is an end node. As this relationship arrow mark represents a relationship from "Emp" node to "Dept" node, this relationship is known as an "Incoming Relationship" to "Dept" Node and "Outgoing Relationship" to "Emp" node. Like nodes, relationships also can contain properties as key-value pairs. Here, "WORKS_FOR" relationship has one property as key-value pair. 
+Id = 123 
+ It represents an Id of this relationship. Labels Label associates a common name to a set of nodes or relationships. A node or relationship can contain one or more labels. We can create new labels to existing nodes or relationships. We can remove the existing labels from the existing nodes or relationships. From the previous diagram, we can observe that there are two nodes. Left side node has a Label: "Emp" and the right side node has a Label: "Dept". Relationship between those two nodes also has a Label: "WORKS_FOR". Note − Neo4j stores data in Properties of Nodes or Relationships. Neo4j Data Browser Once we install Neo4j, we can access Neo4j Data Browser using the following URL 
+http://localhost:7474/browser/
+ Neo4j Data Browser is used to execute CQL commands and view the output. Here, we need to execute all CQL commands at dollar prompt: "$" Type commands after the dollar symbol and click the "Execute" button to run your commands. It interacts with Neo4j Database Server, retrieves and displays the results just below the dollar prompt. Use "VI View" button to view the results in diagrams format. The above diagram shows results in "UI View" format. Use "Grid View" button to view the results in Grid View. The following diagram shows the same results in "Grid View" format. When we use "Grid View" to view our Query results, we can export them into a file in two different formats. CSV Click the "Export CSV" button to export the results in csv file format. JSON Click the "Export JSON" button to export the results in JSON file format. However, if we use "UI View" to see our Query results, we can export them into a file in only one format: JSON

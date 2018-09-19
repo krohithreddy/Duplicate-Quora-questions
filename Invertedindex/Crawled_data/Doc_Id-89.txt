@@ -1,0 +1,131 @@
+DocumentDB SQL - JavaScript Integration
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_javascript_integration.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+These days JavaScript is everywhere, and not just in browsers. DocumentDB embraces JavaScript as a sort of modern day T-SQL and supports the transactional execution of JavaScript logic natively, right inside the database engine. DocumentDB provides a programming model for executing JavaScript-based application logic directly on the collections in terms of stored procedures and triggers. Let’s take a look at an example where we create a simple store procedure. Following are the steps − Step 1 − Create a new console applications. Step 2 − Add in the .NET SDK from NuGet. We are using the .NET SDK here, which means that we'll be writing some C# code to create, execute, and then delete our stored procedure, but the stored procedure itself gets written in JavaScript. Step 3 − Right-click on the project in Solution explorer. Step 4 − Add a new JavaScript file for the stored procedure and call it HelloWorldStoreProce.js Every stored procedure is just a JavaScript function so we'll create a new function and naturally we'll also name this function HelloWorldStoreProce. It doesn't matter if we give the function a name at all. DocumentDB will only refer to this stored procedure by the Id that we provide when we create it. 
+function HelloWorldStoreProce() { 
+   var context = getContext(); 
+   var response = context.getResponse(); 
+   response.setBody('Hello, and welcome to DocumentDB!'); 
+}
+ All the stored procedure does is obtain the response object from the context and call its setBody method to return a string to the caller. In C# code, we will create the stored procedure, execute it, and then delete it. Stored procedures are scoped per collection, therefore we will need the SelfLink of the collection to create the stored procedure. Step 5 − First query for the myfirstdb database and then for the MyCollection collection. Creating a stored procedure is just like creating any other resource in DocumentDB. 
+private async static Task SimpleStoredProcDemo() {  
+   var endpoint = "https://azuredocdbdemo.documents.azure.com:443/"; 
+   var masterKey = 
+      "BBhjI0gxdVPdDbS4diTjdloJq7Fp4L5RO/StTt6UtEufDM78qM2CtBZWbyVwFPSJIm8AcfDu2O+AfV T+TYUnBQ==";
+	  
+   using (var client = new DocumentClient(new Uri(endpoint), masterKey)) { 
+      // Get database 
+      Database database = client 
+         .CreateDatabaseQuery("SELECT * FROM c WHERE c.id = 'myfirstdb'") 
+         .AsEnumerable() 
+         .First();
+			
+      // Get collection 
+      DocumentCollection collection = client 
+         .CreateDocumentCollectionQuery(database.CollectionsLink, "SELECT * FROM 
+         c WHERE c.id = 'MyCollection'") 
+         .AsEnumerable() 
+         .First();
+			
+      // Create stored procedure 
+      var sprocBody = File.ReadAllText(@"..\..\HelloWorldStoreProce.js"); 
+		
+      var sprocDefinition = new StoredProcedure { 
+         Id = "HelloWorldStoreProce", 
+         Body = sprocBody 
+      };
+	  
+      StoredProcedure sproc = await client.
+         CreateStoredProcedureAsync(collection.SelfLink, sprocDefinition); 
+      Console.WriteLine("Created stored procedure {0} ({1})", 
+         sproc.Id, sproc.ResourceId);
+				  
+      // Execute stored procedure 
+      var result = await client.ExecuteStoredProcedureAsync(sproc.SelfLink); 
+      Console.WriteLine("Executed stored procedure; response = {0}", result.Response);
+	  
+      // Delete stored procedure 
+      await client.DeleteStoredProcedureAsync(sproc.SelfLink); 
+      Console.WriteLine("Deleted stored procedure {0} ({1})", 
+         sproc.Id, sproc.ResourceId); 
+   }  
+} 
+ Step 6 − First create a definition object with the Id for the new resource and then call one of the Create methods on the DocumentClient object. In the case of a stored procedure, the definition includes the Id and the actual JavaScript code that you want to ship over to the server. Step 7 − Call File.ReadAllText to extract the stored procedure code out of the JS file. Step 8 − Assign the stored procedure code to the body property of the definition object. As far as DocumentDB is concerned, the Id we specify here, in the definition, is the name of the stored procedure, regardless of what we actually name the JavaScript function. Nevertheless when creating stored procedures and other server-side objects, it is recommended that we name JavaScript functions and that those function names do match the Id that we have set in the definition for DocumentDB. Step 9 − Call CreateStoredProcedureAsync, passing in the SelfLink for the MyCollection collection and the stored procedure definition. This creates the stored procedure and ResourceId that DocumentDB assigned to it. Step 10 − Call the stored procedure. ExecuteStoredProcedureAsync takes a type parameter that you set to the expected data type of the value returned by the stored procedure, which you can specify simply as an object if you want a dynamic object returned. That is an object whose properties will be bound at run-time. In this example we know that our stored procedure is just returning a string and so we call ExecuteStoredProcedureAsync<string>. Following is the complete implementation of Program.cs file. 
+using Microsoft.Azure.Documents; 
+using Microsoft.Azure.Documents.Client; 
+using Microsoft.Azure.Documents.Linq; 
+
+using System; 
+using System.Collections.Generic; 
+using System.Diagnostics; 
+using System.IO; 
+
+using System.Linq; 
+using System.Text; 
+using System.Threading.Tasks; 
+ 
+namespace DocumentDBStoreProce { 
+   class Program { 
+      private static void Main(string[] args) { 
+         Task.Run(async () => { 
+            await SimpleStoredProcDemo(); 
+         }).Wait(); 
+      } 
+	  
+      private async static Task SimpleStoredProcDemo() {  
+         var endpoint = "https://azuredocdbdemo.documents.azure.com:443/"; 
+         var masterKey = 
+            "BBhjI0gxdVPdDbS4diTjdloJq7Fp4L5RO/StTt6UtEufDM78qM2CtBZWbyVwFPSJIm8AcfDu2O+AfV T+TYUnBQ==";  
+				
+         using (var client = new DocumentClient(new Uri(endpoint), masterKey)) { 
+            // Get database 
+            Database database = client 
+               .CreateDatabaseQuery("SELECT * FROM c WHERE c.id = 'myfirstdb'")
+               .AsEnumerable() 
+               .First(); 
+					
+            // Get collection 
+            DocumentCollection collection = client 
+               .CreateDocumentCollectionQuery(database.CollectionsLink, 
+               "SELECT * FROM c WHERE c.id = 'MyCollection'") 
+               .AsEnumerable() 
+               .First();
+					 
+            // Create stored procedure 
+            var sprocBody = File.ReadAllText(@"..\..\HelloWorldStoreProce.js"); 
+				
+            var sprocDefinition = new StoredProcedure { 
+               Id = "HelloWorldStoreProce", 
+               Body = sprocBody 
+            };
+			
+            StoredProcedure sproc = await client
+               .CreateStoredProcedureAsync(collection.SelfLink, sprocDefinition);
+					
+            Console.WriteLine("Created stored procedure {0} ({1})", sproc
+               .Id, sproc.ResourceId);
+					 
+            // Execute stored procedure 
+            var result = await client
+               .ExecuteStoredProcedureAsync<string>(sproc.SelfLink); 
+            Console.WriteLine("Executed stored procedure; response = {0}", 
+               result.Response);
+					
+            // Delete stored procedure 
+            await client.DeleteStoredProcedureAsync(sproc.SelfLink); 
+            Console.WriteLine("Deleted stored procedure {0} ({1})", 
+               sproc.Id, sproc.ResourceId); 
+         } 
+      } 
+   } 
+} 					
+ When the above code is executed, it produces the following output. 
+Created stored procedure HelloWorldStoreProce (Ic8LAMEUVgACAAAAAAAAgA==)
+
+Executed stored procedure; response = Hello, and welcome to DocumentDB!	 
+ As seen in the above output, the response property has the “Hello, and welcome to DocumentDB!” returned by our stored procedure.

@@ -1,0 +1,13 @@
+DTD - Components
+
+https://www.tutorialspoint.com/dtd/dtd_components.htm
+
+DTD, Tutorial, beginners, Overview, Components, DOCTYPE, Elements, Attributes, Entities, Validations, Types.
+
+August-15-2017-02:34:18
+
+This chapter will discuss about XML Components from DTD perspective. A DTD will basically contain declarations of the following XML components: Element Attributes Entities Elements XML elements can be defined as building blocks of an XML document. Elements can behave as a container to hold text, elements, attributes, media objects or mix of all. Each XML document contains one or more elements, the boundaries of which are either delimited by start-tags and end-tags, or empty elements. Example Below is a simple example of XML elements 
+<name>Tutorials Point</name>
+ As you can see we have defined a <name> tag. There's a text between start and end tag of <name>. Elements, when used in an XML-DTD, need to be declared which will be discussed in detail in the chapter DTD Elements. Attributes Attributes are part of the XML elements. An element can have any number of unique attributes. Attributes give more information about the XML element or more precisely it defines a property of the element. An XML attribute is always a name-value pair. Example Below is a simple example of XML attributes: 
+<img src="flower.jpg"/>
+ Here img is the element name whereas src is an attribute name and flower.jpg is a value given for the attribute src. If attributes are used in an XML DTD then these need to be declared which will be discussed in detail in the chapter DTD Attributes Entities Entities are placeholders in XML. These can be declared in the document prolog or in a DTD. Entities can be primarily categorized as: Built-in entities Character entities General entities Parameter entities There are five built-in entities that play in well-formed XML, they are: ampersand: &amp; Single quote: &apos; Greater than: &gt; Less than: &lt; Double quote: &quot; We will study more about entity declarations in XML DTD in detail in the chapter DTD Entities

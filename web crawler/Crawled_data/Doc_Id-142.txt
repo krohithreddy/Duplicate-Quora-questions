@@ -1,0 +1,43 @@
+H2 Database - Alter
+
+https://www.tutorialspoint.com/h2_database/h2_database_alter.htm
+
+H2 Database, Tutorial, Learning, Introduction, Installation, Data Manipulation Select, Insert, Update, Delete, Backup, Call, Explain, Merge, Show, Data Definition Create, Alter, Drop, Truncate, Commit, Grant, Savepoint, Rollback, JDBC Connection.
+
+August-15-2017-02:34:24
+
+ALTER is a command used to change the table structure by adding different clauses to the alter command. Based on the scenario, we need to add respective clause to the alter command. In this chapter, we will discuss various scenarios of alter command. Alter Table Add Alter Table Add is a command used to add a new column to a table along with the respective data type. This command commits the transaction in this connection. Syntax Following is the generic syntax of the Alter Table Add command. 
+ALTER TABLE [ IF EXISTS ] tableName ADD [ COLUMN ] 
+{ [ IF NOT EXISTS ] columnDefinition [ { BEFORE | AFTER } columnName ] 
+   | ( { columnDefinition } [,...] ) }
+ Example In this example, we will add a new column start_date to the table tutorials_tbl. The datatype for start_date is Date. Following is the query to add a new column. 
+ALTER TABLE tutorials_tbl ADD start_date DATE;
+ The above query produces the following output. 
+(6) rows effected 
+ Alter Table Add Constraint Alter table add constraint is a command used to add different constraints to the table such as primary key, foreign key, not null, etc. The required indexes are automatically created if they don’t exist yet. It is not possible to disable checking for unique constraint. This command commits an open transaction in this connection. Syntax Following is the generic syntax of the Alter table add constraint command. 
+ALTER TABLE [ IF EXISTS ] tableName ADD constraint [ CHECK | NOCHECK ] 
+ Example In this example, let us add a primary key constraint (tutorials_tbl_pk) to the column id of the table tutorials_tbl, using the following query. 
+ALTER TABLE tutorials_tbl ADD CONSTRAINT tutorials_tbl_pk PRIMARYKEY(id); 
+ The above query produces the following output. 
+(6) row (s) effected
+ Alter Table Rename Constraint This command is used to rename the constraint name of a particular relation table. This command commits an open transaction in this connection. Syntax Following is the generic syntax of the Alter Table Rename Constraint command. 
+ALTER TABLE [ IF EXISTS ] tableName RENAME oldConstraintName TO newConstraintName
+ While using this syntax, make sure that the old constraint name should exist with the respective column. Example In this example, we will change the primary key constraint name of the table tutorials_tbl from tutorials_tbl_pk to tutorials_tbl_pk_constraint. Following is the query to do so. 
+ALTER TABLE tutorials_tbl RENAME CONSTRAINT 
+tutorials_tbl_pk TO tutorials_tbl_pk_constraint;
+ The above query produces the following output. 
+(1) row (s) effected 
+ Alter Table Alter Column This command is used to change the structure and properties of the column of a particular table. Changing the properties means changing the datatype of a column, rename a column, change the identity value, or change the selectivity. Syntax Following is the generic syntax of the Alter Table Alter Column command. 
+ALTER TABLE [ IF EXISTS ] tableName ALTER COLUMN columnName 
+{ { dataType [ DEFAULT expression ] [ [ NOT ] NULL ] [ AUTO_INCREMENT | IDENTITY ] } 
+| { RENAME TO name } 
+| { RESTART WITH long } 
+| { SELECTIVITY int } 
+| { SET DEFAULT expression } 
+| { SET NULL } 
+| { SET NOT NULL } } 
+ In the above syntax − RESTART − command changes the next value of an auto increment column. SELECTIVITY − command sets the selectivity (1-100) for a column. Based on the selectivity value we can image the value of the column. SET DEFAULT − changes the default value of a column. SET NULL − sets the column to allow NULL. SET NOT NULL − sets the column to allow NOT NULL. Example In this example, we will rename the column of the table tutorials_tbl from Title to Tutorial_Title using the following query. 
+ALTER TABLE tutorials_tbl ALTER COLUMN title RENAME TO tutorial_title; 
+ The above query produces the following output. 
+(0) row(s) effected 
+ In a similar way, we can perform different scenarios with the ALTER command.

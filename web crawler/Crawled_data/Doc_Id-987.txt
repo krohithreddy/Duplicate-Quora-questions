@@ -1,0 +1,18 @@
+WSDL - <definition> Element
+
+https://www.tutorialspoint.com/wsdl/wsdl_definition.htm
+
+WSDL, tutorial, basic, advanced, elements, examples, definition, types, message, port, binding, service.
+
+August-15-2017-02:34:07
+
+The <definitions> element must be the root element of all WSDL documents. It defines the name of the web service. Here is the piece of code from the last chapter that uses the definitions element. 
+<definitions name="HelloService"
+   targetNamespace="http://www.examples.com/wsdl/HelloService.wsdl"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns="http://www.examples.com/wsdl/HelloService.wsdl"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   ................................................
+</definitions>
+ From the above example, we can conclude that definitions: is a container of all the other elements. specifies that this document is called HelloService. specifies a targetNamespace attribute. The targetNamespace is a convention of XML Schema that enables the WSDL document to refer to itself. In this example, we have specified a targetNamespace of http://www.examples.com/wsdl/HelloService.wsdl specifies a default namespace: xmlns=http://schemas.xmlsoap.org/wsdl/. All elements without a namespace prefix, such as message or portType, are therefore assumed to be a part of the default WSDL namespace. specifies numerous namespaces that are used throughout the remainder of the document. NOTE: The namespace specification does not require the document to be present at the given location. The important point is that you specify a value that is unique, different from all other namespaces that are defined.

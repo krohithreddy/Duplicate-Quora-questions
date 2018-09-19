@@ -1,0 +1,44 @@
+MariaDB - Delete Query
+
+https://www.tutorialspoint.com/mariadb/mariadb_delete_query.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+The DELETE command deletes table rows from the specified table, and returns the quantity deleted. Access the quantity deleted with the ROW_COUNT() function. A WHERE clause specifies rows, and in its absence, all rows are deleted. A LIMIT clause controls the number of rows deleted. In a DELETE statement for multiple rows, it deletes only those rows satisfying a condition; and LIMIT and WHERE clauses are not permitted. DELETE statements allow deleting rows from tables in different databases, but do not allow deleting from a table and then selecting from the same table within a subquery. Review the following DELETE syntax − 
+DELETE FROM table_name [WHERE …]
+ Execute a DELETE command from either the command prompt or using a PHP script. The Command Prompt At the command prompt, simply use a standard command − 
+root@host# mysql –u root –p password;
+Enter password:*******
+mysql> use PRODUCTS;
+Database changed
+mysql> DELETE FROM products_tbl WHERE product_id=133;
+mysql> SELECT * from products_tbl WHERE ID_number='133';
+ERROR 1032 (HY000): Can't find record in 'products_tbl'
+ PHP Delete Query Script Use the mysql_query() function in DELETE command statements − 
+<?php
+   $dbhost = 'localhost:3036';
+   $dbuser = 'root';
+   $dbpass = 'rootpassword';
+   $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+   
+   if(! $conn ) {
+      die('Could not connect: ' . mysql_error());
+   }
+
+   $sql = 'DELETE FROM products_tbl WHERE product_id = 261';
+   mysql_select_db('PRODUCTS');
+   $retval = mysql_query( $sql, $conn );
+
+   if(! $retval ) {
+      die('Could not delete data: ' . mysql_error());
+   }
+
+   echo "Deleted data successfully\n";
+   mysql_close($conn);
+?>
+ On successful data deletion, you will see the following output − 
+mysql> Deleted data successfully
+mysql> SELECT * from products_tbl WHERE ID_number='261';
+ERROR 1032 (HY000): Can't find record in 'products_tbl'

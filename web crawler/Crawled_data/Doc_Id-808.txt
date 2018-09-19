@@ -1,0 +1,37 @@
+T-SQL - Drop Tables
+
+https://www.tutorialspoint.com/t_sql/t_sql_drop_tables.htm
+
+T-SQL, Tutorial, Learning, Beginners, Overview, Data Types, Create Tables, Drop Tables, INSERT Statement, SELECT Statement, UPDATE Statement, DELETE Statement, WHERE Clause, LIKE Clause, ORDER BY Clause, GROUP BY Clause, DISTINCT Clause, Joining Tables, Sub-Queries, Stored Procedures, Transactions, Indexes, Functions, String Functions, Date Functions, Numeric Functions.
+
+August-15-2017-02:34:09
+
+The SQL Server DROP TABLE statement is used to remove a table definition and all data, indexes, triggers, constraints, and permission specifications for that table. Note − You have to be careful while using this command because once a table is deleted then all the information available in the table would also be lost forever. Syntax Following is the basic syntax of DROP TABLE statement − 
+DROP TABLE table_name;
+ Example Let us first verify CUSTOMERS table and then we will delete it from the database − 
+Exec sp_columns CUSTOMERS;
+ The above command shows the following table. 
+TABLE_QUALIFIER   TABLE_OWNER   TABLE_NAME   COLUMN_NAME   DATA_TYPE   TYPE_NAME
+   PRECISION   LENGTH SCALE   RADIX   NULLABLE   REMARKS   COLUMN_DEF   SQL_DATA_TYPE 
+   SQL_DATETIME_SUB   CHAR_OCTET_LENGTH   ORDINAL_POSITION   IS_NULLABLE   SS_DATA_TYPE
+   
+TestDB    dbo    CUSTOMERS   ID        4   int        10   4    0      10     0
+   NULL   NULL   4   NULL    NULL      1   NO         56 
+   
+TestDB    dbo    CUSTOMERS   NAME      12  varchar    20   20   NULL   NULL   0
+   NULL   NULL   12   NULL   20        2   NO         39
+  
+TestDB    dbo    CUSTOMERS   AGE       4   int        10   4    0      10     0
+   NULL   NULL   4   NULL    NULL      3   NO         56 
+ 
+TestDB    dbo    CUSTOMERS   ADDRESS   1   char       25   25   NULL   NULL   1
+   NULL   NULL   1   NULL    25        4   YES        39  
+
+TestDB    dbo    CUSTOMERS   SALARY   3   decimal     18   20   2      10     1
+   NULL   NULL   3   NULL    NULL     5   YES         106 
+ CUSTOMERS table is available in the database, so let us drop it. Following is the command for the same. 
+DROP TABLE CUSTOMERS; 
+Command(s) completed successfully.
+ With the above command, you will not get any rows. 
+Exec sp_columns CUSTOMERS; 
+No rows\data will be displayed

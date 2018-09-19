@@ -1,0 +1,101 @@
+DocumentDB - List Databases
+
+https://www.tutorialspoint.com/documentdb/documentdb_list_databases.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+So far, we have created two databases in our DocumentDB account, first one is created using Azure portal while the second database is created using .Net SDK. Now to view these databases, you can use Azure portal. Go to your DocumentDB account on Azure portal and you will see two databases now. You can also view or list the databases from your code using .Net SDK. Following are the steps involved. Step 1 − Issue a database Query with no parameters which returns a complete list, but you can also pass in a query to look for a specific database or specific databases. 
+private static void GetDatabases(DocumentClient client) {
+   Console.WriteLine();
+   Console.WriteLine();
+   Console.WriteLine("******** Get Databases List ********");
+	
+   var databases = client.CreateDatabaseQuery().ToList(); 
+	
+   foreach (var database in databases) { 
+      Console.WriteLine(" Database Id: {0}; Rid: {1}", database.Id, database.ResourceId);
+   }
+	
+   Console.WriteLine(); 
+   Console.WriteLine("Total databases: {0}", databases.Count);
+}
+ You will see that there are a bunch of these CreateQuery methods for locating collections, documents, users, and other resources. These methods don't actually execute the query, they just define the query and return an iterateable object. It's the call to ToList() that actually executes the query, iterates the results, and returns them in a list. Step 2 − Call GetDatabases method from the CreateDocumentClient task after DocumentClient is instantiated. Step 3 − You also need to comment the CreateDatabase task or change the database id, otherwise you will get an error message that the database exists. 
+using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+   //await CreateDatabase(client); 
+   GetDatabases(client); 
+}
+ Following is the complete Program.cs file so far. 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
+using Microsoft.Azure.Documents.Linq;
+using Newtonsoft.Json; 
+
+namespace DocumentDBDemo {
+
+   class Program {
+      private const string EndpointUrl = "https://azuredocdbdemo.documents.azure.com:443/";
+		
+      private const string AuthorizationKey = "BBhjI0gxdVPdDbS4diTjdloJq7Fp4L5RO/
+         StTt6UtEufDM78qM2CtBZWbyVwFPSJIm8AcfDu2O+AfV T+TYUnBQ==";
+			
+      static void Main(string[] args) {
+         try {
+            CreateDocumentClient().Wait();
+         } catch (Exception e) {
+            Exception baseException = e.GetBaseException();
+            Console.WriteLine("Error: {0}, Message: {1}", e.Message, baseException.Message);
+         }
+         Console.ReadKey();
+      }
+		
+      private static async Task CreateDocumentClient() {
+         // Create a new instance of the DocumentClient
+         using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+            await CreateDatabase(client);
+            GetDatabases(client);
+         } 
+      }
+		
+      private async static Task CreateDatabase(DocumentClient client) {
+         Console.WriteLine();
+         Console.WriteLine("******** Create Database *******");
+			
+         var databaseDefinition = new Database { Id = "mynewdb" };
+         var result = await client.CreateDatabaseAsync(databaseDefinition);
+         var database = result.Resource;
+			
+         Console.WriteLine(" Database Id: {0}; Rid: {1}", database.Id, database.ResourceId);
+         Console.WriteLine("******** Database Created *******");
+      }
+		
+      private static void GetDatabases(DocumentClient client) {
+         Console.WriteLine();
+         Console.WriteLine();
+         Console.WriteLine("******** Get Databases List ********");
+			
+         var databases = client.CreateDatabaseQuery().ToList();
+			
+         foreach (var database in databases) {
+            Console.WriteLine(" Database Id: {0}; Rid: {1}",
+               database.Id, database.ResourceId);
+         }  
+			
+         Console.WriteLine(); 
+         Console.WriteLine("Total databases: {0}", databases.Count);
+      }
+		
+   } 
+}
+ When the above code is compiled and executed you will receive the following output which contains the Database and Resources IDs of both the databases. In the end you will also see the total number of databases. 
+******** Get Databases List ******** 
+ Database Id: myfirstdb; Rid: Ic8LAA== 
+ Database Id: mynewdb; Rid: ltpJAA==  
+Total databases: 2

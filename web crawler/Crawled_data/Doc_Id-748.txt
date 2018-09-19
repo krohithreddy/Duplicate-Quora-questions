@@ -1,0 +1,358 @@
+Using the Group Functions Questions
+
+https://www.tutorialspoint.com/sql_certificate/using_the_group_functions_questions.htm
+
+Oracle, Database 11g, Sun, Certificate, SQL, Fundamentals, Free, Preparation, Mock, Exams, Technical, certification, Technical, Projects.
+
+August-15-2017-02:34:06
+
+1. Which of the following is NOT a GROUP BY function? MAX MIN NVL AVG Answer: C. NVL is a general function used to provide alternate value to the NULL values. The functions MAX, MIN and AVG can be used as GROUP BY functions. 2. Which of the following functions can be used without GROUP BY clause in SELECT query? COUNT MAX MIN AVG Answer: A, B, C, D. All the listed group functions can be used in a query provided no other columns are selected in the SELECT query. 3. Which of the following SELECT query returns the department number with maximum salary compensated to an employee? (Consider the table structure as given) SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) SELECT department_id , max(salary ) FROM employees ; SELECT department_id , max(salary ) FROM employees  GROUP BY department_id ; SELECT max(salary ) FROM employees  GROUP BY department_id ; SELECT max(salary ) FROM employees ; Answer: B. The MAX function can be used to return the maximum salary in a department where each group is formed by a department. 4. Which of the following statements are true about the COUNT function? The COUNT function counts the number of rows The COUNT(*) function counts the number of rows with duplicates and NULL values The COUNT(DISTINCT) function counts the number of distinct rows COUNT(*) is equivalent to COUNT(ALL) Answer: B. The COUNT(*) counts the number of rows including duplicates and NULLs. Use DISTINCT and ALL keyword to restrict duplicate and NULL values. 5. What are the appropriate data types accepted by GROUP BY functions? Nested Tables NUMBER CLOB DATE Answer: B. The data types for the functions with an argument may be CHAR, VARCHAR2, NUMBER or DATE. 6. A table T_COUNT has 12 number values as 1, 2, 3, 32, 1, 1, null, 24, 12, null, 32, null. Predict the output of the below query. SELECT COUNT (*) FROM t_count; 12 6 9 Throws exception because COUNT function doesn't works with NULL values Answer: A. The COUNT(*) counts the number of rows including duplicates and NULLs. Use DISTINCT and ALL keyword to restrict duplicate and NULL values. 7. A table T_COUNT has 12 number values as 1, 2, 3, 32, 1, 1, null, 24, 12, null, 32, null. Predict the output of the below query. SELECT COUNT (num) FROM t_count; 12 6 9 Throws exception because COUNT function doesn't works with NULL values Answer: C. COUNT (column) ignores the NULL values but counts the duplicates. 8. A table T_COUNT has 12 number values as 1, 2, 3, 32, 1, 1, null, 24, 12, null, 32, null. Predict the output of the below query. SELECT COUNT (ALL num) FROM t_count; 12 6 9 Throws exception because COUNT function doesn't works with NULL values Answer: C. COUNT(ALL column) ignores the NULL values but counts the duplicates. 9. A table T_COUNT has 12 number values as 1, 2, 3, 32, 1, 1, null, 24, 12, null, 32, null. Predict the output of the below query. SELECT COUNT (DISTINCT num) FROM t_count; 12 6 9 Throws exception because COUNT function doesn't works with NULL values Answer: B. COUNT (DISTINCT column) counts the distinct not null values. 10. What happens when the below query is executed in SQL* Plus? SELECT COUNT() FROM dual; Executes successfully and returns no output Executes successfully and returns output as '1' Throws exception "ORA-00909: invalid number of arguments" Throws exception "ORA-00904: "COUNT": invalid identifier" because COUNT function doesn't works with DUAL table Answer: C. COUNT function requires minimum one argument which can be either the column with [ALL | DISTINCT] modifier or '*'. 11. Here are few statements about VARIANCE function in SQL. i. The function accepts multiple numeric inputs and returns variance of all the values ii. The function accepts a number column and returns variance of all column values including NULLs iii. The function accepts a number column and returns variance of all column values excluding NULLs Chose the correct combination from the below options. i and iii i and ii ii iii Answer: C. The VARIANCE function accepts single numeric argument as the column name and returns variance of all the column values considering NULLs. 12. Which of the following is NOT a GROUP BY extensions in SQL? GROUP BY GROUPING SETS CUBE ROLLUP Answer: A. GROUPING SETS operations can be used to perform multiple GROUP BY aggregations with a single query. 13. Select the correct statements about the below query. Consider the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) SELECT department_id , SUM(salary )
+FROM employees 
+GROUP BY department_id ; SUM is a group by function because it processes group of employees working in a department SUM is an aggregate function because it produces one result per group of data SUM is a single row function because it returns single value for a group i.e. department SUM is a group by extension function because it uses GROUP BY clause to logically group the departments Answer: A. SUM is a group function which calculates the sum of salaries of a group of employees working in a department. 14. Which clause is used to filter the query output based on aggregated results using a group by function? WHERE LIMIT GROUP WHERE HAVING Answer: D. HAVING Clause is used for restricting group results. You use the HAVING clause to specify the groups that are to be displayed, thus further restricting the groups on the basis of aggregate information. The HAVING clause can precede the GROUP BY clause, but it is recommended that you place the GROUP BY clause first because it is more logical. Groups are formed and group functions are calculated before the HAVING clause is applied to the groups in the SELECT list. 15. Examine the given table structure and predict the outcome of the following query. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) SELECT count(*)
+FROM employees 
+WHERE comm = NULL; The query returns the number of employees who have no commission The query throws error because equal sign cannot be used when searching for NULL value The query returns the number of employees in a department whose commission is NULL value The query throws error because GROUP BY clause is missing in the query Answer: B. Excluding out NULLs using WHERE condition is a way to direct the query to ignore NULLs. But here the usage of IS NULL operator is wrong. The condition should be 'WHERE comm IS NULL'. 16. Which of the following statements is true about the group functions? The MIN function can be used only with numeric data. The MAX function can be used only with date values. The AVG function can be used only with numeric data. The SUM function canít be part of a nested function. Answer: C. The AVG function can be only used with numeric values. Other functions which have such restriction are SUM, STDDEV and VARIANCE. 17. Which of the following is a valid SELECT statement? SELECT AVG(retail-cost) FROM books GROUP BY category; SELECT category, AVG(retail-cost) FROM books; SELECT category, AVG(retail-cost) FROM books WHERE AVG(retail-cost) > 8.56 GROUP BY category; SELECT category, AVG(retail-cost) Profit FROM books GROUP BY category HAVING profit > 8.56; Answer: A. Column aliases cannot be used in GROUP BY or HAVING clause. 18. Which of the following statements is correct? The WHERE clause can contain a group function only if the function isnít also listed in the SELECT clause. Group functions canít be used in the SELECT, FROM, or WHERE clauses. The HAVING clause is always processed before the WHERE clause. The GROUP BY clause is always processed before the HAVING clause. Answer: D. Though Oracle doesn't raise error if HAVING clause precedes the GROUP BY clause but it is processed only after the GROUP BY clause is processed and group are ready to be filtered. 19. Which of the following is not a valid SQL statement? SELECT MIN(pubdate) FROM books GROUP BY category HAVING pubid = 4; SELECT MIN(pubdate) FROM books WHERE category = 'COOKING'; SELECT COUNT(*) FROM orders WHERE customer# = 1005; SELECT MAX(COUNT(customer#)) FROM orders GROUP BY customer#; Answer: A. 20. Which of the following statements is correct? The COUNT function can be used to determine how many rows contain a NULL value. Only distinct values are included in group functions, unless the ALL keyword is included in the SELECT clause. The WHERE clause restricts which rows are processed. The HAVING clause determines which groups are displayed in the query results. Answer: C, D. The WHERE clause restricts the rows before they are grouped and processed while HAVING clause restricts the groups. 21. Which of the following is a valid SQL statement? SELECT customer#, order#, MAX(shipdate-orderdate) FROM orders GROUP BY customer# WHERE customer# = 1001; SELECT customer#, COUNT(order#) FROM orders GROUP BY customer#; SELECT customer#, COUNT(order#) FROM orders GROUP BY COUNT(order#); SELECT customer#, COUNT(order#) FROM orders GROUP BY order#; Answer: B. The GROUP BY clause must contain all the columns except the one which is used inside the group function. 22. Which of the following SELECT statements lists only the book with the largest profit? SELECT title, MAX(retail-cost) FROM books GROUP BY title; SELECT title, MAX(retail-cost) FROM books GROUP BY title HAVING MAX(retail-cost); SELECT title, MAX(retail-cost) FROM books; None of the above Answer: A. 23. Which of the following statement(s) is/are correct? 1. A group function can be nested inside a group function. 2. A group function can be nested inside a single-row function. 3. A single-row function can be nested inside a group function. 1 2 3 1 and 3 Answer: A, B, C. Group functions can be nested only to a depth of two. Group functions can be nested inside single-row functions (AVG embedded in a TO_CHAR function). In addition, single-row functions can be nested inside group functions. 24. Which of the following functions is used to calculate the total value stored in a specified column? COUNT ADD TOTAL SUM Answer: D. SUM function is used to get the addition of numeric values. 25. Which of the following SELECT statements lists the highest retail price of all books in the Family category? SELECT MAX(retail) FROM books WHERE category = 'FAMILY'; SELECT MAX(retail) FROM books HAVING category = 'FAMILY'; SELECT retail FROM books WHERE category = 'FAMILY' HAVING MAX(retail); None of the above Answer: A. Since the category FAMILY has to be restricted before grouping, table rows must be filtered using WHERE clause and not HAVING clause. 26. Which of the following functions can be used to include NULL values in calculations? SUM NVL MAX MIN Answer: B.NVL is a general function to provide alternate values to the NULL values. It can really make a difference in arithmetic calculations using AVG, STDDEV and VARIANCE group functions. 27. Which of the following is not a valid statement? You must enter the ALL keyword in a group function to include all duplicate values. The AVG function can be used to find the average calculated difference between two dates. The MIN and MAX functions can be used on VARCHAR2 columns. All of the above Answer: A. The ALL keyword counts duplicates but ignores NULLs. Duplicates are also included with '*' and column name specification. 28. Which of the following SQL statements determines how many total customers were referred by other customers? SELECT customer#, SUM(referred) FROM customers GROUP BY customer#; SELECT COUNT(referred) FROM customers; SELECT COUNT(*) FROM customers; SELECT COUNT(*) FROM customers WHERE referred IS NULL; Answer: B. Considering all customers as one group, COUNT(referred) will count only those who are referred by someone. COUNT(referred) will ignore NULL values of the column. 29. Determine the correct order of execution of following clauses in a SELECT statement. 1.SELECT 2.FROM 3.WHERE 4.GROUP BY 5.HAVING 6.ORDER BY 2-3-4-5-1-6 1-2-3-4-5-6 6-5-4-3-2-1 5-4-2-3-1-6 Answer: A. Processing order starts from FROM clause to get the table names, then restricting rows using WHERE clause, grouping them using GROUP BY clause, restricting groups using HAVING clause. ORDER BY clause is the last one to be processed to sort the final data set. 30. Which of the below clauses is used to group a set of rows based on a column or set of columns? HAVING WHERE GROUP BY GROUPING Answer: C. GROUP BY clause forms the groups of the data based on the column list specified. 31. Which of the following group functions can be used for population variance and population standard deviation problems? VAR_POP STDDEV_POP VARIANCE STDDEV_SASMP Answer: A, B. 32. Select the positions in a SELECT query where a group function can appear. SELECT statement WHERE clause ORDER BY clause GROUP BY clause Answer: A, C, D. Group functions can appear in SELECT, ORDER BY and HAVING clause. Oracle raises exception if group functions are used in WHERE or GROUP BY clauses. 33. Examine the structure of the EMPLOYEES table as given. Which query will return the minimum salary in each department? SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) SELECT department_id , MIN (salary ) from EMPLOYEES ; SELECT department_id , MIN (salary ) from EMPLOYEES  GROUP BY department_id ; SELECT department_id , MIN (salary ) from EMPLOYEES  GROUP BY salary ; SELECT department_id , MIN (salary ) from EMPLOYEES  GROUP BY employee_id ; Answer: B. MIN function returns the minimum salary in a group formed by department. 34. Examine the structure for the table EMPLOYEES and Interpret the output of the below query SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) SELECT COUNT(*), COUNT(all comm) FROM employees ; It throws error because only one aggregate function can be used in a query. It throws error because GROUP BY clause is missing. It executes successfully and returns same values for both. It executes successfully where COUNT(*) including NULLs and COUNT(all comm) excluding NULLs. Answer: D. 35. Which of the following are true about group functions? You can use group functions in any clause of a SELECT statement. You can use group functions only in the column list of the select clause and in the WHERE clause of a SELECT statement. You can mix single row columns with group functions in the column list of a SELECT statement by grouping on the single row columns. You can pass column names, expressions, constants, or functions as parameter to an group function. Answer: C. Group functions can be nested only to a depth of two. Group functions can be nested inside single-row functions (AVG embedded in a TO_CHAR function). In addition, single-row functions can be nested inside group functions. 36. Examine the structure of the table EMPLOYEES as given. You want to create a "emp_dept_sales" view by executing the following SQL statements. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 
+CREATE VIEW emp_dept_sales
+AS
+SELECT d.department_name , sum(e.salary )
+FROM employees  e, departments  d
+where e.department_id =d.department_id 
+GROUP by d.department_name ; Which statement is true regarding the execution of the above statement? The view will be created and you can perform DLM operations on the view The view will not be created because the join statements are not allowed for creating a view The view will not be created because the GROUP BY clause is not allowed for creating a view The view will be created but no DML operations will be allowed on the view Answer: D. Rules for Performing DML Operations on a View. You cannot add data through a view if the view includes group functions or a GROUP BY clause or DISTINCT keyword. The pseudo column ROWNUM keyword Columns defined by expressions NOT NULL columns in the base tables that are not selected by the view. 37. Which of the following statements are true regarding views? A sub query that defines a view cannot include the GROUP BY clause A view is created with the sub query having the DISTINCT keyword can be updated A Data Manipulation Language (DML) operation can be performed on a view that is created with the sub query having all the NOT NULL columns of a table A view that is created with the sub query having the pseudo column ROWNUM keyword cannot be updated Answer: C, D. Rules for Performing DML Operations on a View. You cannot add data through a view if the view includes group functions or a GROUP BY clause or DISTINCT keyword. The pseudo column ROWNUM keyword Columns defined by expressions NOT NULL columns in the base tables that are not selected by the view. 38. Examine the table structure as given. SQL> DESC departments
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ DEPARTMENT_ID		 NOT NULL NUMBER(4)
+ DEPARTMENT_NAME	 NOT NULL VARCHAR2(30)
+ MANAGER_ID			  NUMBER(6)
+ LOCATION_ID			  NUMBER(4) Which clause in the below SQL query generates error? SELECT department_id , avg(salary )
+FROM departments 
+WHERE upper(job) in ('SALES','CLERK')
+GROUP BY job
+ORDER BY department_id ; WHERE SELECT ORDER BY GROUP BY Answer: D. GROUP BY clause must contain all the columns appearing in the SELECT statement. It raises error because JOB is not a selected column. It should have used DEPARTMENT_ID in placed of JOB. 39. Examine the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) Which of the below SELECT query will display the maximum and minimum salary earned by each job category? SELECT job, MAX(salary ), MIN (salary ) FROM employees  GROUP BY department_id ; SELECT job, MAX(salary ), MIN (salary ) FROM employees  GROUP BY job; SELECT job, MAX(salary ), MIN (salary ) FROM employees ; Two aggregate functions cannot be used together in SELECT statement. Answer: B. More than one group function can appear in the SELECT statement. 40. Consider the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) Examine the error in the below query. SELECT department_id 
+FROM employees 
+WHERE hiredate > '01-JAN-1985'
+AND COUNT(*) > 2
+GROUP by department_id 
+HAVING SUM (salary ) > 1000; It executes successfully and generates the required result. It produces an error because COUNT(*) should be specified in the SELECT clause also. It executes successfully but produces no result because COUNT(prod_id) should be used instead of COUNT(*). It produces an error because COUNT(*) should be only in the HAVING clause and not in the WHERE clause. Answer: D. Group functions cannot be used in WHERE clause. The can appear in SELECT, HAVING and ORDER BY clause. 41. Examine the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) Predict the outcome of the below query SELECT job, COUNT(employee_id ),sum(salary )
+FROM employees 
+GROUP BY job
+HAVING SUM (salary ) > 5000; It executes successfully and lists the count of employees under each job category but ignores the HAVING clause since "salary " is not in GROUP BY clause. It throws error because HAVING clause is invalid. It throws error because "salary " is not included in the GROUP BY clause. It executes successfully and lists the count of employees under each category having sum of salary greater than 5000. Answer: D. The HAVING clause restricts the group results. COUNT function is used for counting while SUM is used for adding the numeric values. 42. What is true of using group functions on columns that contain NULL values? Group functions on columns ignore NULL values. Group functions on columns returning dates include NULL values. Group functions on columns returning numbers include NULL values. Group functions on columns cannot be accurately used on columns that contain NULL values. Answer: A. Except COUNT function, all the group functions ignore NULL values. 43. Which of the following statetments are true about the usage of GROUP BY columns in a subquery? Subqueries can contain GROUP BY and ORDER BY clauses. Subqueries cannot contain GROUP BY and ORDER BY clauses. Subqueries can contain ORDER BY but not the GROUP BY clause. Subqueries cannot contain ORDER BY but can have GROUP BY clause. Answer: A. Like the primary query, a subquery can contain a GROUP BY as well as ORDER BY clause. Examine the table structure as given and answer the questions 44 to 49 that follow. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 44. Predict the outcome of the below query SELECT avg(max(salary ))
+FROM employees 
+GROUP BY department_id 
+HAVING avg(max(salary ))>100; It executes successfully. It gives an error because the HAVING clause is not valid. It gives an error because the GROUP BY expression is not valid. It gives an error because aggregate functions cannot be nested in SELECT statement. Answer: B. The HAVING clause doesn't allows nesting of aggregate functions. 45. Predict the output of the below query SELECT avg(salary ), department_id 
+FROM employees 
+GROUP BY department_id ; It gives error because an aggregate function cannot appear just after SELECT clause. It gives error because GROUP BY clause is invalid. It executes without errors but produces no output. It executes successfully and gives average salary in each department. Answer: D. Group functions can be used in any sequence (before or after the group by columns) in a SELECT query. 46. Predict the output of the below query SELECT lower(job),avg(salary )
+FROM employees 
+GROUP BY upper(job); It executes successfully and displays "job" in lower case. It executes successfully but display "job" in original case. It throws error because singe row and aggregate functions cannot be used together. It throws error because case conversion in the SELECT list mismatches with the case conversion GROUP BY clause. Answer: D. The function LOWER, being a single row function must be specified in the GROUP BY clause to base the grouping of EMPLOYEES data. 47. Which of the below query executes successfully? SELECT employee_id , COUNT(hiredate-sysdate) FROM employees ; SELECT AVG(salary ), MAX(salary ) FROM employees ; SELECT AVG(salary ), MAX(salary ) FROM employees  GROUP BY department_id ; SELECT AVG(hiredate) FROM employees ; Answer: B, C. The first query operates of the whole EMPLOYEES data while the second one processes the data in groups of department. 48. Identify the error in the below SELECT statement. SELECT department_id , AVG (salary )
+FROM employees 
+GROUP BY department_id 
+HAVING department_id  > 10; It executes successfully and displays average salary of departments higher than 10. It throws error because non aggregated column cannot be used in HAVING clause. It executes successfully but displays wrong result for the departments. It throws error because HAVING clause must be placed before GROUP BY clause. Answer: A. GROUP BY expressions can be used in HAVING clause to filter out the groups from the final data set. 49. Predict the output of the below query SELECT department_id , AVG (salary )
+FROM employees 
+GROUP BY department_id 
+HAVING (department_id >10 and AVG(salary )>2000); It throws error because multiple conditions cannot be given in HAVING clause. It throws error because a non aggregate column cannot be used in HAVING clause. It executes successfully and displays average salary of department higher than 10 and greater than 2000. It executes successfully but no result is displayed. Answer: C. The HAVING clause can impose multiple conditions joined using AND or OR operator filter the groups. 50. Which of the following group functions can be used with DATE values? AVG MIN SUM COUNT Answer: B, D. The group function AVG and SUM can be used with numeric data only. 51. Which of the following statements are true? AVG and SUM can be used only with numeric data types. STDDEV and VARIANCE can be used only with numeric data types. MAX can be used with LONG data type. MAX and MIN cannot be used with LOB or LONG data types. Answer: A, B, D. The group functions AVG,SUM, VARIANCE and STDDEV can be used with numeric data only. None of the group functions can be used with LONG data type. 52. Examine the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) Identify the error in the below query. SELECT department_id , avg(salary ), count(hiredate)
+FROM employees 
+GROUP BY department_id ; Multiple aggregate functions cannot be used in a single SELECT query GROUP BY clause is invalid COUNT function cannot be used with DATE values No errors and it executes successfully Answer: D. 53. Which of the following group function can be used with LOB data types? MAX MIN COUNT None of these Answer: D. No aggregate function can be used with LOB data types. 54. Examine the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) Predict the output of the below two queries Query - 1 SELECT avg(comm)
+FROM employees ; Query - 2 SELECT avg(nvl(comm,0))
+FROM employees ; Both the queries produce same result Query - 1 and Query - 2 produce different results because Query-1 considers NULL values of COMM and Query-2 substitutes NULL values of COMM with zero Query - 1 produces error because COMM has NULL values Query - 2 produces error because NVL cannot be nested with aggregate function. Answer: B. The AVG function ignores NULL values while calculating the average of numeric data. AVG(column) will calculate average for only non null values. However, if NVL is used to substitute NULLs with a zero, all the values will be considered. 55. Choose the correct statements about the GROUP BY clause. Column alias can be used in the GROUP BY clause. GROUP BY column must be in the SELECT clause. GROUP BY clause must appear together with HAVING clause a SELECT query. GROUP BY clause must appear after WHERE clause in a SELECT query. Answer: D. As per the processing sequence, the GROUP BY clause must appear after the WHERE clause in a SELECT query. 56. Examine the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) Predict the outcome of the below query SELECT department_id ,avg(salary )
+FROM employees 
+GROUP BY department_id , job
+ORDER BY department_id ; It throws error because GROUP BY column list doesn't matches with SELECT column list. It executes successfully and produces average salary of a job category in each department. It executes successfully and produces average salary for a department in each job category. It throws error because GROUP BY and ORDER BY clause have different list of columns. Answer: B. Though GROUP BY clause implicitly sorts the groups, the GROUP BY and ORDER BY clauses can be used together in a query. 57. Which clause should you use to exclude group results in a query using group functions? WHERE HAVING GROUP BY ORDER BY Answer: B. HAVING clause is used to restrict the groups. Examine the table structure as given and answer the questions 58 and 59 that follow. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 58. Predict the outcome of the below query SELECT department_id ,avg(salary )
+FROM employees 
+HAVING avg(salary )>2000
+GROUP BY department_id 
+ORDER BY department_id It executes successfully. It throws error because HAVING clause precedes the GROUP BY clause. It throws error because HAVING clause uses the aggregate function. It executes but no results are displayed because HAVING clause precedes the GROUP BY clause. Answer: A. HAVING clause can precede the GROUP BY clause but it is processed only after the group results are calculated. 59. Predict the outcome of the below query SELECT department_id , COUNT(first_name )
+FROM employees 
+WHERE job IN ('SALESMAN','CLERK','MANAGER','ANALYST')
+GROUP BY department_id 
+HAVING AVG(salary ) BETWEEN 2000 AND 3000; It returns an error because the BETWEEN operator cannot be used in the HAVING clause. It returns an error because WHERE and HAVING clauses cannot be used in the same SELECT statement. It returns an error because WHERE and HAVING clauses cannot be used to apply conditions on the same column. It executes successfully. Answer: D. The WHERE clause restricts the number of rows participating in group clause processing. 60. Which statements are true regarding the WHERE and HAVING clauses in a SELECT statement? The HAVING clause can be used with group functions in subqueries. The WHERE clause can be used to exclude rows after dividing them into groups. The WHERE clause can be used to exclude rows before dividing them into groups. The WHERE and HAVING clauses can be used in the same statement only if they are applied to different columns in the table. Answer: A, C. WHERE and HAVING clause can be used together in a query. WHERE excludes the rows before group processing while HAVING restricts the groups. Examine the table structure as given and answer the questions 61 and 62 that follow. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 61. Predict the outcome of the below query. SELECT department_id , avg(salary )
+FROM employees 
+HAVING avg(salary ) > min(salary )
+GROUP BY department_id ; It throws an error because the aggregate functions used in HAVING clause must be in SELECT list. It throws an error because the HAVING clause appears before GROUP BY clause. It displays the departments whose average salary is greater than the minimum salary of the department. It displays the departments whose average salary is greater than the minimum salary of the organization. Answer: C. Group functions can be used by HAVING clause to filter the groups. 62. Interpret the output of the below query. SELECT SUM(AVG(LENGTH(first_name )))
+FROM employees  
+GROUP BY department_id ; It calculates the sum of averages of length of employee's name in each department. It calculates the average length of employee's name in each department. It throws error because single row function cannot be used with group functions. It throws error because group column DEPARTMENT_ID is not used in the SELECT list. Answer: A. Group functions can be used with single row or general functions in the SELECT query. 63. Up to how many levels, the group functions can be nested? 1 2 3 No limits Answer: B. Group functions can be nested maximum up to 2 levels. However, single row functions can be nested up to any number of levels. 64. What is the limit of number of groups within the groups created by GROUP BY clause? 1 2 3 No Limit Answer: D. There is no limit to the number of groups and subgroups that can be formed. 65. Choose the correct statements about the HAVING clause. The HAVING clause is an optional clause in SELECT statement. The HAVING clause is a mandatory clause if SELECT statement uses a GROUP BY clause. The HAVING clause can appear in a SELECT statement only if it uses a GROUP BY clause. The HAVING clause is a mandatory clause if SELECT statement uses a GROUP BY clause. Answer: A, C. HAVING clause can only appear in a query if GROUP BY clause is present, but vice versa is not true. 66. What is the output of the below query. SELECT count(*) FROM dual GROUP BY dummy; 1 0 NULL Throws error because group functions cannot be applied on DUAL table. Answer: A. The DUAL table contains single column DUMMY of type CHAR(1) whose value is 'X'. Based on the below scenario, answer the question from 67 to 74. An organization has 14 employees who work on fixed salary of 1000. The company recruits 5 new employees whose salary is not yet fixed by the payroll department. However, during the month end processing, the HR payroll department generates several reports to reconcile the financial data of the organization. Examine the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 67. What is the output of the below query? SELECT SUM (salary ) FROM employees ; NULL 14000 19000 0 Answer: B. The SUM function adds the salaries of the employees. 68. What is the output of the below query? SELECT AVG (salary ) FROM employees ; 1000 736.84 NULL 0 Answer: A. The AVG (salary ) function calculates the average of salaries and ignoring the NULL values. In this case, AVG(salary)=(14*1000)/14=1000. 69. What is the output of the below query? SELECT AVG (nvl(salary ,0)) FROM employees ; 1000 NULL 736.84 0 Answer: C. The AVG(NVL(salary ,0)) gives an alternate value to the NULLs and enables them to participate in average calculation. In this case, (14*1000)/19 = 736.84. 70. What is the output of the below query? SELECT VARIANCE (salary ) FROM employees ; 1000 0 NULL 204678.36 Answer: B. The VARIANCE (salary ) calculates the variance of salary column values ignoring NULLs. 71. What is the output of the below query? SELECT VARIANCE (nvl(salary ,0)) FROM employees ; 1000 0 NULL 204678.36 Answer: D. The VARIANCE (NL(salary ,0)) calculates the variance of salary column values including NULLs. 72. What is the output of the below query? SELECT STDDEV (salary ) FROM employees ; 1 1000 0 NULL Answer: C. The STDDEV (salary ) calculates the standard deviation of salary column values ignoring NULLs. 73. What is the output of the below query? SELECT STDDEV (nvl(salary ,0)) FROM employees ; 0 452.41 1000 NULL Answer: B. The STDDEV (nvl(salary ,0)) calculates the standard deviation of salary column values including NULLs. 74. What is the output of the below query? select count(*),count(salary ) from employees ; 19,19 14,19 19,14 14,14 Answer: C. COUNT(*) includes NULLs while COUNT(salary ) ignores NULL values. 75. Examine the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) Which of the below query will give the department who have more than 5 employees working in it? SELECT department_id  FROM employees  WHERE COUNT(*) > 5 GROUP BY department_id ; SELECT department_id  FROM employees  HAVING COUNT(*) > 5; SELECT department_id  FROM employees  GROUP BY employee_id  HAVING COUNT(*) > 5; SELECT department_id  FROM employees  GROUP BY department_id  HAVING COUNT(*) > 5; Answer: D. 76. Which of the following are true about the CUBE extension of GROUP BY? Enables performing multiple GROUP BY clauses with a single query. Performs aggregations for all possible combinations of columns included. Performs increasing levels of cumulative subtotals, based on the provided column list. None of the above Answer: B. CUBE, ROLLUP are the GROUP BY extensions used for OLAP processing. CUBE aggregates the results whenever a new permutation of column is formed. Use the following SELECT statement to answer below questions 77 to 82: 1 SELECT customer#, COUNT(*)
+2 FROM customers JOIN orders USING (customer#)
+3 WHERE orderdate > '02-APR-09'
+4 GROUP BY customer#
+5 HAVING COUNT(*) > 2; 77. Which line of the SELECT statement is used to restrict the number of records the query processes? 1 3 4 5 Answer: B. WHERE clause is used to restrict the rows before the groups are formed. 78. Which line of the SELECT statement is used to restrict groups displayed in the query results? 1 3 4 5 Answer: D. HAVING is used to restrict the group results after the group processing is over. 79. Which line of the SELECT statement is used to group data stored in the database? 1 3 4 5 Answer: C. GROUP BY clause uses the group by columns to group the data in the table. 80. Which clause must be included for the query to execute successfully? 1 3 4 5 Answer: C. Because the SELECT clause contains the CUSTOMER# column, it is mandatory to have GROUP BY clause with the CUSTOMER# column. 81. What is the purpose of using COUNT(*) in the SELECT query? The number of records in the specified tables The number of orders placed by each customer The number of NULL values in the specified tables The number of customers who have placed an order Answer: B. It counts the number of rows processing under a group. In this case, group is formed by the customer and COUNT(*) counts the orders placed by each customer. 82. Which of the following functions can be used to determine the earliest ship date for all orders recently processed by JustLee Books? COUNT function MAX function MIN function STDDEV function Answer: C. MIN function is used to retrieve the least value of the column. When used with date columns, it fetches the minimum date from the column. 83. Which of the following is not a valid SELECT statement? SELECT STDDEV(retail) FROM books; SELECT AVG(SUM(retail)) FROM orders NATURAL JOIN orderitems NATURAL JOIN books GROUP BY customer#; SELECT order#, TO_CHAR(SUM(retail),'999.99') FROM orderitems JOIN books USING (isbn) GROUP BY order#; SELECT title, VARIANCE(retail-cost) FROM books GROUP BY pubid; Answer: D. The GROUP BY clause must specify a column or set of columns contained in the SELECT clause. Here PUBID is not contained in the SELECT clause, hence the query is not valid. 84. Which of the below statements are true about the nesting of group functions? The inner most function is resolved first. Oracle allows nesting of group function up to 3 levels. Single row functions can be nested with group functions. Oracle allows nesting of group function up to 2 levels. Answer: A, C, D. In an expression containing nested functions, the innermost function is executed first whose result is fed into the next function moving in outwards direction. Single row functions can be well used with group functions which can be maximum nested up to 2 levels. 85. What are the statistical group functions in Oracle? AVG STDDEV VARIANCE STATS Answer: B, C. VARIANCE and STATS are the statistical group functions available in Oracle SQL. 86. If the SELECT list contains a column and a group functions, which of the following clause must be mandatorily included? ORDER BY HAVING GROUP BY None of these Answer: C. GROUP BY clause should necessarily contain the column or set of columns contained in the SELECT clause. 87. Examine the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) What is the best explanation as to why this SQL statement will NOT execute? SELECT department_id "Department", AVG (salary)"Average"
+FROM employees
+GROUP BY Department; Salaries cannot be averaged as not all the numbers will divide evenly. You cannot use a column alias in the GROUP BY clause. The GROUP BY clause must have something to GROUP. The department id is not listed in the departments table. Answer: B. Neither GROUP BY clause nor HAVING clause works with column alias. 88. Which of the following data types are compatible with AVG, SUM, VARIANCE, and STDDEV functions? Only numeric data types Integers only Any data type All except numeric Answer: A. The functions AVG, SUM, VARIANCE and STDDEV mandatorily work with numeric data type only. Examine the table structure as given below and answer the questions 89 and 90 that follow. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) 89. Which of the below query will display the number of distinct job categories working in each department? SELECT department_id , COUNT(DISTINCT job) FROM employees  GROUP BY job; SELECT department_id , COUNT(job) FROM employees  GROUP BY employee_id ; SELECT department_id , COUNT(job) FROM employees  GROUP BY department_id ; SELECT department_id , COUNT(DISTINCT job) FROM employees  GROUP BY department_id ; Answer: D. Use DISTINCT modifier to filter out the duplicates. 90. Evaluate this SQL statement: SELECT employee_id , first_name , department_id , SUM(salary )
+FROM employees 
+WHERE salary  > 1000
+GROUP BY department_id , employee_id , first_name 
+ORDER BY hiredate; Why will this statement cause an error? The HAVING clause is missing. The WHERE clause contains a syntax error. The SALARY column is NOT included in the GROUP BY clause. The HIRE_DATE column is NOT included in the GROUP BY clause. Answer: D. All the columns appearing in SELECT and ORDER BY clause must be included in the GROUP BY clause. 91. Which of the following statements is true about the GROUP BY clause? To exclude rows before dividing them into groups using the GROUP BY clause, you use should a WHERE clause. You must use the HAVING clause with the GROUP BY clause. Column alias can be used in a GROUP BY clause. By default, rows are not sorted when a GROUP BY clause is used. Answer: A. Using a WHERE clause, you can exclude rows before dividing them into groups. 92. Examine the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) Interpret the outcome of the below query. SELECT department_id , MIN (hiredate)
+FROM employees 
+GROUP by department_id ; The earliest hire date in the organization. The latest hire date in the organization. The earliest hire date in a department. The latest hire date in a department. Answer: C. The query returns the earliest hired employee in each department. 93. Which statement about group functions is true? Group functions except COUNT(*), ignore null values. A query that includes a group function in the SELECT list must include a GROUP BY clause. Group functions can be used in a WHERE clause. Group functions can only be used in a SELECT list. Answer: A. All the group functions except COUNT(*), ignore NULL values. It is because they process the values directly contained in a specific column. 94. Which of the following clauses represent valid uses of group functions? GROUP BY MAX(salary) ORDER BY AVG(salary) HAVING MAX(salary) > 10000 SELECT AVG(NVL(salary, 0)) Answer: B, C, D. Group functions can appear in SELECT, HAVING and ORDER BY clauses only. 95. Which of the following statements are true about the GROUP BY clause? The last column listed in the GROUP BY clause is the most major grouping. The first column listed in the GROUP BY clause is the most major grouping. A GROUP BY clause cannot be used without an ORDER BY clause. The GROUP BY clause do not ensure the sorting of output. Answer: B. The grouping of data is based on the sequence of columns appearing in the GROUP BY clause. 96. What is difference between WHERE clause and HAVING clause? WHERE clause restrict rows before grouping while HAVING clause restricts groups. WHERE clause cannot contain a group function but HAVING clause can have. WHERE clause can join multiple conditions using AND or OR operators but HAVING clause cannot. WHERE clause can appear in SELECT query without GROUP BY clause but HAVING clause cannot. Answer: A, B, D. WHERE clause restricts the rows before grouping but HAVING restricts the groups. 97. Examine the table structure as given. SQL> DESC employees
+ Name			 Null?	  Type
+ ----------------------- -------- ----------------
+ EMPLOYEE_ID		 NOT NULL NUMBER(6)
+ FIRST_NAME			  VARCHAR2(20)
+ LAST_NAME		 NOT NULL VARCHAR2(25)
+ EMAIL			 NOT NULL VARCHAR2(25)
+ PHONE_NUMBER			  VARCHAR2(20)
+ HIRE_DATE		 NOT NULL DATE
+ JOB_ID 		 NOT NULL VARCHAR2(10)
+ SALARY 			  NUMBER(8,2)
+ COMMISSION_PCT 		  NUMBER(2,2)
+ MANAGER_ID			  NUMBER(6)
+ DEPARTMENT_ID			  NUMBER(4) Predict the outcome of the below query. SELECT department_id ,job,count(*)
+FROM employees 
+GROUP BY department_id ,job
+ORDER BY department_id ,count(*); It executes successfully. It throws error because ORDER BY clause is invalid. It throws error because GROUP BY clause is invalid. It throws error because GROUP BY and ORDER BY clause cannot be used together. Answer: A. ORDER BY clause can use the group functions for sorting.

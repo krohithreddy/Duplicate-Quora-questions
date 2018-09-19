@@ -1,0 +1,123 @@
+XML DOM - Remove Node
+
+https://www.tutorialspoint.com/dom/xml_dom_remove_node.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+In this chapter, we will study about the XML DOM Remove Node operation. The remove node operation removes the specified node from the document. This operation can be implemented to remove the nodes like text node, element node or an attribute node. Following are the methods that are used for remove node operation − removeChild() removeAttribute() removeChild() The method removeChild() removes the child node indicated by oldChild from the list of children, and returns it. Removing a child node is equivalent to removing a text node. Hence, removing a child node removes the text node associated with it. Syntax The syntax to use removeChild() is as follows − 
+Node removeChild(Node oldChild) throws DOMException
+ Where, oldChild − is the node being removed. This method returns the node removed. Example - Remove Current Node The following example (removecurrentnode_example.htm) parses an XML document (node.xml) into an XML DOM object and removes the specified node <ContactNo> from the parent node. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+
+         document.write("<b>Before remove operation, total ContactNo elements: </b>");
+         document.write(xmlDoc.getElementsByTagName("ContactNo").length);
+         document.write("<br>");
+
+         x = xmlDoc.getElementsByTagName("ContactNo")[0];
+         x.parentNode.removeChild(x);
+
+         document.write("<b>After remove operation, total ContactNo elements: </b>");
+         document.write(xmlDoc.getElementsByTagName("ContactNo").length);
+      </script>
+   </body>
+</html>
+ In the above example − x = xmlDoc.getElementsByTagName("ContactNo")[0] gets the element <ContactNo> indexed at 0. x.parentNode.removeChild(x); removes the element <ContactNo> indexed at 0 from the parent node. Execution Save this file as removecurrentnode_example.htm on the server path (this file and node.xml should be on the same path in your server). We get the following result − 
+Before remove operation, total ContactNo elements: 3
+After remove operation, total ContactNo elements: 2 
+ Example - Remove Text Node The following example (removetextNode_example.htm) parses an XML document (node.xml) into an XML DOM object and removes the specified child node <FirstName>. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+
+         x = xmlDoc.getElementsByTagName("FirstName")[0];
+
+         document.write("<b>Text node of child node before removal is:</b> ");
+         document.write(x.childNodes.length);
+         document.write("<br>");
+
+         y = x.childNodes[0];
+         x.removeChild(y);
+         document.write("<b>Text node of child node after removal is:</b> ");
+         document.write(x.childNodes.length);
+
+      </script>
+   </body>
+</html>
+ In the above example − x = xmlDoc.getElementsByTagName("FirstName")[0]; − gets the first element <FirstName> to the x indexed at 0. y = x.childNodes[0]; − in this line y holds the child node to be remove. x.removeChild(y); − removes the specified child node. Execution Save this file as removetextNode_example.htm on the server path (this file and node.xml should be on the same path in your server). We get the following result − 
+Text node of child node before removal is: 1
+Text node of child node after removal is: 0 
+ removeAttribute() The method removeAttribute() removes an attribute of an element by name. Syntax Syntax to use removeAttribute() is as follows − 
+void removeAttribute(java.lang.String name) throws DOMException
+ Where, name − is the name of the attribute to remove. Example The following example (removeelementattribute_example.htm) parses an XML document (node.xml) into an XML DOM object and removes the specified attribute node. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+
+         x = xmlDoc.getElementsByTagName('Employee');
+
+         document.write(x[1].getAttribute('category'));
+         document.write("<br>");
+
+         x[1].removeAttribute('category');
+
+         document.write(x[1].getAttribute('category'));
+
+      </script>
+   </body>
+</html>
+ In the above example − document.write(x[1].getAttribute('category')); − value of attribute category indexed at 1st position is invoked. x[1].removeAttribute('category'); − removes the attribute value. Execution Save this file as removeelementattribute_example.htm on the server path (this file and node.xml should be on the same path in your server). We get the following result − 
+Non-Technical
+null

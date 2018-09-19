@@ -1,0 +1,92 @@
+SQLite - UNION Clause
+
+https://www.tutorialspoint.com/sqlite/sqlite_unions_clause.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+SQLite UNION clause/operator is used to combine the results of two or more SELECT statements without returning any duplicate rows. To use UNION, each SELECT must have the same number of columns selected, the same number of column expressions, the same data type, and have them in the same order, but they do not have to be of the same length. Syntax Following is the basic syntax of UNION. 
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+
+UNION
+
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+ Here the given condition could be any given expression based on your requirement. Example Consider the following two tables, (a) COMPANY table as follows − 
+sqlite> select * from COMPANY;
+ID          NAME                  AGE         ADDRESS     SALARY
+----------  --------------------  ----------  ----------  ----------
+1           Paul                  32          California  20000.0
+2           Allen                 25          Texas       15000.0
+3           Teddy                 23          Norway      20000.0
+4           Mark                  25          Rich-Mond   65000.0
+5           David                 27          Texas       85000.0
+6           Kim                   22          South-Hall  45000.0
+7           James                 24          Houston     10000.0
+ (b) Another table is DEPARTMENT as follows − 
+ID          DEPT                  EMP_ID
+----------  --------------------  ----------
+1           IT Billing            1
+2           Engineering           2
+3           Finance               7
+4           Engineering           3
+5           Finance               4
+6           Engineering           5
+7           Finance               6
+ Now let us join these two tables using SELECT statement along with UNION clause as follows − 
+sqlite>  SELECT EMP_ID, NAME, DEPT FROM COMPANY INNER JOIN DEPARTMENT
+         ON COMPANY.ID = DEPARTMENT.EMP_ID
+         
+         UNION
+         
+         SELECT EMP_ID, NAME, DEPT FROM COMPANY LEFT OUTER JOIN DEPARTMENT
+         ON COMPANY.ID = DEPARTMENT.EMP_ID;
+ This will produce the following result. 
+EMP_ID      NAME                  DEPT
+----------  --------------------  ----------
+1           Paul                  IT Billing
+2           Allen                 Engineering
+3           Teddy                 Engineering
+4           Mark                  Finance
+5           David                 Engineering
+6           Kim                   Finance
+7           James                 Finance
+ The UNION ALL Clause The UNION ALL operator is used to combine the results of two SELECT statements including duplicate rows. The same rules that apply to UNION apply to the UNION ALL operator as well. Syntax Following is the basic syntax of UNION ALL. 
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+
+UNION ALL
+
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+ Here the given condition could be any given expression based on your requirement. Example Now, let us join the above-mentioned two tables in our SELECT statement as follows − 
+sqlite>  SELECT EMP_ID, NAME, DEPT FROM COMPANY INNER JOIN DEPARTMENT
+         ON COMPANY.ID = DEPARTMENT.EMP_ID
+         
+         UNION ALL
+
+         SELECT EMP_ID, NAME, DEPT FROM COMPANY LEFT OUTER JOIN DEPARTMENT
+         ON COMPANY.ID = DEPARTMENT.EMP_ID;
+ This will produce the following result. 
+EMP_ID      NAME                  DEPT
+----------  --------------------  ----------
+1           Paul                  IT Billing
+2           Allen                 Engineering
+3           Teddy                 Engineering
+4           Mark                  Finance
+5           David                 Engineering
+6           Kim                   Finance
+7           James                 Finance
+1           Paul                  IT Billing
+2           Allen                 Engineering
+3           Teddy                 Engineering
+4           Mark                  Finance
+5           David                 Engineering
+6           Kim                   Finance
+7           James                 Finance

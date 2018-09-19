@@ -1,0 +1,24 @@
+SQLite - Injection
+
+https://www.tutorialspoint.com/sqlite/sqlite_injection.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+If you take user input through a webpage and insert it into a SQLite database there's a chance that you have left yourself wide open for a security issue known as SQL Injection. In this chapter, you will learn how to help prevent this from happening and help you secure your scripts and SQLite statements. Injection usually occurs when you ask a user for input, like their name, and instead of a name they give you a SQLite statement that you will unknowingly run on your database. Never trust user provided data, process this data only after validation; as a rule, this is done by pattern matching. In the following example, the username is restricted to alphanumerical chars plus underscore and to a length between 8 and 20 chars - modify these rules as needed. 
+if (preg_match("/^\w{8,20}$/", $_GET['username'], $matches)){
+   $db = new SQLiteDatabase('filename');
+   $result = @$db->query("SELECT * FROM users WHERE username = $matches[0]");
+} else {
+   echo "username not accepted";
+}
+ To demonstrate the problem, consider this excerpt − 
+$name = "Qadir'; DELETE FROM users;";
+@$db->query("SELECT * FROM users WHERE username = '{$name}'");
+ The function call is supposed to retrieve a record from the users table where the name column matches the name specified by the user. Under normal circumstances, $name would only contain alphanumeric characters and perhaps spaces, such as the string ilia. However in this case, by appending an entirely new query to $name, the call to the database turns into a disaster: the injected DELETE query removes all records from users. There are databases interfaces which do not permit query stacking or executing multiple queries in a single function call. If you try to stack queries, the call fails but SQLite and PostgreSQL, happily perform stacked queries, executing all of the queries provided in one string and creating a serious security problem. Preventing SQL Injection You can handle all escape characters smartly in scripting languages like PERL and PHP. Programming language PHP provides the function string sqlite_escape_string() to escape input characters that are special to SQLite. 
+if (get_magic_quotes_gpc()) {
+   $name = sqlite_escape_string($name);
+}
+$result = @$db->query("SELECT * FROM users WHERE username = '{$name}'");
+ Although the encoding makes it safe to insert the data, it will render simple text comparisons and LIKE clauses in your queries unusable for the columns that contain the binary data. Note − addslashes() should NOT be used to quote your strings for SQLite queries; it will lead to strange results when retrieving your data.

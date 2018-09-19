@@ -1,0 +1,17 @@
+WSDL - <message> Element
+
+https://www.tutorialspoint.com/wsdl/wsdl_message.htm
+
+WSDL, tutorial, basic, advanced, elements, examples, definition, types, message, port, binding, service.
+
+August-15-2017-02:34:07
+
+The <message> element describes the data being exchanged between the web service providers and the consumers. Each Web Service has two messages: input and output. The input describes the parameters for the web service and the output describes the return data from the web service. Each message contains zero or more <part> parameters, one for each parameter of the web service function. Each <part> parameter associates with a concrete type defined in the <types> container element. Let us take a piece of code from the WSDL Example chapter: 
+<message name="SayHelloRequest">
+   <part name="firstName" type="xsd:string"/>
+</message>
+
+<message name="SayHelloResponse">
+   <part name="greeting" type="xsd:string"/>
+</message>
+ Here, two message elements are defined. The first represents a request message SayHelloRequest, and the second represents a response message SayHelloResponse. Each of these messages contains a single part element. For the request, the part specifies the function parameters; in this case, we specify a single firstName parameter. For the response, the part specifies the function return values; in this case, we specify a single greeting return value.

@@ -1,0 +1,113 @@
+PL/SQL Mock Test
+
+https://www.tutorialspoint.com/plsql/plsql_mock_test.htm
+
+PL/SQL, syntax, Environment Setup, Operators, Transactions, Date and Time, data types, variables, constants, records, conditional statements, iterative statements, cursors, procedures, functions, exception handling, triggers, packages, collections, external procedures, arrays, strings, dbms output.
+
+August-15-2017-02:34:06
+
+This section presents you various set of Mock Tests related to PL/SQL. You can download these sample mock tests at your local machine and solve offline at your convenience. Every mock test is supplied with a mock test key to let you verify the final score and grade yourself. Mock Test I Mock Test II Mock Test III Mock Test IV PL/SQL Mock Test I Q 1 - Which of the following is not true about the PL/SQL language? A - It supports embedded SQL statements. B - It has all the features of a modern structured programming language. C - It is not a block-structured language. D - Applications developed using PL/SQL are not portable. Answer : C Show Answer Q 2 - Which of the following is not true about the PL/SQL language? A - PL/SQL's general syntax is based on that of ADA and Pascal programming language. B - Apart from Oracle, PL/SQL is available in TimesTen in-memory database and IBM DB2. C - PL/SQL is tightly integrated with SQL. D - It does not offer error checking. Answer : D Show Answer Q 3 - Which of the following is true about the PL/SQL language? A - PL/SQL provides access to predefined SQL packages. B - PL/SQL provides support for Object-Oriented Programming. C - PL/SQL provides support for Developing Web Applications and Server Pages. D - All of the above. Answer : D Show Answer Q 4 - Which of the following is not true about the declaration section of a PL/SQL block? A - This section starts with the DECLARE keyword. B - It is a mandatory section. C - It defines all variables, cursors, subprograms, and other elements to be used in the program. D - None of the above. Answer : B Show Answer Q 5 - Which of the following is true about the execution section of a PL/SQL block? A - It is enclosed between the keywords BEGIN and END. B - It is a mandatory section. C - It consists of the executable PL/SQL statements. D - All of the above. Answer : D Show Answer Q 6 - Which of the following is not true about the execution section of a PL/SQL block? A - It should have more than one executable line of code. B - It may have just a NULL command to indicate that nothing should be executed. C - The statements must always end with a semicolon. D - The section may contain SQL commands, logical control commands, assignment commands, as well as other commands. Answer : A Show Answer Q 7 - Which of the following is not true about the exception handling section of a PL/SQL block? A - This section starts with the EXCEPTION keyword. B - It is a mandatory section. C - It contains exception(s) that handle errors in the program. D - None of the above. Answer : B Show Answer Q 8 - Which of the following is true about comments in PL/SQL? A - Comments are explanatory statements. B - PL/SQL supports both single-line and multi-line comments. C - The PL/SQL single-line comments start with the delimiter -- (double hyphen) and multi-line comments are enclosed by /* and */. D - All of the above. Answer : D Show Answer Q 9 - Which of the following is not a PL/SQL unit? A - Table B - Type C - Trigger D - Package Answer : A Show Answer Q 10 - Which of the following is true about data types in PL/SQL? A - Large Object or LOB data types are pointers to large objects that are stored separately from other data items, such as text, graphic images, video clips, and sound waveforms. B - The composite data types have data items that have internal components that can be accessed individually. For example, collections and records. C - References are pointers to other data items. D - All of the above. Answer : D Show Answer Q 11 - Which of the following is true about scalar data types in PL/SQL? A - They hold single values with no internal components. B - Examples of scalar data types are NUMBER, DATE, or BOOLEAN. C - PL/SQL provides subtypes of data types. D - All are true. Answer : D Show Answer Q 12 - Which of the following is true about character data types and subtypes in PL/SQL? A - LONG is a variable-length character string with maximum size of 32,760 bytes. B - ROWID is a physical column identifier, the address of a column in an ordinary table. C - CHAR is a variable-length character string with maximum size of 32,767 bytes. D - NCHAR is a variable-length national character string with maximum size of 32,767 bytes. Answer : A Show Answer Q 13 - Which of the following is not true about large object data types and in PL/SQL? A - BFILE is used to store large binary objects in operating system files outside the database. B - BLOB is used to store character data in the database. C - CLOB is used to store large blocks of character data in the database. D - NCLOB is used to store large blocks of NCHAR data in the database. Answer : B Show Answer Q 14 - What value will be assigned to the variable declared as below − counter binary_integer; A - 0 B - 1 C - NULL D - None of the above. Answer : C Show Answer Q 15 - Consider the following code − 
+DECLARE
+   -- Global variables 
+   num number := 95; 
+BEGIN 
+   dbms_output.put_line('num: ' || num1);
+   DECLARE 
+      -- Local variables
+      num number := 195; 
+     BEGIN 
+      dbms_output.put_line('num: ' || num1);
+     END; 
+END;
+ What will happen when the code is executed? A - It won’t execute, it has syntax error B - It will print      num: 95      num: 195 C - It will print      num: 95      num: 95 D - It will print      num: 195      num: 195 Answer : B Show Answer Q 16 - What is wrong in the following code? 
+DECLARE
+   c_id := 1;
+   c_name  customers.name%type;
+   c_addr customers.address%type;
+  BEGIN
+   SELECT name, address INTO c_name, c_addr
+   FROM customers
+   WHERE id = c_id;
+END;
+ A - You cannot use the SELECT INTO statement of SQL to assign values to PL/SQL variables. B - The SELECT INTO statement here is wrong. It should be: SELECT c_name, c_address INTO name, addr C - The WHERE statement is wrong. It should be: WHERE id := c_id; D - The variable c_id should be declared as a type-compatible variable as − c_id customers.id%type := 1; Answer : D Show Answer Q 17 - Which of the following is not true about PL/SQL constants and literals? A - A constant holds a value that once declared, does not change in the program. B - The CONSTANT declaration cannot impose the NOT NULL constraint. C - A constant is declared using the CONSTANT keyword. D - A CONSTANT declaration requires an initial value. Answer : B Show Answer Q 18 - What will be the output of the following code snippet? 
+DECLARE
+   a number (2) := 21;
+   b number (2) := 10;
+BEGIN
+   
+   IF ( a <= b ) THEN
+      dbms_output.put_line(a);
+   END IF;
+
+   IF ( b >= a ) THEN
+      dbms_output.put_line(a);
+   END IF;
+   
+   IF ( a <> b ) THEN
+      dbms_output.put_line(b);
+   
+   END IF;
+
+END;
+ A - 2 B - 21 C - 10 D - 21, 10 Answer : C Show Answer Q 19 - What would be printed when the following code is executed? 
+DECLARE
+      x   NUMBER;
+    BEGIN
+      
+       x := 5;
+       x := 10;
+       dbms_output.put_line(-x);
+       dbms_output.put_line(+x);
+       x := -10;
+       dbms_output.put_line(-x);
+       dbms_output.put_line(+x);
+   END;
+ A - -10      10      10      -10 B - 10      -10      10      -10 C - -10      +10      +10      -10 D - 10      -10      -10      10 Answer : A Show Answer Q 20 - To get the server output result and display it into the screen, you need to write − A - set serveroutput on B - set server output on C - set dbmsoutput on D - set dbms output on Answer : A Show Answer Q 21 - Which of the following is not true about PL/SQL decision making structures? A - The IF statement associates a condition with a sequence of statements enclosed by the keywords THEN and END IF. B - The IF statement also adds the keyword ELSE followed by an alternative sequence of statement. C - The IF-THEN-ELSIF statement allows you to choose between several alternatives. D - PL/SQL does not have a CASE statement. Answer : D Show Answer Q 22 - Which of the following is true about the following code snippet? 
+DECLARE
+   a number(3) := 100;
+BEGIN
+   IF (a = 50 ) THEN
+      dbms_output.put_line('Value of a is 10' );
+   ELSEIF ( a = 75 ) THEN
+      dbms_output.put_line('Value of a is 20' );
+   ELSE
+       dbms_output.put_line('None of the values is matching');
+   END IF;
+   dbms_output.put_line('Exact value of a is: '|| a ); 
+END;
+
+ A - It has syntax error. B - It will print 'None of the values is matching'. C - It will print None of the values is matching Exact value of a is: 100 D - None of the above. Answer : A Explanation the ELSIF statement is wrongly written as ELSEIF Show Answer Q 23 - Which of the following is true about the following code snippet? 
+DECLARE
+   a number(3) := 100;
+BEGIN
+   IF (a = 50 ) THEN
+      dbms_output.put_line('Value of a is 10' );
+   ELSIF ( a = 75 )
+      dbms_output.put_line('Value of a is 20' );
+   ELSE
+       dbms_output.put_line('None of the values is matching');
+   END IF;
+   dbms_output.put_line('Exact value of a is: '|| a ); 
+END;
+ A - It has syntax error. B - It will print 'None of the values is matching'. C - It will print None of the values is matching Exact value of a is: 100 D - None of the above. Answer : A Explanation it has the THEN keyword missing in the ELSIF statement Show Answer Q 24 - Which of the following is true about the following PL/SQL CASE statement syntax? 
+CASE selector
+    WHEN 'value1' THEN S1;
+    WHEN 'value2' THEN S2;
+    WHEN 'value3' THEN S3;
+    ...
+    ELSE Sn;  -- default case
+END CASE;
+ A - It is wrongly written. B - It is perfectly written. C - It is you can specify the literal NULL for all the S expressions and the default Sn. D - All the expressions like the selector, the value and the returns values, need not be of the same data type. Answer : B Show Answer Q 25 - What is the output of the following code? 
+DECLARE
+   grade char(1) := 'B';
+BEGIN
+   case 
+      when grade = 'A' then dbms_output.put_line('Excellent');
+      when grade = 'B' then dbms_output.put_line('Very good');
+      when grade = 'C' then dbms_output.put_line('Well done');
+      when grade = 'D' then dbms_output.put_line('You passed');
+      when grade = 'F' then dbms_output.put_line('Better try again');
+      else dbms_output.put_line('No such grade');
+   end case;
+END;
+ A - It has syntax error, so there will not be any output. B - B C - Very good D - No such grade Answer : C Show Answer Answer Sheet Question Number Answer Key 1 C 2 D 3 D 4 B 5 D 6 A 7 B 8 D 9 A 10 D 11 D 12 A 13 B 14 C 15 B 16 D 17 B 18 C 19 A 20 A 21 D 22 A 23 A 24 B 25 C Download plsql_questions_answers.htm

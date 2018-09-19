@@ -1,0 +1,23 @@
+PouchDB - Environment
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_environment.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+This chapter explains how to download and install PouchDB in your system. Installing PouchDB In order to work with PouchDB, you need to download the file .js file and include it in your script. Following are the steps to install PouchDB. Step 1 Visit the homepage of PouchDB website, by clicking the following link − https://PouchDB.com/ Step 2 Click the Download button on the top right hand side of the web page as shown in the above screenshot. This will download PouchDB-5.3.0.min.js in your system. Step 3 Copy and paste the PouchDB-5.3.0.min.js to your working directory and include it in your JavaScript as shown in the following command. 
+<script src = "PouchDB-5.3.0.min.js"></script>
+ Installing Pouch Using Node.js You can also install PouchDB as Node.js module. Following are the steps to install PouchDB using Node.js. Step 1 Install Node.js by following the steps given in the Installing Node.js section of our coffee script tutorial. Step 2 Open the command prompt and execute the following command. This will install PouchDB node module in your system. 
+npm install --save PouchDB
+ Downloading CouchDB When offline, PouchDB stores data locally and works like an app. You can access it online by connecting with compatible servers. As we know PouchDB can be connected to CouchDB, so, lets install CouchDB too. Following are the steps to install CouchDB. Step 1 The official website for CouchDB is http://couchdb.apache.org. If you click the given link, you can get the home page of CouchDB official website as shown in the following screenshot. Step 2 If you click on the download button that will lead to a page where the download links of CouchDB in various formats are provided. The following snapshot illustrates the same. Step 3 Choose the download link for Windows Systems and select one of the provided mirrors to start your download. Installing CouchDB A windows executable setup-couchdb-1.6.1_R16B02.exe file will be downloaded on your system. Run the setup file and proceed with the installation. After installing CouchDB in your system successfully, open the folder where CouchDB was installed, go to the bin folder, and start the server by running a script file named couchdb.bat. After installation, open built-in web interface of CouchDB by visiting the following link − http://127.0.0.1:5984/. If everything goes fine, this will give you a web page, which will have the following output. 
+{                 
+   "couchdb":"Welcome","uuid":"c8d48ac61bb497f4692b346e0f400d60",
+   "version":"1. 6.1",
+   "vendor": {
+      "version":"1.6.1","name":"The Apache Software Foundation"
+   } 
+}
+ You can interact with CouchDB web interface by using the following URL − 
+http://127.0.0.1:5984/_utils/
+ This shows you the index page of Futon, which is the web interface of CouchDB.

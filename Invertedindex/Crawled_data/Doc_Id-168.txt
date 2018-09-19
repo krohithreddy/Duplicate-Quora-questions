@@ -1,0 +1,105 @@
+HSQLDB - Null Values
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_null_values.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+SQL NULL is a term used to represent a missing value. A NULL value in a table is a value in a field that appears to be blank. Whenever we try to give a condition, which compare the field or column value to NULL, it does not work properly. We can handle the NULL values by using the three things. IS NULL − The operator returns true if the column value is NULL. IS NOT NULL − The operator returns true if the column value is NOT NULL. <=> − The operator compares values, which (unlike the = operator) is true even for two NULL values. To look for columns that are NULL or NOT NULL, use IS NULL or IS NOT NULL respectively. Example Let us consider an example where there is a table tcount_tbl that contains two columns, author and tutorial_count. We can provide NULL values to the tutorial_count indicates that the author did not publish even one tutorial. Therefore, the tutorial_count value for that respective author is NULL. Execute the following queries. 
+create table tcount_tbl(author varchar(40) NOT NULL, tutorial_count INT);
+INSERT INTO tcount_tbl values ('Abdul S', 20);
+INSERT INTO tcount_tbl values ('Ajith kumar', 5);
+INSERT INTO tcount_tbl values ('Jen', NULL);
+INSERT INTO tcount_tbl values ('Bavya kanna', 8);
+INSERT INTO tcount_tbl values ('mahran', NULL);
+INSERT INTO tcount_tbl values ('John Poul', 10);
+INSERT INTO tcount_tbl values ('Sathya Murthi', 6);
+ Use the following command to display all the records from the tcount_tbl table. 
+select * from tcount_tbl;
+ After execution of the above command, you will receive the following output. 
++-----------------+----------------+
+|     author      | tutorial_count |
++-----------------+----------------+
+|      Abdul S    |      20        |
+|    Ajith kumar  |      5         |
+|        Jen      |     NULL       |
+|    Bavya kanna  |      8         |
+|       mahran    |     NULL       |
+|     John Poul   |      10        |
+|   Sathya Murthi |      6         |
++-----------------+----------------+
+ To find the records where the tutorial_count column IS NULL, following is the query. 
+SELECT * FROM tcount_tbl WHERE tutorial_count IS NULL;
+ After execution of the query, you will receive the following output. 
++-----------------+----------------+
+|     author      | tutorial_count |
++-----------------+----------------+
+|       Jen       |     NULL       |
+|      mahran     |     NULL       |
++-----------------+----------------+
+ To find the records where the tutorial_count column IS NOT NULL, following is the query. 
+SELECT * FROM tcount_tbl WHERE tutorial_count IS NOT NULL;
+ After execution of the query, you will receive the following output. 
++-----------------+----------------+
+|      author     | tutorial_count |
++-----------------+----------------+
+|      Abdul S    |      20        |
+|     Ajith kumar |       5        |
+|     Bavya kanna |       8        |
+|     John Poul   |      10        |
+|   Sathya Murthi |       6        |
++-----------------+----------------+
+ HSQLDB – JDBC Program Here is the JDBC program that retrieves the records separately from the table tcount_tbl where the tutorial_ count is NULL and the tutorial_count is NOT NULL. Save the following program into NullValues.java. 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class NullValues {
+   public static void main(String[] args) {
+      Connection con = null;
+      Statement stmt_is_null = null;
+      Statement stmt_is_not_null = null;
+      ResultSet result = null;
+      try {
+         Class.forName("org.hsqldb.jdbc.JDBCDriver");
+         con = DriverManager.getConnection(
+            "jdbc:hsqldb:hsql://localhost/testdb", "SA", "");
+         stmt_is_null = con.createStatement();
+         stmt_is_not_null = con.createStatement();
+         result = stmt_is_null.executeQuery(
+            "SELECT * FROM tcount_tbl WHERE tutorial_count IS NULL;");
+         System.out.println("Records where the tutorial_count is NULL");
+         
+         while(result.next()){
+            System.out.println(result.getString("author")+" |
+            "+result.getInt("tutorial_count"));
+         }
+         result = stmt_is_not_null.executeQuery(
+            "SELECT * FROM tcount_tbl WHERE tutorial_count IS NOT NULL;");
+         System.out.println("Records where the tutorial_count is NOT NULL");
+         
+         while(result.next()){
+            System.out.println(result.getString("author")+" |
+            "+result.getInt("tutorial_count"));
+         }
+      } catch (Exception e) {
+         e.printStackTrace(System.out);
+      }
+   }
+}
+ Compile and execute the above program using the following command. 
+\>javac NullValues.java
+\>Java NullValues
+ After execution of the above command, you will receive the following output. 
+Records where the tutorial_count is NULL
+Jen         | 0
+mahran      | 0
+
+Records where the tutorial_count is NOT NULL
+Abdul S        | 20
+Ajith kumar    | 5
+Bavya kanna    | 8
+John Poul      | 10
+Sathya Murthi  | 6

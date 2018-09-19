@@ -1,0 +1,54 @@
+SQLite - GLOB Clause
+
+https://www.tutorialspoint.com/sqlite/sqlite_glob_clause.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+SQLite GLOB operator is used to match only text values against a pattern using wildcards. If the search expression can be matched to the pattern expression, the GLOB operator will return true, which is 1. Unlike LIKE operator, GLOB is case sensitive and it follows syntax of UNIX for specifying THE following wildcards. The asterisk sign (*) The question mark (?) The asterisk sign (*) represents zero or multiple numbers or characters. The question mark (?) represents a single number or character. Syntax Following is the basic syntax of * and ?. 
+SELECT FROM table_name
+WHERE column GLOB 'XXXX*'
+or 
+SELECT FROM table_name
+WHERE column GLOB '*XXXX*'
+or
+SELECT FROM table_name
+WHERE column GLOB 'XXXX?'
+or
+SELECT FROM table_name
+WHERE column GLOB '?XXXX'
+or
+SELECT FROM table_name
+WHERE column GLOB '?XXXX?'
+or
+SELECT FROM table_name
+WHERE column GLOB '????'
+ You can combine N number of conditions using AND or OR operators. Here, XXXX could be any numeric or string value. Example Following table lists a number of examples showing WHERE part having different LIKE clause with '*' and '?' operators. Sr.No. Statement & Description 1 WHERE SALARY GLOB '200*' Finds any values that start with 200 2 WHERE SALARY GLOB '*200*' Finds any values that have 200 in any position 3 WHERE SALARY GLOB '?00*' Finds any values that have 00 in the second and third positions 4 WHERE SALARY GLOB '2??' Finds any values that start with 2 and are at least 3 characters in length 5 WHERE SALARY GLOB '*2' Finds any values that end with 2 6 WHERE SALARY GLOB '?2*3' Finds any values that have a 2 in the second position and end with a 3 7 WHERE SALARY GLOB '2???3' Finds any values in a five-digit number that start with 2 and end with 3 Let us take a real example, consider COMPANY table with the following records − 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Following is an example, which will display all the records from COMPANY table, where AGE starts with 2. 
+sqlite> SELECT * FROM COMPANY WHERE AGE  GLOB '2*';
+ This will produce the following result. 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ Following is an example, which will display all the records from COMPANY table where ADDRESS will have a hyphen (-) inside the text − 
+sqlite> SELECT * FROM COMPANY WHERE ADDRESS  GLOB '*-*';
+ This will produce the following result. 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+4           Mark        25          Rich-Mond   65000.0
+6           Kim         22          South-Hall  45000.0

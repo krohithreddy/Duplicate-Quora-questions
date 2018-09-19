@@ -1,0 +1,102 @@
+SQLite - Useful Functions
+
+https://www.tutorialspoint.com/sqlite/sqlite_useful_functions.htm
+
+SQLite, Tutorial, PHP, PERL, C, C++, JAVA and Python Programming, Database, Clauses, Commands, Functions, Administration, Queries, Simple, Steps, Basic, Advanced, Concepts, Overview, Installation, Commands, Syntax, Data Type, CREATE, ATTACH, DETACH Database, CREATE Table, DROP Table, INSERT Query, SELECT Query, Operators, Expressions, WHERE Clause, AND and OR Operators, UPDATE, DELETE Query, LIKE, GLOB, LIMIT, ORDER BY, GROUP BY, HAVING Clause, DISTINCT Keyword, PRAGMA, Constraints, JOINS, UNION Clause, NULL Values, ALIAS Syntax, Triggers, Indexes, INDEXED BY Clause, ALTER TABLE, TRUNCATE TABLE Command, Views, Transactions, Subqueries, AUTOINCREMENT, Injection, EXPLAIN, VACUUM, Date and Time, Useful Functions.
+
+August-15-2017-02:34:08
+
+SQLite has many built-in functions to perform processing on string or numeric data. Following is the list of few useful SQLite built-in functions and all are case in-sensitive which means you can use these functions either in lower-case form or in upper-case or in mixed form. For more details, you can check official documentation for SQLite. Sr.No. Function & Description 1 SQLite COUNT Function SQLite COUNT aggregate function is used to count the number of rows in a database table. 2 SQLite MAX Function SQLite MAX aggregate function allows us to select the highest (maximum) value for a certain column. 3 SQLite MIN Function SQLite MIN aggregate function allows us to select the lowest (minimum) value for a certain column. 4 SQLite AVG Function SQLite AVG aggregate function selects the average value for certain table column. 5 SQLite SUM Function SQLite SUM aggregate function allows selecting the total for a numeric column. 6 SQLite RANDOM Function SQLite RANDOM function returns a pseudo-random integer between -9223372036854775808 and +9223372036854775807. 7 SQLite ABS Function SQLite ABS function returns the absolute value of the numeric argument. 8 SQLite UPPER Function SQLite UPPER function converts a string into upper-case letters. 9 SQLite LOWER Function SQLite LOWER function converts a string into lower-case letters. 10 SQLite LENGTH Function SQLite LENGTH function returns the length of a string. 11 SQLite sqlite_version Function SQLite sqlite_version function returns the version of the SQLite library. Before we start giving examples on the above-mentioned functions, consider COMPANY table with the following records. 
+ID          NAME        AGE         ADDRESS     SALARY
+----------  ----------  ----------  ----------  ----------
+1           Paul        32          California  20000.0
+2           Allen       25          Texas       15000.0
+3           Teddy       23          Norway      20000.0
+4           Mark        25          Rich-Mond   65000.0
+5           David       27          Texas       85000.0
+6           Kim         22          South-Hall  45000.0
+7           James       24          Houston     10000.0
+ SQLite COUNT Function SQLite COUNT aggregate function is used to count the number of rows in a database table. Following is an example − 
+sqlite> SELECT count(*) FROM COMPANY;
+ The above SQLite SQL statement will produce the following. 
+count(*)
+----------
+7
+ SQLite MAX Function SQLite MAX aggregate function allows us to select the highest (maximum) value for a certain column. Following is an example − 
+sqlite> SELECT max(salary) FROM COMPANY;
+ The above SQLite SQL statement will produce the following. 
+max(salary)
+-----------
+85000.0
+ SQLite MIN Function SQLite MIN aggregate function allows us to select the lowest (minimum) value for a certain column. Following is an example − 
+sqlite> SELECT min(salary) FROM COMPANY;
+ The above SQLite SQL statement will produce the following. 
+min(salary)
+-----------
+10000.0
+ SQLite AVG Function SQLite AVG aggregate function selects the average value for a certain table column. Following is an the example − 
+sqlite> SELECT avg(salary) FROM COMPANY;
+ The above SQLite SQL statement will produce the following. 
+avg(salary)
+----------------
+37142.8571428572
+ SQLite SUM Function SQLite SUM aggregate function allows selecting the total for a numeric column. Following is an example − 
+sqlite> SELECT sum(salary) FROM COMPANY;
+ The above SQLite SQL statement will produce the following. 
+sum(salary)
+-----------
+260000.0
+ SQLite RANDOM Function SQLite RANDOM function returns a pseudo-random integer between -9223372036854775808 and +9223372036854775807. Following is an example − 
+sqlite> SELECT random() AS Random;
+ The above SQLite SQL statement will produce the following. 
+Random
+-------------------
+5876796417670984050
+ SQLite ABS Function SQLite ABS function returns the absolute value of the numeric argument. Following is an example − 
+sqlite> SELECT abs(5), abs(-15), abs(NULL), abs(0), abs("ABC");
+ The above SQLite SQL statement will produce the following. 
+abs(5)      abs(-15)    abs(NULL)   abs(0)      abs("ABC")
+----------  ----------  ----------  ----------  ----------
+5           15                      0           0.0
+ SQLite UPPER Function SQLite UPPER function converts a string into upper-case letters. Following is an example − 
+sqlite> SELECT upper(name) FROM COMPANY;
+ The above SQLite SQL statement will produce the following. 
+upper(name)
+-----------
+PAUL
+ALLEN
+TEDDY
+MARK
+DAVID
+KIM
+JAMES
+ SQLite LOWER Function SQLite LOWER function converts a string into lower-case letters. Following is an example − 
+sqlite> SELECT lower(name) FROM COMPANY;
+ The above SQLite SQL statement will produce the following. 
+lower(name)
+-----------
+paul
+allen
+teddy
+mark
+david
+kim
+james
+ SQLite LENGTH Function SQLite LENGTH function returns the length of a string. Following is an example − 
+sqlite> SELECT name, length(name) FROM COMPANY;
+ The above SQLite SQL statement will produce the following. 
+NAME        length(name)
+----------  ------------
+Paul        4
+Allen       5
+Teddy       5
+Mark        4
+David       5
+Kim         3
+James       5
+ SQLite sqlite_version Function SQLite sqlite_version function returns the version of the SQLite library. Following is an example − 
+sqlite> SELECT sqlite_version() AS 'SQLite Version';
+ The above SQLite SQL statement will produce the following. 
+SQLite Version
+--------------
+3.6.20

@@ -1,0 +1,19 @@
+OrientDB - Delete Vertex
+
+https://www.tutorialspoint.com/orientdb/orientdb_delete_vertex.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Delete Vertex command is used to remove vertices from the database. While deleting, it checks and maintains the consistency with the edges and removes all cross-references (with the edges) to the deleted vertex. The following statement is the basic syntax of Delete Vertex Command. 
+DELETE VERTEX <vertex> [WHERE <conditions>] 
+[LIMIT <MaxRecords>>] [BATCH <batch-size>]
+ Following are the details about the options in the above syntax. <vertex> − Defines the vertex that you want to remove, using its Class, Record ID, or through a sub-query. WHERE − Filters condition to determine which records the command removes. LIMIT − Defines the maximum number of records to be removed. BATCH − Defines how many records the command removes at a time, allowing you to break large transactions into smaller blocks to save on memory usage. Example Try the following command to learn how to delete single vertex or multiple vertices. Execute the following command to remove the vertex ‘#14:1’. 
+orientdb> DELETE VERTEX #14:1
+ If the above command is executed successfully, you will get the following output. 
+Delete record(s) '1' in 0.005000 sec(s)
+ Execute the following command to remove all vertices from the class ‘Customer’ marked with the property ‘isSpam’. 
+orientdb> DELETE VERTEX Customer WHERE isSpam = TRUE 
+ If the above command is executed successfully, you will get the following output. 
+Delete record(s) '3' in 0.005000 sec(s)

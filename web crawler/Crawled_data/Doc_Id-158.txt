@@ -1,0 +1,58 @@
+HSQLDB - Create Table
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_create_table.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+The basic mandatory requirements to create a table are table name, field names, and the data types to those fields. Optionally, you can also provide the key constraints to the table. Syntax Take a look at the following syntax. 
+CREATE TABLE table_name (column_name column_type);
+ Example Let us create a table named tutorials_tbl with the field-names such as id, title, author, and submission_date. Take a look at the following query. 
+CREATE TABLE tutorials_tbl (
+   id INT NOT NULL,
+   title VARCHAR(50) NOT NULL,
+   author VARCHAR(20) NOT NULL,
+   submission_date DATE,
+   PRIMARY KEY (id) 
+);
+ After execution of the above query, you will receive the following output − 
+(0) rows effected
+ HSQLDB – JDBC Program Following is the JDBC program used to create a table named tutorials_tbl into the HSQLDB database. Save the program into CreateTable.java file. 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class CreateTable {
+   
+   public static void main(String[] args) {
+      
+      Connection con = null;
+      Statement stmt = null;
+      int result = 0;
+      
+      try {
+         Class.forName("org.hsqldb.jdbc.JDBCDriver");
+         con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/testdb", "SA", "");
+         stmt = con.createStatement();
+         
+         result = stmt.executeUpdate("CREATE TABLE tutorials_tbl (
+            id INT NOT NULL, title VARCHAR(50) NOT NULL,
+            author VARCHAR(20) NOT NULL, submission_date DATE,
+            PRIMARY KEY (id));
+         ");
+			
+      }  catch (Exception e) {
+         e.printStackTrace(System.out);
+      }
+      System.out.println("Table created successfully");
+   }
+}
+ You can start the database using the following command. 
+\>cd C:\hsqldb-2.3.4\hsqldb
+hsqldb>java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0
+file:hsqldb/demodb --dbname.0 testdb Compile and execute the above program using the following command. 
+\>javac CreateTable.java
+\>java CreateTable
+ After execution of the above command, you will receive the following output − 
+Table created successfully

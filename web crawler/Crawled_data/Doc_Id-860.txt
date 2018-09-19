@@ -1,0 +1,55 @@
+DOM - Element Object Method - getElementByTagName
+
+https://www.tutorialspoint.com/dom/dom_element_getelementbytagname.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The method getElementByTagName gives the value of the specified element. Syntax Following is the syntax for the usage of the getElementByTagName method. 
+getElementsByTagName(name)
+ S.No. Parameter & Description 1 Name It holds the name of the attribute to retrieve. This method returns the name of the tag. Example node.xml contents are as below − 
+<?xml version = "1.0"?>
+<Company>
+   <Employee category = "Technical">
+      <FirstName>Tanmay</FirstName>
+      <LastName>Patil</LastName>
+      <ContactNo>1234567890</ContactNo>
+      <Email>tanmaypatil@xyz.com</Email>
+   </Employee>
+</Company>
+ Following example demonstrates the usage of the getElementByTagName method − 
+<!DOCTYPE html>
+<html>
+   <body>
+      <div>
+         <b>FirstName:</b> <span id = "FirstName"></span>
+         <b>LastName:</b> <span id = "LastName"></span>
+         <b>Category:</b> <span id = "Employee"></span>
+      </div>
+      <script>
+         if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+         }
+         else {// code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+
+         document.getElementById("FirstName").innerHTML=
+         xmlDoc.getElementsByTagName("FirstName")[0].childNodes[0].nodeValue;
+         document.getElementById("LastName").innerHTML=
+         xmlDoc.getElementsByTagName("LastName")[0].childNodes[0].nodeValue;
+         document.getElementById("Employee").innerHTML=
+         xmlDoc.getElementsByTagName("Employee")[0].attributes[0].nodeValue;
+
+      </script>
+   </body>
+</html>
+ Execution Save this file as elementattribute_getelementbytagname.htm on the server path (this file and node_methods.xml should be on the same path in your server). We will get the output as shown below − 
+FirstName: Tanmay
+LastName: Patil
+Category: technical
+ dom_element_object.htm

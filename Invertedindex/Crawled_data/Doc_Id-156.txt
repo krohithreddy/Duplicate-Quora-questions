@@ -1,0 +1,69 @@
+HSQLDB - Alter Command
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_alter_command.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+Whenever there is a need to change the name of a table or a field, change the order of fields, change the datatype of fields, or any table structure, you can achieve the same using the ALTER command. Example Let us consider an example that explains the ALTER command using different scenarios. Use the following query to create a table named testalter_tbl with the fields’ id and name. 
+//below given query is to create a table testalter_tbl table.
+create table testalter_tbl(id INT, name VARCHAR(10));
+
+//below given query is to verify the table structure testalter_tbl.
+Select * From INFORMATION_SCHEMA.SYSTEM_COLUMNS as C Where C.TABLE_SCHEM =
+   'PUBLIC' AND C.TABLE_NAME = 'TESTALTER_TBL';
+ After execution of the above query, you will receive the following output. 
++------------+-------------+------------+-----------+-----------+------------+
+|TABLE_SCHEM |  TABLE_NAME | COLUMN_NAME| DATA_TYPE | TYPE_NAME | COLUMN_SIZE|
++------------+-------------+------------+-----------+-----------+------------+
+|   PUBLIC   |TESTALTER_TBL|     ID     |     4     |   INTEGER |     4      |
+|   PUBLIC   |TESTALTER_TBL|    NAME    |     12    |   VARCHAR |     10     |
++------------+-------------+------------+-----------+-----------+------------+
+ Dropping or Adding a Column Whenever you want to DROP an existing column from the HSQLDB table, then you can use the DROP clause along with the ALTER command. Use the following query to drop a column (name) from the table testalter_tbl. 
+ALTER TABLE testalter_tbl DROP name;
+ After successful execution of the above query, you can get to know if the name field is dropped from the table testalter_tbl using the following command. 
+Select * From INFORMATION_SCHEMA.SYSTEM_COLUMNS as C Where C.TABLE_SCHEM =
+   'PUBLIC' AND C.TABLE_NAME = 'TESTALTER_TBL';
+ After execution of the above command, you will receive the following output. 
++------------+-------------+------------+-----------+-----------+------------+
+|TABLE_SCHEM |  TABLE_NAME | COLUMN_NAME| DATA_TYPE | TYPE_NAME | COLUMN_SIZE|
++------------+-------------+------------+-----------+-----------+------------+
+|  PUBLIC    |TESTALTER_TBL|      ID    |      4    |   INTEGER |     4      |
++------------+-------------+------------+-----------+-----------+------------+
+ Whenever you want to add any column into the HSQLDB table, you can use the ADD clause along with the ALTER command. Use the following query to add a column named NAME to the table testalter_tbl. 
+ALTER TABLE testalter_tbl ADD name VARCHAR(10);
+ After successful execution of the above query, you can get to know if the name field is added to the table testalter_tbl using the following command. 
+Select * From INFORMATION_SCHEMA.SYSTEM_COLUMNS as C Where C.TABLE_SCHEM =
+   'PUBLIC' AND C.TABLE_NAME = 'TESTALTER_TBL';
+ After execution of the above query, you will receive the following output. 
++------------+-------------+------------+-----------+-----------+------------+
+|TABLE_SCHEM |  TABLE_NAME | COLUMN_NAME| DATA_TYPE | TYPE_NAME | COLUMN_SIZE|
++------------+-------------+------------+-----------+-----------+------------+
+|  PUBLIC    |TESTALTER_TBL|      ID    |     4     |   INTEGER |     4      |
+|  PUBLIC    |TESTALTER_TBL|     NAME   |     12    |   VARCHAR |     10     |
++------------+-------------+------------+-----------+-----------+------------+
+ Changing a Column Definition or Name Whenever there is a requirement of changing the column definition, use the MODIFY or CHANGE clause along with the ALTER command. Let us consider an example that will explain how to use the CHANGE clause. The table testalter_tbl contains two fields - id and name - having datatypes int and varchar respectively. Now let us try to change the datatype of id from INT to BIGINT. Following is the query to make the change. 
+ALTER TABLE testalter_tbl CHANGE id id BIGINT;
+ After successful execution of the above query, the table structure can be verified using the following command. 
+Select * From INFORMATION_SCHEMA.SYSTEM_COLUMNS as C Where C.TABLE_SCHEM =
+   'PUBLIC' AND C.TABLE_NAME = 'TESTALTER_TBL';
+ After execution of the above command, you will receive the following output. 
++------------+-------------+------------+-----------+-----------+------------+
+|TABLE_SCHEM |  TABLE_NAME | COLUMN_NAME| DATA_TYPE | TYPE_NAME | COLUMN_SIZE|
++------------+-------------+------------+-----------+-----------+------------+
+|  PUBLIC    |TESTALTER_TBL|      ID    |     4     |   BIGINT  |     4      |
+|  PUBLIC    |TESTALTER_TBL|     NAME   |     12    |   VARCHAR |     10     |
++------------+-------------+------------+-----------+-----------+------------+
+ Now let us try to increase the size of a column NAME from 10 to 20 in the testalter_tbl table. Following is the query to achieve this using the MODIFY clause along with the ALTER command. 
+ALTER TABLE testalter_tbl MODIFY name VARCHAR(20);
+ After successful execution of the above query, the table structure can be verified using the following command. 
+Select * From INFORMATION_SCHEMA.SYSTEM_COLUMNS as C Where C.TABLE_SCHEM =
+   'PUBLIC' AND C.TABLE_NAME = 'TESTALTER_TBL';
+ After execution of the above command, you will receive the following output. 
++------------+-------------+------------+-----------+-----------+------------+
+|TABLE_SCHEM |  TABLE_NAME | COLUMN_NAME| DATA_TYPE | TYPE_NAME | COLUMN_SIZE|
++------------+-------------+------------+-----------+-----------+------------+
+|  PUBLIC    |TESTALTER_TBL|    ID      |      4    |    BIGINT |     4      |
+|  PUBLIC    |TESTALTER_TBL|    NAME    |     12    |   VARCHAR |    20      |
++------------+-------------+------------+-----------+-----------+------------+

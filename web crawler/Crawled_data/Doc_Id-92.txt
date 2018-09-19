@@ -1,0 +1,46 @@
+DocumentDB SQL - Mathematical Function
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_mathematical_functions.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+The mathematical functions perform a calculation, usually based on input values that are provided as arguments, and return a numeric value. Following are the supported built-in mathematical functions in DocumentDB. S.No. Function & Description 1 ABS (num_expr) Returns the absolute (positive) value of the specified numeric expression. 2 CEILING (num_expr) Returns the smallest integer value greater than, or equal to, the specified numeric expression. 3 FLOOR (num_expr) Returns the largest integer less than or equal to the specified numeric expression. 4 EXP (num_expr) Returns the exponent of the specified numeric expression. 5 LOG (num_expr [,base]) Returns the natural logarithm of the specified numeric expression, or the logarithm using the specified base. 6 LOG10 (num_expr) Returns the base-10 logarithmic value of the specified numeric expression. 7 ROUND (num_expr) Returns a numeric value, rounded to the closest integer value. 8 TRUNC (num_expr) Returns a numeric value, truncated to the closest integer value. 9 SQRT (num_expr) Returns the square root of the specified numeric expression. 10 SQUARE (num_expr) Returns the square of the specified numeric expression. 11 POWER (num_expr, num_expr) Returns the power of the specified numeric expression to the value specified. 12 SIGN (num_expr) Returns the sign value (-1, 0, 1) of the specified numeric expression. 13 ACOS (num_expr) Returns the angle, in radians, whose cosine is the specified numeric expression; also called arccosine. 14 ASIN (num_expr) Returns the angle, in radians, whose sine is the specified numeric expression. This is also called arcsine. 15 ATAN (num_expr) Returns the angle, in radians, whose tangent is the specified numeric expression. This is also called arctangent. 16 ATN2 (num_expr) Returns the angle, in radians, between the positive x-axis and the ray from the origin to the point (y, x), where x and y are the values of the two specified float expressions. 17 COS (num_expr) Returns the trigonometric cosine of the specified angle, in radians, in the specified expression. 18 COT (num_expr) Returns the trigonometric cotangent of the specified angle, in radians, in the specified numeric expression. 19 DEGREES (num_expr) Returns the corresponding angle in degrees for an angle specified in radians. 20 PI () Returns the constant value of PI. 21 RADIANS (num_expr) Returns radians when a numeric expression, in degrees, is entered. 22 SIN (num_expr) Returns the trigonometric sine of the specified angle, in radians, in the specified expression. 23 TAN (num_expr) Returns the tangent of the input expression, in the specified expression. Let’s take a look at an example where we will be using some built-in mathematical functions. Following is a query in which you can see the numeric rounding functions, ROUND, CEILING, FLOOR, as well as the absolute value, sin, cosign, tangent, natural logarithm, and pi functions. 
+SELECT 
+   ROUND(3.4) AS MathRound1, 
+   ROUND(3.5) AS MathRound2, 
+	
+   CEILING(3.4) AS MathCeiling1, 
+   CEILING(3.5) AS MathCeiling2, 
+	
+   FLOOR(3.4) AS MathFloor1, 
+   FLOOR(3.5) AS MathFloor2, 
+	
+   ABS(-5) AS MathAbs1, 
+   ABS(5) AS MathAbs2, 
+	
+   SIN(28) AS MathSin, 
+   COS(28) AS MathCos, 
+   TAN(28) AS MathTan, 
+   LOG(16) AS MathLog, 
+   PI() AS MathPi
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "MathRound1": 3, 
+      "MathRound2": 4, 
+      "MathCeiling1": 4, 
+      "MathCeiling2": 4, 
+      "MathFloor1": 3, 
+      "MathFloor2": 3, 
+      "MathAbs1": 5, 
+      "MathAbs2": 5, 
+      "MathSin": 0.27090578830786904, 
+      "MathCos": -0.9626058663135666,
+      "MathTan": -0.28142960456426525, 
+      "MathLog": 2.772588722239781, 
+      "MathPi": 3.141592653589793 
+   } 
+]
+ documentdb_sql_builtin_function.htm

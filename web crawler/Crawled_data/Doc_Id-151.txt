@@ -1,0 +1,25 @@
+H2 Database - Merge
+
+https://www.tutorialspoint.com/h2_database/h2_database_merge.htm
+
+H2 Database, Tutorial, Learning, Introduction, Installation, Data Manipulation Select, Insert, Update, Delete, Backup, Call, Explain, Merge, Show, Data Definition Create, Alter, Drop, Truncate, Commit, Grant, Savepoint, Rollback, JDBC Connection.
+
+August-15-2017-02:34:24
+
+MERGE command is used to update the existing rows and insert new rows into a table. The primary key column plays an important role while using this command; it is used to find the row. Syntax Following is the generic syntax of the MERGE command. 
+MERGE INTO tableName [ ( columnName [,...] ) ] 
+[ KEY ( columnName [,...] ) ] 
+{ VALUES { ( { DEFAULT | expression } [,...] ) } [,...] | select } 
+ In the above syntax, the KEY clause is used to specify the primary key column name. Along with VALUES clause, we can use primitive values to insert or we can retrieve and store another table values into this table using the select command. Example In this example, let us try to add a new record into Customers table. Following are the details of the new record in the table. Column Name Value ID 8 NAME Lokesh AGE 32 ADDRESS Hyderabad SALARY 2500 Using the following query, let us insert the given record into the H2 database query. 
+MERGE INTO CUSTOMER KEY (ID) VALUES (8, 'Lokesh', 32, 'Hyderabad', 2500);
+ The above query produces the following output. 
+Update count: 1 
+ Let us verify the records of the Customer table by executing the following query. 
+SELECT * FROM CUSTOMER;
+ The above query produces the following output. ID Name Age Address Salary 1 Ramesh 32 Ahmedabad 2000 2 Khilan 25 Delhi 1500 3 Kaushik 23 Kota 2000 4 Chaitali 25 Mumbai 6500 5 Hardik 27 Bhopal 8500 6 Komal 22 MP 4500 7 Muffy 24 Indore 10000 8 Lokesh 32 Hyderabad 2500 Now let us try to update the record using the Merge command. Following are the details of the record to be updated. Column Name Value ID 8 NAME Loki AGE 32 ADDRESS Hyderabad SALARY 3000 Use the following query to insert the given record into the H2 database query. 
+MERGE INTO CUSTOMER KEY (ID) VALUES (8, 'Loki', 32, 'Hyderabad', 3000);
+ The above query produces the following output. 
+Update count: 1 
+ Let us verify the records of the Customer table by executing the following query. 
+SELECT * FROM CUSTOMER; 
+ The above query produces the following output − ID Name Age Address Salary 1 Ramesh 32 Ahmedabad 2000 2 Khilan 25 Delhi 1500 3 Kaushik 23 Kota 2000 4 Chaitali 25 Mumbai 6500 5 Hardik 27 Bhopal 8500 6 Komal 22 MP 4500 7 Muffy 24 Indore 10000 8 Loki 32 Hyderabad 3000

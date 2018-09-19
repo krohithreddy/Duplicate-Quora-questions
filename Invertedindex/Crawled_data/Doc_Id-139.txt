@@ -1,0 +1,135 @@
+DynamoDB - Update Items
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_update_items.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+Updating an item in DynamoDB mainly consists of specifying the full primary key and table name for the item. It requires a new value for each attribute you modify. The operation uses UpdateItem, which modifies the existing items or creates them on discovery of a missing item. In updates, you might want to track the changes by displaying the original and new values, before and after the operations. UpdateItem uses the ReturnValues parameter to achieve this. Note − The operation does not report capacity unit consumption, but you can use the ReturnConsumedCapacity parameter. Use the GUI console, Java, or any other tool to perform this task. How to Update Items Using GUI Tools? Navigate to the console. In the navigation pane on the left side, select Tables. Choose the table needed, and then select the Items tab. Choose the item desired for an update, and select Actions | Edit. Modify any attributes or values necessary in the Edit Item window. Update Items Using Java Using Java in the item update operations requires creating a Table class instance, and calling its updateItem method. Then you specify the item's primary key, and provide an UpdateExpression detailing attribute modifications. The Following is an example of the same − 
+DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient(
+   new ProfileCredentialsProvider()));
+   
+Table table = dynamoDB.getTable("ProductList");
+
+Map<String, String> expressionAttributeNames = new HashMap<String, String>();
+expressionAttributeNames.put("#M", "Make");
+expressionAttributeNames.put("#P", "Price
+expressionAttributeNames.put("#N", "ID");
+
+Map<String, Object> expressionAttributeValues = new HashMap<String, Object>();
+expressionAttributeValues.put(":val1",
+   new HashSet<String>(Arrays.asList("Make1","Make2")));
+expressionAttributeValues.put(":val2", 1);       //Price
+
+UpdateItemOutcome outcome =  table.updateItem(
+   "internalID",                                 // key attribute name
+   111,                                          // key attribute value
+   "add #M :val1 set #P = #P - :val2 remove #N", // UpdateExpression
+   expressionAttributeNames,
+   expressionAttributeValues);
+ The updateItem method also allows for specifying conditions, which can be seen in the following example − 
+Table table = dynamoDB.getTable("ProductList");
+Map<String, String> expressionAttributeNames = new HashMap<String, String>();
+expressionAttributeNames.put("#P", "Price");
+
+Map<String, Object> expressionAttributeValues = new HashMap<String, Object>();
+expressionAttributeValues.put(":val1", 44);  // change Price to 44
+expressionAttributeValues.put(":val2", 15);  // only if currently 15
+
+UpdateItemOutcome outcome = table.updateItem (new PrimaryKey("internalID",111),
+   "set #P = :val1",                        // Update
+   "#P = :val2",                            // Condition 
+   expressionAttributeNames,
+   expressionAttributeValues);
+ Update Items Using Counters DynamoDB allows atomic counters, which means using UpdateItem to increment/decrement attribute values without impacting other requests; furthermore, the counters always update. The following is an example that explains how it can be done. Note − The following sample may assume a previously created data source. Before attempting to execute, acquire supporting libraries and create necessary data sources (tables with required characteristics, or other referenced sources). This sample also uses Eclipse IDE, an AWS credentials file, and the AWS Toolkit within an Eclipse AWS Java Project. 
+package com.amazonaws.codesamples.document;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.document.DeleteItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.Table;
+
+import com.amazonaws.services.dynamodbv2.document.UpdateItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
+import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.model.ReturnValue;
+
+public class UpdateItemOpSample {  
+   static DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient( 
+      new ProfileCredentialsProvider()));  
+   static String tblName = "ProductList";  
+   
+   public static void main(String[] args) throws IOException {  
+      createItems();  
+      retrieveItem();  
+      
+      // Execute updates 
+      updateMultipleAttributes(); 
+      updateAddNewAttribute();
+      updateExistingAttributeConditionally();  
+      
+      // Item deletion 
+      deleteItem(); 
+   }
+   private static void createItems() {  
+      Table table = dynamoDB.getTable(tblName); 
+      try { 
+         Item item = new Item() 
+            .withPrimaryKey("ID", 303) 
+            .withString("Nomenclature", "Polymer Blaster 4000") 
+            .withStringSet( "Manufacturers",
+            new HashSet<String>(Arrays.asList("XYZ Inc.", "LMNOP Inc."))) 
+            .withNumber("Price", 50000) 
+            .withBoolean("InProduction", true) 
+            .withString("Category", "Laser Cutter"); 
+            table.putItem(item);  
+         
+         item = new Item() 
+            .withPrimaryKey("ID", 313) 
+            .withString("Nomenclature", "Agitatatron 2000") 
+            .withStringSet( "Manufacturers", 
+            new HashSet<String>(Arrays.asList("XYZ Inc,", "CDE Inc."))) 
+            .withNumber("Price", 40000) 
+            .withBoolean("InProduction", true) 
+            .withString("Category", "Agitator");  
+            table.putItem(item);  
+      } catch (Exception e) { 
+         System.err.println("Cannot create items."); 
+         System.err.println(e.getMessage()); 
+      } 
+   }
+   private static void updateAddNewAttribute() { 
+      Table table = dynamoDB.getTable(tableName);  
+      try {  
+         Map<String, String> expressionAttributeNames = new HashMap<String, String>(); 
+         expressionAttributeNames.put("#na", "NewAttribute");  
+         UpdateItemSpec updateItemSpec = new UpdateItemSpec() 
+            .withPrimaryKey("ID", 303) 
+            .withUpdateExpression("set #na = :val1") 
+            .withNameMap(new NameMap() 
+            .with("#na", "NewAttribute")) 
+            .withValueMap(new ValueMap() 
+            .withString(":val1", "A value")) 
+            .withReturnValues(ReturnValue.ALL_NEW);  
+            UpdateItemOutcome outcome =  table.updateItem(updateItemSpec);  
+         
+         // Confirm 
+         System.out.println("Displaying updated item..."); 
+         System.out.println(outcome.getItem().toJSONPretty());             
+      } catch (Exception e) { 
+         System.err.println("Cannot add an attribute in " + tableName); 
+         System.err.println(e.getMessage()); 
+      }         
+   } 
+}

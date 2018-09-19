@@ -1,0 +1,345 @@
+AIML - <srai> Tag
+
+https://www.tutorialspoint.com/aiml/aiml_srai_tag.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+<srai> Tag is a multipurpose tag. This tag enables AIML to define the different targets for the same template. Syntax 
+<srai> pattern </srai> 
+ Following are the commonly used terms associated with srai − Symbolic Reduction Divide and Conquer Synonyms resolution Keywords detection Symbolic Reduction The symbolic reduction technique is used to simplify patterns. It helps to reduce complex grammatical patterns with simple pattern(s). For example, consider the following conversation. 
+Human: Who was Albert Einstein?
+Robot: Albert Einstein was a German physicist.
+Human: Who was Isaac Newton?
+Robot: Isaac Newton was a English physicist and mathematician.
+ Now What if questions are raised as 
+Human: DO YOU KNOW WHO Albert Einstein IS?
+Human: DO YOU KNOW WHO Isaac Newton IS?
+ Here, <srai> tag works. It can take the pattern of the user as a template. Step 1: Create categories 
+<category>
+   <pattern>WHO IS ALBERT EINSTEIN?</pattern>
+   <template>Albert Einstein was a German physicist.</template>
+</category>
+
+<category>
+   <pattern> WHO IS Isaac NEWTON? </pattern>
+   <template>Isaac Newton was a English physicist and mathematician.</template>
+</category>
+ Step 2: Create generic category using <srai> tag 
+<category>
+   <pattern>DO YOU KNOW WHO * IS?</pattern>
+   
+   <template>
+      <srai>WHO IS <star/></srai>
+   </template>
+   
+</category>
+ Example Create srai.aiml inside C > ab > bots > test > aiml and srai.aiml.csv inside C > ab > bots > test > aimlif directories. srai.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern> WHO IS ALBERT EINSTEIN </pattern>
+      <template>Albert Einstein was a German physicist.</template>
+   </category>
+   
+   <category>
+      <pattern> WHO IS Isaac NEWTON </pattern>
+      <template>Isaac Newton was a English physicist and mathematician.</template>
+   </category>
+   
+   <category>
+      <pattern>DO YOU KNOW WHO * IS</pattern>
+      <template>
+         <srai>WHO IS <star/></srai>
+      </template>
+   </category>
+</aiml>
+ star.aiml.csv 
+0,WHO IS ALBERT EINSTEIN,*,*,Albert Einstein was a German physicist.,srai.aiml
+0,WHO IS Isaac NEWTON,*,*,Isaac Newton was a English physicist and mathematician.,srai.aiml
+0,DO YOU KNOW WHO * IS,*,*,<srai>WHO IS <star/></srai>,srai.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You will see the following output − 
+Human: Do you know who Albert Einstein is
+Robot: Albert Einstein was a German physicist.
+ Divide and Conquer Divide and Conquer is used to reuse sub sentences in making a complete reply. It helps to reduce defining multiple categories. For example, consider following conversation. 
+Human: Bye
+Robot: GoodBye!
+Human: Bye Alice!
+Robot: GoodBye!
+ Now here robot is expected to reply GoodBye! Whenever a user says Bye in the beginning of the sentence. Let's put <srai> tag to work here. Step 1: Create category 
+<category>
+   <pattern>BYE</pattern>
+   <template>Good Bye!</template>
+</category>
+ Step 2: Create generic category using <srai> tag 
+<category>
+   <pattern>BYE *</pattern>
+   
+   <template>
+      <srai>BYE</srai>
+   </template>
+   
+</category>
+ Example Update srai.aiml inside C > ab > bots > test > aiml and srai.aiml.csv inside C > ab > bots > test > aimlif directories. srai.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern> WHO IS ALBERT EINSTEIN </pattern>
+      <template>Albert Einstein was a German physicist.</template>
+   </category>
+ 
+   <category>
+      <pattern> WHO IS Isaac NEWTON </pattern>
+      <template>Isaac Newton was a English physicist and mathematician.</template>
+   </category>
+   
+   <category>
+      <pattern>DO YOU KNOW WHO * IS</pattern>
+      <template>
+         <srai>WHO IS <star/></srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>BYE</pattern>
+      <template>Good Bye!</template>
+   </category>
+   
+   <category>
+      <pattern>BYE *</pattern>
+      <template>
+         <srai>BYE</srai>
+      </template>
+   </category>
+   
+</aiml>
+ star.aiml.csv 
+0,WHO IS ALBERT EINSTEIN,*,*,Albert Einstein was a German physicist.,srai.aiml
+0,WHO IS Isaac NEWTON,*,*,Isaac Newton was a English physicist and mathematician.,srai.aiml
+0,DO YOU KNOW WHO * IS,*,*,<srai>WHO IS <star/></srai>,srai.aiml
+0,BYE,*,*,Good Bye!,srai.aiml
+0,BYE *,*,*,<srai>BYE</srai>,srai.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You will see the following output − 
+Human: Bye
+Robot: GoodBye!
+Human: Bye Alice!
+Robot: GoodBye!
+ Synonyms Resolution Synonyms are words with similar meanings. A bot should reply in the same manner for similar words. For example, consider the following conversation. 
+Human: Factory
+Robot: Development Center!
+Human: Industry
+Robot: Development Center!
+ Now here robot is expected to reply Development Center! whenever a user says Factory or Industry. Let's put <srai> tag to work here. Step 1: Create category 
+<category>
+   <pattern>FACTORY</pattern>
+   <template>Development Center!</template>
+</category>
+ Step 2: Create generic category using <srai> tag 
+<category>
+   <pattern>INDUSTRY</pattern>
+   
+   <template>
+      <srai>FACTORY</srai>
+   </template>
+   
+</category>
+ Example Update srai.aiml inside C > ab > bots > test > aiml and srai.aiml.csv inside C > ab > bots > test > aimlif directories. srai.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern> WHO IS ALBERT EINSTEIN </pattern>
+      <template>Albert Einstein was a German physicist.</template>
+   </category>
+   
+   <category>
+      <pattern> WHO IS Isaac NEWTON </pattern>
+      <template>Isaac Newton was a English physicist and mathematician.</template>
+   </category>
+   
+   <category>
+      <pattern>DO YOU KNOW WHO * IS</pattern>
+      <template>
+         <srai>WHO IS <star/></srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>BYE</pattern>
+      <template>Good Bye!</template>
+   </category>
+   
+   <category>
+      <pattern>BYE *</pattern>
+      <template>
+         <srai>BYE</srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>FACTORY</pattern>
+      <template>Development Center!</template>
+   </category>
+   
+   <category>
+      <pattern>INDUSTRY</pattern>
+      <template>
+         <srai>FACTORY</srai>
+      </template>
+   </category>
+   
+</aiml>
+ star.aiml.csv 
+0,WHO IS ALBERT EINSTEIN,*,*,Albert Einstein was a German physicist.,srai.aiml
+0,WHO IS Isaac NEWTON,*,*,Isaac Newton was a English physicist and mathematician.,srai.aiml
+0,DO YOU KNOW WHO * IS,*,*,<srai>WHO IS <star/></srai>,srai.aiml
+0,BYE,*,*,Good Bye!,srai.aiml
+0,BYE *,*,*,<srai>BYE</srai>,srai.aiml
+0,FACTORY,*,*,Development Center!,srai.aiml
+0,INDUSTRY,*,*,<srai>FACTORY</srai>,srai.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You will see the following output − 
+Human: Factory
+Robot: Development Center!
+Human: Industry
+Robot: Development Center!
+ Keywords Detection Using srai, we can return a simple response when the user types a specific keyword, say, School, no matter where "school" is present in the sentence. For example, consider the following conversation. 
+Human: I love going to school daily.
+Robot: School is an important institution in a child's life.
+Human: I like my school.
+Robot: School is an important institution in a child's life.
+ Here, the robot is expected to reply a standard message 'School is an important institution in a child's life.' whenever a user has school in the sentence. Let's put <srai> tag to work here. We'll use wild-cards here. Step 1: Create category 
+<category>
+   <pattern>SCHOOL</pattern>
+   <template>School is an important institution in a child's life.</template>
+</category>
+ Step 2: Create generic categories using <srai> tag 
+<category>
+   <pattern>_ SCHOOL</pattern>
+   <template>
+      <srai>SCHOOL</srai>
+   </template>
+</category>
+
+<category>
+   <pattern>_ SCHOOL</pattern>
+   <template>
+      <srai>SCHOOL</srai>
+   </template>
+</category>
+
+<category>
+   <pattern>SCHOOL *</pattern>
+   <template>
+      <srai>SCHOOL</srai>
+   </template>
+</category>
+
+<category>
+   <pattern>_ SCHOOL *</pattern>
+   <template>
+      <srai>SCHOOL</srai>
+   </template>
+</category>
+ Example Update srai.aiml inside C > ab > bots > test > aiml and srai.aiml.csv inside C > ab > bots > test > aimlif directories. srai.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern> WHO IS ALBERT EINSTEIN </pattern>
+      <template>Albert Einstein was a German physicist.</template>
+   </category>
+   
+   <category>
+      <pattern> WHO IS Isaac NEWTON </pattern>
+      <template>Isaac Newton was a English physicist and mathematician.</template>
+   </category>
+   
+   <category>
+      <pattern>DO YOU KNOW WHO * IS</pattern>
+      <template>
+         <srai>WHO IS <star/></srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>BYE</pattern>
+      <template>Good Bye!</template>
+   </category>
+   
+   <category>
+      <pattern>BYE *</pattern>
+      <template>
+         <srai>BYE</srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>FACTORY</pattern>
+      <template>Development Center!</template>
+   </category>
+   
+   <category>
+      <pattern>INDUSTRY</pattern>
+      <template>
+         <srai>FACTORY</srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>SCHOOL</pattern>
+      <template>School is an important institution in a child's life.</template>
+   </category>  
+   
+   <category>
+      <pattern>_ SCHOOL</pattern>
+      <template>
+         <srai>SCHOOL</srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>_ SCHOOL</pattern>
+      <template>
+         <srai>SCHOOL</srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>SCHOOL *</pattern>
+      <template>
+         <srai>SCHOOL</srai>
+      </template>
+   </category>
+   
+   <category>
+      <pattern>_ SCHOOL *</pattern>
+      <template>
+         <srai>SCHOOL</srai>
+      </template>
+   </category>
+   
+</aiml>
+ star.aiml.csv 
+0,WHO IS ALBERT EINSTEIN,*,*,Albert Einstein was a German physicist.,srai.aiml
+0,WHO IS Isaac NEWTON,*,*,Isaac Newton was a English physicist and mathematician.,srai.aiml
+0,DO YOU KNOW WHO * IS,*,*,<srai>WHO IS <star/></srai>,srai.aiml
+0,BYE,*,*,Good Bye!,srai.aiml
+0,BYE *,*,*,<srai>BYE</srai>,srai.aiml
+0,FACTORY,*,*,Development Center!,srai.aiml
+0,INDUSTRY,*,*,<srai>FACTORY</srai>,srai.aiml
+0,SCHOOL,*,*,School is an important institution in a child's life.,srai.aiml
+0,_ SCHOOL,*,*,<srai>SCHOOL</srai>,srai.aiml
+0,SCHOOL *,*,*,<srai>SCHOOL</srai>,srai.aiml
+0,_ SCHOOL *,*,*,<srai>SCHOOL</srai>,srai.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You will see the following output − 
+Human: I love going to school daily.
+Robot: School is an important institution in a child's life.
+Human: I like my school.
+Robot: School is an important institution in a child's life.

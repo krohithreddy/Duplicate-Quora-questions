@@ -1,0 +1,124 @@
+DocumentDB - Drop Databases
+
+https://www.tutorialspoint.com/documentdb/documentdb_drop_databases.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+You can drop a database or databases from the portal as well as from the code by using .Net SDK. Here, we will discuss, in a step-wise manner, how to drop a database in DocumentDB. Step 1 − Go to your DocumentDB account on Azure portal. For the purpose of demo, I have added two more databases as seen in the following screenshot. Step 2 − To drop any database, you need to click that database. Let’s select tempdb, you will see the following page, select the ‘Delete Database’ option. Step 3 − It will display the confirmation message, now click the ‘Yes’ button. You will see that the tempdb is no more available in your dashboard. You can also delete databases from your code using .Net SDK. To do following are the steps. Step 1 − Let's delete the database by specifying the ID of the database we want to delete, but we need its SelfLink. Step 2 − We are calling the CreateDatabaseQuery like before, but this time we are actually supplying a query to return just the one database with the ID tempdb1. 
+private async static Task DeleteDatabase(DocumentClient client) {
+   Console.WriteLine("******** Delete Database ********");
+   Database database = client
+      .CreateDatabaseQuery("SELECT * FROM c WHERE c.id = 'tempdb1'")
+      .AsEnumerable()
+      .First();
+   await client.DeleteDatabaseAsync(database.SelfLink);
+}
+ Step 3 − This time, we can call AsEnumerable instead of ToList() because we don't actually need a list object. Expecting only result, calling AsEnumerable is sufficient so that we can get the first database object returned by the query with First(). This is the database object for tempdb1 and it has a SelfLink that we can use to call DeleteDatabaseAsync which deletes the database. Step 4 − You also need to call DeleteDatabase task from the CreateDocumentClient task after DocumentClient is instantiated. Step 5 − To view the list of databases after deleting the specified database, let’s call GetDatabases method again. 
+using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+   //await CreateDatabase(client);
+	
+   GetDatabases(client);
+   await DeleteDatabase(client);
+   GetDatabases(client); 
+} 
+ Following is the complete Program.cs file so far. 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
+using Microsoft.Azure.Documents.Linq;
+using Newtonsoft.Json;
+
+namespace DocumentDBDemo {
+
+   class Program {
+	
+      private const string EndpointUrl = "https://azuredocdbdemo.documents.azure.com:443/";
+		
+      private const string AuthorizationKey = "BBhjI0gxdVPdDbS4diTjdloJq7Fp4L5RO/
+         StTt6UtEufDM78qM2CtBZWbyVwFPSJIm8AcfDu2O+AfV T+TYUnBQ==";
+			
+      static void Main(string[] args) {
+         try {
+            CreateDocumentClient().Wait();
+         } catch (Exception e) {
+            Exception baseException = e.GetBaseException();
+            Console.WriteLine("Error: {0}, Message: {1}", e.Message, baseException.Message);
+         }
+         Console.ReadKey();
+      }
+		
+      private static async Task CreateDocumentClient() {
+         // Create a new instance of the DocumentClient
+         using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+            //await CreateDatabase(client);
+            GetDatabases(client);
+            await DeleteDatabase(client);
+            GetDatabases(client);
+         }
+      }
+		
+      private async static Task CreateDatabase(DocumentClient client) {
+         Console.WriteLine();
+         Console.WriteLine("******** Create Database *******");
+			
+         var databaseDefinition = new Database { Id = "mynewdb" };
+         var result = await client.CreateDatabaseAsync(databaseDefinition);
+         var database = result.Resource;
+			
+         Console.WriteLine(" Database Id: {0}; Rid: {1}",
+            database.Id, database.ResourceId);
+         Console.WriteLine("******** Database Created *******");
+      }
+		
+      private static void GetDatabases(DocumentClient client) {
+         Console.WriteLine();
+         Console.WriteLine();
+         Console.WriteLine("******** Get Databases List ********");
+			
+         var databases = client.CreateDatabaseQuery().ToList();
+			
+         foreach (var database in databases) {
+            Console.WriteLine(" Database Id: {0}; Rid: {1}", database.Id,
+               database.ResourceId);
+         }
+			
+         Console.WriteLine();
+         Console.WriteLine("Total databases: {0}", databases.Count);
+      }
+		
+      private async static Task DeleteDatabase(DocumentClient client) {
+         Console.WriteLine();
+         Console.WriteLine("******** Delete Database ********");
+			
+         Database database = client
+            .CreateDatabaseQuery("SELECT * FROM c WHERE c.id = 'tempdb1'")
+            .AsEnumerable()
+            .First();
+         await client.DeleteDatabaseAsync(database.SelfLink);
+      }
+		
+   }
+}
+ When the above code is compiled and executed, you will receive the following output which contains the Database and Resources IDs of the three databases and total number of databases. 
+******** Get Databases List ******** 
+ Database Id: myfirstdb; Rid: Ic8LAA== 
+ Database Id: mynewdb; Rid: ltpJAA== 
+ Database Id: tempdb1; Rid: 06JjAA==
+ 
+Total databases: 3  
+
+******** Delete Database ******** 
+  
+******** Get Databases List ******** 
+ Database Id: myfirstdb; Rid: Ic8LAA== 
+ Database Id: mynewdb; Rid: ltpJAA==
+ 
+Total databases: 2 
+ After deleting the database, you will also see at the end that only two databases are left in DocumentDB account.

@@ -1,0 +1,75 @@
+MariaDB - Create Tables
+
+https://www.tutorialspoint.com/mariadb/mariadb_create_tables.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+In this chapter, we will learn how to create tables. Before creating a table, first determine its name, field names, and field definitions. Following is the general syntax for table creation − 
+CREATE TABLE table_name (column_name column_type);
+ Review the command applied to creating a table in the PRODUCTS database − 
+databaseproducts_ tbl(
+   product_id INT NOT NULL AUTO_INCREMENT,
+   product_name VARCHAR(100) NOT NULL,
+   product_manufacturer VARCHAR(40) NOT NULL,
+   submission_date DATE,
+   PRIMARY KEY ( product_id )
+);
+ The above example uses “NOT NULL” as a field attribute to avoid errors caused by a null value. The attribute “AUTO_INCREMENT” instructs MariaDB to add the next available value to the ID field. The keyword primary key defines a column as the primary key. Multiple columns separated by commas can define a primary key. The two main methods for creating tables are using the command prompt and a PHP script. The Command Prompt Utilize the CREATE TABLE command to perform the task as shown below − 
+root@host# mysql -u root -p
+Enter password:*******
+mysql> use PRODUCTS;
+Database changed
+mysql> CREATE TABLE products_tbl(
+   -> product_id INT NOT NULL AUTO_INCREMENT,
+   -> product_name VARCHAR(100) NOT NULL,
+   -> product_manufacturer VARCHAR(40) NOT NULL,
+   -> submission_date DATE,
+   -> PRIMARY KEY ( product_id )
+   -> );
+mysql> SHOW TABLES;
++------------------------+
+| PRODUCTS               |
++------------------------+
+| products_tbl           |
++------------------------+
+ Ensure all commands are terminated with a semicolon. PHP Create Table Script PHP provides mysql_query() for table creation. Its second argument contains the necessary SQL command − 
+<html>
+   <head>
+      <title>Create a MariaDB Table</title>
+   </head>
+
+   <body>
+      <?php
+         $dbhost = 'localhost:3036';
+         $dbuser = 'root';
+         $dbpass = 'rootpassword';
+         $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+      
+         if(! $conn ){
+            die('Could not connect: ' . mysql_error());
+         }
+         echo 'Connected successfully<br />';
+         
+         $sql = "CREATE TABLE products_tbl( ".
+            "product_id INT NOT NULL AUTO_INCREMENT, ".
+            "product_name VARCHAR(100) NOT NULL, ".
+            "product_manufacturer VARCHAR(40) NOT NULL, ".
+            "submission_date DATE, ".
+            "PRIMARY KEY ( product_id )); ";
+      
+         mysql_select_db( 'PRODUCTS' );
+         $retval = mysql_query( $sql, $conn );
+      
+         if(! $retval ) {
+            die('Could not create table: ' . mysql_error());
+         }
+         echo "Table created successfully\n";
+         
+         mysql_close($conn);
+      ?>
+   </body>
+</html>
+ On successful table creation, you will see the following output − 
+mysql> Table created successfully

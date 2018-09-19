@@ -1,0 +1,29 @@
+OrientDB - Rollback Database
+
+https://www.tutorialspoint.com/orientdb/orientdb_rollback_database.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+In this chapter, you will learn how to roll back the un-committed transaction through the OrientDB command line interface. The following statement is the basic syntax of the Rollback database command. 
+ROLLBACK
+ Note − You can use this command only after connecting to a particular database and after beginning the transaction. Example In this example, we will use the same database named ‘demo’ that we created in the previous chapter. We will see the operation of rollback transaction and store a record using transactions. First, start the transaction using the following BEGIN command. 
+orientdb {db = demo}> BEGIN
+ Then, insert a record into an employee table with the values id = 12 and name = satish.P using the following command. 
+orientdb> INSERT INTO employee (id, name) VALUES (12, 'satish.P')
+ You can use the following command to retrieve the records from the Employee table. 
+orientdb> SELECT FROM employee WHERE name LIKE '%.P'
+ If this command is executed successfully, you will get the following output. 
+---+-------+-------------------- 
+ # | ID   | name 
+---+-------+-------------------- 
+ 0 | 12   | satish.P 
+---+-------+-------------------- 
+1 item(s) found. Query executed in 0.076 sec(s). 
+ You can now use the following command to Rollback this transaction. 
+orientdb> ROLLBACK
+ Check the select query again to retrieve the same record from the employee table. 
+orientdb> SELECT FROM employee WHERE name LIKE '%.P'
+ If the rollback is executed successfully, you will get 0 records found in the output. 
+0 item(s) found. Query executed in 0.037 sec(s).

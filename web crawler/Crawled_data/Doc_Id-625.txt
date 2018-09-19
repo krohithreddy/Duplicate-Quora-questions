@@ -1,0 +1,16 @@
+Redis - Strings
+
+https://www.tutorialspoint.com/redis/redis_strings.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis strings commands are used for managing string values in Redis. Following is the syntax for using Redis string commands. Syntax 
+redis 127.0.0.1:6379> COMMAND KEY_NAME 
+ Example 
+redis 127.0.0.1:6379> SET tutorialspoint redis 
+OK 
+redis 127.0.0.1:6379> GET tutorialspoint 
+"redis" 
+ In the above example, SET and GET are the commands, while tutorialspoint is the key. Redis Strings Commands Following table lists some basic commands to manage strings in Redis. S.No Command & Description 1 SET key value This command sets the value at the specified key. 2 GET key Gets the value of a key. 3 GETRANGE key start end Gets a substring of the string stored at a key. 4 GETSET key value Sets the string value of a key and return its old value. 5 GETBIT key offset Returns the bit value at the offset in the string value stored at the key. 6 MGET key1 [key2..] Gets the values of all the given keys 7 SETBIT key offset value Sets or clears the bit at the offset in the string value stored at the key 8 SETEX key seconds value Sets the value with the expiry of a key 9 SETNX key value Sets the value of a key, only if the key does not exist 10 SETRANGE key offset value Overwrites the part of a string at the key starting at the specified offset 11 STRLEN key Gets the length of the value stored in a key 12 MSET key value [key value ...] Sets multiple keys to multiple values 13 MSETNX key value [key value ...] Sets multiple keys to multiple values, only if none of the keys exist 14 PSETEX key milliseconds value Sets the value and expiration in milliseconds of a key 15 INCR key Increments the integer value of a key by one 16 INCRBY key increment Increments the integer value of a key by the given amount 17 INCRBYFLOAT key increment Increments the float value of a key by the given amount 18 DECR key Decrements the integer value of a key by one 19 DECRBY key decrement Decrements the integer value of a key by the given number 20 APPEND key value Appends a value to a key

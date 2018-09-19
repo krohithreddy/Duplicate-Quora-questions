@@ -1,0 +1,50 @@
+OrientDB - Insert Record
+
+https://www.tutorialspoint.com/orientdb/orientdb_insert_record.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+OrientDB is a NoSQL database that can store the documents and graph-oriented data. NoSQL database does not contain any table, so how can you insert data as a record. Here you can see the table data in the form of class, property, vertex, and edge meaning classes are like tables, and properties are like files in the tables. We can define all these entities using schema in OrientDB. Property data can be inserted into a class. Insert command creates a new record in the database schema. Records can be schema-less or follow some specified rules. The following statement is the basic syntax of the Insert Record command. 
+INSERT INTO [class:]<class>|cluster:<cluster>|index:<index> 
+   [(<field>[,]*) VALUES (<expression>[,]*)[,]*]| 
+   [SET <field> = <expression>|<sub-command>[,]*]| 
+   [CONTENT {<JSON>}] 
+   [RETURN <expression>]  
+   [FROM <query>] 
+ Following are the details about the options in the above syntax. SET − Defines each field along with the value. CONTENT − Defines JSON data to set field values. This is optional. RETURN − Defines the expression to return instead of number of records inserted. The most common use cases are − @rid − Returns the Record ID of the new record. @this − Returns the entire new record. FROM − Where you want to insert the record or a result set. Example Let us consider a Customer table with the following fields and types. Sr.No. Field Name Type 1 Id Integer 2 Name String 3 Age Integer You can create the Schema (table) by executing the following commands. 
+CREATE DATABASE PLOCAL:/opt/orientdb/databases/sales 
+CREATE CLASS Customer 
+CREATE PROPERTY Customer.id integer 
+CREATE PROPERTY Customer.name String 
+CREATE PROPERTY Customer.age integer
+ After executing all the commands, you will get the table name Customer with id, name, and age fields. You can check the table by executing select query into the Customer table. OrientDB provides different ways to insert a record. Consider the following Customer table containing the sample records. Sr.No. Name Age 1 Satish 25 2 Krishna 26 3 Kiran 29 4 Javeed 21 5 Raja 29 The following command is to insert the first record into the Customer table. 
+INSERT INTO Customer (id, name, age) VALUES (01,'satish', 25) 
+ If the above command is successfully executed, you will get the following output. 
+Inserted record 'Customer#11:0{id:1,name:satish,age:25} v1' in 0.069000 sec(s). 
+ The following command is to insert the second record into the Customer table. 
+INSERT INTO Customer SET id = 02, name = 'krishna', age = 26 
+ If the above command is successfully executed, you will get the following output. 
+Inserted record 'Customer#11:1{id:2,age:26,name:krishna} v1' in 0.005000 sec(s).
+ The following command is to insert the third record into the Customer table. 
+INSERT INTO Customer CONTENT {"id": "03", "name": "kiran", "age": "29"}
+ If the above command is successfully executed, you will get the following output. 
+Inserted record 'Customer#11:2{id:3,name:kiran,age:29} v1' in 0.004000 sec(s).
+ The following command is to insert the next two records into the Customer table. 
+INSERT INTO Customer (id, name, age) VALUES (04,'javeed', 21), (05,'raja', 29) 
+ If the above command is successfully executed, you will get the following output. 
+Inserted record '[Customer#11:3{id:4,name:javeed,age:21} v1,
+Customer#11:4{id:5,name:raja,age:29} v1]' in 0.007000 sec(s).
+ You can check if all these records are inserted or not by executing the following command. 
+SELECT FROM Customer
+ If the above command is successfully executed, you will get the following output. 
+----+-----+--------+----+-------+---- 
+#   |@RID |@CLASS  |id  |name   |age  
+----+-----+--------+----+-------+---- 
+0   |#11:0|Customer|1   |satish |25   
+1   |#11:1|Customer|2   |krishna|26   
+2   |#11:2|Customer|3   |kiran  |29 
+3   |#11:3|Customer|4   |javeed |21 
+4   |#11:4|Customer|5   |raja   |29   
+----+-----+--------+----+-------+----

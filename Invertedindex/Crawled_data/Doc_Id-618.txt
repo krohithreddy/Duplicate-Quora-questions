@@ -1,0 +1,26 @@
+Redis - Publish Subscribe
+
+https://www.tutorialspoint.com/redis/redis_pub_sub.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis Pub/Sub implements the messaging system where the senders (in redis terminology called publishers) sends the messages while the receivers (subscribers) receive them. The link by which the messages are transferred is called channel. In Redis, a client can subscribe any number of channels. Example Following example explains how publish subscriber concept works. In the following example, one client subscribes a channel named ‘redisChat’. 
+redis 127.0.0.1:6379> SUBSCRIBE redisChat  
+Reading messages... (press Ctrl-C to quit) 
+1) "subscribe" 
+2) "redisChat" 
+3) (integer) 1 
+ Now, two clients are publishing the messages on the same channel named ‘redisChat’ and the above subscribed client is receiving messages. 
+redis 127.0.0.1:6379> PUBLISH redisChat "Redis is a great caching technique"  
+(integer) 1  
+redis 127.0.0.1:6379> PUBLISH redisChat "Learn redis by tutorials point"  
+(integer) 1   
+1) "message" 
+2) "redisChat" 
+3) "Redis is a great caching technique" 
+1) "message" 
+2) "redisChat" 
+3) "Learn redis by tutorials point" 
+ Redis PubSub Commands Following table lists some basic commands related to Redis Pub/Sub. S.No Command & Description 1 PSUBSCRIBE pattern [pattern ...] Subscribes to channels matching the given patterns. 2 PUBSUB subcommand [argument [argument ...]] Tells the state of Pub/Sub system. For example, which clients are active on the server. 3 PUBLISH channel message Posts a message to a channel. 4 PUNSUBSCRIBE [pattern [pattern ...]] Stops listening for messages posted to channels matching the given patterns. 5 SUBSCRIBE channel [channel ...] Listens for messages published to the given channels. 6 UNSUBSCRIBE [channel [channel ...]] Stops listening for messages posted to the given channels.

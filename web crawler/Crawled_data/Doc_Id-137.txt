@@ -1,0 +1,48 @@
+DynamoDB - Scan
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_scan.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+Scan Operations read all table items or secondary indices. Its default function results in returning all data attributes of all items within an index or table. Employ the ProjectionExpression parameter in filtering attributes. Every scan returns a result set, even on finding no matches, which results in an empty set. Scans retrieve no more than 1MB, with the option to filter data. Note − The parameters and filtering of scans also apply to querying. Types of Scan Operations Filtering − Scan operations offer fine filtering through filter expressions, which modify data after scans, or queries; before returning results. The expressions use comparison operators. Their syntax resembles condition expressions with the exception of key attributes, which filter expressions do not permit. You cannot use a partition or sort key in a filter expression. Note − The 1MB limit applies prior to any application of filtering. Throughput Specifications − Scans consume throughput, however, consumption focuses on item size rather than returned data. The consumption remains the same whether you request every attribute or only a few, and using or not using a filter expression also does not impact consumption. Pagination − DynamoDB paginates results causing division of results into specific pages. The 1MB limit applies to returned results, and when you exceed it, another scan becomes necessary to gather the rest of the data. The LastEvaluatedKey value allows you to perform this subsequent scan. Simply apply the value to the ExclusiveStartkey. When the LastEvaluatedKey value becomes null, the operation has completed all pages of data. However, a non-null value does not automatically mean more data remains. Only a null value indicates status. The Limit Parameter − The limit parameter manages the result size. DynamoDB uses it to establish the number of items to process before returning data, and does not work outside of the scope. If you set a value of x, DynamoDB returns the first x matching items. The LastEvaluatedKey value also applies in cases of limit parameters yielding partial results. Use it to complete scans. Result Count − Responses to queries and scans also include information related to ScannedCount and Count, which quantify scanned/queried items and quantify items returned. If you do not filter, their values are identical. When you exceed 1MB, the counts represent only the portion processed. Consistency − Query results and scan results are eventually consistent reads, however, you can set strongly consistent reads as well. Use the ConsistentRead parameter to change this setting. Note − Consistent read settings impact consumption by using double the capacity units when set to strongly consistent. Performance − Queries offer better performance than scans due to scans crawling the full table or secondary index, resulting in a sluggish response and heavy throughput consumption. Scans work best for small tables and searches with less filters, however, you can design lean scans by obeying a few best practices such as avoiding sudden, accelerated read activity and exploiting parallel scans. A query finds a certain range of keys satisfying a given condition, with performance dictated by the amount of data it retrieves rather than the volume of keys. The parameters of the operation and the number of matches specifically impact performance. Parallel Scan Scan operations perform processing sequentially by default. Then they return data in 1MB portions, which prompts the application to fetch the next portion. This results in long scans for large tables and indices. This characteristic also means scans may not always fully exploit the available throughput. DynamoDB distributes table data across multiple partitions; and scan throughput remains limited to a single partition due to its single-partition operation. A solution for this problem comes from logically dividing tables or indices into segments. Then “workers” parallel (concurrently) scan segments. It uses the parameters of Segment and TotalSegments to specify segments scanned by certain workers and specify the total quantity of segments processed. Worker Number You must experiment with worker values (Segment parameter) to achieve the best application performance. Note − Parallel scans with large sets of workers impacts throughput by possibly consuming all throughput. Manage this issue with the Limit parameter, which you can use to stop a single worker from consuming all throughput. The following is a deep scan example. Note − The following program may assume a previously created data source. Before attempting to execute, acquire supporting libraries and create necessary data sources (tables with required characteristics, or other referenced sources). This example also uses Eclipse IDE, an AWS credentials file, and the AWS Toolkit within an Eclipse AWS Java Project. 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
+import com.amazonaws.services.dynamodbv2.document.Table;
+
+public class ScanOpSample {  
+   static DynamoDB dynamoDB = new DynamoDB(
+      new AmazonDynamoDBClient(new ProfileCredentialsProvider())); 
+   static String tableName = "ProductList";  
+   
+   public static void main(String[] args) throws Exception { 
+      findProductsUnderOneHun();                       //finds products under 100 dollars
+   }  
+   private static void findProductsUnderOneHun() { 
+      Table table = dynamoDB.getTable(tableName);
+      Map<String, Object> expressionAttributeValues = new HashMap<String, Object>(); 
+      expressionAttributeValues.put(":pr", 100); 
+         
+      ItemCollection<ScanOutcome> items = table.scan ( 
+         "Price < :pr",                                  //FilterExpression 
+         "ID, Nomenclature, ProductCategory, Price",     //ProjectionExpression 
+         null,                                           //No ExpressionAttributeNames  
+         expressionAttributeValues);
+         
+      System.out.println("Scanned " + tableName + " to find items under $100."); 
+      Iterator<Item> iterator = items.iterator(); 
+         
+      while (iterator.hasNext()) { 
+         System.out.println(iterator.next().toJSONPretty()); 
+      }     
+   } 
+}

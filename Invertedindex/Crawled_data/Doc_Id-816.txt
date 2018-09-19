@@ -1,0 +1,46 @@
+T-SQL - ORDER BY Clause
+
+https://www.tutorialspoint.com/t_sql/t_sql_order_by_clause.htm
+
+T-SQL, Tutorial, Learning, Beginners, Overview, Data Types, Create Tables, Drop Tables, INSERT Statement, SELECT Statement, UPDATE Statement, DELETE Statement, WHERE Clause, LIKE Clause, ORDER BY Clause, GROUP BY Clause, DISTINCT Clause, Joining Tables, Sub-Queries, Stored Procedures, Transactions, Indexes, Functions, String Functions, Date Functions, Numeric Functions.
+
+August-15-2017-02:34:09
+
+The MS SQL Server ORDER BY clause is used to sort the data in ascending or descending order, based on one or more columns. Some database sort query results in ascending order by default. Syntax Following is the basic syntax of ORDER BY clause. 
+SELECT column-list  
+FROM table_name  
+[WHERE condition]  
+[ORDER BY column1, column2, .. columnN] [ASC | DESC];
+ You can use more than one column in the ORDER BY clause. Make sure whatever column you are using to sort, that column should be in column-list. Example Consider the CUSTOMERS table having the following records − 
+ID  NAME       AGE       ADDRESS            SALARY 
+1   Ramesh     32        Ahmedabad          2000.00 
+2   Khilan     25        Delhi              1500.00 
+3   kaushik    23        Kota               2000.00 
+4   Chaitali   25        Mumbai             6500.00 
+5   Hardik     27        Bhopal             8500.00 
+6   Komal      22        MP                 4500.00 
+7   Muffy      24        Indore             10000.00 
+ Following command is an example, which would sort the result in ascending order by NAME and SALARY. 
+SELECT * FROM CUSTOMERS 
+   ORDER BY NAME, SALARY 
+ The above command will produce the following output. 
+ID  NAME       AGE       ADDRESS           SALARY 
+4   Chaitali   25        Mumbai            6500.00 
+5   Hardik     27        Bhopal            8500.00 
+3   kaushik    23        Kota              2000.00 
+2   Khilan     25        Delhi             1500.00 
+6   Komal      22        MP                4500.00 
+7   Muffy      24        Indore            10000.00 
+1   Ramesh     32        Ahmedabad         2000.00 
+ Following command is an example, which would sort the result in descending order by NAME. 
+SELECT * FROM CUSTOMERS 
+   ORDER BY NAME DESC
+ The above command will produce the following result − 
+ID  NAME       AGE       ADDRESS            SALARY 
+1   Ramesh     32        Ahmedabad          2000.00
+7   Muffy      24        Indore             10000.00  
+6   Komal      22        MP                 4500.00 
+2   Khilan     25        Delhi              1500.00 
+3   kaushik    23        Kota               2000.00
+5   Hardik     27        Bhopal             8500.00
+4   Chaitali   25        Mumbai             6500.00

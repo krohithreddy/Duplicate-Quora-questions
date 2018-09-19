@@ -1,0 +1,20 @@
+Neo4j - Count Function
+
+https://www.tutorialspoint.com/neo4j/aggregation_count.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+It takes the results from MATCH clause and counts the number of rows present in that result and returns the count value. All CQL functions should use "( )" brackets. Syntax Following is the syntax for COUNT() function. 
+COUNT(<value>) 
+ Example Before proceeding with the example, create 4 nodes in Neo4j database as shown below. 
+CREATE (Ram:employee{name: "Ram", sal: 20000, City: "Delhi"}) 
+CREATE (Rahim:employee{name: "Rahim", sal: 25000, City: "Hyderabad"}) 
+CREATE (Robert:employee{name: "Robert", sal: 30000, City: "Chennai"}) 
+CREATE (Raju:employee{name: "Raju", sal: 35000, City: "Nagpur"})
+ Following is a sample Cypher query which demonstrates the usage of the function COUNT() in Neo4j. Here we are trying to count the employees whose salary is greater than 27000. 
+MATCH (n:employee)  
+WHERE n.sal>27000 
+RETURN COUNT(n) 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. neo4j_aggregation_function.htm

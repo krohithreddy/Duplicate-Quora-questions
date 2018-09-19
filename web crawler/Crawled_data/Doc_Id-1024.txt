@@ -1,0 +1,56 @@
+XQuery - FLWOR
+
+https://www.tutorialspoint.com/xquery/xquery_flwor.htm
+
+Overview, Environment Setup, First Application, FLWOR, HTML Format, XPath, Sequences, Sequence functions, count, distinct-values, subsequence, sum, avg, min, max, insert-before, remove, reverse, index-of, last, position, String functions, string-length, concat, string-join, Date functions, current-date, current-time, current-dateTime, Regular Expressions, matches, replaces, tokenize, if then else, custom functions
+
+August-15-2017-02:34:10
+
+FLWOR is an acronym that stands for "For, Let, Where, Order by, Return". The following list shows what they account for in a FLWOR expression − F - For - Selects a collection of all nodes. L - Let - Puts the result in an XQuery variable. W - Where - Selects the nodes specified by the condition. O - Order by - Orders the nodes specified as per criteria. R - Return - Returns the final result. Example Following is a sample XML document that contains information on a collection of books. We will use a FLWOR expression to retrieve the titles of those books with a price greater than 30. books.xml 
+<?xml version="1.0" encoding="UTF-8"?>
+<books>
+   
+   <book category="JAVA">
+      <title lang="en">Learn Java in 24 Hours</title>
+      <author>Robert</author>
+      <year>2005</year>
+      <price>30.00</price>
+   </book>
+   
+   <book category="DOTNET">
+      <title lang="en">Learn .Net in 24 hours</title>
+      <author>Peter</author>
+      <year>2011</year>
+      <price>70.50</price>
+   </book>
+   
+   <book category="XML">
+      <title lang="en">Learn XQuery in 24 hours</title>
+      <author>Robert</author>
+      <author>Peter</author> 
+      <year>2013</year>
+      <price>50.00</price>
+   </book>
+   
+   <book category="XML">
+      <title lang="en">Learn XPath in 24 hours</title>
+      <author>Jay Ban</author>
+      <year>2010</year>
+      <price>16.50</price>
+   </book>
+   
+</books>
+ The following Xquery document contains the query expression to be executed on the above XML document. books.xqy 
+let $books := (doc("books.xml")/books/book)
+return <results>
+{
+   for $x in $books
+   where $x/price>30
+   order by $x/price
+   return $x/title
+}
+</results>
+ Result 
+<title lang="en">Learn XQuery in 24 hours</title>
+<title lang="en">Learn .Net in 24 hours</title>
+ Verify Result To verify the result, replace the contents of books.xqy (given in theEnvironment Setup chapter) with the above XQuery expression and execute the XQueryTester java program.

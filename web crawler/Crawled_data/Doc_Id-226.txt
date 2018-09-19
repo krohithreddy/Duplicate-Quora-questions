@@ -1,0 +1,52 @@
+MariaDB - Update Query
+
+https://www.tutorialspoint.com/mariadb/mariadb_update_query.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+The UPDATE command modifies existing fields by changing values. It uses the SET clause to specify columns for modification, and to specify the new values assigned. These values can be either an expression or the default value of the field. Setting a default value requires using the DEFAULT keyword. The command can also employ a WHERE clause to specify conditions for an update and/or an ORDER BY clause to update in a certain order. Review the following general syntax − 
+UPDATE table_name SET field=new_value, field2=new_value2,...
+[WHERE ...]
+ Execute an UPDATE command from either the command prompt or using a PHP script. The Command Prompt At the command prompt, simply use a standard commandroot − 
+root@host# mysql -u root -p password;
+Enter password:*******
+mysql> use PRODUCTS;
+Database changed
+mysql> UPDATE products_tbl
+   SET nomenclature = 'Fiber Blaster 300Z'
+      WHERE ID_number = 112;
+mysql> SELECT * from products_tbl WHERE ID_number='112';
++-------------+---------------------+----------------------+
+| ID_number   | Nomenclature        | product_manufacturer |
++-------------+---------------------+----------------------+
+| 112         | Fiber Blaster 300Z  | XYZ Corp             |
++-------------+---------------------+----------------------+      
+ PHP Update Query Script Employ the mysql_query() function in UPDATE command statements − 
+<?php
+   $dbhost = ‘localhost:3036’;
+   $dbuser = ‘root’;
+   $dbpass = ‘rootpassword’;
+   $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+
+   if(! $conn ) {
+      die(‘Could not connect: ‘ . mysql_error());
+   }
+
+   $sql = ‘UPDATE products_tbl
+      SET product_name = ”Fiber Blaster 300z”
+      WHERE product_id = 112’;
+
+   mysql_select_db(‘PRODUCTS’);
+   $retval = mysql_query( $sql, $conn );
+
+   if(! $retval ) {
+      die(‘Could not update data: ‘ . mysql_error());
+   }
+
+   echo “Updated data successfully\n”;
+   mysql_close($conn);
+?>
+ On successful data update, you will see the following output − 
+mysql> Updated data successfully

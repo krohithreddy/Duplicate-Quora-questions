@@ -1,0 +1,411 @@
+H2 Database - JDBC Connection
+
+https://www.tutorialspoint.com/h2_database/h2_database_jdbc_connection.htm
+
+H2 Database, Tutorial, Learning, Introduction, Installation, Data Manipulation Select, Insert, Update, Delete, Backup, Call, Explain, Merge, Show, Data Definition Create, Alter, Drop, Truncate, Commit, Grant, Savepoint, Rollback, JDBC Connection.
+
+August-15-2017-02:34:24
+
+H2 is a JAVA database. We can interact with this database by using JDBC. In this chapter, we will see how to create a JDBC connection with H2 database and the CRUD operations with the H2 database. Generally, there are five steps to create a JDBC connection. Step 1 − Registering the JDBC database driver. 
+Class.forName ("org.h2.Driver"); 
+ Step 2 − Opening the connection. 
+Connection conn = DriverManager.getConnection ("jdbc:h2:~/test", "sa",""); 
+ Step 3 − Creating a statement. 
+Statement st = conn.createStatement(); 
+ Step 4 − Executing a statement and receiving Resultset. 
+Stmt.executeUpdate("sql statement"); 
+ Step 5 − Closing a connection. 
+conn.close(); 
+ Before moving on to create a full program, we need to add h2-1.4.192.jar file to CLASSPATH. We can get this jar from the folder C:\Program Files (x86)\H2\bin. Create Table In this example, we will write a program for create table. Consider a table named Registration having the following fields. S.No Column Name Data Type NOT NULL Primary Key 1 ID Number Yes Yes 2 First Varchar(255) No No 3 Last Varchar(255) No No 4 Age Number No No Following is an example program named H2jdbcCreateDemo. 
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.SQLException; 
+import java.sql.Statement;  
+
+public class H2jdbcCreateDemo { 
+   // JDBC driver name and database URL 
+   static final String JDBC_DRIVER = "org.h2.Driver";   
+   static final String DB_URL = "jdbc:h2:~/test";  
+   
+   //  Database credentials 
+   static final String USER = "sa"; 
+   static final String PASS = ""; 
+  
+   public static void main(String[] args) { 
+      Connection conn = null; 
+      Statement stmt = null; 
+      try { 
+         // STEP 1: Register JDBC driver 
+         Class.forName(JDBC_DRIVER); 
+             
+         //STEP 2: Open a connection 
+         System.out.println("Connecting to database..."); 
+         conn = DriverManager.getConnection(DB_URL,USER,PASS);  
+         
+         //STEP 3: Execute a query 
+         System.out.println("Creating table in given database..."); 
+         stmt = conn.createStatement(); 
+         String sql =  "CREATE TABLE   REGISTRATION " + 
+            "(id INTEGER not NULL, " + 
+            " first VARCHAR(255), " +  
+            " last VARCHAR(255), " +  
+            " age INTEGER, " +  
+            " PRIMARY KEY ( id ))";  
+         stmt.executeUpdate(sql);
+         System.out.println("Created table in given database..."); 
+         
+         // STEP 4: Clean-up environment 
+         stmt.close(); 
+         conn.close(); 
+      } catch(SQLException se) { 
+         //Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         //Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         //finally block used to close resources 
+         try{ 
+            if(stmt!=null) stmt.close(); 
+         } catch(SQLException se2) { 
+         } // nothing we can do 
+         try { 
+            if(conn!=null) conn.close(); 
+         } catch(SQLException se){ 
+            se.printStackTrace(); 
+         } //end finally try 
+      } //end try 
+      System.out.println("Goodbye!");
+   } 
+}
+ Save the above program into H2jdbcCreateDemo.java. Compile and execute the above program by executing the following commands in the command prompt. 
+\>javac H2jdbcCreateDemo.java 
+\>java H2jdbcCreateDemo 
+ The above command produces the following output. 
+Connecting to database... 
+Creating table in given database... 
+Created table in given database... 
+Goodbye!
+ After this execution, we can check the table created using the H2 SQL interface. Insert Records In this example, we will write a program for inserting records. Let us insert the following records into the table Registration. ID First Last Age 100 Zara Ali 18 101 Mahnaz Fatma 25 102 Zaid Khan 30 103 Sumit Mital 28 Following is an example program named H2jdbcInsertDemo. 
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.SQLException; 
+import java.sql.Statement;  
+
+public class H2jdbcInsertDemo { 
+   // JDBC driver name and database URL 
+   static final String JDBC_DRIVER = "org.h2.Driver";   
+   static final String DB_URL = "jdbc:h2:~/test";  
+   
+   //  Database credentials 
+   static final String USER = "sa"; 
+   static final String PASS = ""; 
+  
+   public static void main(String[] args) { 
+      Connection conn = null; 
+      Statement stmt = null; 
+      try{
+         // STEP 1: Register JDBC driver 
+         Class.forName(JDBC_DRIVER);  
+         
+         // STEP 2: Open a connection 
+         System.out.println("Connecting to a selected database..."); 
+         conn = DriverManager.getConnection(DB_URL,USER,PASS); 
+         System.out.println("Connected database successfully..."); 
+         
+         // STEP 3: Execute a query 
+         stmt = conn.createStatement();  
+         String sql = "INSERT INTO Registration " + "VALUES (100, 'Zara', 'Ali', 18)"; 
+         
+         stmt.executeUpdate(sql); 
+         sql = "INSERT INTO Registration " + "VALUES (101, 'Mahnaz', 'Fatma', 25)";  
+         
+         stmt.executeUpdate(sql); 
+         sql = "INSERT INTO Registration " + "VALUES (102, 'Zaid', 'Khan', 30)"; 
+         
+         stmt.executeUpdate(sql); 
+         sql = "INSERT INTO Registration " + "VALUES(103, 'Sumit', 'Mittal', 28)"; 
+         
+         stmt.executeUpdate(sql); 
+         System.out.println("Inserted records into the table..."); 
+         
+         // STEP 4: Clean-up environment 
+         stmt.close(); 
+         conn.close(); 
+      } catch(SQLException se) { 
+         // Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         // Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         // finally block used to close resources 
+         try {
+            if(stmt!=null) stmt.close();  
+         } catch(SQLException se2) { 
+         } // nothing we can do 
+         try { 
+            if(conn!=null) conn.close(); 
+         } catch(SQLException se) { 
+            se.printStackTrace(); 
+         } // end finally try 
+      } // end try 
+      System.out.println("Goodbye!"); 
+   } 
+}
+ Save the above program into H2jdbcInsertDemo.java. Compile and execute the above program by executing the following commands in the command prompt. 
+\>javac H2jdbcInsertDemo.java 
+\>java H2jdbcInsertDemo 
+ The above command produces the following output. 
+Connecting to a selected database... 
+Connected database successfully... 
+Inserted records into the table... 
+Goodbye! 
+ Read Record In this example, we will write a program for reading records. Let us try to read all records from the table Registration. Following is an example program named H2jdbcRecordDemo. 
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.ResultSet; 
+import java.sql.SQLException; 
+import java.sql.Statement;  
+
+public class H2jdbcReadDemo { 
+   // JDBC driver name and database URL 
+   static final String JDBC_DRIVER = "org.h2.Driver";   
+   static final String DB_URL = "jdbc:h2:~/test";  
+   
+   //  Database credentials 
+   static final String USER = "sa"; 
+   static final String PASS = ""; 
+   
+   public static void main(String[] args) { 
+      Connection conn = null; 
+      Statement stmt = null; 
+      try { 
+         // STEP 1: Register JDBC driver 
+         Class.forName(JDBC_DRIVER); 
+         
+         // STEP 2: Open a connection 
+         System.out.println("Connecting to database..."); 
+         conn = DriverManager.getConnection(DB_URL,USER,PASS);  
+         
+         // STEP 3: Execute a query 
+         System.out.println("Connected database successfully..."); 
+         stmt = conn.createStatement(); 
+         String sql = "SELECT id, first, last, age FROM Registration"; 
+         ResultSet rs = stmt.executeQuery(sql); 
+         
+         // STEP 4: Extract data from result set 
+         while(rs.next()) { 
+            // Retrieve by column name 
+            int id  = rs.getInt("id"); 
+            int age = rs.getInt("age"); 
+            String first = rs.getString("first"); 
+            String last = rs.getString("last");  
+            
+            // Display values 
+            System.out.print("ID: " + id); 
+            System.out.print(", Age: " + age); 
+            System.out.print(", First: " + first); 
+            System.out.println(", Last: " + last); 
+         } 
+         // STEP 5: Clean-up environment 
+         rs.close(); 
+      } catch(SQLException se) { 
+         // Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         // Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         // finally block used to close resources 
+         try { 
+            if(stmt!=null) stmt.close();  
+         } catch(SQLException se2) { 
+         } // nothing we can do 
+         try { 
+            if(conn!=null) conn.close(); 
+         } catch(SQLException se) { 
+            se.printStackTrace(); 
+         } // end finally try 
+      } // end try 
+      System.out.println("Goodbye!"); 
+   } 
+}
+ Save the above program into H2jdbcReadDemo.java. Compile and execute the above program by executing the following commands in the command prompt. 
+\>javac H2jdbcReadDemo.java 
+\>java H2jdbcReadDemo 
+ The above command produces the following output. 
+Connecting to a selected database... 
+Connected database successfully... 
+ID: 100, Age: 18, First: Zara, Last: Ali 
+ID: 101, Age: 25, First: Mahnaz, Last: Fatma 
+ID: 102, Age: 30, First: Zaid, Last: Khan 
+ID: 103, Age: 28, First: Sumit, Last: Mittal 
+Goodbye!
+ Update Records In this example, we will write a program to update records. Let us try to read all records from the table Registration. Following is an example program named H2jdbcUpdateDemo. 
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.ResultSet; 
+import java.sql.SQLException; 
+import java.sql.Statement;  
+
+public class H2jdbcUpdateDemo { 
+   // JDBC driver name and database URL 
+   static final String JDBC_DRIVER = "org.h2.Driver";   
+   static final String DB_URL = "jdbc:h2:~/test";  
+   
+   // Database credentials 
+   static final String USER = "sa"; 
+   static final String PASS = ""; 
+   
+   public static void main(String[] args) { 
+      Connection conn = null; 
+      Statement stmt = null; 
+      try { 
+         // STEP 1: Register JDBC driver 
+         Class.forName(JDBC_DRIVER); 
+         
+         // STEP 2: Open a connection 
+         System.out.println("Connecting to a database..."); 
+         conn = DriverManager.getConnection(DB_URL,USER,PASS);  
+         
+         // STEP 3: Execute a query 
+         System.out.println("Connected database successfully..."); 
+         stmt = conn.createStatement(); 
+         String sql = "UPDATE Registration " + "SET age = 30 WHERE id in (100, 101)"; 
+         stmt.executeUpdate(sql);  
+         
+         // Now you can extract all the records 
+         // to see the updated records 
+         sql = "SELECT id, first, last, age FROM Registration"; 
+         ResultSet rs = stmt.executeQuery(sql);  
+         
+         while(rs.next()){ 
+            // Retrieve by column name 
+            int id  = rs.getInt("id"); 
+            int age = rs.getInt("age"); 
+            String first = rs.getString("first"); 
+            String last = rs.getString("last");  
+            
+            // Display values 
+            System.out.print("ID: " + id); 
+            System.out.print(", Age: " + age); 
+            System.out.print(", First: " + first); 
+            System.out.println(", Last: " + last); 
+         } 
+         rs.close();    
+      } catch(SQLException se) { 
+         // Handle errors for JDBC 
+         se.printStackTrace(); 
+      } catch(Exception e) { 
+         // Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         // finally block used to close resources  
+         try { 
+            if(stmt!=null) stmt.close(); 
+         } catch(SQLException se2) { 
+         } // nothing we can do 
+         try { 
+            if(conn!=null) conn.close(); 
+         } catch(SQLException se) { 
+            se.printStackTrace(); 
+         } // end finally try 
+      } // end try 
+      System.out.println("Goodbye!"); 
+   } 
+} 
+ Save the above program into H2jdbcUpdateDemo.java. Compile and execute the above program by executing the following commands in the command prompt. 
+\>javac H2jdbcUpdateDemo.java 
+\>java H2jdbcUpdateDemo 
+ The above command produces the following output. 
+Connecting to a selected database... 
+Connected database successfully... 
+ID: 100, Age: 30, First: Zara, Last: Ali 
+ID: 101, Age: 30, First: Mahnaz, Last: Fatma 
+ID: 102, Age: 30, First: Zaid, Last: Khan 
+ID: 103, Age: 28, First: Sumit, Last: Mittal 
+Goodbye!
+ Delete Records In this example, we will write a program to delete records. Let us try to read all records from the table Registration. Following is an example program named H2jdbcDeleteDemo. 
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.ResultSet; 
+import java.sql.SQLException; 
+import java.sql.Statement;  
+
+public class H2jdbcDeleteDemo { 
+   // JDBC driver name and database URL 
+   static final String JDBC_DRIVER = "org.h2.Driver";   
+   static final String DB_URL = "jdbc:h2:~/test";  
+   
+   // Database credentials 
+   static final String USER = "sa"; 
+   static final String PASS = ""; 
+  
+   public static void main(String[] args) { 
+      Connection conn = null; 
+      Statement stmt = null; 
+      try { 
+         // STEP 1: Register JDBC driver 
+         Class.forName(JDBC_DRIVER);  
+         
+         // STEP 2: Open a connection 
+         System.out.println("Connecting to database..."); 
+         conn = DriverManager.getConnection(DB_URL,USER,PASS);  
+         
+         // STEP 3: Execute a query
+         System.out.println("Creating table in given database..."); 
+         stmt = conn.createStatement();  
+         String sql = "DELETE FROM Registration " + "WHERE id = 101"; 
+         stmt.executeUpdate(sql);  
+         
+         // Now you can extract all the records 
+         // to see the remaining records 
+         sql = "SELECT id, first, last, age FROM Registration"; 
+         ResultSet rs = stmt.executeQuery(sql);  
+         
+         while(rs.next()){ 
+            // Retrieve by column name 
+            int id  = rs.getInt("id"); 
+            int age = rs.getInt("age"); 
+            String first = rs.getString("first"); 
+            String last = rs.getString("last");  
+            
+            // Display values 
+            System.out.print("ID: " + id); 
+            System.out.print(", Age: " + age); 
+            System.out.print(", First: " + first); 
+            System.out.println(", Last: " + last); 
+         } 
+         rs.close(); 
+      } catch(SQLException se) { 
+         // Handle errors for JDBC 
+         se.printStackTrace();  
+      } catch(Exception e) { 
+         // Handle errors for Class.forName 
+         e.printStackTrace(); 
+      } finally { 
+         // finally block used to close resources 
+         try { 
+            if(stmt!=null) stmt.close(); 
+         } catch(SQLException se2) { 
+         } // nothing we can do 
+         try { 
+            if(conn!=null) conn.close(); 
+         } catch(SQLException se) { 
+            se.printStackTrace(); 
+         } // end finally try
+      } // end try 
+      System.out.println("Goodbye!"); 
+   } 
+}
+ Save the above program into H2jdbcDeleteDemo.java. Compile and execute the above program by executing the following commands in the command prompt. 
+\>javac H2jdbcDeleteDemo.java 
+\>java H2jdbcDeleteDemo
+ The above command produces the following output. 
+Connecting to a selected database... 
+Connected database successfully... 
+ID: 100, Age: 30, First: Zara, Last: Ali 
+ID: 102, Age: 30, First: Zaid, Last: Khan 
+ID: 103, Age: 28, First: Sumit, Last: Mittal 
+Goodbye!

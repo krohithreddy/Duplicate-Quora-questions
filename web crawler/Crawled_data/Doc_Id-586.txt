@@ -1,0 +1,63 @@
+PouchDB - Create Batch
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_create_batch.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+You can create an array (batch) of documents in PouchDB using the db.bulkDocs() method. While creating documents, using this method if we do not provide _id values, on our behalf PouchDB generates unique ids for all the documents in the bulk. Syntax Following is the syntax of using the db.bulkDocs() method of PouchDB. You can store all the documents that are to be created in PouchDB in an array and pass it to this method as a parameter. In addition to it, this method also accepts a callback (optional) function as a parameter. 
+db.bulkDocs(docs, [options], [callback])
+ Example Following is an example of creating multiple documents in PouchDB using the db.bulkDocs () method. The documents we create should be of JSON format, a set of key-value pairs separated by comma (,) and enclosed within curly braces ({}). 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_database');
+
+//Preparing the documents array
+doc1 = {_id: '001', name: 'Ram', age: 23, Designation: 'Programmer'}
+doc2 = {_id: '002', name: 'Robert', age: 24, Designation: 'Programmer'}
+doc3 = {_id: '003', name: 'Rahim', age: 25, Designation: 'Programmer'}
+docs = [doc1, doc2, doc3]
+
+//Inserting Documents
+db.bulkDocs(docs, function(err, response) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log("Documents created Successfully");
+   }
+});
+ Save the above code in a file with name Create_Batch.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Create_Batch.js
+ This creates the given document in PouchDB database named my_database which is stored locally. The following message gets displayed. 
+Documents created Successfully
+ Inserting a Batch in a Remote Database You can insert an array of documents in the database that is stored remotely on the server (CouchDB). To do so, instead of a database name you need to pass the path to the database where we want to create documents in CouchDB. Example Suppose there is a database named my_database in the CouchDB server. Then, if you verify the list of databases in CouchDB using the URL http://127.0.0.1:5984/_utils/index.html you will get the following screenshot. Following is an example of inserting an array of documents in the database named my_database which is saved in the CouchDB server. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('http://localhost:5984/my_database');
+
+//Preparing the documents array
+
+doc1 = {_id: '001', name: 'Ram', age: 23, Designation: 'Programmer'}
+doc2 = {_id: '002', name: 'Robert', age: 24, Designation: 'Programmer'}
+doc3 = {_id: '003', name: 'Rahim', age: 25, Designation: 'Programmer'}
+
+docs = [doc1, doc2, doc3]
+
+//Inserting Documents
+db.bulkDocs(docs, function(err, response) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log("Documents created Successfully");
+   }
+});
+ Save the above code in a file with the name Remote_Create_Batch.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Remote_Create_Batch.js
+ This creates the given documents in PouchDB database named my_database which is stored in CouchDB. The following message is displayed. 
+Document created Successfully
+ Verification After executing the above program if you visit the my_database again, you can observe the documents created as shown in the following screenshot.

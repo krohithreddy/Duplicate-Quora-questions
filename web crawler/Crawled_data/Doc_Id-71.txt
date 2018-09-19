@@ -1,0 +1,57 @@
+DocumentDB - Limiting Records
+
+https://www.tutorialspoint.com/documentdb/documentdb_limiting_records.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+Microsoft has recently added a number of improvements on how you can query Azure DocumentDB, such as the TOP keyword to SQL grammar, which made queries run faster and consume fewer resources, increased the limits for query operators, and added support for additional LINQ operators in the .NET SDK. Let’s take a look at a simple example in which we will retrieve only the first two records. If you have a number of records and you want to retrieve only some of them, then you can use the Top keyword. In this example, we have a lot of records of earthquakes. Now we want to show the first two records only Step 1 − Go to the query explorer and run this query. 
+SELECT * FROM c 
+WHERE c.magnitude > 2.5 
+ You will see that it has retrieved four records because we have not specified TOP keyword yet. Step 2 − Now use the TOP keyword with same query. Here we have specified the TOP keyword and ‘2’ means that we want two records only. 
+SELECT TOP 2 * FROM c 
+WHERE c.magnitude > 2.5
+ Step 3 − Now run this query and you will see that only two records are retrieved. Similarly, you can use TOP keyword in code using .Net SDK. Following is the implementation. 
+private async static Task QueryDocumentsWithPaging(DocumentClient client) {
+   Console.WriteLine(); 
+   Console.WriteLine("**** Query Documents (paged results) ****"); 
+   Console.WriteLine();  
+   Console.WriteLine("Quering for all documents"); 
+	
+   var sql = "SELECT TOP 3 * FROM c";  
+   var query = client 
+      .CreateDocumentQuery(collection.SelfLink, sql) 
+      .AsDocumentQuery(); 
+		
+   while (query.HasMoreResults) {
+      var documents = await query.ExecuteNextAsync(); 
+		
+      foreach (var document in documents) { 
+         Console.WriteLine(" PublicId: {0}; Magnitude: {1};", document.publicid,
+            document.magnitude); 
+      } 
+   } 
+	
+   Console.WriteLine(); 
+}
+ Following is the CreateDocumentClient task in which are instantiated the DocumentClient and earthquake database. 
+private static async Task CreateDocumentClient() {
+   // Create a new instance of the DocumentClient 
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+      database = client.CreateDatabaseQuery("SELECT * FROM c WHERE c.id =
+         'earthquake'").AsEnumerable().First(); 
+			
+      collection = client.CreateDocumentCollectionQuery(database.CollectionsLink,
+         "SELECT * FROM c WHERE c.id = 'earthquakedata'").AsEnumerable().First(); 
+			
+      await QueryDocumentsWithPaging(client); 
+   } 
+}
+ When the above code is compiled and executed, you will see that only three records are retrieved. 
+**** Query Documents (paged results) **** 
+ 
+Quering for all documents 
+PublicId: 2015p947400; Magnitude: 2.515176918; 
+PublicId: 2015p947373; Magnitude: 1.506774108; 
+PublicId: 2015p947329; Magnitude: 1.593394461;

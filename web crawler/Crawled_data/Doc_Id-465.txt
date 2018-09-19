@@ -1,0 +1,22 @@
+OrientDB - Move Vertex
+
+https://www.tutorialspoint.com/orientdb/orientdb_move_vertex.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Move Vertex command in OrientDB is to move one or more vertices from current location to different class or cluster. If you are applying move command on a particular vertex, then it will update all the edges that are connected to this vertex. If you are specifying a cluster to move vertex, then it moves the vertices to the server owner of the target cluster. The following statement is the basic syntax of Move Vertex Command. 
+MOVE VERTEX <source> TO <destination> 
+[SET [<field>=<value>]* [,]] 
+[MERGE <JSON>] 
+[BATCH <batch-size>] 
+ Following are the details about the options in the above syntax. <source> − Defines the vertex you want to move. It accepts Record ID of a particular vertex or array of Record IDs for vertices. <destination> − Defines where you want to move the vertex. It supports either class or a cluster as destination. SET − Sets the values to fields. MERGE − Sets the values to fields through JSON. BATCH − Defines the batch size. Note − This command updates all connected edges, but not links. When using Graph API, it is recommended to use edge connected to vertices. Example Try the following examples to learn how to move vertices. Execute the following query to move a single vertex having Record ID #11:2 from its current position to Class Employee. 
+orientdb> MOVE VERTEX #11:2 TO CLASS:Employee
+ If the above query is executed successfully, you will get the following output − 
+Move vertex command executed with result '[{old:#11:2, new:#13:0}]' in 0.022000 sec(s)
+ Execute the following query to move set of vertices from the class ‘Customer’ to class ‘Employee’. 
+orientdb> MOVE VERTEX (SELECT FROM Customer) TO CLASS:Employee 
+ If the above query is executed successfully, you will get the following output. 
+Move vertex command executed with result '[{old:#11:0, 
+new:#13:1},{old:#11:1, new:#13:2},{old:#11:2, new:#13:3}]' in 0.011000 sec(s)

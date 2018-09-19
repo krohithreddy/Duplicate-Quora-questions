@@ -1,0 +1,47 @@
+MySQL - Database Info
+
+https://www.tutorialspoint.com/mysql/mysql-database-info.htm
+
+Learning, MySQL, Programming, Database, Clauses, Commands, Functions, Database Info, Queries, Simple, Steps, Basic, Advanced, Concepts.
+
+August-15-2017-02:34:19
+
+Obtaining and Using MySQL Metadata There are three types of information, which you would like to have from MySQL. Information about the result of queries − This includes the number of records affected by any SELECT, UPDATE or DELETE statement. Information about the tables and databases − This includes information pertaining to the structure of the tables and the databases. Information about the MySQL server − This includes the status of the database server, version number, etc. It is very easy to get all this information at the MySQL prompt, but while using PERL or PHP APIs, we need to call various APIs explicitly to obtain all this information. Obtaining the Number of Rows Affected by a Query Let is now see how to obtain this information. PERL Example In DBI scripts, the affected row count is returned by the do( ) or by the execute( ) command, depending on how you execute the query. 
+# Method 1
+# execute $query using do( )
+my $count = $dbh->do ($query);
+# report 0 rows if an error occurred
+printf "%d rows were affected\n", (defined ($count) ? $count : 0);
+
+# Method 2
+# execute query using prepare( ) plus execute( )
+my $sth = $dbh->prepare ($query);
+my $count = $sth->execute ( );
+printf "%d rows were affected\n", (defined ($count) ? $count : 0);
+ PHP Example In PHP, invoke the mysql_affected_rows( ) function to find out how many rows a query changed. 
+$result_id = mysql_query ($query, $conn_id);
+# report 0 rows if the query failed
+$count = ($result_id ? mysql_affected_rows ($conn_id) : 0);
+print ("$count rows were affected\n");
+ Listing Tables and Databases It is very easy to list down all the databases and the tables available with a database server. Your result may be null if you don't have the sufficient privileges. Apart from the method which is shown in the following code block, you can use SHOW TABLES or SHOW DATABASES queries to get the list of tables or databases either in PHP or in PERL. PERL Example 
+# Get all the tables available in current database.
+my @tables = $dbh->tables ( );
+foreach $table (@tables ){
+   print "Table Name $table\n";
+}
+ PHP Example 
+<?php
+   $con = mysql_connect("localhost", "userid", "password");
+   
+   if (!$con) {
+      die('Could not connect: ' . mysql_error());
+   }
+
+   $db_list = mysql_list_dbs($con);
+
+   while ($db = mysql_fetch_object($db_list)) {
+      echo $db->Database . "<br />";
+   }
+   mysql_close($con);
+?>
+ Getting Server Metadata There are a few important commands in MySQL which can be executed either at the MySQL prompt or by using any script like PHP to get various important information about the database server. S. No. Command & Description 1 SELECT VERSION( ) Server version string 2 SELECT DATABASE( ) Current database name (empty if none) 3 SELECT USER( ) Current username 4 SHOW STATUS Server status indicators 5 SHOW VARIABLES Server configuration variables

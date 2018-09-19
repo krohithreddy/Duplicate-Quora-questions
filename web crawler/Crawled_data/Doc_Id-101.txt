@@ -1,0 +1,43 @@
+DocumentDB SQL - String Function
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_string_functions.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+The string functions perform an operation on a string input value and return a string, numeric or Boolean value. Following are the supported built-in string functions. S.No. Function & Description 1 LENGTH (str_expr) Returns the number of characters of the specified string expression. 2 CONCAT (str_expr, str_expr [, str_expr]) Returns a string that is the result of concatenating two or more string values. 3 SUBSTRING (str_expr, num_expr, num_expr) Returns part of a string expression. 4 STARTSWITH (str_expr, str_expr) Returns a Boolean indicating whether the first string expression ends with the second. 5 ENDSWITH (str_expr, str_expr) Returns a Boolean indicating whether the first string expression ends with the second. 6 CONTAINS (str_expr, str_expr) Returns a Boolean indicating whether the first string expression contains the second. 7 INDEX_OF (str_expr, str_expr) Returns the starting position of the first occurrence of the second string expression within the first specified string expression, or -1 if the string is not found. 8 LEFT (str_expr, num_expr) Returns the left part of a string with the specified number of characters. 9 RIGHT (str_expr, num_expr) Returns the right part of a string with the specified number of characters. 10 LTRIM (str_expr) Returns a string expression after it removes leading blanks. 11 RTRIM (str_expr) Returns a string expression after truncating all trailing blanks. 12 LOWER (str_expr) Returns a string expression after converting uppercase character data to lowercase. 13 UPPER (str_expr) Returns a string expression after converting lowercase character data to uppercase. 14 REPLACE (str_expr, str_expr, str_expr) Replaces all occurrences of a specified string value with another string value. 15 REPLICATE (str_expr, num_expr) Repeats a string value a specified number of times. 16 REVERSE (str_expr) Returns the reverse order of a string value. Let’s take a look at an example where some built-in string functions are used. Following is the query with different string functions. 
+SELECT 
+   CONCAT("There are ", "2", " items") AS StrConcat, 
+   CONTAINS("Abcdef", "cde") AS StrContains, 
+   STARTSWITH("Abcdef", "Ab") AS StrStartsWith, 
+   ENDSWITH("Abcdef", "cdef") AS StrEndsWith,
+	
+   INDEX_OF("Abcdef", "de") AS StrIndexOf1, 
+   INDEX_OF("Abcdef", "df") AS StrIndexOf2, 
+	
+   LEFT("Abcdef", 3) AS StrLeft, 
+   RIGHT("Abcdef", 3) AS StrRight, 
+	
+   SUBSTRING("Abcdef", 2, 3) AS StrSubstring, 
+   LENGTH("Abcdef") AS StrLength, 
+   LOWER("Abcdef") AS StrLower, 
+   UPPER("Abcdef") AS StrUpper
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "StrConcat": "There are 2 items", 
+      "StrContains": true, 
+      "StrStartsWith": true, 
+      "StrEndsWith": true, 
+      "StrIndexOf1": 3, 
+      "StrIndexOf2": -1, 
+      "StrLeft": "Abc", 
+      "StrRight": "def", 
+      "StrSubstring": "cde", 
+      "StrLength": 6, 
+      "StrLower": "abcdef", 
+      "StrUpper": "ABCDEF" 
+   } 
+]
+ documentdb_sql_builtin_function.htm

@@ -1,0 +1,21 @@
+XSD - Miscellaneous Data Types
+
+https://www.tutorialspoint.com/xsd/xsd_misc.htm
+
+ XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+XSD has a few other important data types, such as Boolean, binary, and anyURI. <xs:boolean> data type The <xs:boolean> data type is used to represent true, false, 1 (for true) or 0 (for false) value. <xs:boolean> Example Element declaration in XSD − 
+<xs:element name = "pass" type = "xs:boolean"/>
+ Element usage in XML − 
+<pass>false</pass>
+ Binary data types The Binary data types are used to represent binary values. Two binary types are common in use. base64Binary − represents base64 encoded binary data hexBinary − represents hexadecimal encoded binary data <xs:hexbinary> Example Element declaration in XSD − 
+<xs:element name = "blob" type = "xs:hexBinary"/>
+ Element usage in XML − 
+<blob>9FEEF</blob>
+ <xs:anyURI> data type The <xs:anyURI> data type is used to represent URI. <xs:anyURI> Example Element declaration in XSD − 
+<xs:attribute name = "resource" type = "xs:anyURI"/>
+ Element usage in XML − 
+<image resource = "http://www.tutorialspoint.com/images/smiley.jpg" />
+ Numeric Data Types Following is the list of commonly used numeric data types. S.No. Name & Description 1. byte A signed 8 bit integer 2. decimal A decimal value 3. int A signed 32 bit integer 4. integer An integer value 5. long A signed 64 bit integer 6. negativeInteger An integer having only negative values (..,-2,-1) 7. nonNegativeInteger An integer having only non-negative values (0,1,2,..) 8. nonPositiveInteger An integer having only non-positive values (..,-2,-1,0) 9. positiveInteger An integer having only positive values (1,2,..) 10. short A signed 16 bit integer 11. unsignedLong An unsigned 64 bit integer 12. unsignedInt An unsigned 32 bit integer 13. unsignedShort An unsigned 16 bit integer 14. unsignedByte An unsigned 8 bit integer Restrictions Following types of restrictions can be used with Miscellaneous data types except on boolean data type − enumeration length maxLength minLength pattern whiteSpace

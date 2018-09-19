@@ -1,0 +1,13 @@
+OBIEE – Multiple Logical Table Sources
+
+https://www.tutorialspoint.com/obiee/obiee_multiple_logical_table_sources.htm
+
+OBIEE, Tutorial, Data Warehouse, Dimensional Modeling, Schema, Basics, Components, Architecture, Repositories, Business Layer, Presentation Layer, Testing Repository, Multiple Logical Table Sources, Calculation Measures, Dimension Hierarchies, Level-Based Measures, Aggregates, Variables, Dashboards, Filters, Views, Prompts, Security, Administration.
+
+August-15-2017-02:34:09
+
+When you drag and drop a column from a physical table that is not currently being used in your logical table in BMM layer, the physical table containing such column gets added as a new Logical Table Source (LTS). When in BMM layer, you use more than one table as source table, it is called multiple logical table sources. You can have a Fact table as multiple logical table sources when it uses different physical tables as source. Example Multiple LTS are used to convert Snowflakes schema to Star schemas in BMM layer. Let us say you have two dimensions − Dim_Emp and Dim_Dept and one fact table FCT_Attendance in the Physical layer. Here your Dim_Emp is normalized to Dim_Dept to implement Snowflakes schema. So in your Physical diagram, it would be like this − 
+Dim_Dept<------Dim_Emp <-------FCT_Attendance
+ When we move these table to the BMM layer, we will create a single dimension table Dim_Employee with 2 logical sources corresponding to Dim_Emp and Dim_Dept. In your BMM diagram − 
+Dim_Employee <-----------FCT_Attendance
+ This is one approach where you can use concept of multiple LTS in BMM layer. Specifying Content When you use multiple physical tables as sources, you expand table sources in BMM diagram. It shows all multiple LTS from where it is picking up the data in BMM layer. To see table mapping in BMM layer, expand the sources under logical table in BMM layer. It will open Logical table source mapping dialogue box. You can check all tables which are mapped to provide data in logical table.

@@ -1,0 +1,57 @@
+Neo4j - Set Clause
+
+https://www.tutorialspoint.com/neo4j/neo4j_set_clause.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+Using Set clause, you can add new properties to an existing Node or Relationship, and also add or update existing Properties values. In this chapter, we are going to discuss how to − Set a property Remove a property Set multiple properties Set a label on a node Set multiple labels on a node Setting a Property Using the SET clause, you can create a new property in a node. Syntax Following is the syntax for setting a property. 
+MATCH (node:label{properties . . . . . . . . . . . . . . }) 
+SET node.property = value 
+RETURN node
+ Example Before proceeding with the example, first create a node named Dhawan as shown below. 
+CREATE (Dhawan:player{name: "shikar Dhawan", YOB: 1985, POB: "Delhi"}) 
+ Following is a sample Cypher Query to create a property named “highestscore” with value “187”. 
+MATCH (Dhawan:player{name: "shikar Dhawan", YOB: 1985, POB: "Delhi"}) 
+SET Dhawan.highestscore = 187 
+RETURN Dhawan
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screnshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Here you can observe that a property with a key-value pair highestscore/187 is created in the node named “Dhawan”. Removing a Property You can remove an existing property by passing NULL as value to it. Syntax Following is the syntax of removing a property from a node using the SET clause. 
+MATCH (node:label {properties}) 
+SET node.property = NULL 
+RETURN node 
+ Example Before proceeding with the example, first create a node “jadeja” as shown below. 
+Create (Jadeja:player {name: "Ravindra Jadeja", YOB: 1988, POB: "NavagamGhed"})
+ Following is a sample Cypher Query which removes the property named POB from this node using the SET clause as shown below. 
+MATCH (Jadeja:player {name: "Ravindra Jadeja", YOB: 1988, POB: "NavagamGhed"}) 
+SET Jadeja.POB = NULL 
+RETURN Jadeja 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Here you can observe that the variable named POB was deleted. Setting Multiple Properties In the same way, you can create multiple properties in a node using the Set clause. To do so, you need to specify these key value pairs with commas. Syntax Following is the syntax to create multiple properties in a node using the SET clause. 
+MATCH (node:label {properties}) 
+SET node.property1 = value, node.property2 = value 
+RETURN node 
+ Example Following is a sample Cypher Query which creates multiple properties in a node using the SET clause in Neo4j. 
+MATCH (Jadeja:player {name: "Ravindra Jadeja", YOB: 1988})  
+SET Jadeja.POB: "NavagamGhed", Jadeja.HS = "90" 
+RETURN Jadeja
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Here you can observe that properties named POB and HS were created. Setting a Label on a Node You can set a label to an existing node using the SET clause. Syntax Following is the syntax to set a label to an existing node. 
+MATCH (n {properties . . . . . . . }) 
+SET n :label 
+RETURN n 
+ Example Before proceeding with the example, first create a node “Anderson” as shown below. 
+CREATE (Anderson {name: "James Anderson", YOB: 1982, POB: "Burnely"})
+ Following is a sample Cypher Query to set a label on a node using the SET clause. This query adds the label “player” to the node Anderson and returns it. 
+MATCH (Anderson {name: "James Anderson", YOB: 1982, POB: "Burnely"}) 
+SET Anderson: player 
+RETURN Anderson 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Here you can observe that the label named “player” is added to the node. Setting Multiple Labels on a Node You can set multiple labels to an existing node using the SET clause. Here you need to specify the labels by separating them with colons “:”. Syntax Following is the syntax to set multiple labels to an existing node using the SET clause. 
+MATCH (n {properties . . . . . . . }) 
+SET n :label1:label2 
+RETURN n 
+ Example Before proceeding with the example, first create a node named “Ishant” as shown below. 
+CREATE (Ishant {name: "Ishant Sharma", YOB: 1988, POB: "Delhi"}) 
+ Following is a sample Cypher Query used to create multiple labels on a node using the SET clause. 
+MATCH (Ishant {name: "Ishant Sharma", YOB: 1988, POB: "Delhi"}) 
+SET Ishant: player:person 
+RETURN Ishant 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Here you can observe that two labels - person and player – are added to the node named Ishant.

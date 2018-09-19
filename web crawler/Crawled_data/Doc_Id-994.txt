@@ -1,0 +1,9 @@
+WSDL - References
+
+https://www.tutorialspoint.com/wsdl/wsdl_references.htm
+
+WSDL, tutorial, basic, advanced, elements, examples, definition, types, message, port, binding, service.
+
+August-15-2017-02:34:07
+
+If you are interested in listing down your company, website or books as an WSDL resource then please contact at webmaster@tutorialspoint.com List of WSDL Specifications Specification Draft / Proposal W3C Recommendation       WSDL 1.1 Note 15. Mar 2001   WSDL Usage Scenarios 04. Jun 2002   WSDL Requirements 28. Oct 2002   WSDL Architecture 11. Feb 2004   WSDL Glossary 11. Feb 2004   WSDL Usage Scenarios 11. Feb 2004   WSDL 1.2 Core Language 11. Jun 2003   WSDL 1.2 Message Patterns 11. Jun 2003   WSDL 1.2 Bindings 11. Jun 2003   WSDL 2.0 Primer 27. Mar 2006   WSDL 2.0 Core Language 27. Mar 2006   WSDL 2.0 Adjuncts 27. Mar 2006   WSDL 2.0 SOAP 1.1 Binding 27. Mar 2006   WSDL 2.0 RDF Mapping 18. May 2006   WS Addressing Core   09. May 2006 WS Addressing SOAP Binding   09. May 2006 Web Architecture   15. Dec 2004

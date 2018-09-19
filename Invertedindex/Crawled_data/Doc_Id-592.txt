@@ -1,0 +1,86 @@
+PouchDB - Deleting Attachment
+
+https://www.tutorialspoint.com/pouchdb/pouchdb_deleting_attachment.htm
+
+PouchDB, Tutorial, Overview, Environment, Create, Info, Delete Database, Create, Read, Update, Delete Document, Create, Fetch, Update, Delete Batch, Adding, Retrieving, Deleting Attachment, Replication, Synchronization, Miscellaneous.
+
+August-15-2017-02:34:06
+
+You can delete an attachment from PouchDB using the removeAttachment() method. Syntax Following is the syntax of the removeAttachment() method. To this method, we have to pass the document id, attachment id, and _rev value. This method also accepts an optional callback function. 
+db.removeAttachment ( docId, attachmentId, rev, [callback] );
+ Example Suppose there is a document in PouchDB with id 001, which contains id, name, age, designation of an employee along with an attachment as shown below. 
+{ 
+   name: 'Raju',
+   age: 23,
+   designation: 'Designer',
+   _attachments: { 
+      'att_1.txt': { 
+         content_type: 'text/plain',
+         digest: 'md5-k7iFrf4NoInN9jSQT9WfcQ==',
+         data: 'AA==' 
+      } 
+   },
+   _id: '001',
+   _rev: '2-cdec6c9f45ddbee7d456945654742d43' 
+}
+ Following is an example of deleting the attachment of this document 001 stored in PouchDB, using removeAttachment() method. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my');
+db.removeAttachment('001', 'att_1.txt', '2-cdec6c9f45ddbee7d456945654742d43', 
+   function(err, res) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(res+"Attachment Deleted successfully")
+   }
+});
+ Save the above code in a file with the name Remove_Attachment.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Remove_Attachment.js
+ This removes the attachment of the document and displays a message on the console as shown below. 
+Attachment deleted successfully
+ After deletion, you can verify the contents of the document by executing the following code. 
+//Requiring the package
+var PouchDB = require('PouchDB');
+
+//Creating the database object
+var db = new PouchDB('my_d');
+
+//Reading the Document
+db.get('001',{attachments: true}, function(err, doc) {
+   if (err) {
+      return console.log(err);
+   } else {
+      console.log(doc);
+   }
+});
+ Save this code as read.js and execute it. On executing, you will get the contents of the document after deleting the attachment, as shown below. 
+{ 
+   name: 'Raju',
+   age: 23,
+   designation: 'Designer',
+   _id: '001',
+   _rev: '3-da775487a6ed0495f2e49c543384f8e8' 
+}
+ Removing Attachment from a Remote Document You can delete an attachment of an existing document in the database that is stored remotely on the server (CouchDB). To do so, instead of a database name, you need to pass the path to the database in CouchDB, which contains the document that is to be read. Example Suppose there is a database named my_database in the CouchDB server. Then, if you verify the list of databases in CouchDB using the URL http://127.0.0.1:5984/_utils/index.html you will get the following screenshot. And if you select the database named my_database, you can view its contents as shown below. Suppose there is an attachment in this document as shown below. Following is an example of deleting the above mentioned attachment of the document 001 that exists in a database named my_database which is stored in the CouchDB server. 
+//Requiring the package 
+var PouchDB = require('PouchDB');
+
+//Creating the database object 
+var db = new PouchDB('http://localhost:5984/my_database');
+
+db.removeAttachment('001', 'att_1.txt', '2-049f1c4ffa54576ec0947b65e34de423', 
+   function(err, res) { 
+   if (err) { 
+      return console.log(err); 
+   } else { 
+      console.log(res+"Attachment Deleted successfully") 
+   } 
+});
+ Save the above code in a file with the name Remote_Delete_Attachment.js. Open the command prompt and execute the JavaScript file using node as shown below. 
+C:\PouchDB_Examples >node Remote_Delete_Attachment.js
+ This removes the existing attachment and displays the following message. 
+Attachment Deleted successfully
+ If you visit the document again, you can notice that the attachment was deleted as shown in the following screenshot.

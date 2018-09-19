@@ -1,0 +1,219 @@
+DocumentDB SQL - In Keyword
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_in_keyword.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+The IN keyword can be used to check whether a specified value matches any value in a list. The IN operator allows you to specify multiple values in a WHERE clause. IN is equivalent to chaining multiple OR clauses. The similar three documents are considered as done in earlier examples. Following is the AndersenFamily document. 
+{ 
+   "id": "AndersenFamily", 
+   "lastName": "Andersen",
+	
+   "parents": [ 
+      { "firstName": "Thomas", "relationship":  "father" }, 
+      { "firstName": "Mary Kay", "relationship":  "mother" } 
+   ], 
+	
+   "children": [ 
+      { 
+         "firstName": "Henriette Thaulow", 
+         "gender": "female", 
+         "grade": 5, 
+         "pets": [ { "givenName": "Fluffy", "type":  "Rabbit" } ] 
+      } 
+   ], 
+	
+   "location": { "state": "WA", "county": "King", "city": "Seattle" }, 
+   "isRegistered": true 
+}
+ Following is the SmithFamily document. 
+{ 
+   "id": "SmithFamily", 
+	
+   "parents": [ 
+      { "familyName": "Smith", "givenName": "James" }, 
+      { "familyName": "Curtis", "givenName": "Helen" } 
+   ],
+	
+   "children": [ 
+      {
+         "givenName": "Michelle", 
+         "gender": "female", 
+         "grade": 1 
+      },
+		
+      { 
+         "givenName": "John", 
+         "gender": "male", 
+         "grade": 7,
+			
+         "pets": [ 
+            { "givenName": "Tweetie", "type": "Bird" } 
+         ] 
+      } 
+   ],
+   
+   "location": { 
+      "state": "NY", 
+      "county": "Queens", 
+      "city": "Forest Hills" 
+   },
+	
+   "isRegistered": true 
+}
+ Following is the WakefieldFamily document. 
+{ 
+   "id": "WakefieldFamily", 
+	
+   "parents": [ 
+      { "familyName": "Wakefield", "givenName": "Robin" }, 
+      { "familyName": "Miller", "givenName": "Ben" } 
+   ],
+   
+   "children": [ 
+      { 
+         "familyName": "Merriam", 
+         "givenName": "Jesse", 
+         "gender": "female", 
+         "grade": 6, 
+			
+         "pets": [ 
+            { "givenName": "Charlie Brown", "type": "Dog" }, 
+            { "givenName": "Tiger", "type": "Cat" },
+            { "givenName": "Princess", "type": "Cat" } 
+         ] 
+      }, 
+		
+      { 
+         "familyName": "Miller", 
+         "givenName": "Lisa", 
+         "gender": "female", 
+         "grade": 3,
+			
+         "pets": [ 
+            { "givenName": "Jake", "type": "Snake" } 
+         ] 
+      } 
+   ],
+   
+   "location": { "state": "NY", "county": "Manhattan", "city": "NY" }, 
+   "isRegistered": false 
+}
+ Let’s take a look at a simple example. Following is the query which will retrieve the data whose familyName is either “Smith” or Wakefield. 
+SELECT * 
+FROM Families.parents[0] f 
+WHERE f.familyName IN ('Smith', 'Wakefield')
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "familyName": "Wakefield", 
+      "givenName": "Robin" 
+   }, 
+	
+   { 
+      "familyName": "Smith", 
+      "givenName": "James" 
+   } 
+]
+ Let’s consider another simple example in which all family documents will be retrieved where the id is one of "SmithFamily" or "AndersenFamily". Following is the query. 
+SELECT * 
+FROM Families  
+WHERE Families.id IN ('SmithFamily', 'AndersenFamily')
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "id": "SmithFamily", 
+      "parents": [ 
+         { 
+            "familyName": "Smith", 
+            "givenName": "James" 
+         }, 
+			
+         { 
+            "familyName": "Curtis", 
+            "givenName": "Helen"
+         } 
+      ], 
+	  
+      "children": [ 
+         { 
+            "givenName": "Michelle", 
+            "gender": "female", 
+            "grade": 1 
+         },
+			
+         { 
+            "givenName": "John", 
+            "gender": "male", 
+            "grade": 7,
+				
+            "pets": [ 
+               { 
+                  "givenName": "Tweetie", 
+                  "type": "Bird" 
+               }  
+            ] 
+         } 
+      ], 
+	  
+      "location": { 
+         "state": "NY", 
+         "county": "Queens", 
+         "city": "Forest Hills" 
+      },
+	  
+      "isRegistered": true, 
+      "_rid": "Ic8LAJFujgEDAAAAAAAAAA==", 
+      "_ts": 1450541623, 
+      "_self": "dbs/Ic8LAA==/colls/Ic8LAJFujgE=/docs/Ic8LAJFujgEDAAAAAAAAAA==/", 
+      "_etag": "\"00000600-0000-0000-0000-567582370000\"", 
+      "_attachments": "attachments/" 
+   },
+	
+   { 
+      "id": "AndersenFamily", 
+      "lastName": "Andersen", 
+		
+      "parents": [ 
+         { 
+            "firstName": "Thomas", 
+            "relationship": "father"
+         },
+			
+         { 
+            "firstName": "Mary Kay", 
+            "relationship": "mother" 
+         } 
+      ],
+	  
+      "children": [ 
+         { 
+            "firstName": "Henriette Thaulow", 
+            "gender": "female", 
+            "grade": 5,
+				
+            "pets": [ 
+               { 
+                  "givenName": "Fluffy", 
+                  "type": "Rabbit" 
+               } 
+            ] 
+         } 
+      ],
+	  
+      "location": {      
+         "state": "WA", 
+         "county": "King", 
+         "city": "Seattle"    
+      },
+	  
+      "isRegistered": true, 
+      "_rid": "Ic8LAJFujgEEAAAAAAAAAA==", 
+      "_ts": 1450541624, 
+      "_self": "dbs/Ic8LAA==/colls/Ic8LAJFujgE=/docs/Ic8LAJFujgEEAAAAAAAAAA==/", 
+      "_etag": "\"00000700-0000-0000-0000-567582380000\"", 
+      "_attachments": "attachments/" 
+   }
+]

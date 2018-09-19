@@ -1,0 +1,48 @@
+HSQLDB - Update Query
+
+https://www.tutorialspoint.com/hsqldb/hsqldb_update_query.htm
+
+HSQLDB, Tutorial, Introduction, Installation, Connect, Data Types, Create Table, Drop Table, Insert Query, Select Query, Where Clause, Update Query, Delete Clause, LIKE Clause, Sorting Results, Joins, Null Values, Regular Expressions, Transactions, Alter Command, Indexes.
+
+August-15-2017-02:34:09
+
+Whenever you want to modify the values of a table, you can use the UPDATE command. This will modify any field value from any HSQLDB table. Syntax Here is the generic syntax for UPDATE command. 
+UPDATE table_name SET field1 = new-value1, field2 = new-value2 [WHERE Clause]
+ You can update one or more field altogether. You can specify any condition using WHERE clause. You can update values in a single table at a time. Example Let us consider an example that updates the title of the tutorial from "Learn C" to "C and Data Structures" having an id "101". Following is the query for the update. 
+UPDATE tutorials_tbl SET title = 'C and Data Structures' WHERE id = 101;
+ After execution of the above query, you will receive the following output. 
+(1) Rows effected
+ HSQLDB – JDBC Program Here is the JDBC program that will update a tutorial title from Learn C to C and Data Structures having an id 101. Save the following program into the UpdateQuery.java file. 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class UpdateQuery {
+   
+   public static void main(String[] args) {
+      Connection con = null;
+      Statement stmt = null;
+      int result = 0;
+      
+      try {
+         Class.forName("org.hsqldb.jdbc.JDBCDriver");
+         con = DriverManager.getConnection(
+            "jdbc:hsqldb:hsql://localhost/testdb", "SA", "");
+         stmt = con.createStatement();
+         result = stmt.executeUpdate(
+            "UPDATE tutorials_tbl SET title = 'C and Data Structures' WHERE id = 101");
+      } catch (Exception e) {
+         e.printStackTrace(System.out);
+      }
+      System.out.println(result+" Rows effected");
+   }
+}
+ You can start the database using the following command. 
+\>cd C:\hsqldb-2.3.4\hsqldb
+hsqldb>java -classpath lib/hsqldb.jar org.hsqldb.server.Server --database.0
+file:hsqldb/demodb --dbname.0 testdb
+ Compile and execute the above program using the following command. 
+\>javac UpdateQuery.java
+\>java UpdateQuery
+ After execution of the above command, you will receive the following output − 
+1 Rows effected

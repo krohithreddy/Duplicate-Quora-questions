@@ -1,0 +1,23 @@
+OrientDB - Create Vertex
+
+https://www.tutorialspoint.com/orientdb/orientdb_create_vertex.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+OrientDB database is not only a Document database but also a Graph database. New concepts such as Vertex and Edge are used to store the data in the form of graph. It applies polymorphism on vertices. The base class for Vertex is V. In this chapter you can learn how to create vertex to store graph data. The following statement is the basic syntax of Create Vertex Command. 
+CREATE VERTEX [<class>] [CLUSTER <cluster>] [SET <field> = <expression>[,]*]
+ Following are the details about the options in the above syntax. <class> − Defines the class to which the vertex belongs. <cluster> − Defines the cluster in which it stores the vertex. <field> − Defines the field you want to set. <expression> − Defines the express to set for the field. Example Try the following example to understand how to create vertex. Execute the following query to create a vertex without ‘name’ and on the base class V. 
+orientdb> CREATE VERTEX
+ If the above query is executed successfully, you will get the following output. 
+Created vertex 'V#9:0 v1' in 0.118000 sec(s)
+ Execute the following query to create a new vertex class named v1, then create vertex in that class. 
+orientdb> CREATE CLASS V1 EXTENDS V 
+orientdb> CREATE VERTEX V1
+ If the above query is executed successfully, you will get the following output. 
+Created vertex 'V1#14:0 v1' in 0.004000 sec(s)
+ Execute the following query to create a new vertex of the class named v1, defining its properties such as brand = 'Maruti' and name = 'Swift'. 
+orientdb> CREATE VERTEX V1 SET brand = 'maruti', name = 'swift'
+ If the above query is executed successfully, you will get the following output. 
+Created vertex 'V1#14:1{brand:maruti,name:swift} v1' in 0.004000 sec(s)

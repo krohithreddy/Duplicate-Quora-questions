@@ -1,0 +1,187 @@
+DocumentDB SQL - User-Defined Functions
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_user_defined_functions.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+DocumentDB SQL provides support for User-Defined Functions (UDFs). UDFs are just another kind of JavaScript functions you can write and these work pretty much as you'd expect. You can create UDFs to extend the query language with custom business logic that you can reference in your queries. The DocumentDB SQL syntax is extended to support custom application logic using these UDFs. UDFs can be registered with DocumentDB and then be referenced as part of a SQL query. Let’s consider the following three documents for this example. AndersenFamily document is as follows. 
+{ 
+   "id": "AndersenFamily", 
+   "lastName": "Andersen", 
+	
+   "parents": [ 
+      { "firstName": "Thomas", "relationship":  "father" }, 
+      { "firstName": "Mary Kay", "relationship":  "mother" } 
+   ],
+   
+   "children": [ 
+      { 
+         "firstName": "Henriette Thaulow", 
+         "gender": "female", 
+         "grade": 5, 
+         "pets": [ { "givenName": "Fluffy", "type":  "Rabbit" } ] 
+      } 
+   ],
+   
+   "location": { "state": "WA", "county": "King", "city": "Seattle" }, 
+   "isRegistered": true 
+}
+ SmithFamily document is as follows. 
+{ 
+   "id": "SmithFamily", 
+	
+   "parents": [ 
+      { "familyName": "Smith", "givenName": "James" }, 
+      { "familyName": "Curtis", "givenName": "Helen" }
+   ], 
+	
+   "children": [ 
+      { 
+         "givenName": "Michelle", 
+         "gender": "female", 
+         "grade": 1 
+      }, 
+		
+      { 
+         "givenName": "John", 
+         "gender": "male", 
+         "grade": 7,
+			
+         "pets": [ 
+            { "givenName": "Tweetie", "type": "Bird" } 
+         ] 
+      }
+   ],
+   
+   "location": { 
+      "state": "NY", 
+      "county": "Queens", 
+      "city": "Forest Hills" 
+   },
+   
+   "isRegistered": true 
+} 
+ WakefieldFamily document is as follows. 
+{ 
+   "id": "WakefieldFamily", 
+	
+   "parents": [ 
+      { "familyName": "Wakefield", "givenName": "Robin" }, 
+      { "familyName": "Miller", "givenName": "Ben" } 
+   ],
+   
+   "children": [ 
+      { 
+         "familyName": "Merriam", 
+         "givenName": "Jesse", 
+         "gender": "female", 
+         "grade": 6,
+			
+         "pets": [
+            { "givenName": "Charlie Brown", "type": "Dog" }, 
+            { "givenName": "Tiger", "type": "Cat" }, 
+            { "givenName": "Princess", "type": "Cat" } 
+         ] 
+      },
+		
+      { 
+         "familyName": "Miller", 
+         "givenName": "Lisa", 
+         "gender": "female", 
+         "grade": 3,
+			
+         "pets": [ 
+            { "givenName": "Jake", "type": "Snake" } 
+         ] 
+      } 
+   ],
+   
+   "location": { "state": "NY", "county": "Manhattan", "city": "NY" }, 
+   "isRegistered": false 
+} 
+ Let’s take a look at an example where we will create some simple UDFs. Following is the implementation of CreateUserDefinedFunctions. 
+private async static Task CreateUserDefinedFunctions(DocumentClient client) { 
+   Console.WriteLine(); 
+   Console.WriteLine("**** Create User Defined Functions ****"); 
+   Console.WriteLine();  
+	
+   await CreateUserDefinedFunction(client, "udfRegEx");  
+}
+ We have a udfRegEx, and in CreateUserDefinedFunction we get its JavaScript code from our local file. We construct the definition object for the new UDF, and call CreateUserDefinedFunctionAsync with the collection's SelfLink and the udfDefinition object as shown in the following code. 
+private async static Task<UserDefinedFunction>
+CreateUserDefinedFunction(DocumentClient client, string udfId) { 
+   var udfBody = File.ReadAllText(@"..\..\Server\" + udfId + ".js"); 
+	
+   var udfDefinition = new UserDefinedFunction { 
+      Id = udfId, 
+      Body = udfBody 
+   }; 
+   
+   var result = await client
+      .CreateUserDefinedFunctionAsync(_collection.SelfLink, udfDefinition); 
+   var udf = result.Resource; 
+	
+   Console.WriteLine("Created user defined function {0}; RID: {1}", 
+      udf.Id, udf.ResourceId);  
+		
+   return udf; 
+}
+ We get back the new UDF from the resource property of the result and return it back up to the caller. To display the existing UDF, following is the implementation of ViewUserDefinedFunctions. We call CreateUserDefinedFunctionQuery and loop through them as usual. 
+private static void ViewUserDefinedFunctions(DocumentClient client) { 
+   Console.WriteLine(); 
+   Console.WriteLine("**** View UDFs ****"); 
+   Console.WriteLine(); 
+	
+   var udfs = client  
+      .CreateUserDefinedFunctionQuery(_collection.UserDefinedFunctionsLink) 
+      .ToList();  
+		
+   foreach (var udf in udfs) { 
+      Console.WriteLine("User defined function {0}; RID: {1}", udf.Id, udf.ResourceId); 
+   }
+}
+ DocumentDB SQL doesn't provide built-in functions to search for substrings or for regular expressions, hence the following little one-liner fills that gap which is a JavaScript function. 
+function udfRegEx(input, regex) { 
+   return input.match(regex); 
+}
+ Given the input string in the first parameter, use JavaScript's built-in regular expression support passing in the pattern matching string in the second parameter into .match. We can run a substring query to find all stores with the word Andersen in their lastName property. 
+private static void Execute_udfRegEx(DocumentClient client) { 
+   var sql = "SELECT c.name FROM c WHERE udf.udfRegEx(c.lastName, 'Andersen') != null";
+	
+   Console.WriteLine(); 
+   Console.WriteLine("Querying for Andersen"); 
+	
+   var documents = client.CreateDocumentQuery(_collection.SelfLink, sql).ToList();  
+   Console.WriteLine("Found {0} Andersen:", documents.Count); 
+	
+   foreach (var document in documents) { 
+      Console.WriteLine("Id: {0}, Name: {1}", document.id, document.lastName); 
+   } 
+}
+ Note that we must qualify every UDF reference with the prefix udf. We just passed the SQL along to CreateDocumentQuery like any ordinary query. Finally, let’s call the above queries from the CreateDocumentClient task 
+private static async Task CreateDocumentClient() { 
+   // Create a new instance of the DocumentClient 
+	
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)){ 
+      database = client.CreateDatabaseQuery("SELECT * FROM c WHERE 
+         c.id = 'myfirstdb'").AsEnumerable().First();
+      collection = client.CreateDocumentCollectionQuery(database.CollectionsLink, 
+         "SELECT * FROM c WHERE c.id = 'Families'").AsEnumerable().First();
+			 
+      await CreateUserDefinedFunctions(client);
+   
+      ViewUserDefinedFunctions(client);
+   
+      Execute_udfRegEx(client); 
+   } 
+}
+ When the above code is executed, it produces the following output. 
+**** Create User Defined Functions ****  
+Created user defined function udfRegEx; RID: kV5oANVXnwAlAAAAAAAAYA==  
+**** View UDFs ****  
+User defined function udfRegEx; RID: kV5oANVXnwAlAAAAAAAAYA==  
+Querying for Andersen 
+Found 1 Andersen: 
+ Id: AndersenFamily, Name: Andersen

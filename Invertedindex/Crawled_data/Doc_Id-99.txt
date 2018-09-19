@@ -1,0 +1,268 @@
+DocumentDB SQL - Select Clause
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_select_clause.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+The Azure portal has a Query Explorer that lets us run any SQL query against our DocumentDB database. We will use the Query Explorer to demonstrate the many different capabilities and features of the query language starting with the simplest possible query. Step 1 − Open the Azure Portal, and in the database blade, click the Query Explorer blade. Remember that queries run within the scope of a collection, and so the Query Explorer lets us choose the collection in this dropdown. We will leave it set to our Families collection that contains the three documents. Let’s consider these three documents in this example. Following is the AndersenFamily document. 
+{ 
+   "id": "AndersenFamily", 
+   "lastName": "Andersen", 
+	
+   "parents": [ 
+      { "firstName": "Thomas", "relationship":  "father" }, 
+      { "firstName": "Mary Kay", "relationship":  "mother" } 
+   ],
+	
+   "children": [ 
+      { 
+         "firstName": "Henriette Thaulow", 
+         "gender": "female", 
+         "grade": 5, 
+         "pets": [ { "givenName": "Fluffy", "type":  "Rabbit" } ] 
+      } 
+   ],
+   
+   "location": { "state": "WA", "county": "King", "city": "Seattle" }, 
+   "isRegistered": true 
+}
+ Following is the SmithFamily document. 
+{ 
+   "id": "SmithFamily",
+	
+   "parents": [ 
+      { "familyName": "Smith", "givenName": "James" }, 
+      { "familyName": "Curtis", "givenName": "Helen" } 
+   ], 
+	
+   "children": [ 
+      { 
+         "givenName": "Michelle", 
+         "gender": "female", 
+         "grade": 1 
+      },
+		
+      { 
+         "givenName": "John", 
+         "gender": "male", 
+         "grade": 7, 
+			
+         "pets": [ 
+            { "givenName": "Tweetie", "type": "Bird" } 
+         ] 
+			
+      } 
+   ],
+	
+   "location": { 
+      "state": "NY", 
+      "county": "Queens", 
+      "city": "Forest Hills" 
+   },
+	
+   "isRegistered": true 
+}
+ Following is the WakefieldFamily document. 
+{ 
+   "id": "WakefieldFamily", 
+	
+   "parents": [ 
+      { "familyName": "Wakefield", "givenName": "Robin" }, 
+      { "familyName": "Miller", "givenName": "Ben" } 
+   ], 
+	
+   "children": [ 
+      { 
+         "familyName": "Merriam", 
+         "givenName": "Jesse", 
+         "gender": "female", 
+         "grade": 6, 
+		
+         "pets": [ 
+            { "givenName": "Charlie Brown", "type": "Dog" }, 
+            { "givenName": "Tiger", "type": "Cat" }, 
+            { "givenName": "Princess", "type": "Cat" } 
+         ] 
+      }, 
+	
+      { 
+         "familyName": "Miller", 
+         "givenName": "Lisa", 
+         "gender": "female", 
+         "grade": 3, 
+		
+         "pets": [ 
+            { "givenName": "Jake", "type": "Snake" } 
+         ]
+		
+      } 
+   ], 
+	
+   "location": { "state": "NY", "county": "Manhattan", "city": "NY" }, 
+   "isRegistered": false
+} 
+ The Query Explorer opens up with this simple query SELECT * FROM c, which simply retrieves all documents from the collection. Although it is simple, it's still quite different than the equivalent query in a relational database. Step 2 − In relational databases, SELECT * means return all columns while in DocumentDB. It means that you want each document in your result to be returned exactly as it's stored in the database. But when you select specific properties and expressions instead of simply issuing a SELECT *, then you are projecting a new shape that you want for each document in the result. Step 3 − Click ‘Run’ to execute query and open the Results blade. As can be seen the WakefieldFamily, the SmithFamily, and the AndersonFamily are retrieved. Following are the three documents which are retrieved as a result of the SELECT * FROM c query. 
+[ 
+   { 
+      "id": "WakefieldFamily",
+      "parents": [ 
+         { 
+            "familyName": "Wakefield", 
+            "givenName": "Robin" 
+         }, 
+		
+         { 
+            "familyName": "Miller", 
+            "givenName": "Ben" 
+         } 
+      ],
+	  
+      "children": [ 
+         { 
+            "familyName": "Merriam", 
+            "givenName": "Jesse", 
+            "gender": "female", 
+            "grade": 6, 
+			
+            "pets": [ 
+               { 
+                  "givenName": "Charlie Brown", 
+                  "type": "Dog" 
+               },
+			
+               { 
+                  "givenName": "Tiger", 
+                  "type": "Cat" 
+               },
+			
+               { 
+                  "givenName": "Princess", 
+                  "type": "Cat" 
+               } 
+            ] 
+         }, 
+		
+         { 
+            "familyName": "Miller", 
+            "givenName": "Lisa", 
+            "gender": "female", 
+            "grade": 3, 
+			
+            "pets": [ 
+               { 
+                  "givenName": "Jake",
+                  "type": "Snake" 
+               } 
+            ] 
+         } 
+      ], 
+		
+      "location": { 
+         "state": "NY", 
+         "county": "Manhattan", 
+         "city": "NY" 
+      }, 
+		
+      "isRegistered": false, 
+      "_rid": "Ic8LAJFujgECAAAAAAAAAA==", 
+      "_ts": 1450541623, 
+      "_self": "dbs/Ic8LAA==/colls/Ic8LAJFujgE=/docs/Ic8LAJFujgECAAAAAAAAAA==/", 
+      "_etag": "\"00000500-0000-0000-0000-567582370000\"", 
+      "_attachments": "attachments/" 
+   }, 
+	
+   { 
+      "id": "SmithFamily", 
+      "parents": [ 
+         { 
+            "familyName": "Smith", 
+            "givenName": "James" 
+         }, 
+		
+         { 
+            "familyName": "Curtis", 
+            "givenName": "Helen" 
+         } 
+      ], 
+		
+      "children": [ 
+         { 
+            "givenName": "Michelle", 
+            "gender": "female", 
+            "grade": 1 
+         }, 
+		
+         { 
+            "givenName": "John", 
+            "gender": "male", 
+            "grade": 7,
+			
+            "pets": [ 
+               { 
+                  "givenName": "Tweetie", 
+                  "type": "Bird" 
+               } 
+            ] 
+         } 
+      ],
+		
+      "location": { 
+         "state": "NY", 
+         "county": "Queens", 
+         "city": "Forest Hills" 
+      }, 
+		
+      "isRegistered": true, 
+      "_rid": "Ic8LAJFujgEDAAAAAAAAAA==", 
+      "_ts": 1450541623, 
+      "_self": "dbs/Ic8LAA==/colls/Ic8LAJFujgE=/docs/Ic8LAJFujgEDAAAAAAAAAA==/", 
+      "_etag": "\"00000600-0000-0000-0000-567582370000\"", 
+      "_attachments": "attachments/" 
+   }, 
+	
+   { 
+      "id": "AndersenFamily", 
+      "lastName": "Andersen", 
+		
+      "parents": [ 
+         { 
+            "firstName": "Thomas", 
+            "relationship": "father" 
+         },
+		
+         { 
+            "firstName": "Mary Kay", 
+            "relationship": "mother" 
+         } 
+      ], 
+		
+      "children": [ 
+         { 
+            "firstName": "Henriette Thaulow", 
+            "gender": "female", 
+            "grade": 5, 
+			
+            "pets": [  
+               "givenName": "Fluffy", 
+               "type": "Rabbit" 
+            ] 
+         } 
+      ],
+		
+      "location": { 
+         "state": "WA", 
+         "county": "King", 
+         "city": "Seattle" 
+      },
+		
+      "isRegistered": true, 
+      "_rid": "Ic8LAJFujgEEAAAAAAAAAA==", 
+      "_ts": 1450541624, 
+      "_self": "dbs/Ic8LAA==/colls/Ic8LAJFujgE=/docs/Ic8LAJFujgEEAAAAAAAAAA==/", 
+      "_etag": "\"00000700-0000-0000-0000-567582380000\"", 
+      "_attachments": "attachments/" 
+   }
+]	
+ However, these results also include the system-generated properties that are all prefixed with the underscore character.

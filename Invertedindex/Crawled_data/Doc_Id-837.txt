@@ -1,0 +1,45 @@
+AIML - <think> Tag
+
+https://www.tutorialspoint.com/aiml/aiml_think_tag.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+<think> Tag is used in AIML to store a variable without notifying the user. Syntax Store a value using <think> tag 
+<think> 
+   <set name = "variable-name"> variable-value </set>
+</think>
+ For example, consider the following conversation. 
+Human: My name is Mahesh
+Robot: Hello!
+Human: Byeee
+Robot: Hi Mahesh Thanks for the conversation!
+ Example Create think.aiml inside C > ab > bots > test > aiml and think.aiml.csv inside C > ab > bots > test > aimlif directories. think.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern>My name is *</pattern>
+      <template>
+         Hello!<think><set name = "username"> <star/></set></think>
+      </template>  
+   </category>  
+   
+   <category>
+      <pattern>Byeee</pattern>
+      <template>
+         Hi <get name = "username"/> Thanks for the conversation!
+      </template>  
+   </category>  
+   
+</aiml>
+ think.aiml.csv 
+0,My name is *,*,*, Hello! <think><set name = "username"> <star/></set></think>,think.aiml
+0,Byeee,*,*, Hi <get name = "username"/> Thanks for the conversation!,think.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You will see the following output − 
+Human: My name is Mahesh
+Robot: Hello!
+Human: Byeee
+Robot: Hi Mahesh Thanks for the conversation!

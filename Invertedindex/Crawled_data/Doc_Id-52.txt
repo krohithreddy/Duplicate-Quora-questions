@@ -1,0 +1,297 @@
+DocumentDB - Access Control
+
+https://www.tutorialspoint.com/documentdb/documentdb_access_control.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+DocumentDB provides the concepts to control access to DocumentDB resources. Access to DocumentDB resources is governed by a master key token or a resource token. Connections based on resource tokens can only access the resources specified by the tokens and no other resources. Resource tokens are based on user permissions. First you create one or more users, and these are defined at the database level. Then you create one or more permissions for each user, based on the resources that you want to allow each user to access. Each permission generates a resource token that allows either read-only or full access to a given resource and that can be any user resource within the database. Users are defined at the database level and permissions are defined for each user. Users and permissions apply to all collections in the database. Let’s take a look at a simple example in which we will learn how to define users and permissions to achieve granular security in DocumentDB. We will start with a new DocumentClient and query for the myfirstdb database. 
+private static async Task CreateDocumentClient() {
+   // Create a new instance of the DocumentClient
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+      database = client.CreateDatabaseQuery("SELECT * FROM c WHERE c.id =
+         'myfirstdb'").AsEnumerable().First();
+			
+      collection = client.CreateDocumentCollectionQuery(database.CollectionsLink,
+         "SELECT * FROM c WHERE c.id = 'MyCollection'").AsEnumerable().First();
+			
+      var alice = await CreateUser(client, "Alice");
+      var tom = await CreateUser(client, "Tom");
+   }
+}
+ Following is the implementation for CreateUser. 
+private async static Task<User> CreateUser(DocumentClient client, string userId) {
+   Console.WriteLine();
+   Console.WriteLine("**** Create User {0} in {1} ****", userId, database.Id);
+	
+   var userDefinition = new User { Id = userId };
+   var result = await client.CreateUserAsync(database.SelfLink, userDefinition);
+   var user = result.Resource;
+	
+   Console.WriteLine("Created new user");
+   ViewUser(user);
+	
+   return user;
+}
+ Step 1 − Create two users, Alice and Tom like any resource we create, we construct a definition object with the desired Id and call the create method and in this case we're calling CreateUserAsync with the database's SelfLink and the userDefinition. We get back the result from whose resource property we obtain the newly created user object. Now to see these two new users in the database. 
+private static void ViewUsers(DocumentClient client) {
+   Console.WriteLine(); 
+   Console.WriteLine("**** View Users in {0} ****", database.Id);  
+	
+   var users = client.CreateUserQuery(database.UsersLink).ToList();
+   var i = 0;
+	
+   foreach (var user in users) { 
+      i++; 
+      Console.WriteLine(); 
+      Console.WriteLine("User #{0}", i); 
+      ViewUser(user); 
+   }
+	
+   Console.WriteLine();
+   Console.WriteLine("Total users in database {0}: {1}", database.Id, users.Count); 
+}
+  
+private static void ViewUser(User user) {
+   Console.WriteLine("User ID: {0} ", user.Id); 
+   Console.WriteLine("Resource ID: {0} ", user.ResourceId); 
+   Console.WriteLine("Self Link: {0} ", user.SelfLink); 
+   Console.WriteLine("Permissions Link: {0} ", user.PermissionsLink); 
+   Console.WriteLine("Timestamp: {0} ", user.Timestamp); 
+}
+ Step 2 − Call CreateUserQuery, against the database's UsersLink to retrieve a list of all users. Then loop through them and view their properties. Now we have to create them first. So let's say that we wanted to allow Alice read/write permissions to the MyCollection collection, but Tom can only read documents in the collection. 
+await CreatePermission(client, alice, "Alice Collection Access", PermissionMode.All,
+   collection);
+	
+await CreatePermission(client, tom, "Tom Collection Access", PermissionMode.Read,
+   collection);
+ Step 3− Create a permission on a resource that is MyCollection collection so we need to get that resource a SelfLink. Step 4 − Then create a Permission.All on this collection for Alice and a Permission.Read on this collection for Tom. Following is the implementation for CreatePermission. 
+private async static Task CreatePermission(DocumentClient client, User user,
+   string permId, PermissionMode permissionMode, string resourceLink) {
+   Console.WriteLine();
+   Console.WriteLine("**** Create Permission {0} for {1} ****", permId, user.Id);
+	
+   var permDefinition = new Permission {
+      Id = permId,
+      PermissionMode = permissionMode,
+      ResourceLink = resourceLink
+   };
+	
+   var result = await client.CreatePermissionAsync(user.SelfLink, permDefinition);
+   var perm = result.Resource;
+   Console.WriteLine("Created new permission");
+   ViewPermission(perm);
+}
+ As you should come to expect by now, we do this by creating a definition object for the new permission, which includes an Id and a permissionMode, which is either Permission.All or Permission.Read, and the SelfLink of the resource that's being secured by the permission. Step 5 − Call CreatePermissionAsync and get the created permission from the resource property in the result. To view the created permission, following is the implementation of ViewPermissions. 
+private static void ViewPermissions(DocumentClient client, User user) {
+   Console.WriteLine(); 
+   Console.WriteLine("**** View Permissions for {0} ****", user.Id);
+	
+   var perms = client.CreatePermissionQuery(user.PermissionsLink).ToList();
+   var i = 0; 
+	
+   foreach (var perm in perms) {
+      i++; 
+      Console.WriteLine(); 
+      Console.WriteLine("Permission #{0}", i); 
+      ViewPermission(perm); 
+   }  
+	
+   Console.WriteLine(); 
+   Console.WriteLine("Total permissions for {0}: {1}", user.Id, perms.Count); 
+}
+  
+private static void ViewPermission(Permission perm) {
+   Console.WriteLine("Permission ID: {0} ", perm.Id); 
+   Console.WriteLine("Resource ID: {0} ", perm.ResourceId); 
+   Console.WriteLine("Permission Mode: {0} ", perm.PermissionMode);
+   Console.WriteLine("Token: {0} ", perm.Token); 
+   Console.WriteLine("Timestamp: {0} ", perm.Timestamp); 
+}
+ This time, it's a permission query against the user's permissions link and we simply list each permission returned for the user. Let's delete the Alice’s and Tom’s permissions. 
+await DeletePermission(client, alice, "Alice Collection Access"); 
+await DeletePermission(client, tom, "Tom Collection Access");
+ Following is the implementation for DeletePermission. 
+private async static Task DeletePermission(DocumentClient client, User user,
+   string permId) {
+   Console.WriteLine(); 
+   Console.WriteLine("**** Delete Permission {0} from {1} ****", permId, user.Id);
+	
+   var query = new SqlQuerySpec {
+      QueryText = "SELECT * FROM c WHERE c.id = @id", 
+      Parameters = new SqlParameterCollection {
+         new SqlParameter { Name = "@id", Value = permId }
+      } 
+   };
+	
+   Permission perm = client.CreatePermissionQuery(user.PermissionsLink, query)
+      .AsEnumerable().First();  
+   await client.DeletePermissionAsync(perm.SelfLink);  
+   Console.WriteLine("Deleted permission {0} from user {1}", permId, user.Id); 
+}
+ Step 6 − To delete permissions, query by permission Id to get the SelfLink, and then using the SelfLink to delete the permission. Next, let’s delete the users themselves. Let’s delete both the users. 
+await DeleteUser(client, "Alice"); 
+await DeleteUser(client, "Tom");
+ Following is the implementation for DeleteUser. 
+private async static Task DeleteUser(DocumentClient client, string userId) {
+   Console.WriteLine(); 
+   Console.WriteLine("**** Delete User {0} in {1} ****", userId, database.Id);
+	
+   var query = new SqlQuerySpec { 
+      QueryText = "SELECT * FROM c WHERE c.id = @id", 
+      Parameters = new SqlParameterCollection {
+         new SqlParameter { Name = "@id", Value = userId }
+      } 
+   };
+	
+   User user = client.CreateUserQuery(database.SelfLink, query).AsEnumerable().First();  
+   await client.DeleteUserAsync(user.SelfLink);  
+   Console.WriteLine("Deleted user {0} from database {1}", userId, database.Id); 
+}
+ Step 7 − First query to get her SelfLink and then call DeleteUserAsync to delete her user object. Following is the implementation of CreateDocumentClient task in which we call all the above tasks. 
+private static async Task CreateDocumentClient() {
+   // Create a new instance of the DocumentClient
+   using (var client = new DocumentClient(new Uri(EndpointUrl), AuthorizationKey)) {
+      database = client.CreateDatabaseQuery("SELECT * FROM c WHERE c.id =
+         'myfirstdb'").AsEnumerable().First();
+			
+      collection = client.CreateDocumentCollectionQuery(database.CollectionsLink,
+         "SELECT * FROM c WHERE c.id = 'MyCollection'").AsEnumerable().First();
+			
+      ViewUsers(client);
+		
+      var alice = await CreateUser(client, "Alice");
+      var tom = await CreateUser(client, "Tom");
+      ViewUsers(client);
+		
+      ViewPermissions(client, alice);
+      ViewPermissions(client, tom);
+		
+      string collectionLink = client.CreateDocumentCollectionQuery(database.SelfLink,
+         "SELECT VALUE c._self FROM c WHERE c.id = 'MyCollection'")
+         .AsEnumerable().First().Value;
+			
+      await CreatePermission(client, alice, "Alice Collection Access", PermissionMode.All,
+         collectionLink);
+			
+      await CreatePermission(client, tom, "Tom Collection Access", PermissionMode.Read,
+         collectionLink);
+			
+      ViewPermissions(client, alice);
+      ViewPermissions(client, tom);
+		
+      await DeletePermission(client, alice, "Alice Collection Access");
+      await DeletePermission(client, tom, "Tom Collection Access");
+		
+      await DeleteUser(client, "Alice");
+      await DeleteUser(client, "Tom");
+   }
+}
+ When the above code is compiled and executed you will receive the following output. 
+**** View Users in myfirstdb **** 
+ 
+Total users in database myfirstdb: 0 
+ 
+**** Create User Alice in myfirstdb **** 
+Created new user 
+          User ID: Alice 
+      Resource ID: kV5oAC56NwA= 
+        Self Link: dbs/kV5oAA==/users/kV5oAC56NwA=/ 
+ Permissions Link: dbs/kV5oAA==/users/kV5oAC56NwA=/permissions/ 
+        Timestamp: 12/17/2015 5:44:19 PM
+		  
+**** Create User Tom in myfirstdb **** 
+Created new user 
+          User ID: Tom 
+      Resource ID: kV5oAALxKgA= 
+        Self Link: dbs/kV5oAA==/users/kV5oAALxKgA=/ 
+ Permissions Link: dbs/kV5oAA==/users/kV5oAALxKgA=/permissions/ 
+        Timestamp: 12/17/2015 5:44:21 PM
+		  
+**** View Users in myfirstdb ****
+  
+User #1 
+          User ID: Tom 
+      Resource ID: kV5oAALxKgA= 
+        Self Link: dbs/kV5oAA==/users/kV5oAALxKgA=/ 
+ Permissions Link: dbs/kV5oAA==/users/kV5oAALxKgA=/permissions/ 
+        Timestamp: 12/17/2015 5:44:21 PM 
+		  
+User #2 
+          User ID: Alice 
+      Resource ID: kV5oAC56NwA= 
+        Self Link: dbs/kV5oAA==/users/kV5oAC56NwA=/ 
+ Permissions Link: dbs/kV5oAA==/users/kV5oAC56NwA=/permissions/ 
+        Timestamp: 12/17/2015 5:44:19 PM
+		  
+Total users in database myfirstdb: 2
+  
+**** View Permissions for Alice **** 
+ 
+Total permissions for Alice: 0  
+
+**** View Permissions for Tom **** 
+ 
+Total permissions for Tom: 0  
+
+**** Create Permission Alice Collection Access for Alice **** 
+Created new permission 
+    Permission ID: Alice Collection Access 
+      Resource ID: kV5oAC56NwDON1RduEoCAA== 
+  Permission Mode: All
+            Token: type=resource&ver=1&sig=zB6hfvvleC0oGGbq5cc67w==;Zt3Lx 
+Ol14h8pd6/tyF1h62zbZKk9VwEIATIldw4ZyipQGW951kirueAKdeb3MxzQ7eCvDfvp7Y/ZxFpnip/D G 
+JYcPyim5cf+dgLvos6fUuiKSFSul7uEKqp5JmJqUCyAvD7w+qt1Qr1PmrJDyAIgbZDBFWGe2VT9FaBH o 
+PYwrLjRlnH0AxfbrR+T/UpWMSSHtLB8JvNFZNSH8hRjmQupuTSxCTYEC89bZ/pS6fNmNg8=; 
+        Timestamp: 12/17/2015 5:44:28 PM
+		  
+**** Create Permission Tom Collection Access for Tom **** 
+Created new permission 
+    Permission ID: Tom Collection Access 
+      Resource ID: kV5oAALxKgCMai3JKWdfAA== 
+  Permission Mode: Read 
+            Token: type=resource&ver=1&sig=ieBHKeyi6EY9ZOovDpe76w==;92gwq 
+V4AxKaCJ2dLS02VnJiig/5AEbPcfo1xvOjR10uK3a3FUMFULgsaK8nzxdz6hLVCIKUj6hvMOTOSN8Lt 7 
+i30mVqzpzCfe7JO3TYSJEI9D0/5HbMIEgaNJiCu0JPPwsjVecTytiLN56FHPguoQZ7WmUAhVTA0IMP6 p 
+jQpLDgJ43ZaG4Zv3qWJiO689balD+egwiU2b7RICH4j6R66UVye+GPxq/gjzqbHwx79t54=; 
+        Timestamp: 12/17/2015 5:44:30 PM
+		  
+**** View Permissions for Alice ****
+  
+Permission #1 
+    Permission ID: Alice Collection Access 
+      Resource ID: kV5oAC56NwDON1RduEoCAA== 
+  Permission Mode: All 
+            Token: type=resource&ver=1&sig=BSzz/VNe9j4IPJ9M31Mf4Q==;Tcq/B 
+X50njB1vmANZ/4aHj/3xNkghaqh1OfV95JMi6j4v7fkU+gyWe3mJasO3MJcoop9ixmVnB+RKOhFaSxE l 
+P37SaGuIIik7GAWS+dcEBWglMefc95L2YkeNuZsjmmW5b+a8ELCUg7N45MKbpzkp5BrmmGVJ7h4Z4pf D 
+rdmehYLuxSPLkr9ndbOOrD8E3bux6TgXCsgYQscpIlJHSKCKHUHfXWBP2Y1LV2zpJmRjis=; 
+        Timestamp: 12/17/2015 5:44:28 PM
+		  
+Total permissions for Alice: 1
+  
+**** View Permissions for Tom ****
+Permission #1 
+    Permission ID: Tom Collection Access 
+      Resource ID: kV5oAALxKgCMai3JKWdfAA== 
+  Permission Mode: Read 
+            Token: type=resource&ver=1&sig=NPkWNJp1mAkCASE8KdR6PA==;ur/G2 
+V+fDamBmzECux000VnF5i28f8WRbPwEPxD1DMpFPqYcu45wlDyzT5A5gBr3/R3qqYkEVn8bU+een6Gl j 
+L6vXzIwsZfL12u/1hW4mJT2as2PWH3eadry6Q/zRXHAxV8m+YuxSzlZPjBFyJ4Oi30mrTXbBAEafZhA 5 
+yvbHkpLmQkLCERy40FbIFOzG87ypljREpwWTKC/z8RSrsjITjAlfD/hVDoOyNJwX3HRaz4=; 
+        Timestamp: 12/17/2015 5:44:30 PM
+		  
+Total permissions for Tom: 1
+  
+**** Delete Permission Alice Collection Access from Alice **** 
+Deleted permission Alice Collection Access from user Alice
+  
+**** Delete Permission Tom Collection Access from Tom **** 
+Deleted permission Tom Collection Access from user Tom
+  
+**** Delete User Alice in myfirstdb **** 
+Deleted user Alice from database myfirstdb
+  
+**** Delete User Tom in myfirstdb **** 
+Deleted user Tom from database myfirstdb

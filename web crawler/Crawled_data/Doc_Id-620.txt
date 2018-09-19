@@ -1,0 +1,18 @@
+Redis - Scripting
+
+https://www.tutorialspoint.com/redis/redis_scripting.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis scripting is used to evaluate scripts using the Lua interpreter. It is built into Redis starting from version 2.6.0. The command used for scripting is EVAL command. Syntax Following is the basic syntax of EVAL command. 
+redis 127.0.0.1:6379> EVAL script numkeys key [key ...] arg [arg ...]
+ Example Following example explains how Redis scripting works. 
+redis 127.0.0.1:6379> EVAL "return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}" 2 key1 
+key2 first second  
+1) "key1" 
+2) "key2" 
+3) "first" 
+4) "second"
+ Redis Scripting Commands Following table lists some basic commands related to Redis Scripting. S.No Command & Description 1 EVAL script numkeys key [key ...] arg [arg ...] Executes a Lua script. 2 EVALSHA sha1 numkeys key [key ...] arg [arg ...] Executes a Lua script. 3 SCRIPT EXISTS script [script ...] Checks the existence of scripts in the script cache. 4 SCRIPT FLUSH Removes all the scripts from the script cache. 5 SCRIPT KILL Kills the script currently in execution. 6 SCRIPT LOAD script Loads the specified Lua script into the script cache.

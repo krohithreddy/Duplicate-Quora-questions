@@ -1,0 +1,71 @@
+DocumentDB - Sorting Records
+
+https://www.tutorialspoint.com/documentdb/documentdb_sorting_records.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+Microsoft Azure DocumentDB supports querying documents using SQL over JSON documents. You can sort documents in the collection on numbers and strings using an ORDER BY clause in your query. The clause can include an optional ASC/DESC argument to specify the order in which results must be retrieved. Let’s take a look at the following example in which we have a JSON document. 
+{ 
+   "id": "Food Menu",
+   "description": "Grapes, red or green (European type, such as Thompson seedless), raw",
+	
+   "tags": [
+      {
+         "name": "grapes"
+      },
+		
+      {
+         "name": "red or green (european type"
+      },
+		
+      {
+         "name": "such as thompson seedless)"
+      },
+		
+      {
+         "name": "raw"
+      }
+   ],
+	
+   "foodGroup": "Fruits and Fruit Juices",
+	
+   "servings": [
+      {
+         "amount": 1,
+         "description": "cup",
+         "weightInGrams": 151
+      },
+		
+      {
+         "amount": 10,
+         "description": "grapes",
+         "weightInGrams": 49
+      },
+		
+      {
+         "amount": 1,
+         "description": "NLEA serving",
+         "weightInGrams": 126
+      }
+   ]
+	
+}
+ Following is the SQL query to sort the result in a descending order. 
+SELECT f.description, f.foodGroup,  
+   f.servings[2].description AS servingDescription,  
+   f.servings[2].weightInGrams AS servingWeight  
+	
+FROM f  
+ORDER BY f.servings[2].weightInGrams DESC 
+ When the above query is executed, you will receive the following output. 
+[
+   {
+      "description": "Grapes, red or green (European type, such as Thompson
+         seedless), raw",
+      "foodGroup": "Fruits and Fruit Juices",
+      "servingDescription": "NLEA serving",
+      "servingWeight": 126
+   }
+]

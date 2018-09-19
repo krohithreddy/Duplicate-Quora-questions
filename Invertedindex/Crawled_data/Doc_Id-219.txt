@@ -1,0 +1,50 @@
+MariaDB - Select Database
+
+https://www.tutorialspoint.com/mariadb/mariadb_select_database.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+After connecting to MariaDB, you must select a database to work with because many databases may exist. There are two ways to perform this task: from the command prompt or through a PHP script. The Command Prompt In choosing a database at the command prompt, simply utilize the SQL command ‘use’ − 
+[root@host]# mysql -u root -p
+
+Enter password:******
+
+mysql> use PRODUCTS;
+
+Database changed
+
+mysql> SELECT database();  
++-------------------------+ 
+| Database                | 
++-------------------------+ 
+| PRODUCTS                | 
++-------------------------+ 
+ Once you select a database, all subsequent commands will operate on the chosen database. Note − All names (e.g., database, table, fields) are case sensitive. Ensure commands conform to the proper case. PHP Select Database Script PHP provides the mysql_select_db function for database selection. The function uses two parameters, one optional, and returns a value of “true” on successful selection, or false on failure. Syntax Review the following select database script syntax. 
+bool mysql_select_db( db_name, connection );
+ The description of the parameters is given below − S.No Parameter & Description 1 db_name This required parameter specifies the name of the database to use. 2 connection When not specified, this optional parameter uses the most recent connection used. Try the following example code for selecting a database − 
+<html>
+   <head>
+      <title>Select a MariaDB Database</title>
+   </head>
+
+   <body>
+      <?php
+         $dbhost = 'localhost:3036';
+         $dbuser = 'guest1';
+         $dbpass = 'guest1a';
+         $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+      
+         if(! $conn ) {
+            die('Could not connect: ' . mysql_error());
+         }
+         echo 'Connected successfully';
+         
+         mysql_select_db( 'PRODUCTS' );
+         mysql_close($conn);
+      ?>
+   </body>
+</html>
+ On successful selection, you will see the following output − 
+mysql> Connected successfully

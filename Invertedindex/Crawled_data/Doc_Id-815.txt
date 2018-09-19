@@ -1,0 +1,50 @@
+T-SQL - Numeric Functions
+
+https://www.tutorialspoint.com/t_sql/t_sql_numeric_functions.htm
+
+T-SQL, Tutorial, Learning, Beginners, Overview, Data Types, Create Tables, Drop Tables, INSERT Statement, SELECT Statement, UPDATE Statement, DELETE Statement, WHERE Clause, LIKE Clause, ORDER BY Clause, GROUP BY Clause, DISTINCT Clause, Joining Tables, Sub-Queries, Stored Procedures, Transactions, Indexes, Functions, String Functions, Date Functions, Numeric Functions.
+
+August-15-2017-02:34:09
+
+MS SQL Server numeric functions can be applied on numeric data and will return numeric data. Following is the list of Numeric functions with examples. ABS() Absolute value will come as output for numeric expression. Example The following query will give the absolute value. 
+Select ABS(-22) 
+ ACOS() Arc cosine value will come as output for the specified numeric expression. Example The following query will give the arc cosine value of 0. 
+Select ACOS(0) 
+ ASIN() Arc sine value will come as output for the specified numeric expression. Example The following query will give the arc sine value of 0. 
+Select ASIN(0)
+ ATAN() Arc tangent value will come as output for the specified numeric expression. Example The following query will give the arc tangent value of 0. 
+Select ATAN(0) 
+ ATN2() Arc tangent value in all four quadrants will come as output for the specified numeric expression. Example The following query will give the arc tangent value in all four quadrants of 0. 
+Select ATN2(0, -1) 
+ Consider the CUSTOMERS table having the following records. 
+ID  NAME       AGE       ADDRESS             SALARY 
+1   Ramesh     32        Ahmedabad           2000.00 
+2   Khilan     25        Delhi               1500.00 
+3   kaushik    23        Kota                2000.00 
+4   Chaitali   25        Mumbai              6500.00 
+5   Hardik     27        Bhopal              8500.00 
+6   Komal      22        MP                  4500.00 
+7   Muffy      24        Indore              10000.00 
+ BETWEEN() If the values exist between given two expressions then those will be come as output. Example The following query will give the following output. 
+SELECT salary from customers where salary between 2000 and 8500
+ Output 
+salary 
+2000.00 
+2000.00 
+6500.00 
+8500.00 
+4500.00
+ MIN() Minimum value will come as output from the given expression. Example The following query will give '1500.00' for the given 'salary' expression from the customers table. 
+Select MIN(salary)from CUSTOMERS
+ MAX() Maximum value will come as output from the given expression. Example The following query will give '10000.00' for the given 'salary' expression from the customers table. 
+Select MAX(salary)from CUSTOMERS
+ SQRT() Square root of the given numeric expression will come as output. Example The following query will give 2 for the given 4 numeric expression. 
+Select SQRT(4) 
+ PI() PI value will come as output. Example The following query will give 3.14159265358979 for the PI value. 
+Select PI() 
+ CEILING() Given value will come as output after rounding the decimals which is the next highest value. Example The following query will give 124 for the given 123.25 value. 
+Select CEILING(123.25) 
+ FLOOR() Given value will come as output after rounding the decimals which is less than or equal to the expression. Example The following query will give 123 for the given 123.25 value. 
+Select FLOOR(123.25) 
+ LOG() Natural logarithm of the given expression will come as output. Example The following query will give 0 for the given 1 value. 
+Select LOG(1)

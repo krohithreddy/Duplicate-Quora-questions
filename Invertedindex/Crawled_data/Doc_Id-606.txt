@@ -1,0 +1,22 @@
+Redis - Commands
+
+https://www.tutorialspoint.com/redis/redis_commands.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration,  Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis commands are used to perform some operations on Redis server. To run commands on Redis server, you need a Redis client. Redis client is available in Redis package, which we have installed earlier. Syntax Following is the basic syntax of Redis client. 
+$redis-cli 
+ Example Following example explains how we can start Redis client. To start Redis client, open the terminal and type the command redis-cli. This will connect to your local server and now you can run any command. 
+$redis-cli 
+redis 127.0.0.1:6379> 
+redis 127.0.0.1:6379> PING  
+PONG
+ In the above example, we connect to Redis server running on the local machine and execute a command PING, that checks whether the server is running or not. Run Commands on the Remote Server To run commands on Redis remote server, you need to connect to the server by the same client redis-cli Syntax 
+$ redis-cli -h host -p port -a password
+ Example Following example shows how to connect to Redis remote server, running on host 127.0.0.1, port 6379 and has password mypass. 
+$redis-cli -h 127.0.0.1 -p 6379 -a "mypass" 
+redis 127.0.0.1:6379> 
+redis 127.0.0.1:6379> PING  
+PONG

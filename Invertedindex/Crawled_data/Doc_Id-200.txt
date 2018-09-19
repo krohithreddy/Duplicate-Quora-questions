@@ -1,0 +1,49 @@
+MariaDB - Connection
+
+https://www.tutorialspoint.com/mariadb/mariadb_connection.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+One way to establish a connection with MariaDB consists of using the mysql binary at the command prompt. MYSQL Binary Review an example given below. 
+[root@host]# mysql -u root -p
+
+Enter password:******
+ The code given above connects to MariaDB and provides a command prompt for executing SQL commands. After entering the code, a welcome message should appear indicating a successful connection, with the version number displayed. 
+Welcome to the MariaDB monitor. Commands end with ; or \g. 
+Your MariaDB connection id is 122323232 
+Server version: 5.5.40-MariaDB-log
+  
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.  
+mysql> 
+ The example uses root access, but any user with privileges can of course access the MariaDB prompt and perform operations. Disconnect from MariaDB through the exit command as follows − 
+mysql> exit
+ PHP Connection Script Another way to connect to and disconnect from MariaDB consists of employing a PHP script. PHP provides the mysql_connect() function for opening a database connection. It uses five optional parameters, and returns a MariaDB link identifier after a successful connection, or a false on unsuccessful connection. It also provides the mysql_close() function for closing database connections, which uses a single parameter. Syntax Review the following PHP connection script syntax − 
+connection mysql_connect(server,user,passwd,new_link,client_flag);
+ The description of the parameters is given below − S.No Parameter & Description 1 server This optional parameter specifies the host name running the database server. Its default value is “localhost:.3036.” 2 user This optional parameter specifies the username accessing the database. Its default value is the owner of the server. 3 passwd This optional parameter specifies the user's password. Its default value is blank. 4 new_link This optional parameter specifies that on a second call to mysql_connect() with identical arguments, rather than a new connection, the identifier of the current connection will be returned. 5 client flags This optional parameter uses a combination of the following constant values − MYSQL_CLIENT_SSL − It uses ssl encryption. MYSQL_CLIENT_COMPRESS − It uses compression protocol. MYSQL_CLIENT_IGNORE_SPACE − It permits space after function names. MYSQL_CLIENT_INTERACTIVE − It permits interactive timeout seconds of inactivity prior to closing the connection. Review the PHP disconnection script syntax given below − 
+bool mysql_close ( resource $link_identifier );
+ If you omit the resource, the most recent opened resource will close. It returns a value of true on a successful close, or false. Try the following example code to connect with a MariaDB server − 
+<html>
+   <head>
+      <title>Connect to MariaDB Server</title>
+   </head>
+
+   <body>
+      <?php
+         $dbhost = 'localhost:3036';
+         $dbuser = 'guest1';
+         $dbpass = 'guest1a';
+         $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+      
+         if(! $conn ) {
+            die('Could not connect: ' . mysql_error());
+         }
+         
+         echo 'Connected successfully';
+         mysql_close($conn);
+      ?>
+   </body>
+</html>
+ On successful connection, you will see the following output − 
+mysql> Connected successfully

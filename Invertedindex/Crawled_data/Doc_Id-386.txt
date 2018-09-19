@@ -1,0 +1,23 @@
+Neo4j - Foreach Clause
+
+https://www.tutorialspoint.com/neo4j/neo4j_foreach_clause.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+The FOREACH clause is used to update data within a list whether components of a path, or result of aggregation. Syntax Following is the syntax of the FOREACH clause. 
+MATCH p = (start node)-[*]->(end node) 
+WHERE start.node = "node_name" AND end.node = "node_name" 
+FOREACH (n IN nodes(p)| SET n.marked = TRUE) 
+ Example Before proceeding with the example, create a path p in Neo4j database as shown below. 
+CREATE p = (Dhawan {name:"Shikar Dhawan"})-[:TOPSCORRER_OF]->(Ind{name: 
+   "India"})-[:WINNER_OF]->(CT2013{name: "Champions Trophy 2013"}) 
+RETURN p 
+ Following is a sample Cypher Query which adds a property to all the nodes along the path using the FOREACH clause. 
+MATCH p = (Dhawan)-[*]->(CT2013) 
+   WHERE Dhawan.name = "Shikar Dhawan" AND CT2013.name = "Champions Trophy 2013" 
+FOREACH (n IN nodes(p)| SET n.marked = TRUE)
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Verification To verify the creation of the node, type and execute the following query in the dollar prompt. 
+MATCH (n) RETURN n 
+ This query returns all the nodes in the database (we will discuss this query in detail in the coming chapters). On executing, this query shows the created node as shown in the following screenshot.

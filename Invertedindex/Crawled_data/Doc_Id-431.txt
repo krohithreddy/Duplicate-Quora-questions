@@ -1,0 +1,22 @@
+OrientDB - Alter Cluster
+
+https://www.tutorialspoint.com/orientdb/orientdb_alter_cluster.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Alter Cluster command is to update attributes on an existing cluster. In this chapter you can learn how to add or modify the attributes of a cluster. The following statement is the basic syntax of Alter Cluster command. 
+ALTER CLUSTER <cluster> <attribute-name> <attribute-value> 
+ Following are the details about the options in the above syntax. <cluster> − Defines the cluster name. <attribute-name> − Defines the attribute you want to change. <attribute-value> − Defines the value you want to set for this attribute. The following tabular format provides the list of supported attributes you can use along with Alter cluster command. Name Type Description NAME String Changes the cluster name. STATUS String Changes the cluster status. Allowed values are ONLINE and OFFLINE. By default, clusters are online. COMPRESSION String Defines the compression type to use. Allowed values are NOTHING, SNAPPY, GZIP, and any other compression types registered in the OCompressionFactory class. USE_WAL Boolean Defines whether it uses the Journal when OrientDB operates against the cluster RECORD_GROW_FACTO R Integer Defines the grow factor to save more space on record creation. You may find this useful when you update the record with additional information. RECORD_OVERFLOW_GR OW_FACTOR Integer Defines grow factor on updates. When it reaches the size limit, is uses this setting to get more space, (factor > 1). CONFLICTSTRATEGY String Defines the strategy it uses to handle conflicts in the event that OrientDB MVCC finds an update or a delete operation it executes against an old record. The following table provides the list of Conflict strategies. Sr.No. Strategy & Description 1 Version Throws an exception when versions are different. This is the default setting. 2 Content In the event that the versions are different, it checks for changes in the content, otherwise it uses the highest version to avoid throwing an exception. 3 Automerge Merges the changes. Example Try the following example queries to learn Alter cluster command. Execute the following command to change the name of a cluster from Employee to Employee2. 
+orientdb {db = demo}> ALTER CLUSTER Employee NAME Employee2
+ If the above command is executed successfully, you will get the following output. 
+Cluster updated successfully 
+ Execute the following command to change the name of a cluster from Employee2 to Employee using cluster ID. 
+orientdb {db = demo}> ALTER CLUSTER 12 NAME Employee 
+ If the above command is executed successfully, you will get the following output. 
+Cluster updated successfully
+ Execute the following command to change the cluster conflict strategy to automerge. 
+orientdb {db = demo}> ALTER CLUSTER V CONFICTSTRATEGY automerge 
+ If the above command is executed successfully, you will get the following output. 
+Cluster updated successfully

@@ -1,0 +1,57 @@
+DocumentDB SQL - Scalar Expressions
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_scalar_expressions.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+In DocumentDB SQL, the SELECT clause also supports scalar expressions like constants, arithmetic expressions, logical expressions, etc. Normally, scalar queries are rarely used, because they don't actually query documents in the collection, they just evaluate expressions. But it's still helpful to use scalar expression queries to learn the basics, how to use expressions and shape JSON in a query, and these concepts apply directly to the actual queries you'll be running against documents in a collection. Let’s take a look at an example which contains multiple scalar queries. In the Query Explorer, select just the text to be executed and click ‘Run’. Let's run this first one. 
+SELECT "Hello"
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "$1": "Hello" 
+   } 
+]
+ This output may look a bit confusing, so let's break it down. First, as we saw in the last demo, query results are always contained in square brackets because they are returned as a JSON array, even results from scalar expression queries like this one that only returns a single document. We have an array with one document in it, and that document has a single property in it for the single expression in the SELECT statement. The SELECT statement doesn't provide a name for this property, thus DocumentDB auto generates one using $1. This is usually not what we want, which is why we can use AS to alias the expression in the query, which sets the property name in the generated document the way you'd like it to be, word, in this example. 
+SELECT "Hello" AS word
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "word": "Hello" 
+   } 
+]
+ Similarly, following is another simple query. 
+SELECT ((2 + 11 % 7)-2)/3
+ The query retrieves the following output. 
+[ 
+   { 
+      "$1": 1.3333333333333333 
+   } 
+]
+ Let’s take a look at another example of shaping nested arrays and embedded objects. 
+SELECT 
+   { 
+      "words1": 
+         ["Hello", "World"], 
+      "words2": 
+         ["How", "Are", "You?"] 
+   } AS allWords
+ When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "allWords": { 
+         "words1": [ 
+            "Hello", 
+            "World" 
+         ],
+			
+         "words2": [ 
+            "How", 
+            "Are", 
+            "You?" 
+         ] 
+      } 
+   } 
+]

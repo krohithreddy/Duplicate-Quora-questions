@@ -1,0 +1,95 @@
+Redis - Java
+
+https://www.tutorialspoint.com/redis/redis_java.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Before you start using Redis in your Java programs, you need to make sure that you have Redis Java driver and Java set up on the machine. You can check our Java tutorial for Java installation on your machine. Installation Now, let us see how to set up Redis Java driver. You need to download the jar from the path Download jedis.jar. Make sure to download the latest release of it. You need to include the jedis.jar into your classpath. Connect to Redis Server 
+import redis.clients.jedis.Jedis; 
+
+public class RedisJava { 
+   public static void main(String[] args) { 
+      //Connecting to Redis server on localhost 
+      Jedis jedis = new Jedis("localhost"); 
+      System.out.println("Connection to server sucessfully"); 
+      //check whether server is running or not 
+      System.out.println("Server is running: "+jedis.ping()); 
+   } 
+} 
+ Now, let's compile and run the above program to test the connection to Redis server. You can change your path as per your requirement. We are assuming the current version of jedis.jar is available in the current path. 
+$javac RedisJava.java 
+$java RedisJava 
+Connection to server sucessfully 
+Server is running: PONG
+ Redis Java String Example 
+import redis.clients.jedis.Jedis; 
+
+public class RedisStringJava { 
+   public static void main(String[] args) { 
+      //Connecting to Redis server on localhost 
+      Jedis jedis = new Jedis("localhost"); 
+      System.out.println("Connection to server sucessfully"); 
+      //set the data in redis string 
+      jedis.set("tutorial-name", "Redis tutorial"); 
+      // Get the stored data and print it 
+      System.out.println("Stored string in redis:: "+ jedis.get("tutorialname")); 
+   } 
+}
+ Now, let's compile and run the above program. 
+$javac RedisStringJava.java 
+$java RedisStringJava 
+Connection to server sucessfully 
+Stored string in redis:: Redis tutorial 
+ Redis Java List Example 
+import redis.clients.jedis.Jedis; 
+
+public class RedisListJava { 
+   public static void main(String[] args) { 
+      //Connecting to Redis server on localhost 
+      Jedis jedis = new Jedis("localhost"); 
+      System.out.println("Connection to server sucessfully"); 
+      
+      //store data in redis list 
+      jedis.lpush("tutorial-list", "Redis"); 
+      jedis.lpush("tutorial-list", "Mongodb"); 
+      jedis.lpush("tutorial-list", "Mysql"); 
+      // Get the stored data and print it 
+      List<String> list = jedis.lrange("tutorial-list", 0 ,5); 
+      
+      for(int i = 0; i<list.size(); i++) { 
+         System.out.println("Stored string in redis:: "+list.get(i)); 
+      } 
+   } 
+} 
+ Now, let's compile and run the above program. 
+$javac RedisListJava.java 
+$java RedisListJava 
+Connection to server sucessfully 
+Stored string in redis:: Redis 
+Stored string in redis:: Mongodb 
+Stored string in redis:: Mysql
+ Redis Java Keys Example 
+import redis.clients.jedis.Jedis; 
+
+public class RedisKeyJava { 
+   public static void main(String[] args) { 
+      //Connecting to Redis server on localhost 
+      Jedis jedis = new Jedis("localhost"); 
+      System.out.println("Connection to server sucessfully"); 
+      //store data in redis list 
+      // Get the stored data and print it 
+      List<String> list = jedis.keys("*"); 
+      
+      for(int i = 0; i<list.size(); i++) { 
+         System.out.println("List of stored keys:: "+list.get(i)); 
+      } 
+   } 
+}
+ Now, let's compile and run the above program. 
+$javac RedisKeyJava.java 
+$java RedisKeyJava 
+Connection to server sucessfully 
+List of stored keys:: tutorial-name 
+List of stored keys:: tutorial-list

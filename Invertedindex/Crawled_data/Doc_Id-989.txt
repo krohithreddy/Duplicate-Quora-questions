@@ -1,0 +1,61 @@
+WSDL - Example
+
+https://www.tutorialspoint.com/wsdl/wsdl_example.htm
+
+WSDL, tutorial, basic, advanced, elements, examples, definition, types, message, port, binding, service.
+
+August-15-2017-02:34:07
+
+Given below is a WSDL file that is provided to demonstrate a simple WSDL program. Let us assume the service provides a single publicly available function, called sayHello. This function expects a single string parameter and returns a single string greeting. For example, if you pass the parameter world then service function sayHello returns the greeting, "Hello, world!". Example Contents of HelloService.wsdl file: 
+<definitions name="HelloService"
+   targetNamespace="http://www.examples.com/wsdl/HelloService.wsdl"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:tns="http://www.examples.com/wsdl/HelloService.wsdl"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ 
+   <message name="SayHelloRequest">
+      <part name="firstName" type="xsd:string"/>
+   </message>
+	
+   <message name="SayHelloResponse">
+      <part name="greeting" type="xsd:string"/>
+   </message>
+
+   <portType name="Hello_PortType">
+      <operation name="sayHello">
+         <input message="tns:SayHelloRequest"/>
+         <output message="tns:SayHelloResponse"/>
+      </operation>
+   </portType>
+
+   <binding name="Hello_Binding" type="tns:Hello_PortType">
+      <soap:binding style="rpc"
+         transport="http://schemas.xmlsoap.org/soap/http"/>
+      <operation name="sayHello">
+         <soap:operation soapAction="sayHello"/>
+         <input>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:helloservice"
+               use="encoded"/>
+         </input>
+		
+         <output>
+            <soap:body
+               encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+               namespace="urn:examples:helloservice"
+               use="encoded"/>
+         </output>
+      </operation>
+   </binding>
+
+   <service name="Hello_Service">
+      <documentation>WSDL File for HelloService</documentation>
+      <port binding="tns:Hello_Binding" name="Hello_Port">
+         <soap:address
+            location="http://www.examples.com/SayHello/" />
+      </port>
+   </service>
+</definitions>
+ Example Analysis Definitions : HelloService Type : Using built-in data types and they are defined in XMLSchema. Message : sayHelloRequest : firstName parameter sayHelloresponse: greeting return value Port Type : sayHello operation that consists of a request and a response service. Binding : Direction to use the SOAP HTTP transport protocol. Service : Service available at http://www.examples.com/SayHello/ Port : Associates the binding with the URI http://www.examples.com/SayHello/ where the running service can be accessed.

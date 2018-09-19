@@ -1,0 +1,20 @@
+OrientDB - Update Edge
+
+https://www.tutorialspoint.com/orientdb/orientdb_update_edge.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Update edge command is used to update edge records in the current database. This is equivalent to actual update command in addition to checking and maintaining graph consistency with vertices, in the event that you update the out and in properties. The following statement is the basic syntax of Update Edge Command. 
+UPDATE EDGE <edge>  
+   [SET|INCREMENT|ADD|REMOVE|PUT <field-name> = <field-value> [,]*]|[CONTENT|MERGE <JSON>] 
+   [RETURN <returning> [<returning-expression>]] 
+   [WHERE <conditions>] 
+   [LOCK default|record] 
+   [LIMIT <max-records>] [TIMEOUT <timeout>]
+ Following are the details about the options in the above syntax. <edge> − Defines the edge that you want to update. You can choose between Class that updates edges by class, Cluster that updates edges by cluster, using CLUSTER prefix, or Record ID that updating edges by record ID. SET − Updates the field to the given values. INCREMENT − Increments the given field by the value. ADD − Defines an item to add to a collection of fields. REMOVE − Defines an item to remove from a collection of fields. PUT − Defines an entry to put into map fields. RETURN − Defines the expression you want to return after running the update. WHERE − Defines the filter condition. LOCK − Defines how the record locks between the load and updates. LIMIT − Defines the maximum number of records. Example Let us consider an example of updating the edge named ‘address’ in the person class by taking data from the address table having area Id = 001, and the person name = Krishna. 
+orientdb> UPDATE EDGE address SET out = (SELECT FROM Address WHERE areaID = 001) 
+WHERE name = 'krishna'
+ If the above query is executed successfully, you will get the following output. 
+Updated edge '[address[#10:3][#11:3->#14:2]]' in 0.012000 sec(s)

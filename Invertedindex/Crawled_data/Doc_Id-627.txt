@@ -1,0 +1,18 @@
+Redis - Scripting Eval Command
+
+https://www.tutorialspoint.com/redis/scripting_eval.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis EVAL command is used to evaluate scripts using the Lua interpreter. The first argument of EVAL is a Lua 5.1 script. The script does not need to define a Lua function (and should not). It is just a Lua program that will run in the context of the Redis server. The second argument of EVAL is the number of arguments that follows the script (starting from the third argument) that represent Redis key names. These arguments can be accessed by Lua using the KEYS global variable in the form of a one-based array (so KEYS[1], KEYS[2], ...). All the additional arguments should not represent key names and can be accessed by Lua using the ARGV global variable, similar to what happens with the keys (so ARGV[1], ARGV[2], ...). Syntax Following is the basic syntax of Redis EVAL command. 
+redis 127.0.0.1:6379> EVAL script numkeys key [key ...] arg [arg ...]
+ Example 
+redis 127.0.0.1:6379> eval "return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}" 2 key1 
+key2 first second 
+1) "key1" 
+2) "key2" 
+3) "first" 
+4) "second"
+ redis_scripting.htm

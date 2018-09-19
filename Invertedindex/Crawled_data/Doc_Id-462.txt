@@ -1,0 +1,26 @@
+OrientDB - List Database
+
+https://www.tutorialspoint.com/orientdb/orientdb_list_database.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+This chapter explains how to get the list of all databases in an instance from the OrientDB command line. The following statement is the basic syntax of the info command. 
+LIST DATABASES
+ Note − You can use this command only after connecting to a local or remote server. Example Before retrieving the list of databases, we have to connect to the localhost server through the remote server. It is required to remind that the username and password for connecting to the localhost instance is guest and guest respectively, which is configured in the orintdb/config/orientdb-server-config.xml file. You can use the following command to connect to the localhost database server instance. 
+orientdb> connect remote:localhost guest 
+ It will ask the password. As per the config file password for guest is also guest. If it is successfully connected, you will get the following output. 
+Connecting to remote Server instance [remote:localhost] with user 'guest'...OK 
+orientdb {server = remote:localhost/}>
+ After connecting to the localhost database server you can use the following command to list the databases. 
+orientdb {server = remote:localhost/}> list databases
+ If it is successfully executed, you will get the following output − 
+Found 6 databases: 
+* demo (plocal) 
+* s2 (plocal) 
+* s1 (plocal) 
+* GratefulDeadConcerts (plocal) 
+* s3 (plocal) 
+* sample (plocal) 
+orientdb {server = remote:localhost/}>

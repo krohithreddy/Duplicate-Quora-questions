@@ -1,0 +1,9 @@
+DocumentDB SQL - Built-in Function
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_builtin_function.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+DocumentDB supports a host of built-in functions for common operations that can be used inside queries. There are a bunch of functions for performing mathematical calculations, and also type checking functions that are extremely useful while working with varying schemas. These functions can test if a certain property exists and if it does whether it's a number or a string, Boolean or object. We also get these handy functions for parsing and manipulating strings, as well as several functions for working with arrays allowing you to do things like concatenate arrays and test to see if an array contains a particular element. Following are the different types of built-in functions − S.No. Built-in Functions & Description 1 Mathematical Functions The mathematical functions perform a calculation, usually based on input values that are provided as arguments, and return a numeric value. 2 Type Checking Functions The type checking functions allow you to check the type of an expression within SQL queries. 3 String Functions The string functions perform an operation on a string input value and return a string, numeric or Boolean value. 4 Array Functions The array functions perform an operation on an array input value and return in the form of numeric, Boolean or array value. 5 Spatial Functions DocumentDB also supports the Open Geospatial Consortium (OGC) built-in functions for geospatial querying.

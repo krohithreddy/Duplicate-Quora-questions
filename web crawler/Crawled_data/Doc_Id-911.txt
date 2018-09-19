@@ -1,0 +1,61 @@
+DOM - NodeList Object Method - item
+
+https://www.tutorialspoint.com/dom/dom_nodelist_item.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The method item returns the indexth item in the collection. Syntax Following is the syntax for the usage of the item attribute. 
+Node item(long index)
+ Where index is the index into the collection. Example node.xml contents are as below − 
+<?xml version = "1.0"?>
+<Company>
+   <Employee category = "Technical">
+      <FirstName>Tanmay</FirstName>
+      <LastName>Patil</LastName>
+      <ContactNo>1234567890</ContactNo>
+      <Email>tanmaypatil@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Non-Technical">
+      <FirstName>Taniya</FirstName>
+      <LastName>Mishra</LastName>
+      <ContactNo>1234667898</ContactNo>
+      <Email>taniyamishra@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Management">
+      <FirstName>Tanisha</FirstName>
+      <LastName>Sharma</LastName>
+      <ContactNo>1234562350</ContactNo>
+      <Email>tanishasharma@xyz.com</Email>
+   </Employee>
+</Company>
+ The following example (nodelist_methods.htm) parses an XML document (node.xml) into an XML DOM object and displays each item in the node list − 
+<!DOCTYPE html>
+   <body>
+      <script>
+         if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+         } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         xmlhttp.open("GET","/dom/node.xml",false);
+         xmlhttp.send();
+         xmlDoc = xmlhttp.responseXML;
+
+         y = xmlDoc.getElementsByTagName("Employee");
+
+         for (i=0; i<y.length; i++) {
+            document.write(y.item(i).nodeName);
+            document.write("<br>");
+         }
+      </script>
+   </body>
+</html>
+ Execution Save this file as nodemethod_item.htm on the server path (this file and node.xml should be on the same path in your server). We will get the output as shown below − 
+Employee
+Employee
+Employee
+ dom_nodelist_object.htm

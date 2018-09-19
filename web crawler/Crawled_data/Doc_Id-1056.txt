@@ -1,0 +1,73 @@
+XSLT <message>
+
+https://www.tutorialspoint.com/xslt/xslt_message.htm
+
+XSLT Overview, Syntax, <template>, <value-of>,<for-each>, <sort>, <if>, <choose>, <key>, <message>, <import>.
+
+August-15-2017-02:34:18
+
+<message> tag element helps to debug an XSLT processing. It is similar to javascript alerts. <xsl:> tag buffers a message to XSLT processor which terminates the processing and sends a message to the caller application to display the error message. Declaration Following is the syntax declaration of <xsl:message> element. 
+<xsl:message 
+   terminate = "yes" | "no" >
+</xsl:message>
+ Attributes S.No Name & Description 1. terminate It specifies whether the transformation should terminate upon executing this instruction or not. Default is "yes". Elements Number of Occurrences Unlimited Parent elements xsl:attribute, xsl:comment, xsl:copy, xsl:element, xsl:fallback, xsl:foreach, xsl:if, xsl:message, xsl:otherwise, xsl:param, xsl:processinginstruction, xsl:template, xsl:variable, xsl:when, xsl:with-param, output elements Child elements xsl:apply-templates, xsl:attribute, xsl:call-template, xsl:choose, xsl:comment, xsl:copy, xsl:copy-of, xsl:element, xsl:for-each, xsl:if, xsl:processing-instruction, xsl:text, xsl:value-of, xsl:variable, output elements Demo Example This example creates a table of <student> element with its attribute rollno and its child <firstname>, <lastname>, <nickname>, and <marks> by iterating over each student. It checks key as firstname to be present and then prints the student details, otherwise displays an error message. students.xml 
+<?xml version = "1.0"?> 
+<?xml-stylesheet type = "text/xsl" href = "students.xsl"?> 
+<class> 
+   <student rollno = "393"> 
+      <firstname>Dinkar</firstname> 
+      <lastname>Kad</lastname> 
+      <nickname>Dinkar</nickname> 
+      <marks>85</marks> 
+   </student> 
+   <student rollno = "493"> 
+      <firstname></firstname> 
+      <lastname>Gupta</lastname> 
+      <nickname>Vinni</nickname> 
+      <marks>95</marks> 
+   </student> 
+   <student rollno = "593"> 
+      <firstname>Jasvir</firstname> 
+      <lastname>Singh</lastname> 
+      <nickname>Jazz</nickname> 
+      <marks>90</marks> 
+   </student> 
+</class>
+ students.xsl 
+<?xml version = "1.0" encoding = "UTF-8"?> 
+<xsl:stylesheet version = "1.0" 
+   xmlns:xsl = "http://www.w3.org/1999/XSL/Transform">   
+   <xsl:template match = "/"> 
+      <html> 
+         <body> 
+            <h2>Students</h2> 
+            <table border = "1"> 
+               <tr bgcolor = "#9acd32"> 
+                  <th>Roll No</th> 
+                  <th>First Name</th> 
+                  <th>Last Name</th> 
+                  <th>Nick Name</th> 
+                  <th>Marks</th> 
+               </tr> 
+					
+               <xsl:for-each select = "class/student"> 
+					
+                  <xsl:if test = "firstname = ''"> 
+                     <xsl:message terminate = "yes">A first name field is empty. 
+                     </xsl:message> 
+                  </xsl:if> 
+					
+                  <tr> 
+                     <td><xsl:value-of select = "@rollno"/></td> 
+                     <td><xsl:value-of select = "firstname"/></td> 
+                     <td><xsl:value-of select = "lastname"/></td>
+                     <td><xsl:value-of select = "nickname"/></td> 
+                     <td><xsl:value-of select = "marks"/></td> 
+                  </tr> 
+               </xsl:for-each> 
+            </table> 
+         </body> 
+      </html> 
+   </xsl:template>
+</xsl:stylesheet> 
+ Output

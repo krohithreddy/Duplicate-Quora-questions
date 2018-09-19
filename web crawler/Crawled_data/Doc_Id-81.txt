@@ -1,0 +1,137 @@
+DocumentDB SQL - Array Creation
+
+https://www.tutorialspoint.com/documentdb_sql/documentdb_sql_array_creation.htm
+
+DocumentDB SQL, Tutorial Learning, Beginners, Overview, Select Clause, From Clause, Where Clause, Operators, Between Keyword, In Keyword, Value Keyword, Order By Clause, Iteration, Joins, Aliasing, Array Creation, Scalar Expressions, Parameterized SQL, Built-in Function, Linq to SQL Translation, JavaScript Integration, User-Defined Functions, Composite SQL Queries.
+
+August-15-2017-02:34:08
+
+In DocumentDB SQL, Microsoft has added a key feature with the help of which we can easily create an array. It means when we run a query, then as a result it will create an array of collection similar to JSON object as a result of query. Let’s consider the same documents as in the previous examples. Following is the AndersenFamily document. 
+{ 
+   "id": "AndersenFamily", 
+   "lastName": "Andersen",
+	
+   "parents": [ 
+      { "firstName": "Thomas", "relationship":  "father" }, 
+      { "firstName": "Mary Kay", "relationship":  "mother" } 
+   ], 
+   
+   "children": [ 
+      { 
+         "firstName": "Henriette Thaulow", 
+         "gender": "female", 
+         "grade": 5, 
+         "pets": [ { "givenName": "Fluffy", "type":  "Rabbit" } ] 
+      } 
+   ],
+   
+   "location": { "state": "WA", "county": "King", "city": "Seattle" }, 
+   "isRegistered": true 
+} 
+ Following is the SmithFamily document. 
+{ 
+   "id": "SmithFamily", 
+	
+   "parents": [ 
+      { "familyName": "Smith", "givenName": "James" }, 
+      { "familyName": "Curtis", "givenName": "Helen" } 
+   ],
+   
+   "children": [ 
+      {
+         "givenName": "Michelle", 
+         "gender": "female", 
+         "grade": 1 
+      },
+		
+      { 
+         "givenName": "John", 
+         "gender": "male", 
+         "grade": 7,
+			
+         "pets": [ 
+            { "givenName": "Tweetie", "type": "Bird" } 
+         ] 
+      } 
+   ], 
+   
+   "location": { 
+      "state": "NY", 
+      "county": "Queens", 
+      "city": "Forest Hills" 
+   },
+   
+   "isRegistered": true 
+}
+ Following is the WakefieldFamily document. 
+{ 
+   "id": "WakefieldFamily", 
+	
+   "parents": [ 
+      { "familyName": "Wakefield", "givenName": "Robin" }, 
+      { "familyName": "Miller", "givenName": "Ben" } 
+   ],
+   
+   "children": [ 
+      { 
+         "familyName": "Merriam", 
+         "givenName": "Jesse", 
+         "gender": "female", 
+         "grade": 6,
+			
+         "pets": [ 
+            { "givenName": "Charlie Brown", "type": "Dog" }, 
+            { "givenName": "Tiger", "type": "Cat" }, 
+            { "givenName": "Princess", "type": "Cat" }
+         ]
+      },
+		
+      { 
+         "familyName": "Miller", 
+         "givenName": "Lisa", 
+         "gender": "female", 
+         "grade": 3,
+			
+         "pets": [ 
+            { "givenName": "Jake", "type": "Snake" } 
+         ] 
+      } 
+   ], 
+   
+   "location": { "state": "NY", "county": "Manhattan", "city": "NY" }, 
+   "isRegistered": false 
+}
+ Let’s take a look at an example. Following is the query which will return the family name and address of each family. 
+SELECT f.id AS FamilyName, 
+[f.location.city, f.location.county, f.location.state] AS Address 
+FROM Families f
+ As can be seen city, county and state fields are enclosed in square brackets, which will create an array and this array is named Address. When the above query is executed, it produces the following output. 
+[ 
+   { 
+      "FamilyName": "WakefieldFamily", 
+      "Address": [ 
+         "NY", 
+         "Manhattan", 
+         "NY" 
+      ] 
+   },
+	
+   { 
+      "FamilyName": "SmithFamily", 
+      "Address": [
+         "Forest Hills", 
+         "Queens", 
+         "NY" 
+      ] 
+   },
+	
+   { 
+      "FamilyName": "AndersenFamily", 
+      "Address": [ 
+         "Seattle", 
+         "King", 
+         "WA" 
+      ] 
+   } 
+]
+ The city, county, and state information are added in the Address array in the above output.

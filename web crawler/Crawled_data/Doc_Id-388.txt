@@ -1,0 +1,30 @@
+Neo4j - Limit Clause
+
+https://www.tutorialspoint.com/neo4j/neo4j_limit_clause.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+The limit clause is used to limit the number of rows in the output. Syntax Following is the syntax of the LIMIT clause. 
+MATCH (n) 
+RETURN n 
+ORDER BY n.name 
+LIMIT 3 
+ Example Before proceeding with the example, create 5 nodes in the Neo4j database as shown below. 
+CREATE(Dhawan:player{name:"shikar Dhawan", YOB: 1985, runs:363, country: "India"})
+CREATE(Jonathan:player{name:"Jonathan Trott", YOB:1981, runs:229, country:"South Africa"})
+CREATE(Sangakkara:player{name:"Kumar Sangakkara", YOB:1977, runs:222, country:"Srilanka"})
+CREATE(Rohit:player{name:"Rohit Sharma", YOB: 1987, runs:177, country:"India"})
+CREATE(Virat:player{name:"Virat Kohli", YOB: 1988, runs:176, country:"India"})
+ Following is a sample Cypher Query which returns the nodes created above in a descending order and limits the records in the result to 3. 
+MATCH (n)  
+RETURN n.name, n.runs 
+ORDER BY n.runs DESC 
+LIMIT 3 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. Limit with expression You can also use the LIMIT clause with expression. Example Following is a sample Cypher Query which limits the records using an expression. 
+MATCH (n) 
+RETURN n.name, n.runs 
+ORDER BY n.runs DESC 
+LIMIT toInt(3 * rand())+ 1 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result.

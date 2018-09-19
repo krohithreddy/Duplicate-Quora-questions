@@ -1,0 +1,75 @@
+DocumentDB - Data Types
+
+https://www.tutorialspoint.com/documentdb/documentdb_data_types.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+JSON or JavaScript Object Notation is a lightweight text-based open standard designed for human-readable data interchange and also easy for machines to parse and generate. JSON is at the heart of DocumentDB. We transmit JSON over the wire, we store JSON as JSON, and we index the JSON tree allowing queries on the full JSON document. JSON format supports the following data types − S.No. Type & Description 1 Number Double-precision floating-point format in JavaScript 2 String Double-quoted Unicode with backslash escaping 3 Boolean True or false 4 Array An ordered sequence of values 5 Value It can be a string, a number, true or false, null, etc. 6 Object An unordered collection of key:value pairs 7 Whitespace It can be used between any pair of tokens 8 Null Empty Let’s take a look at a simple example DateTime type. Add birth date to the customer class. 
+public class Customer {
+   [JsonProperty(PropertyName = "id")] 
+   public string Id { get; set; }
+	
+   // Must be nullable, unless generating unique values for new customers on client  
+   [JsonProperty(PropertyName = "name")] 
+   public string Name { get; set; }  
+	
+   [JsonProperty(PropertyName = "address")] 
+   public Address Address { get; set; }  
+	
+   [JsonProperty(PropertyName = "birthDate")] 
+   public DateTime BirthDate { get; set; } 
+}
+ We can store, retrieve, and query using DateTime as shown in the following code. 
+private async static Task CreateDocuments(DocumentClient client) {
+   Console.WriteLine(); 
+   Console.WriteLine("**** Create Documents ****"); 
+   Console.WriteLine();
+	
+   var document3Definition = new Customer { 
+      Id = "1001", 
+      Name = "Luke Andrew", 
+		
+      Address = new Address { 
+         AddressType = "Main Office", 
+         AddressLine1 = "123 Main Street", 
+         Location = new Location {
+            City = "Brooklyn",
+            StateProvinceName = "New York" 
+         }, 
+         PostalCode = "11229",
+         CountryRegionName = "United States" 
+      },
+		
+      BirthDate = DateTime.Parse(DateTime.Today.ToString()), 
+   };
+	
+   Document document3 = await CreateDocument(client, document3Definition); 
+   Console.WriteLine("Created document {0} from typed object", document3.Id); 
+   Console.WriteLine(); 
+}
+ When the above code is compiled and executed, and the document is created, you will see that birth date is added now. 
+**** Create Documents ****  
+Created new document: 1001 
+{ 
+   "id": "1001", 
+   "name": "Luke Andrew", 
+   "address": { 
+      "addressType": "Main Office", 
+      "addressLine1": "123 Main Street", 
+      "location": { 
+         "city": "Brooklyn", 
+         "stateProvinceName": "New York" 
+      }, 
+      "postalCode": "11229", 
+      "countryRegionName": "United States" 
+   }, 
+   "birthDate": "2015-12-14T00:00:00", 
+   "_rid": "Ic8LAMEUVgAKAAAAAAAAAA==", 
+   "_ts": 1450113676, 
+   "_self": "dbs/Ic8LAA==/colls/Ic8LAMEUVgA=/docs/Ic8LAMEUVgAKAAAAAAAAAA==/", 
+   "_etag": "\"00002d00-0000-0000-0000-566efa8c0000\"", 
+   "_attachments": "attachments/" 
+} 
+Created document 1001 from typed object

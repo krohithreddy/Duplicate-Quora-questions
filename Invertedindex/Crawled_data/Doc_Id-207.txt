@@ -1,0 +1,23 @@
+MariaDB - Indexes & Statistics Tables
+
+https://www.tutorialspoint.com/mariadb/mariadb_indexes_statistics_tables.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+Indexes are tools for accelerating record retrieval. An index spawns an entry for each value within an indexed column. There are four types of indexes − Primary (one record represents all records) Unique (one record represents multiple records) Plain Full-Text (permits many options in text searches). The terms “key” and “index” are identical in this usage. Indexes associate with one or more columns, and support rapid searches and efficient record organization. When creating an index, consider which columns are frequently used in your queries. Then create one or multiple indexes on them. In addition, view indexes as essentially tables of primary keys. Though indexes accelerate searches or SELECT statements, they make insertions and updates drag due to performing the operations on both the tables and the indexes. Create an Index You can create an index through a CREATE TABLE...INDEX statement or a CREATE INDEX statement. The best option supporting readability, maintenance, and best practices is CREATE INDEX. Review the general syntax of Index given below − 
+CREATE [UNIQUE or FULLTEXT or...] INDEX index_name ON table_name column;
+ Review an example of its use − 
+CREATE UNIQUE INDEX top_sellers ON products_tbl product;
+ Drop an Index You can drop an index with DROP INDEX or ALTER TABLE...DROP. The best option supporting readability, maintenance, and best practices is DROP INDEX. Review the general syntax of Drop Index given below − 
+DROP INDEX index_name ON table_name;
+ Review an example of its use − 
+DROP INDEX top_sellers ON product_tbl;
+ Rename an Index Rename an index with the ALTER TABLE statement. Review its general syntax given below − 
+ALTER TABLE table_name DROP INDEX index_name, ADD INDEX new_index_name;
+ Review an example of its use − 
+ALTER TABLE products_tbl DROP INDEX top_sellers, ADD INDEX top_2016sellers;
+ Managing Indexes You will need to examine and track all indexes. Use SHOW INDEX to list all existing indexes associated with a given table. You can set the format of the displayed content by using an option such as “\G”, which specifies a vertical format. Review the following example − 
+mysql > SHOW INDEX FROM products_tbl\G
+ Table Statistics Indexes are used heavily to optimize queries given the faster access to records, and the statistics provided. However, many users find index maintenance cumbersome. MariaDB 10.0 made storage engine independent statistics tables available, which calculate data statistics for every table in every storage engine, and even statistics for columns that are not indexed.

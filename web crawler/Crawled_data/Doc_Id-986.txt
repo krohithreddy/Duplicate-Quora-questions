@@ -1,0 +1,29 @@
+WSDL - <binding> Element
+
+https://www.tutorialspoint.com/wsdl/wsdl_binding.htm
+
+WSDL, tutorial, basic, advanced, elements, examples, definition, types, message, port, binding, service.
+
+August-15-2017-02:34:07
+
+The <binding> element provides specific details on how a portType operation will actually be transmitted over the wire. The bindings can be made available via multiple transports including HTTP GET, HTTP POST, or SOAP. The bindings provide concrete information on what protocol is being used to transfer portType operations. The bindings provide information where the service is located. For SOAP protocol, the binding is <soap:binding>, and the transport is SOAP messages on top of HTTP protocol. You can specify multiple bindings for a single portType. The binding element has two attributes : name and type attribute. 
+<binding name="Hello_Binding" type="tns:Hello_PortType">
+ The name attribute defines the name of the binding, and the type attribute points to the port for the binding, in this case the "tns:Hello_PortType" port. SOAP Binding WSDL 1.1 includes built-in extensions for SOAP 1.1. It allows you to specify SOAP specific details including SOAP headers, SOAP encoding styles, and the SOAPAction HTTP header. The SOAP extension elements include the following: soap:binding soap:operation soap:body soap:binding This element indicates that the binding will be made available via SOAP. The style attribute indicates the overall style of the SOAP message format. A style value of rpc specifies an RPC format. The transport attribute indicates the transport of the SOAP messages. The value http://schemas.xmlsoap.org/soap/http indicates the SOAP HTTP transport, whereas http://schemas.xmlsoap.org/soap/smtp indicates the SOAP SMTP transport. soap:operation This element indicates the binding of a specific operation to a specific SOAP implementation. The soapAction attribute specifies that the SOAPAction HTTP header be used for identifying the service. soap:body This element enables you to specify the details of the input and output messages. In the case of HelloWorld, the body element specifies the SOAP encoding style and the namespace URN associated with the specified service. Here is the piece of code from the Example chapter: 
+<binding name="Hello_Binding" type="tns:Hello_PortType">
+   <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/ >
+   <operation name="sayHello">
+      <soap:operation soapAction="sayHello"/>
+			
+      <input>
+         <soap:body
+            encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+            namespace="urn:examples:helloservice" use="encoded"/>
+      </input>
+			
+      <output>
+         <soap:body
+            encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+            namespace="urn:examples:helloservice" use="encoded"/>
+      </output>
+   </operation>
+</binding>

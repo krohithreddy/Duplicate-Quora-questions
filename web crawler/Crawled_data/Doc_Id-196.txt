@@ -1,0 +1,71 @@
+MariaDB - Administration
+
+https://www.tutorialspoint.com/mariadb/mariadb_administration.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+Before attempting to run MariaDB, first determine its current state, running or shutdown. There are three options for starting and stopping MariaDB − Run mysqld (the MariaDB binary). Run the mysqld_safe startup script. Run the mysql.server startup script. If you installed MariaDB in a non-standard location, you may have to edit location information in the script files. Stop MariaDB by simply adding a “stop” parameter with the script. If you would like to start it automatically under Linux, add startup scripts to your init system. Each distribution has a different procedure. Refer to your system documentation. Creating a User Account Create a new user account with the following code − 
+'newusername'@'localhost' IDENTIFIED BY 'userpassword';
+ This code adds a row to the user table with no privileges. You also have the option to use a hash value for the password. Grant the user privileges with the following code − 
+GRANT SELECT, INSERT, UPDATE, DELETE ON database1 TO 'newusername'@'localhost';
+ Other privileges include just about every command or operation possible in MariaDB. After creating a user, execute a “FLUSH PRIVILEGES” command in order to refresh grant tables. This allows the user account to be used. The Configuration File After a build on Unix/Linux, the configuration file “/etc/my.conf” should be edited to appear as follow − 
+# Example mysql config file.
+# You can copy this to one of:
+# /etc/my.cnf to set global options,
+# /mysql-data-dir/my.cnf to get server specific options or
+# ~/my.cnf for user specific options.
+
+#
+
+# One can use all long options that the program supports.
+# Run the program with --help to get a list of available options
+
+# This will be passed to all mysql clients
+[client]
+#password = my_password
+#port = 3306
+#socket = /tmp/mysql.sock
+
+# Here is entries for some specific programs
+# The following values assume you have at least 32M ram
+
+# The MySQL server
+[mysqld]
+#port = 3306
+#socket = /tmp/mysql.sock
+temp-pool
+
+# The following three entries caused mysqld 10.0.1-MariaDB (and possibly other
+   versions) to abort...
+# skip-locking
+# set-variable = key_buffer = 16M
+# set-variable = thread_cache = 4
+
+loose-innodb_data_file_path = ibdata1:1000M
+loose-mutex-deadlock-detector
+gdb
+
+######### Fix the two following paths
+
+# Where you want to have your database
+data = /path/to/data/dir
+
+# Where you have your mysql/MariaDB source + sql/share/english
+language = /path/to/src/dir/sql/share/english
+
+[mysqldump]
+quick
+MariaDB
+8
+set-variable = max_allowed_packet=16M
+[mysql]
+no-auto-rehash
+
+[myisamchk]
+set-variable = key_buffer = 128M
+ Edit the lines “data= ” and “language= ” to match your environment. After file modification, navigate to the source directory and execute the following − 
+./scripts/mysql_install_db --srcdir = $PWD --datadir = /path/to/data/dir --
+   user = $LOGNAME
+ Omit the “$PWD” variable if you added datadir to the configuration file. Ensure “$LOGNAME” is used when running version 10.0.1 of MariaDB. Administration Commands Review the following list of important commands you will regularly use when working with MariaDB − USE [database name] − Sets the current default database. SHOW DATABASES − Lists the databases currently on the server. SHOW TABLES − Lists all non-temporary tables. SHOW COLUMNS FROM [table name] − Provides column information pertaining to the specified table. SHOW INDEX FROM TABLENAME [table name] − Provides table index information relating to the specified table. SHOW TABLE STATUS LIKE [table name]\G – − Provides tables with information about non-temporary tables, and the pattern that appears after the LIKE clause is used to fetch table names.

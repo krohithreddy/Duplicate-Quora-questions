@@ -1,0 +1,27 @@
+Redis - Security
+
+https://www.tutorialspoint.com/redis/redis_security.htm
+
+Redis, Tutorial, Beginners, Overview, Environment, Configuration, Data, types, Commands, Keys, Strings, Hashes, Lists, Sets, Sorted Sets, HyperLogLog, Pub/Sub, Transactions, Scripting, Connection, Server, Backup, Security, Benchmarks, Client Connection, Pipelining, Partitioning.
+
+August-15-2017-02:34:21
+
+Redis database can be secured, such that any client making a connection needs to authenticate before executing a command. To secure Redis, you need to set the password in the config file. Example Following example shows the steps to secure your Redis instance. 
+127.0.0.1:6379> CONFIG get requirepass 
+1) "requirepass" 
+2) "" 
+ By default, this property is blank, which means no password is set for this instance. You can change this property by executing the following command. 
+127.0.0.1:6379> CONFIG set requirepass "tutorialspoint" 
+OK 
+127.0.0.1:6379> CONFIG get requirepass 
+1) "requirepass" 
+2) "tutorialspoint" 
+ After setting the password, if any client runs the command without authentication, then (error) NOAUTH Authentication required. error will return. Hence, the client needs to use AUTH command to authenticate himself. Syntax Following is the basic syntax of AUTH command. 
+127.0.0.1:6379> AUTH password 
+ Example 
+127.0.0.1:6379> AUTH "tutorialspoint" 
+OK 
+127.0.0.1:6379> SET mykey "Test value" 
+OK 
+127.0.0.1:6379> GET mykey 
+"Test value"

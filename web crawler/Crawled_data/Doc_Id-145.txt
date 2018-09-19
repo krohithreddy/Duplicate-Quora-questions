@@ -1,0 +1,32 @@
+H2 Database - Drop
+
+https://www.tutorialspoint.com/h2_database/h2_database_drop.htm
+
+H2 Database, Tutorial, Learning, Introduction, Installation, Data Manipulation Select, Insert, Update, Delete, Backup, Call, Explain, Merge, Show, Data Definition Create, Alter, Drop, Truncate, Commit, Grant, Savepoint, Rollback, JDBC Connection.
+
+August-15-2017-02:34:24
+
+DROP is a command taken from the generic SQL grammar. This command is used to delete a database component and its structure from the memory. There are different scenarios with the Drop command that we will discuss in this chapter. Drop Table Drop Table is a command that deletes the respective table and its structure. Syntax Following is the generic syntax of the Drop Table command. 
+DROP TABLE [ IF EXISTS ] tableName [,...] [ RESTRICT | CASCADE ]
+ The command will fail if we are using RESTRICT and the table having dependent views exist. All dependent views are dropped, when we are using CASCADE keyword. Example In this example, we will drop a table named test using the following query. 
+DROP TABLE test;
+ The above query produces the following output. 
+(6) row (s) effected 
+ Drop Schema Drop Schema is a command that drops a respective schema from the database server. It will not work from the current schema. Syntax 
+DROP SCHEMA [ IF EXISTS ] schemaName 
+ Example In this example, we will drop a schema named test_schema using the following query. 
+DROP SCHEMA TEST_SCHEMA; 
+ The above query produces the following output. 
+(0) row(s) effected
+ Drop Sequence Drop Sequence is a command used to drop a sequence from the table structure. Syntax Following is the generic syntax of the Drop Sequence command. 
+DROP SEQUENCE [ IF EXISTS ] sequenceName
+ This command commits an open transaction in this connection. Example In this example, we will drop a sequence named sequence_id. Following is the command. 
+DROP SEQUENCE sequence_id;
+ The above command produces the following output. 
+(0) row (s) effected 
+ Drop View Drop View is a command used to drop the existing view. All dependent views are dropped as well if the CASCADE clause is used. Syntax Following is the generic syntax of the Drop View command. 
+DROP VIEW [ IF EXISTS ] viewName [ RESTRICT | CASCADE ]
+ Example In this example, we will drop a view named sample_view using the following query. 
+DROP VIEW sample_view;
+ The above query produces the following output. 
+(0) row (s) effected

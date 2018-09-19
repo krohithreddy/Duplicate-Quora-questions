@@ -1,0 +1,47 @@
+AIML - <that> Tag
+
+https://www.tutorialspoint.com/aiml/aiml_that_tag.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+<that> Tag is used in AIML to respond based on the context. Syntax 
+<that> template </that>
+ For example, consider the following conversation. 
+Human: Hi Alice! What about movies?
+Robot: Do you like comedy movies?
+Human: No
+Robot: Ok! But I like comedy movies.
+ Example Create that.aiml inside C > ab > bots > test > aiml and that.aiml.csv inside C > ab > bots > test > aimlif directories. that.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern>WHAT ABOUT MOVIES</pattern>
+      <template>Do you like comedy movies</template>  
+   </category>
+   
+   <category>
+      <pattern>YES</pattern>
+      <that>Do you like comedy movies</that>
+      <template>Nice, I like comedy movies too.</template>
+   </category>
+   
+   <category>
+      <pattern>NO</pattern>
+      <that>Do you like comedy movies</that>
+      <template>Ok! But I like comedy movies.</template>
+   </category> 
+   
+</aiml>
+ that.aiml.csv 
+0,WHAT ABOUT MOVIES,*,*,Do you like comedy movies,that.aiml
+0,YES,Do you like comedy movies,*,Nice! I like comedy movies too.,that.aiml
+0,NO,Do you like comedy movies,*,Ok! But I like comedy movies.,that.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You will see the following output − 
+Human: What about movies?
+Robot: Do you like comedy movies?
+Human: No
+Robot: Ok! But I like comedy movies.

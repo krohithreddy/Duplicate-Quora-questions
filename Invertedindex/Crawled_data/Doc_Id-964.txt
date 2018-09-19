@@ -1,0 +1,129 @@
+Java JDOM Parser - Parse XML Document
+
+https://www.tutorialspoint.com/java_xml/java_jdom_parse_document.htm
+
+Java XML, Tutorial, Overview, Java XML Parsers, DOM Parser, Parse XML Document, Query XML Document, Create XML Document, Modify XML Document, SAX Parser, JDOM XML Parser, StAX Parser, XPath Parser, DOM4J Parser, XSLT, JAXB.
+
+August-15-2017-02:34:06
+
+Steps to Using JDOM Following are the steps used while parsing a document using JDOM Parser. Import XML-related packages. Create a SAXBuilder Create a Document from a file or stream Extract the root element Examine attributes Examine sub-elements Import XML-related packages 
+import java.io.*;
+import java.util.*;
+import org.jdom2.*;
+ Create a DocumentBuilder 
+SAXBuilder saxBuilder = new SAXBuilder();
+ Create a Document from a file or stream 
+File inputFile = new File("input.txt");
+SAXBuilder saxBuilder = new SAXBuilder();
+Document document = saxBuilder.build(inputFile);
+ Extract the root element 
+Element classElement = document.getRootElement();
+ Examine attributes 
+//returns specific attribute
+getAttribute("attributeName"); 
+ Examine sub-elements 
+//returns a list of subelements of specified name
+getChildren("subelementName"); 
+
+//returns a list of all child nodes
+getChildren(); 
+
+//returns first child node
+getChild("subelementName"); 
+ Demo Example Here is the input xml file we need to parse − 
+<?xml version = "1.0"?>
+<class>
+   <student rollno = "393">
+      <firstname>dinkar</firstname>
+      <lastname>kad</lastname>
+      <nickname>dinkar</nickname>
+      <marks>85</marks>
+   </student>
+   
+   <student rollno = "493">
+      <firstname>Vaneet</firstname>
+      <lastname>Gupta</lastname>
+      <nickname>vinni</nickname>
+      <marks>95</marks>
+   </student>
+   
+   <student rollno = "593">
+      <firstname>jasvir</firstname>
+      <lastname>singn</lastname>
+      <nickname>jazz</nickname>
+      <marks>90</marks>
+   </student>
+</class>
+ DomParserDemo.java 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+
+
+public class JDomParserDemo {
+
+   public static void main(String[] args) {
+
+      try {
+         File inputFile = new File("input.txt");
+         SAXBuilder saxBuilder = new SAXBuilder();
+         Document document = saxBuilder.build(inputFile);
+         System.out.println("Root element :" + document.getRootElement().getName());
+         Element classElement = document.getRootElement();
+
+         List<Element> studentList = classElement.getChildren();
+         System.out.println("----------------------------");
+
+         for (int temp = 0; temp < studentList.size(); temp++) {    
+            Element student = studentList.get(temp);
+            System.out.println("\nCurrent Element :" 
+               + student.getName());
+            Attribute attribute =  student.getAttribute("rollno");
+            System.out.println("Student roll no : " 
+               + attribute.getValue() );
+            System.out.println("First Name : "
+               + student.getChild("firstname").getText());
+            System.out.println("Last Name : "
+               + student.getChild("lastname").getText());
+            System.out.println("Nick Name : "
+               + student.getChild("nickname").getText());
+            System.out.println("Marks : "
+               + student.getChild("marks").getText());
+         }
+      } catch(JDOMException e) {
+         e.printStackTrace();
+      } catch(IOException ioe) {
+         ioe.printStackTrace();
+      }
+   }
+}
+ This would produce the following result − 
+Root element :class
+----------------------------
+
+Current Element :student
+Student roll no : 393
+First Name : dinkar
+Last Name : kad
+Nick Name : dinkar
+Marks : 85
+
+Current Element :student
+Student roll no : 493
+First Name : Vaneet
+Last Name : Gupta
+Nick Name : vinni
+Marks : 95
+
+Current Element :student
+Student roll no : 593
+First Name : jasvir
+Last Name : singn
+Nick Name : jazz
+Marks : 90

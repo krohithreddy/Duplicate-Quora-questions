@@ -1,0 +1,90 @@
+Memcached - CAS Command
+
+https://www.tutorialspoint.com/memcached/memcached_cas.htm
+
+Memcached, Tutorial, Beginners, Overview, Environment, Connection,  Set Data, Add Data, Replace Data, Append Data, Prepend Data, Get Data, Delete Data, Stats, Clear Data
+
+August-15-2017-02:34:11
+
+CAS stands for Check-And-Set or Compare-And-Swap. Memcached CAS command 'checks' and 'set' data item if and only if, no other client process has updated it since last read by this client. For example, if in the past, we retrieved the value <key, value> as <total, 3784>. If we now try to set or modify this value using CAS command, then CAS command will first check if it is the same value or is changed by some other client. If it is changed, then we should not change it to avoid any race anomalies in the system. If the value is not modified since our last fetch, CAS now sets the updated value. Memcached server assigns a unique 64-bit CAS token to all items stored in it. We use gets command to retrieve CAS number of any item. Syntax The basic syntax of Memcached CAS command is as shown below − 
+cas key flags exptime bytes unique_cas_token [noreply]
+ The keywords in the syntax are as described below − key - It is the name of the unique key by which data is accessed. flags - It is the 32-bit unsigned integer that the server stores with the data provided by the user, and returns along with the data when the item is retrieved. exptime - It is the expiration time (seconds) of data stored in cache. A 0 value means "never expire", i.e. it should not be removed from the cache unless required. If the exptime is more than 30 days then Memcached interprets it as UNIX timestamp for expiration. bytes - This is the length of the data in bytes that needs to be stored in Memcached. unique_cas_token − It is a unique token number obtained from gets comamand. noreply (optional) - This parameter informs the server not to send any reply. value - It is the data that needs to be stored. The data needs to be given on the new line after executing the command with the above options. Example To execute a CAS command in Memcached, you need to obtain a CAS token from the Memcached gets command. gets command is variation of get command, it is explained in forthcoming chapter. In this example we should see − Incorrect cas statement i.e. unique cas key missing casing a non-existing key add a key value item obtain unique cas key using gets command use cas and unique_cas_key to update data item use get command and check if data is updated 
+cas tp 0 900 9
+ERROR             <− unique cas key missing
+
+cas tp 0 900 9 2
+memcached
+NOT_FOUND         <− the key tp does not exist
+
+set tp 0 900 9
+memcached
+STORED
+
+gets tp
+VALUE tp 0 9 1
+memcached
+END
+
+cas tp 0 900 5 1
+redis
+STORED
+
+get tp
+VALUE tp 0 5
+redis
+END
+ Output CAS command may produce one of the following result − STORED indicates success. ERROR indicates error while saving data or wrong syntax. EXISTS indicates that someone has modified the CAS data since last fetch. NOT_FOUND indicates that the key does not exist in the Memcached server. CAS Using Java Application To get CAS data from a Memcached server, you need to use Memcached gets method. Example 
+import java.net.InetSocketAddress;
+import java.util.concurrent.Future;
+
+import net.spy.memcached.CASValue;
+import net.spy.memcached.CASResponse;
+import net.spy.memcached.MemcachedClient;
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+   
+      try{
+   
+         // Connecting to Memcached server on localhost
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server sucessful.");
+
+         // add data to memcached server
+         Future fo = mcc.set("tutorialspoint", 900, "Free Education");
+
+         // print status of set method
+         System.out.println("set status:" + fo.get());
+            
+         // retrieve value stored for tutorialspoint from cache
+         System.out.println("tutorialspoint value in cache - " + mcc.get("tutorialspoint"));
+
+         // obtain CAS token value using gets method
+         CASValue casValue = mcc.gets("tutorialspoint");
+
+         // display CAS token value
+         System.out.println("CAS token - " + casValue);
+
+         // try to update data using memcached cas method
+         CASResponse casresp = mcc.cas("tutorialspoint", casValue.getCas(), 900, "Largest Tutorials-Library");
+         
+         // display CAS Response
+         System.out.println("CAS Response - " + casresp);
+
+         // retrieve and check the value from cache
+         System.out.println("tutorialspoint value in cache - " + mcc.get("tutorialspoint"));
+
+         // Shutdowns the memcached client
+         mcc.shutdown();
+         
+      }catch(Exception ex)
+         System.out.println(ex.getMessage());
+   }
+}
+ Output On compiling and executing the program, you get to see the following output − 
+Connection to server successful.
+set status:true
+tutorialspoint value in cache - Free Education
+CAS - {CasValue 34/Free Education}
+CAS Response - OK
+tutorialspoint value in cache - Largest Tutorials-Library

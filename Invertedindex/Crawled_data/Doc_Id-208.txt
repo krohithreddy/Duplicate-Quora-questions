@@ -1,0 +1,63 @@
+MariaDB - Insert Query
+
+https://www.tutorialspoint.com/mariadb/mariadb_insert_query.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+In this chapter, we will learn how to insert data in a table. Inserting data into a table requires the INSERT command. The general syntax of the command is INSERT followed by the table name, fields, and values. Review its general syntax given below − 
+INSERT INTO tablename (field,field2,...) VALUES (value, value2,...);
+ The statement requires the use of single or double quotes for string values. Other options for the statement include “INSERT...SET” statements, “INSERT...SELECT” statements, and several other options. Note − The VALUES() function that appears within the statement, only applies to INSERT statements and returns NULL if used elsewhere. Two options exist for performing the operation: use the command line or use a PHP script. The Command Prompt At the prompt, there are many ways to perform a select operation. A standard statement is given below − 
+belowmysql>
+INSERT INTO products_tbl (ID_number, Nomenclature) VALUES (12345,
+“Orbitron 4000”);
+mysql> SHOW COLUMNS FROM products_tbl;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| ID_number   | int(5)      |      |     |         |       |
+| Nomenclature| char(13)    |      |     |         |       |
++-------------+-------------+------+-----+---------+-------+
+ You can insert multiple rows − 
+INSERT INTO products VALUES (1, “first row”), (2, “second row”);
+ You can also employ the SET clause − 
+INSERT INTO products SELECT * FROM inventory WHERE status = 'available';
+ PHP Insertion Script Employ the same “INSERT INTO...” statement within a PHP function to perform the operation. You will use the mysql_query() function once again. Review the example given below − 
+<?php
+   if(isset($_POST['add'])) {
+      $dbhost = 'localhost:3036';
+      $dbuser = 'root';
+      $dbpass = 'rootpassword';
+      $conn = mysql_connect($dbhost, $dbuser, $dbpass);
+
+      if(! $conn ) {
+         die('Could not connect: ' . mysql_error());
+      }
+
+      if(! get_magic_quotes_gpc() ) {
+         $product_name = addslashes ($_POST['product_name']);
+         $product_manufacturer = addslashes ($_POST['product_name']);
+      } else {
+         $product_name = $_POST['product_name'];
+         $product_manufacturer = $_POST['product_manufacturer'];
+      }
+      $ship_date = $_POST['ship_date'];
+      $sql = "INSERT INTO products_tbl ".
+         "(product_name,product_manufacturer, ship_date) ".
+         "VALUES"."('$product_name','$product_manufacturer','$ship_date')";
+
+      mysql_select_db('PRODUCTS');
+      $retval = mysql_query( $sql, $conn );
+      
+      if(! $retval ) {
+         die('Could not enter data: ' . mysql_error());
+      }
+
+      echo "Entered data successfully\n";
+      mysql_close($conn);
+   }
+?>
+ On successful data insertion, you will see the following output − 
+mysql> Entered data successfully
+ You will also collaborate validation statements with insert statements such as checking to ensure correct data entry. MariaDB includes a number of options for this purpose, some of which are automatic.

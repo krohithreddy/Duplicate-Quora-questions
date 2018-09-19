@@ -1,0 +1,72 @@
+PostgreSQL - ALTER TABLE Command
+
+https://www.tutorialspoint.com/postgresql/postgresql_alter_command.htm
+
+PostgreSQL, Tutorial, Programming, Database, Overview, Environment Setup, Syntax, Data Type, Create, Select, Drop Database, Drop, Create Table, Schema, Insert, Select, Update, Delete Query, Operators, Expressions, Where, Like, Limit, Order By, Group By, With, Having Clause, AND and OR Operators, Distinct Keyword, Constraints, Joins, Unions Clause, NULL Values, Alias Syntax, Triggers, Indexes, Alter Table Command, Truncate Table Command, Views, Transactions, Locks, Sub Queries, Auto Increment, Privileges, DATE/TIME Functions and Operators, Functions, Useful Functions, C/C++, JAVA, PHP, Perl, Python Interface.
+
+August-15-2017-02:34:22
+
+The PostgreSQL ALTER TABLE command is used to add, delete or modify columns in an existing table. You would also use ALTER TABLE command to add and drop various constraints on an existing table. Syntax The basic syntax of ALTER TABLE to add a new column in an existing table is as follows − 
+ALTER TABLE table_name ADD column_name datatype;
+ The basic syntax of ALTER TABLE to DROP COLUMN in an existing table is as follows − 
+ALTER TABLE table_name DROP COLUMN column_name;
+ The basic syntax of ALTER TABLE to change the DATA TYPE of a column in a table is as follows − 
+ALTER TABLE table_name ALTER COLUMN column_name TYPE datatype;
+ The basic syntax of ALTER TABLE to add a NOT NULL constraint to a column in a table is as follows − 
+ALTER TABLE table_name MODIFY column_name datatype NOT NULL;
+ The basic syntax of ALTER TABLE to ADD UNIQUE CONSTRAINT to a table is as follows − 
+ALTER TABLE table_name
+ADD CONSTRAINT MyUniqueConstraint UNIQUE(column1, column2...);
+ The basic syntax of ALTER TABLE to ADD CHECK CONSTRAINT to a table is as follows − 
+ALTER TABLE table_name
+ADD CONSTRAINT MyUniqueConstraint CHECK (CONDITION);
+ The basic syntax of ALTER TABLE to ADD PRIMARY KEY constraint to a table is as follows − 
+ALTER TABLE table_name
+ADD CONSTRAINT MyPrimaryKey PRIMARY KEY (column1, column2...);
+ The basic syntax of ALTER TABLE to DROP CONSTRAINT from a table is as follows − 
+ALTER TABLE table_name
+DROP CONSTRAINT MyUniqueConstraint;
+ If you are using MySQL, the code is as follows − 
+ALTER TABLE table_name
+DROP INDEX MyUniqueConstraint;
+ The basic syntax of ALTER TABLE to DROP PRIMARY KEY constraint from a table is as follows − 
+ALTER TABLE table_name
+DROP CONSTRAINT MyPrimaryKey;
+ If you are using MySQL, the code is as follows − 
+ALTER TABLE table_name
+DROP PRIMARY KEY;
+ Example Consider our COMPANY table has the following records − 
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000
+ The following is the example to ADD a new column in an existing table − 
+testdb=# ALTER TABLE COMPANY ADD GENDER char(1);
+ Now, COMPANY table is changed and the following would be the output from SELECT statement − 
+ id | name  | age | address     | salary | gender
+----+-------+-----+-------------+--------+--------
+  1 | Paul  |  32 | California  |  20000 |
+  2 | Allen |  25 | Texas       |  15000 |
+  3 | Teddy |  23 | Norway      |  20000 |
+  4 | Mark  |  25 | Rich-Mond   |  65000 |
+  5 | David |  27 | Texas       |  85000 |
+  6 | Kim   |  22 | South-Hall  |  45000 |
+  7 | James |  24 | Houston     |  10000 |
+(7 rows)
+ The following is the example to DROP gender column from existing table − 
+testdb=# ALTER TABLE COMPANY DROP GENDER;
+ Now, COMPANY table is changed and the following would be the output from SELECT statement − 
+ id | name  | age | address   | salary
+----+-------+-----+-----------+--------
+  1 | Paul  |  32 | California|  20000
+  2 | Allen |  25 | Texas     |  15000
+  3 | Teddy |  23 | Norway    |  20000
+  4 | Mark  |  25 | Rich-Mond |  65000
+  5 | David |  27 | Texas     |  85000
+  6 | Kim   |  22 | South-Hall|  45000
+  7 | James |  24 | Houston   |  10000

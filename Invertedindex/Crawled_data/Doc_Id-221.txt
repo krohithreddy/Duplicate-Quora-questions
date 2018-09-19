@@ -1,0 +1,22 @@
+MariaDB - Sequences
+
+https://www.tutorialspoint.com/mariadb/mariadb_sequences.htm
+
+MariaDB, Tutorial, Introduction, Installation, Administration, PHP Syntax, Connection, Create Database, Drop Database, Select Database, Data Types, Create Tables, Drop Tables, Insert Query, Select Query, Where Clause, Update Query, Delete Query, Like Clause, Order By Clause, Join, Null Values, Regular Expression, Transactions, Alter Command, Indexes and Statistics Tables, Temporary Tables, Table Coning, Sequences, Managing Duplicates, SQL Injection Protection, Backup Methods, Backup Loading Methods, Useful Functions.
+
+August-15-2017-02:34:13
+
+In version 10.0.3, MariaDB introduced a storage engine known as sequence. Its ad hoc generates an integer sequence for operations, and then it terminates. The sequence contains positive integers in descending or ascending order, and uses a starting, ending, and increment value. It does not allow use in multiple queries, only in its original query because of its virtual (not written to disk) nature. However, sequence tables can be converted to standard tables through an ALTER command. If a converted table is deleted, the sequence table still exists. Sequences also cannot produce negative numbers or rotate at the minimum/maximum. Installating the Sequence Engine Using sequences requires installing the sequence engine, which MariaDB distributes as a plugin rather than binary. Install it with the following command − 
+INSTALL SONAME "ha_sequence";
+ After installation, verify it − 
+SHOW ENGINES\G
+ Remember that after engine installation, you cannot create a standard table with a name that uses sequence syntax, but you can create a temporary table with a sequence-syntax name. Creating Sequence There are two methods of sequence creation − Create a table and use the AUTO_INCREMENT attribute to define a column as auto-increment. Use an existing database and use a sequence SELECT query to produce a sequence. The query uses seq_ [FROM] _to_[TO] or seq_[FROM]_to_[TO]_step_STEP syntax. Best practices prefer the use of the second method. Review an example of a sequence creation given below − 
+SELECT * FROM seq_77_to_99;
+ Sequences have many uses − Locate missing values within a column to protect against related issues in operations − 
+SELECT myseq.seq FROM seq_22_to_28 myseq LEFT JOIN table1 t ON myseq.seq
+   = x.y WHERE x.y IS NULL;
+ Construct a combination of values − 
+SELECT x1.seq, x2.seq FROM seq_5_to_9 x1 JOIN seq_5_to_9 x2 ORDER BY 5, 6;
+ Find multiples of a number − 
+SELECT seq FROM seq_3_to_100_step_4;
+ Construct a date sequence for use in applications like booking systems. Construct a time sequence.

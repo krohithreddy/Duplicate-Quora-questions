@@ -1,0 +1,46 @@
+Memcached - Connection
+
+https://www.tutorialspoint.com/memcached/memcached_connection.htm
+
+Memcached, Tutorial, Beginners, Overview, Environment, Connection,  Set Data, Add Data, Replace Data, Append Data, Prepend Data, Get Data, Delete Data, Stats, Clear Data
+
+August-15-2017-02:34:11
+
+To connect to a Memcached server, you need to use telnet command providing HOST name and PORT number. Syntax The basic syntax of Memcached telnet command is as shown below − 
+$telnet HOST PORT
+ Here, HOST and PORT are machine IP and port number respectively, on which the Memcached server is running. Example The following example shows how to connect to a Memcached server and execute a simple set and get command. Assume that the Memcached server is running on host 127.0.0.1 and port 11211. 
+$telnet 127.0.0.1 11211
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+// now store some data and get it from memcached server
+set tutorialspoint 0 900 9
+memcached
+STORED
+get tutorialspoint
+VALUE tutorialspoint 0 9
+memcached
+END
+ Connection from Java Application To connect the Memcached server from your java program, you need to add the Memcached jar into your classpath. The following program assumes that Memcached server is running on host 127.0.0.1 and port 11211 − Example 
+import net.spy.memcached.MemcachedClient;
+import java.net.*;
+
+
+public class MemcachedJava {
+   public static void main(String[] args) {
+      try{
+         // Connecting to Memcached server on localhost
+         MemcachedClient mcc = new MemcachedClient(new InetSocketAddress("127.0.0.1", 11211));
+         System.out.println("Connection to server sucessful.");
+         
+         // Shutdowns the memcached client
+         mcc.shutdown();
+         
+      }catch(Exception ex){
+         System.out.println( ex.getMessage() );
+      }
+   }
+}
+ This program tries to connect memcached server on IP 127.0.0.1 and port number 11211 using InetSocketAddress. Output On compiling and executing the program, memcached client should connect to memcached server listening on port 11211 and the following should be the output − 
+Connection to server successful.
+ The terminal may show few infomational messages too, those can be ignored.

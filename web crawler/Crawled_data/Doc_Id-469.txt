@@ -1,0 +1,32 @@
+OrientDB - Python Interface
+
+https://www.tutorialspoint.com/orientdb/orientdb_python_interface.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+OrientDB driver for Python uses the binary protocol. PyOrient is the git hub project name which helps to connect OrientDB with Python. It works with OrientDB version 1.7 and later. The following command is used to install PyOrient. 
+pip install pyorient
+ You can use the script file named demo.py to do the following tasks − Create a client instance means create a connection. Create DB named DB_Demo. Open DB named DB_Demo. Create class my_class. Create properties id, and name. Insert record into my class. 
+//create connection 
+client = pyorient.OrientDB("localhost", 2424) 
+session_id = client.connect( "admin", "admin" )
+ 
+//create a databse 
+client.db_create( db_name, pyorient.DB_TYPE_GRAPH, pyorient.STORAGE_TYPE_MEMORY ) 
+
+//open databse 
+client.db_open( DB_Demo, "admin", "admin" ) 
+
+//create class 
+cluster_id = client.command( "create class my_class extends V" ) 
+
+//create property 
+cluster_id = client.command( "create property my_class.id Integer" ) 
+cluster_id = client.command( "create property my_class.name String" ) 
+
+//insert record 
+client.command("insert into my_class ( 'id','’name' ) values( 1201, 'satish')") 
+ Execute the above script using the following command. 
+$ python demo.py

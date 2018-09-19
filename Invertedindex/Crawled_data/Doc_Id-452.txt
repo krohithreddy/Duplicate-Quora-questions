@@ -1,0 +1,18 @@
+OrientDB - Drop Database
+
+https://www.tutorialspoint.com/orientdb/orientdb_drop_database.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+Similar to RDBMS, OrientDB provides the feature to drop a database. Drop database refers to removing a database completely. The following statement is the basic syntax of the Drop database command. 
+DROP DATABASE [<database-name> <server-username> <server-user-password>]
+ Following are the details about the options in the above syntax. <database-name> − Database name you want to drop. <server-username> − Username of the database who has the privilege to drop a database. <server-user-password> − Password of the particular user. Example There are two ways to drop a database, one is drop a currently open database and second is drop a particular database by providing the particular name. In this example, we will use the same database named ‘demo’ that we created in an earlier chapter. You can use the following command to drop a database demo. 
+orientdb {db = demo}> DROP DATABASE
+ If this command is successfully executed, you will get the following output. 
+Database 'demo' deleted successfully
+ OR You can use another command to drop a database as follows. 
+orientdb> DROP DATABASE PLOCAL:/opt/orientdb/databases/demo admin admin 
+ If this command is successfully executed, you will get the following output. 
+Database 'demo' deleted successfully

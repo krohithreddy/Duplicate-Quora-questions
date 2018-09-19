@@ -1,0 +1,9 @@
+SQL Certificate - Useful Resources
+
+https://www.tutorialspoint.com/sql_certificate/sql_useful_resources.htm
+
+Oracle, Database 11g, Sun, Certificate, SQL, Fundamentals, Free, Preparation, Mock, Exams, Technical, certification, Technical, Projects.
+
+August-15-2017-02:34:06
+
+The following resources contain additional information on SQL Certificate. Please use them to get more in-depth knowledge on this topic. Useful Links on SQL Certificate ANSI SQL − Database Language SQL (Proposed revised text of DIS 9075) July 1992 (Second Informal Review Draft). Structured Query Language (SQL): − DB2 resource for SQL users. Oracle SQL Developer − Oracle SQL Developer is a free and fully supported graphical tool for database development. SQL at Wikipedia − A small article on SQL, worth to go through it. MySQL Official Website − Here you can download the latest MySQL release, get the MySQL news update. The mailing list is also a great resources for anyone who want to build dynamic websites using MySQL. MySQL and PERL − Its a tutorial from Tutorials Point which explains you how to use MySQL along with PERL and DBI module. Here you will learn all the required MySQL operations alongwith examples. Useful Books on SQL Certificate To enlist your site on this page, please drop an email to contact@tutorialspoint.com

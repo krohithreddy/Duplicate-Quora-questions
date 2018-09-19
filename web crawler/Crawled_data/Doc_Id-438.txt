@@ -1,0 +1,51 @@
+OrientDB - Config Database
+
+https://www.tutorialspoint.com/orientdb/orientdb_config_database.htm
+
+OrientDB, Tutorial, Learning, Beginners, Overview, Installation, Basic Concepts, Data Types, Console Modes, Create Database, Alter Database, Backup Database, Restore Database, Connect Database, Disconnect Database, Info Database, List Database, Freeze Database, Release Database, Config Database, Export Database, Import Database, Commit Database, Rollback Database, Optimize Database, Drop Database, Insert Record, Display Records, Load Record, Reload Record, Export Record, Update Record, Truncate Record, Delete Record, Create Class, Alter Class, Truncate Class, Drop Class, Create Cluster, Alter Cluster, Truncate Cluster, Drop Cluster, Create Property, Alter Property, Drop Property, Create Vertex, Move Vertex, Delete Vertex, Create Edge, Update Edge, Delete Edge, Functions, Sequences, Indexes, Transactions, Hooks, Caching, Logging, Performance Tuning, Upgrading, Security, Studio, Java Interface, Python Interface.
+
+August-15-2017-02:34:10
+
+In this chapter, you can learn how to display the configuration of a particular database through OrientDB command line. This command is applicable for both local and remote databases. Configuration information contains default cache either enabled or not, the size of that cache, the load factor value, max memory for map, node page size, pool minimum and maximum size, etc. The following statement is the basic syntax of the config database command. 
+CONFIG
+ Note − You can use this command only after connecting to a particular database. Example In this example, we will use the same database named ‘demo’ that we created in the previous chapter. You can use the following command to display the configuration of demo database. 
+Orientdb {db = demo}> CONFIG
+ If it is successfully executed, you will get the following output. 
+LOCAL SERVER CONFIGURATION: 
++---------------------------------------+-------------------------+ 
+| NAME                                  | VALUE                   | 
++---------------------------------------+-------------------------+ 
+| environment.dumpCfgAtStartup          | false                   | 
+| environment.concurrent                | true                    | 
+| environment.allowJVMShutdown          | true                    | 
+| script.pool.maxSize                   | 20                      | 
+| memory.useUnsafe                      | true                    | 
+| memory.directMemory.safeMode          | true                    | 
+| memory.directMemory.trackMode         | false                   | 
+|………………………………..                         |                         | 
+| storage.lowestFreeListBound           | 16                      | 
+| network.binary.debug                  | false                   | 
+| network.http.maxLength                | 1000000                 | 
+| network.http.charset                  | utf-8                   | 
+| network.http.jsonResponseError        | true                    | 
+| network.http.json                     | false                   | 
+| tx.log.fileType                       | classic                 | 
+| tx.log.synch                          | false                   | 
+| tx.autoRetry                          | 1                       | 
+| client.channel.minPool                | 1                       | 
+| storage.keepOpen                      | true                    | 
+| cache.local.enabled                   | true                    | 
++---------------------------------------+-------------------------+ 
+orientdb {db = demo}>
+ In the above list of configuration parameters, if you want to change any of the parameter value then you can do it from the command line easily using config set and get command. Config Set You can update the configuration variable value by using the CONFIG SET command. The following statement is the basic syntax of the config set command. 
+CONFIG SET <config-variable> <config-value>
+ Note − You can use this command only after connecting to a particular database. Example In this example, we will use the same database named ‘demo’ that we created in the previous chapter. We will modify the ‘tx.autoRetry’ variable value to 5. You can use the following command to set the configuration of demo database. 
+orientdb {db = demo}> CONFIG SET tx.autoRetry 5 
+ If it is successfully executed, you will get the following output. 
+Local configuration value changed correctly
+ Config Get You can display the configuration variable value by using the CONFIG GET command. The following statement is the basic syntax of the config get command. 
+CONFIG GET <config-variable> 
+ Note − You can use this command only after connecting to a particular database. Example In this example, we will use the same database named ‘demo’ that we created in the previous chapter. We will try to retrieve the ‘tx.autoRetry’ variable value. You can use the following command to display the configuration of demo database. 
+orientdb {db = demo}> CONFIG GET tx.autoRetry
+ If it is successfully executed, you will get the following output. 
+Local configuration: tx.autoRetry = 5

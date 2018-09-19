@@ -1,0 +1,9 @@
+T-SQL - Functions
+
+https://www.tutorialspoint.com/t_sql/t_sql_functions.htm
+
+T-SQL, Tutorial, Learning, Beginners, Overview, Data Types, Create Tables, Drop Tables, INSERT Statement, SELECT Statement, UPDATE Statement, DELETE Statement, WHERE Clause, LIKE Clause, ORDER BY Clause, GROUP BY Clause, DISTINCT Clause, Joining Tables, Sub-Queries, Stored Procedures, Transactions, Indexes, Functions, String Functions, Date Functions, Numeric Functions.
+
+August-15-2017-02:34:09
+
+MS SQL Server has many built-in functions to perform processing on string or numeric data. Following is the list of all useful SQL built-in functions − SQL Server COUNT Function − The SQL Server COUNT aggregate function is used to count the number of rows in a database table. SQL Server MAX Function − The SQL Server MAX aggregate function allows to select the highest (maximum) value for a certain column. SQL Server MIN Function − The SQL Server MIN aggregate function allows to select the lowest (minimum) value for a certain column. SQL Server AVG Function − The SQL Server AVG aggregate function selects the average value for certain table column. SQL Server SUM Function − The SQL Server SUM aggregate function allows selecting the total for a numeric column. SQL Server SQRT Function − This is used to generate a square root of a given number. SQL Server RAND Function − This is used to generate a random number using SQL command. SQL Server CONCAT Function − This is used to concatenate multiple parameters to a single parameter. SQL Server Numeric Functions − Complete list of SQL functions required to manipulate numbers in SQL. SQL Server String Functions − Complete list of SQL functions required to manipulate strings in SQL.

@@ -1,0 +1,9 @@
+ebXML - Summary
+
+https://www.tutorialspoint.com/ebxml/ebxml_summary.htm
+
+ebXML, Tutorial, Learn, understanding, B2B, C2C, B2C, Message, Services, System, Registry, Repository, Core, Components, Architecture, Business, Processes, CPP, CPA, Collaboration, Context, Affect, Specifications, Standards, Vision, Goal, OASIS, UN/CEFACT, Agreement, Security, Resources.
+
+August-15-2017-02:34:17
+
+This brief tutorial covered the basics of ebXML and its various elements. We discussed the complete architecture of ebXML and how it provides consistent business semantics and a standard technical infrastructure for business exchanges. In addition, we covered how to put ebXML into use a real example. From this tutorial we conclude: ebXML is a worldwide project to standardize the exchange of electronic business data. ebXML is a group of related specifications that covers analysis of Business Processes and Business Documents. ebXML is to enable consistent, secure, and interoperable message exchange XML-based infrastructure. ebXML is supported by hundreds of industry consortia, standards bodies, companies, and individuals from around the world. What is Next? Hope you have a basic understanding of ebXML. To help you learn more on this topic, we have supplied a list of useful links on our website from where you can collect more information on ebXML. Did you find ebXML interesting? Please send us your feedback at contact@tutorialspoint.com.

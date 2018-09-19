@@ -1,0 +1,101 @@
+DynamoDB - Getting Items
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_getting_items.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+Retrieving an item in DynamoDB requires using GetItem, and specifying the table name and item primary key. Be sure to include a complete primary key rather than omitting a portion. For example, omitting the sort key of a composite key. GetItem behaviour conforms to three defaults − It executes as an eventually consistent read. It provides all attributes. It does not detail its capacity unit consumption. These parameters allow you to override the default GetItem behaviour. Retrieve an Item DynamoDB ensures reliability through maintaining multiple copies of items across multiple servers. Each successful write creates these copies, but takes substantial time to execute; meaning eventually consistent. This means you cannot immediately attempt a read after writing an item. You can change the default eventually consistent read of GetItem, however, the cost of more current data remains consumption of more capacity units; specifically, two times as much. Note DynamoDB typically achieves consistency across every copy within a second. You can use the GUI console, Java, or another tool to perform this task. Item Retrieval Using Java Using Java in item retrieval operations requires creating a DynamoDB Class Instance, Table Class Instance, and calling the Table instance's getItem method. Then specify the primary key of the item. You can review the following example − 
+DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient( 
+   new ProfileCredentialsProvider()));  
+Table table = dynamoDB.getTable("ProductList");  
+Item item = table.getItem("IDnum", 109);
+ In some cases, you need to specify the parameters for this operation. The following example uses .withProjectionExpression and GetItemSpec for retrieval specifications − 
+GetItemSpec spec = new GetItemSpec() 
+   .withPrimaryKey("IDnum", 122) 
+   .withProjectionExpression("IDnum, EmployeeName, Department") 
+   .withConsistentRead(true);
+
+Item item = table.getItem(spec);
+System.out.println(item.toJSONPretty());
+ You can also review a the following bigger example for better understanding. Note − The following sample may assume a previously created data source. Before attempting to execute, acquire supporting libraries and create necessary data sources (tables with required characteristics, or other referenced sources). This sample also uses Eclipse IDE, an AWS credentials file, and the AWS Toolkit within an Eclipse AWS Java Project. 
+package com.amazonaws.codesamples.document;
+
+import java.io.IOException
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.amazonaws.services.dynamodbv2.document.DeleteItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.Table;
+
+import com.amazonaws.services.dynamodbv2.document.UpdateItemOutcome;
+import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
+import com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec;
+import com.amazonaws.services.dynamodbv2.document.utils.NameMap;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.model.ReturnValue;
+
+public class GetItemOpSample {
+   static DynamoDB dynamoDB = new DynamoDB(new AmazonDynamoDBClient(
+      new ProfileCredentialsProvider()));
+   
+   static String tblName = "ProductList";
+   public static void main(String[] args) throws IOException {
+      createItems();
+      retrieveItem();
+      
+      // Execute updates
+      updateMultipleAttributes();
+      updateAddNewAttribute();
+      updateExistingAttributeConditionally();
+      
+      // Item deletion
+      deleteItem();
+   }
+   private static void createItems() {
+      Table table = dynamoDB.getTable(tblName);
+      try {
+         Item item = new Item()
+            .withPrimaryKey("ID", 303)
+            .withString("Nomenclature", "Polymer Blaster 4000")
+            .withStringSet( "Manufacturers",
+            new HashSet<String>(Arrays.asList("XYZ Inc.", "LMNOP Inc.")))
+            .withNumber("Price", 50000)
+            .withBoolean("InProduction", true)
+            .withString("Category", "Laser Cutter");
+            table.putItem(item);
+            
+         item = new Item()
+            .withPrimaryKey("ID", 313)
+            .withString("Nomenclature", "Agitatatron 2000")
+            .withStringSet( "Manufacturers",
+            new HashSet<String>(Arrays.asList("XYZ Inc,", "CDE Inc.")))
+            .withNumber("Price", 40000)
+            .withBoolean("InProduction", true)
+            .withString("Category", "Agitator");
+         
+         table.putItem(item);
+      } catch (Exception e) {
+         System.err.println("Cannot create items.");
+         System.err.println(e.getMessage());
+      }
+   }
+   private static void retrieveItem() {
+      Table table = dynamoDB.getTable(tableName);
+      try {
+         Item item = table.getItem("ID", 303, "ID, Nomenclature, Manufacturers", null);
+         System.out.println("Displaying retrieved items...");
+         System.out.println(item.toJSONPretty());
+      } catch (Exception e) {
+         System.err.println("Cannot retrieve items.");
+         System.err.println(e.getMessage());
+      }
+   }
+}

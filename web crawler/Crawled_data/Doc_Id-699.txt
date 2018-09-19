@@ -1,0 +1,30 @@
+SQL - UNIQUE Constraint
+
+https://www.tutorialspoint.com/sql/sql-unique.htm
+
+Learning, SQL, Structured, Programming, Language, database concepts, Overview, RDBMS Concepts, Databases, SQL Syntax, Data Types, Operators, Expressions, CREATE, DROP or DELETE, SELECT Database, USE Statement, CREATE, DROP or DELETE Table, INSERT, SELECT Query, WHERE Clauses, AND and OR Conjunctive Operators, UPDATE, DELETE Query, LIKE Clause, TOP, LIMIT or ROWNUM, ORDER BY Clause, GROUP BY, DISTINCT Keyword, SORTING Results, Constraints, Using Joins, UNIONS CLAUSE, NULL Values, Alias Syntax, Indexes, ALTER, TRUNCATE TABLE Command, Using Views, Having Clause, Transactions, Wildcard Operators, Date Functions, Temporary, Clone Tables, Sub Queries, Using Sequences, Handling Duplicates, Injection.
+
+August-15-2017-02:34:10
+
+The UNIQUE Constraint prevents two records from having identical values in a column. In the CUSTOMERS table, for example, you might want to prevent two or more people from having an identical age. Example For example, the following SQL query creates a new table called CUSTOMERS and adds five columns. Here, the AGE column is set to UNIQUE, so that you cannot have two records with the same age. 
+CREATE TABLE CUSTOMERS(
+   ID   INT              NOT NULL,
+   NAME VARCHAR (20)     NOT NULL,
+   AGE  INT              NOT NULL UNIQUE,
+   ADDRESS  CHAR (25) ,
+   SALARY   DECIMAL (18, 2),       
+   PRIMARY KEY (ID)
+);
+ If the CUSTOMERS table has already been created, then to add a UNIQUE constraint to the AGE column. You would write a statement like the query that is given in the code block below. 
+ALTER TABLE CUSTOMERS
+   MODIFY AGE INT NOT NULL UNIQUE;
+ You can also use the following syntax, which supports naming the constraint in multiple columns as well. 
+ALTER TABLE CUSTOMERS
+   ADD CONSTRAINT myUniqueConstraint UNIQUE(AGE, SALARY);
+ DROP a UNIQUE Constraint To drop a UNIQUE constraint, use the following SQL query. 
+ALTER TABLE CUSTOMERS
+   DROP CONSTRAINT myUniqueConstraint;
+ If you are using MySQL, then you can use the following syntax − 
+ALTER TABLE CUSTOMERS
+   DROP INDEX myUniqueConstraint;
+ sql-rdbms-concepts.htm

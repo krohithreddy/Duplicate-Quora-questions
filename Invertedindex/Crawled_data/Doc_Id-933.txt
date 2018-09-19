@@ -1,0 +1,108 @@
+XML DOM - Set Node
+
+https://www.tutorialspoint.com/dom/xml_dom_set_node.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+In this chapter, we will study about how to change the values of nodes in an XML DOM object. Node value can be changed as follows − 
+var value = node.nodeValue;
+ If node is an Attribute then the value variable will be the value of the attribute; if node is a Text node it will be the text content; if node is an Element it will be null. Following sections will demonstrate the node value setting for each node type (attribute, text node and element). The node.xml used in all the following examples is as below − 
+<Company>
+   <Employee category = "Technical">
+      <FirstName>Tanmay</FirstName>
+      <LastName>Patil</LastName>
+      <ContactNo>1234567890</ContactNo>
+      <Email>tanmaypatil@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Non-Technical">
+      <FirstName>Taniya</FirstName>
+      <LastName>Mishra</LastName>
+      <ContactNo>1234667898</ContactNo>
+      <Email>taniyamishra@xyz.com</Email>
+   </Employee>
+   
+   <Employee category = "Management">
+      <FirstName>Tanisha</FirstName>
+      <LastName>Sharma</LastName>
+      <ContactNo>1234562350</ContactNo>
+      <Email>tanishasharma@xyz.com</Email>
+   </Employee>
+</Company>
+ Change Value of Text Node When we, say the change value of Node element we mean to edit the text content of an element (which is also called the text node). Following example demonstrates how to change the text node of an element. Example The following example (set_text_node_example.htm) parses an XML document (node.xml) into an XML DOM object and change the value of an element's text node. In this case, Email of each Employee to support@xyz.com and print the values. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+
+         x = xmlDoc.getElementsByTagName("Email");
+         for(i = 0;i<x.length;i++) {	
+	
+            x[i].childNodes[0].nodeValue = "support@xyz.com";
+            document.write(i+');
+            document.write(x[i].childNodes[0].nodeValue);
+            document.write('<br>');
+         }
+	
+      </script>
+   </body>
+</html>
+ Execution Save this file as set_text_node_example.htm on the server path (this file and node.xml should be on the same path in your server). You will receive the following output − 
+0) support@xyz.com
+1) support@xyz.com
+2) support@xyz.com
+ Change Value of Attribute Node The following example demonstrates how to change the attribute node of an element. Example The following example (set_attribute_example.htm) parses an XML document (node.xml) into an XML DOM object and changes the value of an element's attribute node. In this case, the Category of each Employee to admin-0, admin-1, admin-2 respectively and print the values. 
+<!DOCTYPE html>
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+                xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         xmlDoc = loadXMLDoc("/dom/node.xml");
+
+         x = xmlDoc.getElementsByTagName("Employee");
+         for(i = 0 ;i<x.length;i++){	
+	
+            newcategory = x[i].getAttributeNode('category');
+            newcategory.nodeValue = "admin-"+i;
+            document.write(i+');
+            document.write(x[i].getAttributeNode('category').nodeValue);
+            document.write('<br>');
+         }
+	
+      </script>
+   </body>
+</html>
+ Execution Save this file as set_node_attribute_example.htm on the server path (this file and node.xml should be on the same path in your server). The result would be as below − 
+0) admin-0
+1) admin-1
+2) admin-2

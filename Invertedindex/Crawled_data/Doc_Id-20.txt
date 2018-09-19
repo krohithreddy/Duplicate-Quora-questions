@@ -1,0 +1,20 @@
+CouchDB - Deleting a Database
+
+https://www.tutorialspoint.com/couchdb/couchdb_deleting_a_database.htm
+
+CouchDB, Introduction, Installation, Curl and Futon, Http API, Creating a Database, Deleting a Database, Creating a Document, Updating a Document, Deleting a Document, Attaching Files.
+
+August-15-2017-02:34:06
+
+Deleting a Database using cURL Utility You can delete a database in CouchDB by sending a request to the server using DELETE method through cURL utility. Following is the syntax to create a database − 
+$ curl -X DELETE http://127.0.0.1:5984/database_name
+ Using −X we can specify a custom request method of HTTP we are using, while communicating with the HTTP server. In this case, we are using the DELETE method. Send the url to the server by specifying the database to be deleted in it. Example Assume there is a database named my_database2 in CouchDB. Execute the command as mentioned below. Server should respond you with a JSON document having "ok" : true indicating the operation was successful. 
+$ curl -X DELETE http://127.0.0.1:5984/my_database2
+{
+   "ok" : true
+}
+ Verification Verify whether the database is deleted by listing out all the databases as shown below. Here you can observe the name of the deleted database, "my_database" is not there in the list. 
+$ curl -X GET http://127.0.0.1:5984/_all_dbs
+
+[ "_replicator " , " _users " ]
+ Deleting a Database using Futon To delete a database, open the http://127.0.0.1:5984/_utils/ url where you will get an Overview/index page of CouchDB as shown below. Here you can see three user created databases. Let us delete the database named tutorials_point2. To delete a database, select one from the list of databases, and click on it, which will lead to the overview page of the selected database where you can see the various operations on databases. The following screenshot shows the same − Among them you can find Delete Database option. By clicking on it you will get a popup window, asking whether you are sure! Click on delete, to delete the selected database.

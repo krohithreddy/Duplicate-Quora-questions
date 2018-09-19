@@ -1,0 +1,61 @@
+XPath - String Functions
+
+https://www.tutorialspoint.com/xpath/xpath_string_functions.htm
+
+XPath, Tutorial, Learning, Overview, Expression, Nodes, Element, Attribute, Text, comment, Absolute Path, Relative Path, Axes, Operators, Wildcard, Predicates.
+
+August-15-2017-02:34:16
+
+The following is a list of XPath String functions − S.No. Function & Description 1 starts-with(string1, string2) Returns true when first string starts with the second string. 2 contains(string1, string2) Returns true when the first string contains the second string. 3 substring(string, offset, length?) Returns a section of the string. The section starts at offset up to the length provided. 4 substring-before(string1, string2) Returns the part of string1 up before the first occurrence of string2. 5 substring-after(string1, string2) Returns the part of string1 after the first occurrence of string2. 6 string-length(string) Returns the length of string in terms of characters. 7 normalize-space(string) Trims the leading and trailing space from string. 8 translate(string1, string2, string3) Returns string1 after any matching characters in string2 have been replaced by the characters in string3. 9 concat(string1, string2, ...) Concatenates all strings. 10 format-number(number1, string1, string2) Returns a formatted version of number1 after applying string1 as a format string. string2 is an optional locale string. Example This example creates a table of <student> element with their names and length of names, by iterating over each student. It calculates length of the student name after concatenating firstname and lastname and then prints the student(s) details. students.xml 
+<?xml version = "1.0"?>
+<?xml-stylesheet type = "text/xsl" href = "students.xsl"?>
+<class>
+   <student rollno = "393">
+      <firstname>Dinkar</firstname>
+      <lastname>Kad</lastname>
+      <nickname>Dinkar</nickname>
+      <marks>85</marks>
+   </student>
+   <student rollno = "493">
+      <firstname>Vaneet</firstname>
+      <lastname>Gupta</lastname>
+      <nickname>Vinni</nickname>
+      <marks>95</marks>
+   </student>
+   <student rollno = "593">
+      <firstname>Jasvir</firstname>
+      <lastname>Singh</lastname>
+      <nickname>Jazz</nickname>
+      <marks>90</marks>
+   </student>
+</class>
+ students.xsl 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xsl:stylesheet version = "1.0"
+   xmlns:xsl = "http://www.w3.org/1999/XSL/Transform">  
+
+   <xsl:template match = "/">
+      <html>
+         <body>
+            <h2>Students</h2>
+				
+            <table border = "1">
+               <tr bgcolor = "#9acd32">	
+                  <th>Name</th>     
+                  <th>Length of Name</th>
+               </tr>
+					
+               <xsl:for-each select = "class/student">
+				
+                  <tr>
+                     <td><xsl:value-of select = "concat(firstname,' ',lastname)"/></td>
+                     <td><xsl:value-of select = "string-length(concat(firstname,' ',lastname))"/></td>
+                  </tr>	
+               </xsl:for-each>
+            </table>
+         </body>
+      </html>
+   </xsl:template>
+
+</xsl:stylesheet>
+ Verify the output xpath_operators.htm

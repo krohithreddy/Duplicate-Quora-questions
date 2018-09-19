@@ -1,0 +1,50 @@
+DOM - DOMException Object
+
+https://www.tutorialspoint.com/dom/dom_domexception_object.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The DOMException represents an abnormal event happening when a method or a property is used. Properties Below table lists the properties of the DOMException object S.No. Property & Description 1 name Returns a DOMString that contains one of the string associated with an error constant (as seen the table below). Error Types S.No. Type & Description 1 IndexSizeError The index is not in the allowed range. For example, this can be thrown by the Range object. (Legacy code value: 1 and legacy constant name: INDEX_SIZE_ERR) 2 HierarchyRequestError The node tree hierarchy is not correct. (Legacy code value: 3 and legacy constant name: HIERARCHY_REQUEST_ERR) 3 WrongDocumentError The object is in the wrong document. (Legacy code value: 4 and legacy constant name: WRONG_DOCUMENT_ERR) 4 InvalidCharacterError The string contains invalid characters. (Legacy code value: 5 and legacy constant name: INVALID_CHARACTER_ERR) 5 NoModificationAllowedError The object cannot be modified. (Legacy code value: 7 and legacy constant name: NO_MODIFICATION_ALLOWED_ERR) 6 NotFoundError The object cannot be found here. (Legacy code value: 8 and legacy constant name: NOT_FOUND_ERR) 7 NotSupportedError The operation is not supported. (Legacy code value: 9 and legacy constant name: NOT_SUPPORTED_ERR) 8 InvalidStateError The object is in an invalid state. (Legacy code value: 11 and legacy constant name: INVALID_STATE_ERR) 9 SyntaxError The string did not match the expected pattern. (Legacy code value: 12 and legacy constant name: SYNTAX_ERR) 10 InvalidModificationError The object cannot be modified in this way. (Legacy code value: 13 and legacy constant name: INVALID_MODIFICATION_ERR) 11 NamespaceError The operation is not allowed by Namespaces in XML. (Legacy code value: 14 and legacy constant name: NAMESPACE_ERR) 12 InvalidAccessError The object does not support the operation or argument. (Legacy code value: 15 and legacy constant name: INVALID_ACCESS_ERR) 13 TypeMismatchError The type of the object does not match the expected type. (Legacy code value: 17 and legacy constant name: TYPE_MISMATCH_ERR) This value is deprecated, the JavaScript TypeError exception is now raised instead of a DOMException with this value. 14 SecurityError The operation is insecure. (Legacy code value: 18 and legacy constant name: SECURITY_ERR) 15 NetworkError A network error occurred. (Legacy code value: 19 and legacy constant name: NETWORK_ERR) 16 AbortError The operation was aborted. (Legacy code value: 20 and legacy constant name: ABORT_ERR) 17 URLMismatchError The given URL does not match another URL. (Legacy code value: 21 and legacy constant name: URL_MISMATCH_ERR) 18 QuotaExceededError The quota has been exceeded. (Legacy code value: 22 and legacy constant name: QUOTA_EXCEEDED_ERR) 19 TimeoutError The operation timed out. (Legacy code value: 23 and legacy constant name: TIMEOUT_ERR) 20 InvalidNodeTypeError The node is incorrect or has an incorrect ancestor for this operation. (Legacy code value: 24 and legacy constant name: INVALID_NODE_TYPE_ERR) 21 DataCloneError The object cannot be cloned. (Legacy code value: 25 and legacy constant name: DATA_CLONE_ERR) 22 EncodingError The encoding operation, being an encoding or a decoding one, failed (No legacy code value and constant name). 23 NotReadableError The input/output read operation failed (No legacy code value and constant name). Example Following example demonstrates how using a not well-formed XML document causes a DOMException. error.xml contents are as below − 
+<?xml version = "1.0" encoding = "UTF-8" standalone = "no" ?>
+<Company id = "companyid">
+   <Employee category = "Technical" id = "firstelement" type = "text/html">
+      <FirstName>Tanmay</first>
+      <LastName>Patil</LastName>
+      <ContactNo>1234567890</ContactNo>
+      <Email>tanmaypatil@xyz.com</Email>
+   </Employee>
+</Company>
+ Following example demonstrates the usage of the name attribute − 
+<html>
+   <head>
+      <script>
+         function loadXMLDoc(filename) {
+            if (window.XMLHttpRequest) {
+               xhttp = new XMLHttpRequest();
+            } else // code for IE5 and IE6 {
+               xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xhttp.open("GET",filename,false);
+            xhttp.send();
+            return xhttp.responseXML;
+         }
+      </script>
+   </head>
+   <body>
+      <script>
+         try {
+            xmlDoc = loadXMLDoc("/dom/error.xml");
+            var node  = xmlDoc.getElementsByTagName("to").item(0);
+            var refnode = node.nextSibling;
+            var newnode = xmlDoc.createTextNode('That is why you fail.');
+            node.insertBefore(newnode, refnode);
+         } catch(err) {
+            document.write(err.name);
+         }
+      </script>
+   </body>
+</html>
+ Execution Save this file as domexcption_name.html on the server path (this file and error.xml should be on the same path in your server). We will get the output as shown below − 
+TypeError

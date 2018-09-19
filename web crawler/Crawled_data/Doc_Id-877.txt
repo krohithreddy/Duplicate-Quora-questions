@@ -1,0 +1,9 @@
+DOM - NamedNodeMap Object
+
+https://www.tutorialspoint.com/dom/dom_namednodemap_object.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+The NamedNodeMap object is used to represent collections of nodes that can be accessed by name. Attributes The following table lists the Property of the NamedNodeMap Object. Attribute Type Description length unsigned long It gives the number of nodes in this map. The range of valid child node indices is 0 to length-1 inclusive. Methods The following table lists the methods of the NamedNodeMap object. S.No. Methods & Description 1 getNamedItem () Retrieves the node specified by name. 2 getNamedItemNS () Retrieves a node specified by local name and namespace URI. 3 item () Returns the indexth item in the map. If index is greater than or equal to the number of nodes in this map, this returns null. 4 removeNamedItem () Removes a node specified by name. 5 removeNamedItemNS () Removes a node specified by local name and namespace URI. 6 setNamedItem () Adds a node using its nodeName attribute. If a node with that name is already present in this map, it is replaced by the new one. 7 setNamedItemNS () Adds a node using its namespaceURI and localName. If a node with that namespace URI and that local name is already present in this map, it is replaced by the new one. Replacing a node by itself has no effect.

@@ -1,0 +1,43 @@
+Apache Presto - Range Operator
+
+https://www.tutorialspoint.com/apache_presto/apache_presto_range_operator.htm
+
+Apache Presto, Tutorial, Learning, Overview, Architecture, Installation, Configuration Settings, Administration Tools, Basic SQL Operations, SQL Functions, MySQL, JMX, HIVE, KAFKA Connector, JDBC Interface, Custom Function Application.
+
+August-15-2017-02:34:16
+
+Between operator is used to test the particular value, which exists from minimum to maximum range. Query 1 
+presto:default> select 30.5 between 10 and 40 as range; 
+ Result 
+ range 
+------- 
+ true 
+(1 row) 
+ Query 2 
+presto:default> select 4.5 is null; 
+ Result 
+ _col0 
+------- 
+ false 
+(1 row) 
+ Here, 4.5 is a value and not null since it is checked with null, so the result is false. Query 3 
+presto:default> select 3 is not null;
+ Result 
+ _col0 
+------- 
+ true 
+(1 row) 
+ Greatest(x,y) If the value of x is greater than y, then it returns x, otherwise y. Query 
+presto:default> select greatest(200,300) as greatest; 
+ Result 
+ greatest 
+---------- 
+  300 
+(1 row) 
+ The output is returned as the greatest of two values. Least(x,y) Returns the least value from the two given values. Query 
+presto:default> select least('a','b') as result; 
+ Result 
+ result 
+-------- 
+   a
+ Here, the lowest character value is ‘a’ hence it is returned in the result. apache_presto_basic_sql_operations.htm

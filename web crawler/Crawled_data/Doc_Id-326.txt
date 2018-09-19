@@ -1,0 +1,67 @@
+MySQL - RAND Function
+
+https://www.tutorialspoint.com/mysql/mysql-rand-function.htm
+
+Learning, MySQL, Programming, Database, Clauses, Commands, Functions, MySQL Between Clause, Queries, Simple, Steps, Basic, Advanced, Concepts.
+
+August-15-2017-02:34:19
+
+MySQL has a RAND function that can be invoked to produce random numbers between 0 and 1 − 
+mysql>  SELECT RAND( ), RAND( ), RAND( );
++------------------+-----------------+------------------+
+|      RAND( )     |      RAND( )    |      RAND( )     |
++------------------+-----------------+------------------+
+| 0.45464584925645 | 0.1824410643265 | 0.54826780459682 |
++------------------+-----------------+------------------+
+1 row in set (0.00 sec)
+ When invoked with an integer argument, RAND( ) uses that value to seed the random number generator. Each time you seed the generator with a given value, RAND( ) will produce a repeatable series of numbers − 
+mysql>  SELECT RAND(1), RAND( ), RAND( );
++------------------+------------------+------------------+
+|     RAND(1 )     |      RAND( )     |      RAND( )     |
++------------------+------------------+------------------+
+| 0.18109050223705 | 0.75023211143001 | 0.20788908117254 |
++------------------+------------------+------------------+
+1 row in set (0.00 sec)
+ You can use ORDER BY RAND() to randomize a set of rows or values as follows − To understand ORDER BY RAND() function, consider an employee_tbl table, which is having the following records − 
+mysql> SELECT * FROM employee_tbl;
++------+------+------------+--------------------+
+|  id  | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|   1  | John | 2007-01-24 |        250         |
+|   2  | Ram  | 2007-05-27 |        220         |
+|   3  | Jack | 2007-05-06 |        170         |
+|   3  | Jack | 2007-04-06 |        100         |
+|   4  | Jill | 2007-04-06 |        220         |
+|   5  | Zara | 2007-06-06 |        300         |
+|   5  | Zara | 2007-02-06 |        350         |
++------+------+------------+--------------------+
+7 rows in set (0.00 sec)
+ Now, use the following commands − 
+mysql> SELECT * FROM employee_tbl ORDER BY RAND();
++------+------+------------+--------------------+
+|  id  | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|   5  | Zara | 2007-02-06 |        350         |
+|   5  | Zara | 2007-06-06 |        300         |
+|   3  | Jack | 2007-05-06 |        170         |
+|   2  | Ram  | 2007-05-27 |        220         |
+|   4  | Jill | 2007-04-06 |        220         |
+|   5  | Zara | 2007-02-06 |        350         |
+|   1  | John | 2007-01-24 |        250         |
++------+------+------------+--------------------+
+7 rows in set (0.01 sec)
+
+mysql> SELECT * FROM employee_tbl ORDER BY RAND();
++------+------+------------+--------------------+
+|  id  | name | work_date  | daily_typing_pages |
++------+------+------------+--------------------+
+|   5  | Zara | 2007-02-06 |        350         |
+|   5  | Zara | 2007-06-06 |        300         |
+|   3  | Jack | 2007-05-06 |        170         |
+|   2  | Ram  | 2007-05-27 |        220         |
+|   4  | Jill | 2007-04-06 |        220         |
+|   5  | Zara | 2007-02-06 |        350         |
+|   1  | John | 2007-01-24 |        250         |
++------+------+------------+--------------------+
+7 rows in set (0.00 sec)
+ mysql-useful-functions.htm

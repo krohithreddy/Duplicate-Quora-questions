@@ -1,0 +1,88 @@
+DocumentDB - Geospatial Data
+
+https://www.tutorialspoint.com/documentdb/documentdb_geospatial_data.htm
+
+DocumentDB, Tutorial, Introduction, Advantages, Environment Setup, Create, Connect Account, Create, List, Drop Databases, Create, Delete Collection, Insert, Query, Update, Delete Document, Data Modeling, Data Types, Limiting, Sorting, Indexing Records, Geospatial Data, Partitioning, Data Migration, Access Control, Visualize Data.
+
+August-15-2017-02:34:09
+
+Microsoft added geospatial support, which lets you store location data in your documents and perform spatial calculations for distance and intersections between points and polygons. Spatial data describes the position and shape of objects in space. Typically, it can be used to represent the location of a person, a place of interest, or the boundary of a city, or a lake. Common use cases often involve proximity queries. For e.g., "find all universities near my current location". A Point denotes a single position in space which represents the exact location, e.g. street address of particular university. A point is represented in DocumentDB using its coordinate pair (longitude and latitude). Following is an example of JSON point. 
+{ 
+   "type":"Point", 
+   "coordinates":[ 28.3, -10.7 ] 
+} 
+ Let’s take a look at a simple example which contains the location of a university. 
+{ 
+   "id":"case-university", 
+   "name":"CASE: Center For Advanced Studies In Engineering", 
+   "city":"Islamabad", 
+	
+   "location": { 
+      "type":"Point", 
+      "coordinates":[ 33.7194136, -73.0964862 ] 
+   } 
+}
+ To retrieve the university name based on the location, you can use the following query. 
+SELECT c.name FROM c 
+
+WHERE c.id = "case-university" AND ST_ISVALID({ 
+      "type":"Point", 
+      "coordinates":[ 33.7194136, -73.0964862 ] })
+ When the above query is executed you will receive the following output. 
+[ 
+   { 
+      "name": "CASE: Center For Advanced Studies In Engineering" 
+   } 
+] 
+ Create Document with Geospatial Data in .NET You can create a document with geospatial data, let’s take a look at a simple example in which a university document is created. 
+private async static Task CreateDocuments(DocumentClient client) {
+   Console.WriteLine(); 
+   Console.WriteLine("**** Create Documents ****"); 
+   Console.WriteLine();
+	
+   var uniDocument = new UniversityProfile {
+      Id = "nust", 
+      Name = "National University of Sciences and Technology", 
+      City = "Islamabad", 
+      Loc = new Point(33.6455715, 72.9903447) 
+   };
+	
+   Document document = await CreateDocument(client, uniDocument); 
+   Console.WriteLine("Created document {0} from typed object", document.Id); 
+   Console.WriteLine(); 
+}
+ Following is the implementation for the UniversityProfile class. 
+public class UniversityProfile { 
+   [JsonProperty(PropertyName = "id")] 
+   public string Id { get; set; }  
+	
+   [JsonProperty("name")] 
+   public string Name { get; set; }
+	
+   [JsonProperty("city")] 
+   public string City { get; set; }  
+	
+   [JsonProperty("location")] 
+   public Point Loc { get; set; } 
+} 
+ When the above code is compiled and executed, you will receive the following output. 
+**** Create Documents ****  
+Created new document: nust 
+{ 
+   "id": "nust", 
+   "name": "National University of Sciences and Technology", 
+   "city": "Islamabad", 
+   "location": { 
+      "type": "Point", 
+      "coordinates": [ 
+         33.6455715, 
+         72.9903447 
+      ] 
+   }, 
+   "_rid": "Ic8LAMEUVgANAAAAAAAAAA==", 
+   "_ts": 1450200910, 
+   "_self": "dbs/Ic8LAA==/colls/Ic8LAMEUVgA=/docs/Ic8LAMEUVgANAAAAAAAAAA==/", 
+   "_etag": "\"00004100-0000-0000-0000-56704f4e0000\"", 
+   "_attachments": "attachments/" 
+} 
+Created document nust from typed object

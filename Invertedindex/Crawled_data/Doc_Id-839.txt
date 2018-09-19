@@ -1,0 +1,9 @@
+DOM - Attribute Object
+
+https://www.tutorialspoint.com/dom/dom_attribute_object.htm
+
+XML, DOM, Document, Object, Model, simple, easy, steps, Overview, DOM Model, DOM Nodes, DOM Node Tree, DOM Node List, DOM Methods, DOM Loading, DOM Parser, DOM Traversing, DOM Navigation, DOM Accessing, Get, Set, Create, Add, Replace, Remove and Clone Node, Node Object, NodeList Object, NamedNodeMap Object, Document Object, DocumentImplementation Object, DocumentType Object, ProcessingInstruction Object, Entity Object, EntityReference Object, Notation Object, Element Object, Attribute Object, Text Object, CDATASection Object, Comment Object, XMLHttpRequest Object, ParseError Object, DOMException Object.
+
+August-15-2017-02:34:12
+
+Attr interface represents an attribute in an Element object. Typically, the allowable values for the attribute are defined in a schema associated with the document. Attr objects are not considered as part of the document tree since they are not actually child nodes of the element they describe. Thus for the child nodes parentNode, previousSibling and nextSibling the attribute value is null. Attributes The following table lists the attributes of the Attribute object − Attribute Type Description name DOMString This gives the name of the attribute. specified boolean It is a boolean value which returns true if the attribute value exists in the document. value DOMString Returns the value of the attribute. ownerElement Element It gives the node to which attribute is associated or null if attribute is not in use. isId boolean It returns whether the attribute is known to be of type ID (i.e. to contain an identifier for its owner element) or not.

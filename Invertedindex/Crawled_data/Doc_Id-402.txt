@@ -1,0 +1,20 @@
+Neo4j - Upper Function
+
+https://www.tutorialspoint.com/neo4j/string_upper.htm
+
+Neo4j, Tutorial, Learning, Overview, Data Model, Environment Setup, Building Blocks, CQL Introduction, Creating Nodes, Creating a Relationship, Merge Command, Set, Delete, Remove, Foreach, Match, Optional Match, Where, Return, Order By, Limit, Skip, With, Unwind Clause, Count, String, Aggregation Function, Backup and Restore, Index, Create Unique Constraint, Drop Unique.
+
+August-15-2017-02:34:07
+
+It takes a string as an input and converts it into upper case letters. All CQL functions should use "( )" brackets. Syntax Following is the syntax of the function upper() in Neo4j. 
+UPPER (<input-string>) 
+ Example Before proceeding with the example, create 5 nodes in Neo4j as shown below. 
+CREATE (Dhawan:player{name: "shikar Dhawan", YOB: 1995, POB: "Delhi"}) 
+CREATE (Jonathan:player {name: "Jonathan Trott", YOB: 1981, POB: "CapeTown"}) 
+CREATE (Sangakkara:player {name: "Kumar Sangakkara", YOB: 1977, POB: "Matale"}) 
+CREATE (Rohit:player {name: "Rohit Sharma", YOB: 1987, POB: "Nagpur"}) 
+CREATE (Virat:player {name: "Virat Kohli", YOB: 1988, POB: "Delhi"})
+ Following is a sample cypher query which demonstrates the usage of the function UPPER() in Neo4j. Here we are trying to convert the names of all the players into upper case. 
+MATCH (n:player)  
+RETURN UPPER(n.name), n.YOB, n.POB 
+ To execute the above query, carry out the following steps − Step 1 − Open the Neo4j desktop App and start the Neo4j Server. Open the built-in browser app of Neo4j using the URL http://localhost:7474/ as shown in the following screenshot. Step 2 − Copy and paste the desired query in the dollar prompt and press the play button (to execute the query) highlighted in the following screenshot. Result On executing, you will get the following result. neo4j_string_functions.htm

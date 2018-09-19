@@ -1,0 +1,39 @@
+XSD - Complex Element Only
+
+https://www.tutorialspoint.com/xsd/xsd_complex_element_only.htm
+
+XSD, Tutorial, Overview, Syntax, Validation, Simple Types, Complex Types, String, Date Time, Numeric, Miscellaneous.
+
+August-15-2017-02:34:11
+
+Complex Elements Only can only have other elements. See the following example − 
+<student>	 
+   <firstname>Vaneet</firstname>
+   <lastname>Gupta</lastname>
+   <nickname>Vinni</nickname>
+   <marks>95</marks>
+</student>
+ We can declare Complex element-only element using the following methods − Use type attribute Define a complex type element "StudentType" and then create an element called student of type StudentType. 
+<xs:complexType name = "StudentType">
+   <xs:sequence>
+      <xs:element name = "firstname" type = "xs:string"/>
+      <xs:element name = "lastname" type = "xs:string"/>
+      <xs:element name = "nickname" type = "xs:string"/>
+      <xs:element name = "marks" type = "xs:string"/>
+   </xs:sequence>
+</xs:complexType>
+
+<xs:element name = 'student' type = 'StudentType' />			 
+ In the above example, we've used sequence. It is used to maintain the order in which the elements are to be present in the XML. If order is not maintained, then XML will not be validated. Use ComplexType alone Define an element of complexType with the required attribute element only. 
+<xs:element name = 'student'>
+   <xs:complexType>
+      <xs:sequence>
+         <xs:element name = "firstname" type = "xs:string"/>
+         <xs:element name = "lastname" type = "xs:string"/>
+         <xs:element name = "nickname" type = "xs:string"/>
+         <xs:element name = "marks" type = "xs:string"/>
+      </xs:sequence>
+      <xs:attribute name = 'rollno' type = 'xs:positiveInteger'/>
+   </xs:complexType>			  
+</xs:element>
+ xsd_complex_types.htm

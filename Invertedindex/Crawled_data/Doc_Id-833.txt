@@ -1,0 +1,45 @@
+AIML - <set>, <get> Tags
+
+https://www.tutorialspoint.com/aiml/aiml_setget_tag.htm
+
+AIML, Tutorial, Introduction, Environment Setup, First Application, Basic Tags, <star> Tag, <srai> Tag, <random> Tag, <set> Tag, <get> Tag, <that> Tag, <topic> Tag, <think> Tag, <condition> Tag.
+
+August-15-2017-02:34:07
+
+<set> and <get> tags are used to work with variables in AIML. Variables can be predefined variables or programmer created variables. Syntax <set> tag is used to set value in a variable. 
+<set name = "variable-name"> variable-value </set>
+ <get> tag is used to get value from a variable. 
+<get name = "variable-name"></get>
+ For example, consider the following conversation. 
+Human: I am Mahesh
+Robot: Hello Mahesh!
+Human: Good Night
+Robot: Good Night Mahesh! Thanks for the conversation!
+ Example Create setget.aiml inside C > ab > bots > test > aiml and setget.aiml.csv inside C > ab > bots > test > aimlif directories. setget.aiml 
+<?xml version = "1.0" encoding = "UTF-8"?>
+<aiml version = "1.0.1" encoding = "UTF-8"?>
+   <category>
+      <pattern>I am *</pattern>
+      <template>
+         Hello <set name = "username"> <star/>! </set>
+      </template>  
+   </category>  
+   
+   <category>
+      <pattern>Good Night</pattern>
+      <template>
+         Hi <get name = "username"/> Thanks for the conversation!
+      </template>  
+   </category>  
+   
+</aiml>
+ setget.aiml.csv 
+0,I am *,*,*, Hello <set name = "username"> <star/>! </set>,setget.aiml
+0,Good Night,*,*, Hi <get name = "username"/> Thanks for the conversation!,setget.aiml
+ Execute the Program Open the command prompt. Go to C > ab > and type the following command − 
+java -cp lib/Ab.jar Main bot = test action = chat trace = false
+ Verify the Result You will see the following output − 
+Human: I am Mahesh
+Robot: Hello Mahesh!
+Human: Good Night
+Robot: Good Night Mahesh! Thanks for the conversation!

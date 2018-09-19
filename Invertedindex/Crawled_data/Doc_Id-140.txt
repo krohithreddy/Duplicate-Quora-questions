@@ -1,0 +1,9 @@
+DynamoDB - Useful Resources
+
+https://www.tutorialspoint.com/dynamodb/dynamodb_useful_resources.htm
+
+DynamoDB, Tutorial, Learning, Overview, Basic Concepts, Environment, Operations Tools, Data Types, Create, Load, Query, Delete Table, API Interface, Creating, Getting, Update, Delete Items, Batch Writing, Batch Retrieve, Querying, Scan, Indexes, Global, Local Secondary Indexes, Aggregation, Access Control, Permissions API, Conditions, Web Identity Federation, Data Pipeline, Data Backup, Monitoring, CloudTrail, MapReduce, Table Activity, Error Handling, Best Practices.
+
+August-15-2017-02:34:06
+
+The following resources contain additional information on DynamoDB. Please use them to get more in-depth knowledge on this. Useful Links on DynamoDB DynamoDB Wiki − Wikipedia Reference for DynamoDB DynamoDB Official Knowledge Base − This resource serves the best and latest DynamoDB information, code examples, tips, tricks, fixes, and a comprehensive collection of related information. Amazon offers tutorials, videos, classes, labs, white papers, and much more. LinkedIn Pulse Content − LinkedIn, described as the world's largest professional network, allows over 100 million professionals to network. It opened its publishing platform, Pulse, to the public in 2014, resulting in a wealth of valuable professional and industry information. This information includes rare insight, training media, and more related to DynamoDB. Lynda.com DynamoDB Videos − This online learning organization offers thousands of videos on various topics (including DynamoDB) supplied by professionals, organizations, and individuals. YouTube DynamoDB Videos − Individuals just like you produce thousands of DynamoDB videos on YT to address particular topics not covered elsewhere, or covered poorly elsewhere. These videos use different languages, styles, and offer unique voices. Useful Books on DynamoDB To enlist your site on this page, please drop an email to contact@tutorialspoint.com
